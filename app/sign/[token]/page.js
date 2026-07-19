@@ -93,8 +93,8 @@ export default async function SigningPage({ params }) {
     )
   }
 
-  // Mark viewed (best-effort, don't block)
-  markViewed(contract)
+  // Mark viewed + send notification (must await to complete on Vercel serverless)
+  await markViewed(contract)
 
   return <SigningForm contract={contract} />
 }
