@@ -1,4 +1,9 @@
+export const runtime = 'nodejs'
+export const maxDuration = 60
+
 import crypto from 'crypto'
+import { generateSignedContractPdf } from '../../../lib/pdf.js'
+import { uploadSignedPdf } from '../../../lib/storage.js'
 
 export async function POST(request) {
   try {
@@ -81,7 +86,40 @@ export async function POST(request) {
       }),
     })
 
-    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip })
+    // Refresh contract with the just-set fields (need contract_hash_at_signing for PDF audit block)
+    const updatedContract = {
+      ...contract,
+      contract_hash_at_signing: contractHash,
+      client_signature_name: signerName,
+      client_signature_title: signerTitle,
+      signed_at: signedAt,
+    }
+
+    // Generate signed PDF + upload to storage
+    let pdfUrl = null
+    try {
+      const pdfBuffer = await generateSignedContractPdf(updatedContract, signerName, signerTitle, signedAt, ip)
+      const uploaded = await uploadSignedPdf(contract.id, pdfBuffer)
+      pdfUrl = uploaded.signedUrl
+
+      // Save the PDF URL on the contract
+      if (pdfUrl) {
+        await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contract.id}`, {
+          method: 'PATCH',
+          headers: {
+            'apikey': serviceKey,
+            'Authorization': `Bearer ${serviceKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ signed_pdf_url: pdfUrl }),
+        })
+      }
+    } catch (pdfErr) {
+      console.error('PDF generation failed:', pdfErr)
+      // Non-fatal — signature is already saved, just no PDF
+    }
+
+    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfUrl })
 
     return Response.json({ success: true })
   } catch (err) {
@@ -90,7 +128,7 @@ export async function POST(request) {
   }
 }
 
-async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip }) {
+async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfUrl }) {
   if (!process.env.RESEND_API_KEY) return
 
   const clientHtml = `<!DOCTYPE html>
@@ -108,6 +146,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     <div style="font-size: 12px; color: #6B7280;">SIGNED AT</div>
     <div style="margin-top: 4px;">${new Date(signedAt).toLocaleString()}</div>
   </div>
+  ${pdfUrl ? `<div style="text-align: center; margin: 30px 0;"><a href="${pdfUrl}" style="display: inline-block; background: #1F3A2E; color: white; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 600;">Download Signed PDF</a></div>` : ''}
   <p>Our team will review and countersign shortly. You'll receive a final copy of the fully-executed agreement.</p>
   <p>Questions? Just reply to this email.</p>
 </body></html>`
@@ -124,6 +163,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
   <p><strong>Services:</strong> ${(contract.services || []).join(', ')}</p>
   <p><strong>Client Email:</strong> ${signerEmail || 'not provided'}</p>
   <p><strong>Client IP:</strong> ${ip || 'not captured'}</p>
+  ${pdfUrl ? `<p><strong>Signed PDF:</strong> <a href="${pdfUrl}" style="color: #1F3A2E;">View / Download</a></p>` : '<p style="color: #B45309;"><strong>Note:</strong> PDF generation failed. Contract data is still saved.</p>'}
   <p style="margin-top: 30px;">Head to the client detail page in the Command Center to countersign.</p>
 </body></html>`
 
