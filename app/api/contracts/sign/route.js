@@ -95,31 +95,33 @@ export async function POST(request) {
       signed_at: signedAt,
     }
 
-    // Generate signed PDF + upload to storage
-    let pdfUrl = null
+    // Generate signed PDF (used both for archival + email attachment)
+    let pdfBuffer_ref = null
     try {
-      const pdfBuffer = await generateSignedContractPdf(updatedContract, signerName, signerTitle, signedAt, ip)
-      const uploaded = await uploadSignedPdf(contract.id, pdfBuffer)
-      pdfUrl = uploaded.signedUrl
+      pdfBuffer_ref = await generateSignedContractPdf(updatedContract, signerName, signerTitle, signedAt, ip)
 
-      // Save the PDF URL on the contract
-      if (pdfUrl) {
-        await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contract.id}`, {
-          method: 'PATCH',
-          headers: {
-            'apikey': serviceKey,
-            'Authorization': `Bearer ${serviceKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ signed_pdf_url: pdfUrl }),
-        })
+      // Archive to Supabase Storage (non-blocking - best effort)
+      try {
+        const uploaded = await uploadSignedPdf(contract.id, pdfBuffer_ref)
+        if (uploaded?.signedUrl) {
+          await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contract.id}`, {
+            method: 'PATCH',
+            headers: {
+              'apikey': serviceKey,
+              'Authorization': `Bearer ${serviceKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ signed_pdf_url: uploaded.signedUrl }),
+          })
+        }
+      } catch (uploadErr) {
+        console.error('PDF upload to Storage failed (non-fatal):', uploadErr)
       }
     } catch (pdfErr) {
       console.error('PDF generation failed:', pdfErr)
-      // Non-fatal — signature is already saved, just no PDF
     }
 
-    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfUrl })
+    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfBuffer: pdfBuffer_ref })
 
     return Response.json({ success: true })
   } catch (err) {
@@ -128,7 +130,7 @@ export async function POST(request) {
   }
 }
 
-async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfUrl }) {
+async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfBuffer }) {
   if (!process.env.RESEND_API_KEY) return
 
   const clientHtml = `<!DOCTYPE html>
@@ -146,8 +148,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     <div style="font-size: 12px; color: #6B7280;">SIGNED AT</div>
     <div style="margin-top: 4px;">${new Date(signedAt).toLocaleString()}</div>
   </div>
-  ${pdfUrl ? `<div style="text-align: center; margin: 30px 0;"><a href="${pdfUrl}" style="display: inline-block; background: #1F3A2E; color: white; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 600;">Download Signed PDF</a></div>` : ''}
-  <p>Our team will review and countersign shortly. You'll receive a final copy of the fully-executed agreement.</p>
+  <p>Your signed contract is attached to this email for your records. Our team will review and countersign shortly. You'll receive a final copy of the fully-executed agreement.</p>
   <p>Questions? Just reply to this email.</p>
 </body></html>`
 
@@ -163,8 +164,8 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
   <p><strong>Services:</strong> ${(contract.services || []).join(', ')}</p>
   <p><strong>Client Email:</strong> ${signerEmail || 'not provided'}</p>
   <p><strong>Client IP:</strong> ${ip || 'not captured'}</p>
-  ${pdfUrl ? `<p><strong>Signed PDF:</strong> <a href="${pdfUrl}" style="color: #1F3A2E;">View / Download</a></p>` : '<p style="color: #B45309;"><strong>Note:</strong> PDF generation failed. Contract data is still saved.</p>'}
-  <p style="margin-top: 30px;">Head to the client detail page in the Command Center to countersign.</p>
+  <p style="margin-top: 20px;">${pdfBuffer ? 'Signed PDF is attached.' : '<span style="color: #B45309;">Note: PDF generation failed. Contract data is still saved.</span>'}</p>
+  <p style="margin-top: 20px;">Head to the client detail page in the Command Center to countersign.</p>
 </body></html>`
 
   const emails = []
@@ -183,6 +184,12 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     html: teamHtml,
   })
 
+  // Convert PDF buffer to base64 for Resend attachment
+  const attachments = pdfBuffer ? [{
+    filename: 'signed-contract.pdf',
+    content: Buffer.from(pdfBuffer).toString('base64'),
+  }] : []
+
   for (const email of emails) {
     try {
       await fetch('https://api.resend.com/emails', {
@@ -191,7 +198,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(email),
+        body: JSON.stringify({ ...email, attachments }),
       })
     } catch (e) {
       console.error('Email send failed:', e)
