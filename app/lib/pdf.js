@@ -397,3 +397,208 @@ export async function generateSignedContractPdf(contract, signerName, signerTitl
   const pdfBytes = await pdfDoc.save()
   return Buffer.from(pdfBytes)
 }
+
+
+// =========================================================
+// FULLY EXECUTED PDF (client + MACH signatures)
+// =========================================================
+
+export async function generateFullyExecutedPdf(contract) {
+  const pdfDoc = await PDFDocument.create()
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+  const fontItalic = await pdfDoc.embedFont(StandardFonts.HelveticaOblique)
+
+  let page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT])
+  let y = PAGE_HEIGHT - MARGIN_TOP
+
+  const ensureSpace = (needed) => {
+    if (y - needed < MARGIN_BOTTOM) {
+      page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT])
+      y = PAGE_HEIGHT - MARGIN_TOP
+    }
+  }
+
+  // Header
+  page.drawText('NGS DIGITAL LLC', {
+    x: PAGE_WIDTH / 2 - fontBold.widthOfTextAtSize('NGS DIGITAL LLC', 10) / 2,
+    y, size: 10, font: fontBold, color: BRAND_GREEN,
+  })
+  y -= 8
+  page.drawLine({
+    start: { x: MARGIN_LEFT, y }, end: { x: PAGE_WIDTH - MARGIN_RIGHT, y },
+    thickness: 1.5, color: BRAND_GREEN,
+  })
+  y -= 30
+
+  const title = 'Digital Services Subscription Agreement'
+  page.drawText(title, {
+    x: PAGE_WIDTH / 2 - fontBold.widthOfTextAtSize(title, 18) / 2,
+    y, size: 18, font: fontBold, color: TEXT_PRIMARY,
+  })
+  y -= 26
+
+  const subtitle = 'FULLY EXECUTED'
+  page.drawText(subtitle, {
+    x: PAGE_WIDTH / 2 - fontBold.widthOfTextAtSize(subtitle, 11) / 2,
+    y, size: 11, font: fontBold, color: rgb(0.13, 0.55, 0.27),
+  })
+  y -= 30
+
+  // Body
+  const blocks = extractTextBlocks(contract.rendered_html)
+  for (const block of blocks) {
+    let size, blockFont, color, spaceAfter
+    if (block.tag === 'h1') {
+      size = 16; blockFont = fontBold; color = TEXT_PRIMARY; spaceAfter = 14
+      ensureSpace(30)
+    } else if (block.tag === 'h2') {
+      size = 12; blockFont = fontBold; color = BRAND_GREEN; spaceAfter = 8
+      ensureSpace(24); y -= 6
+    } else if (block.tag === 'h3') {
+      size = 11; blockFont = fontBold; color = BRAND_GREEN; spaceAfter = 6
+      ensureSpace(20); y -= 4
+    } else if (block.tag === 'li') {
+      size = 10; blockFont = font; color = TEXT_PRIMARY; spaceAfter = 4
+      ensureSpace(18)
+      page.drawText('•', { x: MARGIN_LEFT + 6, y, size, font, color })
+    } else {
+      size = 10; blockFont = font; color = TEXT_PRIMARY; spaceAfter = 6
+      ensureSpace(18)
+    }
+
+    const x = block.tag === 'li' ? MARGIN_LEFT + 18 : MARGIN_LEFT
+    const width = block.tag === 'li' ? USABLE_WIDTH - 18 : USABLE_WIDTH
+
+    if (['h1', 'h2', 'h3'].includes(block.tag)) {
+      const lines = wrapText(block.content.replace(/\*\*/g, ''), blockFont, size, width)
+      for (const line of lines) {
+        ensureSpace(size * 1.4)
+        page.drawText(line, { x, y, size, font: blockFont, color })
+        y -= size * 1.4
+      }
+    } else {
+      y = await drawTextWithBold(page, block.content, x, y, {
+        font, fontBold, size, color, maxWidth: width,
+      })
+    }
+    y -= spaceAfter
+  }
+
+  // Signature page
+  page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT])
+  y = PAGE_HEIGHT - MARGIN_TOP
+
+  page.drawText('SIGNATURES', {
+    x: MARGIN_LEFT, y, size: 14, font: fontBold, color: BRAND_GREEN,
+  })
+  y -= 8
+  page.drawLine({
+    start: { x: MARGIN_LEFT, y }, end: { x: PAGE_WIDTH - MARGIN_RIGHT, y },
+    thickness: 2, color: BRAND_GREEN,
+  })
+  y -= 40
+
+  const cellWidth = (USABLE_WIDTH - 40) / 2
+  const signatureNameSize = 24
+
+  const clientSignedAt = new Date(contract.signed_at).toLocaleString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+  })
+
+  page.drawText(contract.client_signature_name, {
+    x: MARGIN_LEFT, y, size: signatureNameSize, font: fontItalic, color: TEXT_PRIMARY,
+  })
+  y -= 6
+  page.drawLine({
+    start: { x: MARGIN_LEFT, y }, end: { x: MARGIN_LEFT + cellWidth, y },
+    thickness: 0.5, color: TEXT_MUTED,
+  })
+  y -= 12
+  page.drawText('CLIENT SIGNATURE', { x: MARGIN_LEFT, y, size: 8, font: fontBold, color: TEXT_MUTED })
+  y -= 14
+  page.drawText(`Name: ${contract.client_signature_name}`, { x: MARGIN_LEFT, y, size: 10, font, color: TEXT_PRIMARY })
+  y -= 14
+  page.drawText(`Title: ${contract.client_signature_title}`, { x: MARGIN_LEFT, y, size: 10, font, color: TEXT_PRIMARY })
+  y -= 14
+  page.drawText(`Date: ${clientSignedAt}`, { x: MARGIN_LEFT, y, size: 10, font, color: TEXT_PRIMARY })
+
+  const countersignedAt = new Date(contract.countersigned_at).toLocaleString('en-US', {
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+  })
+
+  let mY = PAGE_HEIGHT - MARGIN_TOP - 40
+  page.drawText(contract.countersigned_name, {
+    x: MARGIN_LEFT + cellWidth + 40, y: mY,
+    size: signatureNameSize, font: fontItalic, color: TEXT_PRIMARY,
+  })
+  mY -= 6
+  page.drawLine({
+    start: { x: MARGIN_LEFT + cellWidth + 40, y: mY }, end: { x: PAGE_WIDTH - MARGIN_RIGHT, y: mY },
+    thickness: 0.5, color: TEXT_MUTED,
+  })
+  mY -= 12
+  page.drawText('MACH DIGITAL SOLUTIONS', {
+    x: MARGIN_LEFT + cellWidth + 40, y: mY,
+    size: 8, font: fontBold, color: TEXT_MUTED,
+  })
+  mY -= 14
+  page.drawText(`Name: ${contract.countersigned_name}`, { x: MARGIN_LEFT + cellWidth + 40, y: mY, size: 10, font, color: TEXT_PRIMARY })
+  mY -= 14
+  page.drawText(`Title: ${contract.countersigned_title}`, { x: MARGIN_LEFT + cellWidth + 40, y: mY, size: 10, font, color: TEXT_PRIMARY })
+  mY -= 14
+  page.drawText(`Date: ${countersignedAt}`, { x: MARGIN_LEFT + cellWidth + 40, y: mY, size: 10, font, color: TEXT_PRIMARY })
+
+  y = Math.min(y, mY) - 40
+
+  // Audit trail
+  ensureSpace(220)
+  const auditHeight = 210
+  page.drawRectangle({
+    x: MARGIN_LEFT, y: y - auditHeight,
+    width: USABLE_WIDTH, height: auditHeight,
+    color: BG_GRAY, borderColor: TEXT_MUTED, borderWidth: 0.5,
+  })
+
+  y -= 16
+  page.drawText('Electronic Signature Audit Trail', {
+    x: MARGIN_LEFT + 16, y, size: 11, font: fontBold, color: TEXT_PRIMARY,
+  })
+  y -= 20
+
+  const auditRows = [
+    ['CONTRACT ID', contract.id],
+    ['CLIENT SIGNED', clientSignedAt],
+    ['COUNTERSIGNED', countersignedAt],
+    ['CLIENT IP', contract.client_signature_ip || 'not captured'],
+    ['CONTRACT HASH (SHA-256)', contract.contract_hash_at_signing || 'pending'],
+    ['STATUS', 'FULLY EXECUTED — both parties signed'],
+  ]
+
+  for (const [label, value] of auditRows) {
+    page.drawText(label, {
+      x: MARGIN_LEFT + 16, y, size: 8, font: fontBold, color: TEXT_MUTED,
+    })
+    y -= 12
+    const valueLines = wrapText(String(value), font, 9, USABLE_WIDTH - 32)
+    for (const line of valueLines.slice(0, 2)) {
+      page.drawText(line, { x: MARGIN_LEFT + 16, y, size: 9, font, color: TEXT_PRIMARY })
+      y -= 12
+    }
+    y -= 4
+  }
+
+  ensureSpace(60)
+  y -= 20
+  const complianceText = 'This contract was executed electronically in compliance with the U.S. Electronic Signatures in Global and National Commerce Act (E-SIGN Act, 15 U.S.C. § 7001) and applicable state Uniform Electronic Transactions Act (UETA).'
+  const complianceLines = wrapText(complianceText, fontItalic, 9, USABLE_WIDTH)
+  for (const line of complianceLines) {
+    page.drawText(line, { x: MARGIN_LEFT, y, size: 9, font: fontItalic, color: TEXT_MUTED })
+    y -= 12
+  }
+
+  const pdfBytes = await pdfDoc.save()
+  return Buffer.from(pdfBytes)
+}
