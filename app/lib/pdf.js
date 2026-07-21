@@ -287,10 +287,7 @@ export async function generateSignedContractPdf(contract, signerName, signerTitl
   })
   y -= 14
 
-  const signedAtFormatted = new Date(signedAt).toLocaleString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
-  })
+  const signedAtFormatted = new Date(signedAt).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'America/Chicago' })
 
   page.drawText(`Name: ${signerName}`, { x: MARGIN_LEFT, y, size: 10, font, color: TEXT_PRIMARY })
   y -= 14
@@ -502,10 +499,7 @@ export async function generateFullyExecutedPdf(contract) {
   const cellWidth = (USABLE_WIDTH - 40) / 2
   const signatureNameSize = 24
 
-  const clientSignedAt = new Date(contract.signed_at).toLocaleString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
-  })
+  const clientSignedAt = new Date(contract.signed_at).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'America/Chicago' })
 
   page.drawText(contract.client_signature_name, {
     x: MARGIN_LEFT, y, size: signatureNameSize, font: fontItalic, color: TEXT_PRIMARY,
@@ -524,10 +518,7 @@ export async function generateFullyExecutedPdf(contract) {
   y -= 14
   page.drawText(`Date: ${clientSignedAt}`, { x: MARGIN_LEFT, y, size: 10, font, color: TEXT_PRIMARY })
 
-  const countersignedAt = new Date(contract.countersigned_at).toLocaleString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-    hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
-  })
+  const countersignedAt = new Date(contract.countersigned_at).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'America/Chicago' })
 
   let mY = PAGE_HEIGHT - MARGIN_TOP - 40
   page.drawText(contract.countersigned_name, {

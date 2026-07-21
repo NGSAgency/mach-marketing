@@ -43,7 +43,7 @@ export async function POST(request) {
   <div style="background: #F0FDF4; padding: 20px; border-left: 4px solid #22C55E; margin: 30px 0;">
     <div style="font-size: 12px; color: #166534; font-weight: 600;">FULLY EXECUTED</div>
     <div style="margin-top: 8px; font-size: 14px;">Countersigned by ${contract.countersigned_name}, ${contract.countersigned_title}</div>
-    <div style="margin-top: 4px; font-size: 13px; color: #4B5563;">${new Date(contract.countersigned_at).toLocaleString()}</div>
+    <div style="margin-top: 4px; font-size: 13px; color: #4B5563;">${new Date(contract.countersigned_at).toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' })}</div>
   </div>
   <p>Your fully-executed contract is attached to this email. Please keep it for your records.</p>
   <p>Our team will be in touch shortly to kick off your onboarding. Welcome aboard!</p>

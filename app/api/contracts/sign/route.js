@@ -119,7 +119,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     <div style="font-size: 12px; color: #6B7280;">SIGNED BY</div>
     <div style="margin: 4px 0 12px 0;">${signerName}, ${signerTitle}</div>
     <div style="font-size: 12px; color: #6B7280;">SIGNED AT</div>
-    <div style="margin-top: 4px;">${new Date(signedAt).toLocaleString()}</div>
+    <div style="margin-top: 4px;">${new Date(signedAt).toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' })}</div>
   </div>
   <p>Your signature has been recorded. Our team will review and countersign shortly. You'll receive the fully-executed contract PDF for your records once the countersignature is complete.</p>
   <p>Questions? Just reply to this email.</p>
