@@ -2,8 +2,6 @@ export const runtime = 'nodejs'
 export const maxDuration = 60
 
 import crypto from 'crypto'
-import { generateSignedContractPdf } from '../../../lib/pdf.js'
-import { uploadSignedPdf } from '../../../lib/storage.js'
 
 export async function POST(request) {
   try {
@@ -95,33 +93,8 @@ export async function POST(request) {
       signed_at: signedAt,
     }
 
-    // Generate signed PDF (used both for archival + email attachment)
-    let pdfBuffer_ref = null
-    try {
-      pdfBuffer_ref = await generateSignedContractPdf(updatedContract, signerName, signerTitle, signedAt, ip)
-
-      // Archive to Supabase Storage (non-blocking - best effort)
-      try {
-        const uploaded = await uploadSignedPdf(contract.id, pdfBuffer_ref)
-        if (uploaded?.signedUrl) {
-          await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contract.id}`, {
-            method: 'PATCH',
-            headers: {
-              'apikey': serviceKey,
-              'Authorization': `Bearer ${serviceKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ signed_pdf_url: uploaded.signedUrl }),
-          })
-        }
-      } catch (uploadErr) {
-        console.error('PDF upload to Storage failed (non-fatal):', uploadErr)
-      }
-    } catch (pdfErr) {
-      console.error('PDF generation failed:', pdfErr)
-    }
-
-    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfBuffer: pdfBuffer_ref })
+    // Send confirmation emails (no PDF yet - full PDF ships on countersign)
+    await sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip })
 
     return Response.json({ success: true })
   } catch (err) {
@@ -130,7 +103,7 @@ export async function POST(request) {
   }
 }
 
-async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip, pdfBuffer }) {
+async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip }) {
   if (!process.env.RESEND_API_KEY) return
 
   const clientHtml = `<!DOCTYPE html>
@@ -148,7 +121,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     <div style="font-size: 12px; color: #6B7280;">SIGNED AT</div>
     <div style="margin-top: 4px;">${new Date(signedAt).toLocaleString()}</div>
   </div>
-  <p>Your signed contract is attached to this email for your records. Our team will review and countersign shortly. You'll receive a final copy of the fully-executed agreement.</p>
+  <p>Your signature has been recorded. Our team will review and countersign shortly. You'll receive the fully-executed contract PDF for your records once the countersignature is complete.</p>
   <p>Questions? Just reply to this email.</p>
 </body></html>`
 
@@ -164,8 +137,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
   <p><strong>Services:</strong> ${(contract.services || []).join(', ')}</p>
   <p><strong>Client Email:</strong> ${signerEmail || 'not provided'}</p>
   <p><strong>Client IP:</strong> ${ip || 'not captured'}</p>
-  <p style="margin-top: 20px;">${pdfBuffer ? 'Signed PDF is attached.' : '<span style="color: #B45309;">Note: PDF generation failed. Contract data is still saved.</span>'}</p>
-  <p style="margin-top: 20px;">Head to the client detail page in the Command Center to countersign.</p>
+  <p style="margin-top: 20px;">Head to the client detail page in the Command Center to countersign. Fully-executed PDF will be generated and sent when you countersign.</p>
 </body></html>`
 
   const emails = []
@@ -184,12 +156,6 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
     html: teamHtml,
   })
 
-  // Convert PDF buffer to base64 for Resend attachment
-  const attachments = pdfBuffer ? [{
-    filename: 'signed-contract.pdf',
-    content: Buffer.from(pdfBuffer).toString('base64'),
-  }] : []
-
   for (const email of emails) {
     try {
       await fetch('https://api.resend.com/emails', {
@@ -198,7 +164,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...email, attachments }),
+        body: JSON.stringify(email),
       })
     } catch (e) {
       console.error('Email send failed:', e)
