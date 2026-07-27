@@ -1,5 +1,8 @@
-export default async function PaymentSuccess({ params }) {
+export default async function PaymentSuccess({ params, searchParams }) {
   const { clientId } = await params
+  const sp = await searchParams
+  const token = sp?.token
+
   return (
     <div style={{ background: '#F9FAFB', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ background: '#1F3A2E', color: 'white', padding: '20px 40px', textAlign: 'center' }}>
@@ -11,12 +14,18 @@ export default async function PaymentSuccess({ params }) {
         <p style={{ color: '#4B5563', margin: '0 0 32px 0', fontSize: 16, lineHeight: 1.6 }}>
           Your payment method is on file. Your first charge will happen on the 1st of next month per your contract — nothing has been charged today.
         </p>
-        <p style={{ color: '#4B5563', margin: '0 0 32px 0', fontSize: 15 }}>
-          Return to the onboarding questionnaire to continue setting up your account.
-        </p>
-        <p style={{ color: '#6B7280', fontSize: 14 }}>
-          You can close this window and return to the onboarding tab you had open.
-        </p>
+        {token ? (
+          
+            href={`https://app.machdigitalsolutions.com/onboard/${token}`}
+            style={{ display: 'inline-block', background: '#1F3A2E', color: 'white', padding: '14px 32px', textDecoration: 'none', borderRadius: 8, fontWeight: 600, fontSize: 15 }}
+          >
+            Continue Onboarding →
+          </a>
+        ) : (
+          <p style={{ color: '#6B7280', fontSize: 14 }}>
+            You can close this window and return to the onboarding tab you had open.
+          </p>
+        )}
       </div>
     </div>
   )
