@@ -15,7 +15,7 @@ export default async function PaymentSuccess({ params, searchParams }) {
           Your payment method is on file. Your first charge will happen on the 1st of next month per your contract — nothing has been charged today.
         </p>
         {token ? (
-          
+          <a
             href={`https://app.machdigitalsolutions.com/onboard/${token}`}
             style={{ display: 'inline-block', background: '#1F3A2E', color: 'white', padding: '14px 32px', textDecoration: 'none', borderRadius: 8, fontWeight: 600, fontSize: 15 }}
           >
