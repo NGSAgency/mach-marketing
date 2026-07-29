@@ -31,7 +31,7 @@ export const boltTokens = {
     borderLight: '#e4e4e7',
   },
   fonts: {
-    display: "'Barlow Condensed', 'Impact', system-ui, sans-serif",
+    display: "'Anton', 'Impact', system-ui, sans-serif",
     body: "'Inter', system-ui, sans-serif",
     mono: "'JetBrains Mono', ui-monospace, monospace",
   },
