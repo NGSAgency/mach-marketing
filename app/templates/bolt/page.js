@@ -1,8 +1,8 @@
 "use client"
 
-import { boltTokens as t } from '../tokens.js'
-import { ServiceIcon } from '@/lib/templates/shared/icons.js'
-import { config } from '@/lib/templates/configs/example-multi-service.js'
+import { boltTokens as t } from './tokens.js'
+import { ServiceIcon } from '../../../lib/templates/shared/icons.js'
+import { config } from '../../../lib/templates/configs/example-multi-service.js'
 import { useState } from 'react'
 
 const T = t
