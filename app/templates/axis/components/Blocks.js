@@ -1,7 +1,8 @@
 "use client"
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens } from '../tokens.js'
 
-export function AxisCTA({ config, headline, sub }) {
+export function AxisCTA({ config, headline, sub , T: Toverride }) {
+  const T = Toverride || axisTokens
   const c = config
   return (
     <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '120px 32px' }}>
@@ -25,7 +26,8 @@ export function AxisCTA({ config, headline, sub }) {
   )
 }
 
-export function AxisPageHero({ eyebrow, title, sub }) {
+export function AxisPageHero({ eyebrow, title, sub, T: Toverride }) {
+  const T = Toverride || axisTokens
   return (
     <section style={{ background: T.colors.bg, padding: '96px 32px 64px', borderBottom: `1px solid ${T.colors.borderLight}` }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>

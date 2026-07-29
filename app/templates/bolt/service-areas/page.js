@@ -1,9 +1,10 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { BoltHeader, BoltFooter } from '../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -13,7 +14,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function AreasIndex() {
+export default async function AreasIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }]
 
@@ -21,10 +24,9 @@ export default function AreasIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
+        <BoltHeader config={c} logo={brand.logo} T={T} />
 
-        <BoltPageHero
-          eyebrow="Where We Serve"
+        <BoltPageHero T={T} eyebrow="Where We Serve"
           title={c.primary_service_area}
           sub={`We serve families across ${c.service_areas.length}+ neighborhoods with same-day and 24/7 emergency response.`}
         />
@@ -43,8 +45,8 @@ export default function AreasIndex() {
           </div>
         </section>
 
-        <BoltCTA config={c} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

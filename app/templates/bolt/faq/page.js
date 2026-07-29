@@ -1,8 +1,9 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltFooter } from '../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 const DEFAULT_FAQS = [
   {
@@ -47,7 +48,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function FAQPage() {
+export default async function FAQPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const faqs = c.faqs || DEFAULT_FAQS
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
@@ -57,9 +60,8 @@ export default function FAQPage() {
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <JsonLd data={buildFAQSchema(faqs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
-        <BoltPageHero
-          eyebrow="FAQ"
+        <BoltHeader config={c} logo={brand.logo} T={T} />
+        <BoltPageHero T={T} eyebrow="FAQ"
           title="Common Questions"
           sub="Answers to the questions we hear most from customers."
         />
@@ -79,8 +81,8 @@ export default function FAQPage() {
           </div>
         </section>
 
-        <BoltCTA config={c} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

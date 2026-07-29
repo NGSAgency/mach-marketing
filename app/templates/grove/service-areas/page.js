@@ -1,15 +1,18 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GroveCTA, GrovePageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'service-areas', title: 'Service Areas', description: `${config.business.display_name} serves ${config.service_areas.length}+ neighborhoods across ${config.primary_service_area}.` }, { isPreview: true })
 }
 
-export default function AreasIndex() {
+export default async function AreasIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }]
 
@@ -17,8 +20,8 @@ export default function AreasIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
-        <GrovePageHero eyebrow="Where we serve" title={<>On your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>street.</em></>} sub={`${c.service_areas.length}+ neighborhoods across ${c.primary_service_area}. Same-day and 24/7 emergency response.`} />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
+        <GrovePageHero T={T} eyebrow="Where we serve" title={<>On your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>street.</em></>} sub={`${c.service_areas.length}+ neighborhoods across ${c.primary_service_area}. Same-day and 24/7 emergency response.`} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
@@ -34,8 +37,8 @@ export default function AreasIndex() {
           </div>
         </section>
 
-        <GroveCTA config={c} />
-        <GroveFooter config={c} />
+        <GroveCTA T={T} config={c} />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

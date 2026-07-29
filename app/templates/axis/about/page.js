@@ -1,14 +1,17 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisFooter } from '../components/Chrome.js'
 import { AxisCTA, AxisPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'about', title: 'About', description: `Family-owned since ${config.business.established_year}. Meet the ${config.business.display_name} team.` }, { isPreview: true })
 }
 
-export default function AboutPage() {
+export default async function AboutPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]
 
@@ -16,8 +19,8 @@ export default function AboutPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
-        <AxisPageHero eyebrow={`Since ${c.business.established_year}`} title={<>Built on <span style={{ color: T.colors.accent }}>trust</span>.</>} sub={`${c.business.years_in_business} years. ${c.team.size} technicians. One family.`} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
+        <AxisPageHero T={T} eyebrow={`Since ${c.business.established_year}`} title={<>Built on <span style={{ color: T.colors.accent }}>trust</span>.</>} sub={`${c.business.years_in_business} years. ${c.team.size} technicians. One family.`} />
 
         <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
@@ -48,8 +51,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <AxisCTA config={c} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

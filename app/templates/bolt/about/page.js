@@ -1,8 +1,9 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltFooter } from '../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -12,7 +13,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function AboutPage() {
+export default async function AboutPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]
 
@@ -20,9 +23,8 @@ export default function AboutPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
-        <BoltPageHero
-          eyebrow={`Family-Owned Since ${c.business.established_year}`}
+        <BoltHeader config={c} logo={brand.logo} T={T} />
+        <BoltPageHero T={T} eyebrow={`Family-Owned Since ${c.business.established_year}`}
           title={<>Who We Are</>}
           sub={`${c.business.years_in_business}+ years serving ${c.primary_service_area} with honest, professional home services.`}
         />
@@ -52,8 +54,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <BoltCTA config={c} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

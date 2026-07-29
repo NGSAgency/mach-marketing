@@ -1,7 +1,8 @@
 "use client"
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens } from '../tokens.js'
 
-export function GroveHeader({ config }) {
+export function GroveHeader({ config, logo, T: Toverride }) {
+  const T = Toverride || groveTokens
   const c = config
   return (
     <>
@@ -13,14 +14,18 @@ export function GroveHeader({ config }) {
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
           <a href="/templates/grove" style={{ textDecoration: 'none' }}>
-            <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
-              {c.business.display_name}
-              {c.business.family_owned && (
-                <div style={{ fontSize: 11, fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 2 }}>
-                  Family-owned since {c.business.established_year}
-                </div>
-              )}
-            </div>
+            {logo ? (
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 48, width: 'auto', display: 'block' }} />
+            ) : (
+              <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
+                {c.business.display_name}
+                {c.business.family_owned && (
+                  <div style={{ fontSize: 11, fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 2 }}>
+                    Family-owned since {c.business.established_year}
+                  </div>
+                )}
+              </div>
+            )}
           </a>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
             <a href="/templates/grove/services" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Services</a>
@@ -37,7 +42,8 @@ export function GroveHeader({ config }) {
   )
 }
 
-export function GroveFooter({ config }) {
+export function GroveFooter({ config, T: Toverride }) {
+  const T = Toverride || groveTokens
   const c = config
   return (
     <footer style={{ background: T.colors.bgAlt, padding: '64px 32px 32px', borderTop: `1px solid ${T.colors.border}` }}>

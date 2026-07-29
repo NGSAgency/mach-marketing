@@ -1,9 +1,10 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GroveCTA, GrovePageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -13,7 +14,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function ServicesIndex() {
+export default async function ServicesIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
   const categories = [...new Set(c.services.map(s => s.category))]
@@ -22,8 +25,8 @@ export default function ServicesIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
-        <GrovePageHero eyebrow="Our services" title={<>Everything for your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>home</em>.</>} sub={`One licensed team. ${c.services.length} home services. Family-owned since ${c.business.established_year}.`} />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
+        <GrovePageHero T={T} eyebrow="Our services" title={<>Everything for your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>home</em>.</>} sub={`One licensed team. ${c.services.length} home services. Family-owned since ${c.business.established_year}.`} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
@@ -54,8 +57,8 @@ export default function ServicesIndex() {
           </div>
         </section>
 
-        <GroveCTA config={c} />
-        <GroveFooter config={c} />
+        <GroveCTA T={T} config={c} />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

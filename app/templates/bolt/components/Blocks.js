@@ -1,7 +1,8 @@
 "use client"
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens } from '../tokens.js'
 
-export function BoltCTA({ config, headline = "Need Service? Call Now.", sub = "24/7 emergency service. Free estimates. Financing available." }) {
+export function BoltCTA({ config, headline = "Need Service? Call Now.", sub = "24/7 emergency service. Free estimates. Financing available." , T: Toverride }) {
+  const T = Toverride || boltTokens
   const c = config
   return (
     <section style={{ background: T.colors.accent, padding: '80px 24px', textAlign: 'center' }}>
@@ -20,7 +21,8 @@ export function BoltCTA({ config, headline = "Need Service? Call Now.", sub = "2
   )
 }
 
-export function BoltPageHero({ eyebrow, title, sub }) {
+export function BoltPageHero({ eyebrow, title, sub, T: Toverride }) {
+  const T = Toverride || boltTokens
   return (
     <section style={{ background: T.colors.bg, padding: '80px 24px 60px', borderBottom: `4px solid ${T.colors.accent}` }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>

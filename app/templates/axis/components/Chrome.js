@@ -1,15 +1,20 @@
 "use client"
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens } from '../tokens.js'
 
-export function AxisHeader({ config }) {
+export function AxisHeader({ config, logo, T: Toverride }) {
+  const T = Toverride || axisTokens
   const c = config
   return (
     <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
       <div style={{ maxWidth: 1440, margin: '0 auto', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
         <a href="/templates/axis" style={{ textDecoration: 'none' }}>
-          <div style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
-            {c.business.display_name}
-          </div>
+          {logo ? (
+            <img src={logo} alt={c.business.display_name} style={{ maxHeight: 32, width: 'auto', display: 'block' }} />
+          ) : (
+            <div style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
+              {c.business.display_name}
+            </div>
+          )}
         </a>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <a href="/templates/axis/services" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>Services</a>
@@ -29,7 +34,8 @@ export function AxisHeader({ config }) {
   )
 }
 
-export function AxisFooter({ config }) {
+export function AxisFooter({ config, T: Toverride }) {
+  const T = Toverride || axisTokens
   const c = config
   return (
     <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '80px 32px 32px' }}>

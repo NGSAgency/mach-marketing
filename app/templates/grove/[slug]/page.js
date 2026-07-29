@@ -1,11 +1,12 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildComboMetadata, buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { breadcrumbsForCombo, slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GroveCTA } from '../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 function parseComboSlug(slug) {
   for (const svc of config.services) {
@@ -34,7 +35,9 @@ export async function generateMetadata({ params }) {
   return buildComboMetadata(config, parsed.service, parsed.area, { isPreview: true })
 }
 
-export default async function ComboPage({ params }) {
+export default async function ComboPage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const parsed = parseComboSlug(slug)
   if (!parsed) notFound()
@@ -49,7 +52,7 @@ export default async function ComboPage({ params }) {
       <JsonLd data={buildServiceSchema(c, service)} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 96px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
@@ -106,8 +109,8 @@ export default async function ComboPage({ params }) {
           </div>
         </section>
 
-        <GroveCTA config={c} headline={`${service.name} in ${area}`} sub="Give us a call. We'll take good care of your home." />
-        <GroveFooter config={c} />
+        <GroveCTA T={T} config={c} headline={`${service.name} in ${area}`} sub="Give us a call. We'll take good care of your home." />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

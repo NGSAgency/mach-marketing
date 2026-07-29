@@ -1,8 +1,9 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltFooter } from '../components/Chrome.js'
 import { BoltPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -12,7 +13,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
 
@@ -20,9 +23,8 @@ export default function ContactPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
-        <BoltPageHero
-          eyebrow="Get In Touch"
+        <BoltHeader config={c} logo={brand.logo} T={T} />
+        <BoltPageHero T={T} eyebrow="Get In Touch"
           title="Contact Us"
           sub={c.positioning.emergency_service ? "24/7 emergency service. Same-day appointments. Free estimates on installs." : "Fast response. Free estimates. Family-owned service."}
         />
@@ -80,7 +82,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <BoltFooter config={c} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

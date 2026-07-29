@@ -1,9 +1,10 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens as t } from '../tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisFooter } from '../components/Chrome.js'
 import { AxisCTA, AxisPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -13,7 +14,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function ServicesIndex() {
+export default async function ServicesIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
   const categories = [...new Set(c.services.map(s => s.category))]
@@ -22,8 +25,8 @@ export default function ServicesIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
-        <AxisPageHero eyebrow="Services" title={<>Everything you need <span style={{ color: T.colors.accent }}>for your home</span>.</>} sub={`${c.services.length} services across ${categories.length} categories, one licensed team.`} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
+        <AxisPageHero T={T} eyebrow="Services" title={<>Everything you need <span style={{ color: T.colors.accent }}>for your home</span>.</>} sub={`${c.services.length} services across ${categories.length} categories, one licensed team.`} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -54,8 +57,8 @@ export default function ServicesIndex() {
           </div>
         </section>
 
-        <AxisCTA config={c} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

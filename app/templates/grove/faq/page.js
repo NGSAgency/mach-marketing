@@ -1,8 +1,9 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GroveCTA, GrovePageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 const DEFAULT_FAQS = [
   { question: 'Do you offer 24/7 emergency service?', answer: 'Yes. We provide 24/7 emergency service for HVAC, plumbing, and electrical needs. Call us anytime — our licensed technicians are standing by.' },
@@ -19,7 +20,9 @@ export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'faq', title: 'FAQ', description: `Common questions about ${config.business.display_name} services and coverage areas.` }, { isPreview: true })
 }
 
-export default function FAQPage() {
+export default async function FAQPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const faqs = c.faqs || DEFAULT_FAQS
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
@@ -29,8 +32,8 @@ export default function FAQPage() {
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <JsonLd data={buildFAQSchema(faqs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
-        <GrovePageHero eyebrow="Answers" title={<>Common <em style={{ fontStyle: 'italic', color: T.colors.accent }}>questions.</em></>} sub="What our neighbors ask most often." />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
+        <GrovePageHero T={T} eyebrow="Answers" title={<>Common <em style={{ fontStyle: 'italic', color: T.colors.accent }}>questions.</em></>} sub="What our neighbors ask most often." />
 
         <section style={{ background: T.colors.bgAlt, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
@@ -47,8 +50,8 @@ export default function FAQPage() {
           </div>
         </section>
 
-        <GroveCTA config={c} />
-        <GroveFooter config={c} />
+        <GroveCTA T={T} config={c} />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

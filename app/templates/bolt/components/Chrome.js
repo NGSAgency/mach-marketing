@@ -1,7 +1,8 @@
 "use client"
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens } from '../tokens.js'
 
-export function BoltHeader({ config }) {
+export function BoltHeader({ config, logo, T: Toverride }) {
+  const T = Toverride || boltTokens
   const c = config
   return (
     <>
@@ -13,9 +14,13 @@ export function BoltHeader({ config }) {
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
           <a href="/templates/bolt" style={{ textDecoration: 'none' }}>
-            <div style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase' }}>
-              <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
-            </div>
+            {logo ? (
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 44, width: 'auto', display: 'block' }} />
+            ) : (
+              <div style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase' }}>
+                <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
+              </div>
+            )}
           </a>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
             <a href="/templates/bolt/services" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Services</a>
@@ -32,7 +37,8 @@ export function BoltHeader({ config }) {
   )
 }
 
-export function BoltFooter({ config }) {
+export function BoltFooter({ config, T: Toverride }) {
+  const T = Toverride || boltTokens
   const c = config
   return (
     <footer style={{ background: T.colors.bgAlt, padding: '48px 24px 24px', borderTop: `1px solid ${T.colors.border}` }}>

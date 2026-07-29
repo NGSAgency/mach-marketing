@@ -1,14 +1,17 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisFooter } from '../components/Chrome.js'
 import { AxisPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'contact', title: 'Contact', description: `Contact ${config.business.display_name} for home services in ${config.primary_service_area}.` }, { isPreview: true })
 }
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
 
@@ -16,8 +19,8 @@ export default function ContactPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
-        <AxisPageHero eyebrow="Contact" title={<>Get <span style={{ color: T.colors.accent }}>started</span>.</>} sub={c.positioning.emergency_service ? "Call for immediate service or request a free quote below." : "Call or request a free quote below."} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
+        <AxisPageHero T={T} eyebrow="Contact" title={<>Get <span style={{ color: T.colors.accent }}>started</span>.</>} sub={c.positioning.emergency_service ? "Call for immediate service or request a free quote below." : "Call or request a free quote below."} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 64 }}>
@@ -69,7 +72,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <AxisFooter config={c} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

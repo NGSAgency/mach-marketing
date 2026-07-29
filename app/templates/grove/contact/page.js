@@ -1,14 +1,17 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GrovePageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'contact', title: 'Contact Us', description: `Contact ${config.business.display_name} for home service in ${config.primary_service_area}.` }, { isPreview: true })
 }
 
-export default function ContactPage() {
+export default async function ContactPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
 
@@ -16,8 +19,8 @@ export default function ContactPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
-        <GrovePageHero eyebrow="Get in touch" title={<>Say <em style={{ fontStyle: 'italic', color: T.colors.accent }}>hi</em>.</>} sub={c.positioning.emergency_service ? 'Same-day service. 24/7 emergency response.' : 'Same-day response. Free estimates.'} />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
+        <GrovePageHero T={T} eyebrow="Get in touch" title={<>Say <em style={{ fontStyle: 'italic', color: T.colors.accent }}>hi</em>.</>} sub={c.positioning.emergency_service ? 'Same-day service. 24/7 emergency response.' : 'Same-day response. Free estimates.'} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 64 }}>
@@ -71,7 +74,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <GroveFooter config={c} />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

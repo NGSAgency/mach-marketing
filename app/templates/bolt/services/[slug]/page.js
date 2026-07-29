@@ -1,5 +1,5 @@
 import { config } from '../../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../../tokens.js'
+import { boltTokens as t } from '../../tokens.js'
 import { ServiceIcon } from '../../../../../lib/templates/shared/icons.js'
 import {
   buildServiceMetadata,
@@ -11,6 +11,7 @@ import { breadcrumbsForService } from '../../../../../lib/templates/shared/seo/u
 import { BoltHeader, BoltFooter } from '../../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../../lib/templates/shared/brand.js'
 
 export async function generateStaticParams() {
   return config.services.map(s => ({ slug: s.slug }))
@@ -23,7 +24,9 @@ export async function generateMetadata({ params }) {
   return buildServiceMetadata(config, service, { isPreview: true })
 }
 
-export default async function ServicePage({ params }) {
+export default async function ServicePage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const c = config
   const service = c.services.find(s => s.slug === slug)
@@ -37,7 +40,7 @@ export default async function ServicePage({ params }) {
       <JsonLd data={buildServiceSchema(c, service)} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
+        <BoltHeader config={c} logo={brand.logo} T={T} />
 
         {/* Hero with service info */}
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}` }}>
@@ -149,8 +152,8 @@ export default async function ServicePage({ params }) {
           </section>
         )}
 
-        <BoltCTA config={c} headline={`Need ${service.name}? Call Now.`} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} headline={`Need ${service.name}? Call Now.`} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

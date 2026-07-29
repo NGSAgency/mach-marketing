@@ -1,11 +1,12 @@
 import { config } from '../../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../../tokens.js'
+import { axisTokens as t } from '../../tokens.js'
 import { ServiceIcon } from '../../../../../lib/templates/shared/icons.js'
 import { buildAreaMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../../lib/templates/shared/seo/index.js'
 import { breadcrumbsForArea, slugify } from '../../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisFooter } from '../../components/Chrome.js'
 import { AxisCTA } from '../../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../../lib/templates/shared/brand.js'
 
 export async function generateStaticParams() { return config.service_areas.map(a => ({ slug: slugify(a) })) }
 
@@ -16,7 +17,9 @@ export async function generateMetadata({ params }) {
   return buildAreaMetadata(config, area, { isPreview: true })
 }
 
-export default async function AreaPage({ params }) {
+export default async function AreaPage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const c = config
   const area = c.service_areas.find(a => slugify(a) === slug)
@@ -28,7 +31,7 @@ export default async function AreaPage({ params }) {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 128px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -66,8 +69,8 @@ export default async function AreaPage({ params }) {
           </div>
         </section>
 
-        <AxisCTA config={c} headline={`Serving ${area}.`} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} headline={`Serving ${area}.`} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

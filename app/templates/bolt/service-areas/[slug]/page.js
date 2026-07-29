@@ -1,11 +1,12 @@
 import { config } from '../../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../../tokens.js'
+import { boltTokens as t } from '../../tokens.js'
 import { ServiceIcon } from '../../../../../lib/templates/shared/icons.js'
 import { buildAreaMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../../lib/templates/shared/seo/index.js'
 import { breadcrumbsForArea, slugify } from '../../../../../lib/templates/shared/seo/urls.js'
 import { BoltHeader, BoltFooter } from '../../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../../lib/templates/shared/brand.js'
 
 export async function generateStaticParams() {
   return config.service_areas.map(a => ({ slug: slugify(a) }))
@@ -18,7 +19,9 @@ export async function generateMetadata({ params }) {
   return buildAreaMetadata(config, area, { isPreview: true })
 }
 
-export default async function AreaPage({ params }) {
+export default async function AreaPage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const c = config
   const area = c.service_areas.find(a => slugify(a) === slug)
@@ -29,7 +32,7 @@ export default async function AreaPage({ params }) {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
+        <BoltHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}` }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -81,8 +84,8 @@ export default async function AreaPage({ params }) {
           </div>
         </section>
 
-        <BoltCTA config={c} headline={`Home Service Pro in ${area}`} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} headline={`Home Service Pro in ${area}`} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )

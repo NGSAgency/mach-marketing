@@ -1,7 +1,8 @@
 "use client"
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens } from '../tokens.js'
 
-export function GroveCTA({ config, headline, sub }) {
+export function GroveCTA({ config, headline, sub , T: Toverride }) {
+  const T = Toverride || groveTokens
   const c = config
   return (
     <section style={{ background: T.colors.accent, padding: '96px 32px', textAlign: 'center', position: 'relative' }}>
@@ -20,7 +21,8 @@ export function GroveCTA({ config, headline, sub }) {
   )
 }
 
-export function GrovePageHero({ eyebrow, title, sub }) {
+export function GrovePageHero({ eyebrow, title, sub, T: Toverride }) {
+  const T = Toverride || groveTokens
   return (
     <section style={{ background: T.colors.bg, padding: '96px 32px 72px' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto', textAlign: 'center' }}>

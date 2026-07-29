@@ -1,14 +1,17 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { groveTokens as T } from '../tokens.js'
+import { groveTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { GroveHeader, GroveFooter } from '../components/Chrome.js'
 import { GroveCTA, GrovePageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'about', title: 'About Us', description: `Family-owned since ${config.business.established_year}. Meet the ${config.business.display_name} team serving ${config.primary_service_area}.` }, { isPreview: true })
 }
 
-export default function AboutPage() {
+export default async function AboutPage({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]
 
@@ -16,8 +19,8 @@ export default function AboutPage() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <GroveHeader config={c} />
-        <GrovePageHero eyebrow={`Family-owned since ${c.business.established_year}`} title={<>Who <em style={{ fontStyle: 'italic', color: T.colors.accent }}>we are.</em></>} sub={`${c.business.years_in_business}+ years, ${c.team.size} people, one family.`} />
+        <GroveHeader config={c} logo={brand.logo} T={T} />
+        <GrovePageHero T={T} eyebrow={`Family-owned since ${c.business.established_year}`} title={<>Who <em style={{ fontStyle: 'italic', color: T.colors.accent }}>we are.</em></>} sub={`${c.business.years_in_business}+ years, ${c.team.size} people, one family.`} />
 
         <section style={{ background: T.colors.bgAlt, padding: '96px 32px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
@@ -48,8 +51,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <GroveCTA config={c} />
-        <GroveFooter config={c} />
+        <GroveCTA T={T} config={c} />
+        <GroveFooter config={c} T={T} />
       </div>
     </>
   )

@@ -1,15 +1,18 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens as t } from '../tokens.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisFooter } from '../components/Chrome.js'
 import { AxisCTA, AxisPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, { slug: 'service-areas', title: 'Service Areas', description: `${config.business.display_name} serves ${config.service_areas.length}+ neighborhoods across ${config.primary_service_area}.` }, { isPreview: true })
 }
 
-export default function AreasIndex() {
+export default async function AreasIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }]
 
@@ -17,8 +20,8 @@ export default function AreasIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
-        <AxisPageHero eyebrow="Coverage" title={<>Serving the <span style={{ color: T.colors.accent }}>{c.primary_service_area}</span>.</>} sub={`${c.service_areas.length}+ neighborhoods. Same-day response. 24/7 emergency.`} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
+        <AxisPageHero T={T} eyebrow="Coverage" title={<>Serving the <span style={{ color: T.colors.accent }}>{c.primary_service_area}</span>.</>} sub={`${c.service_areas.length}+ neighborhoods. Same-day response. 24/7 emergency.`} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -34,8 +37,8 @@ export default function AreasIndex() {
           </div>
         </section>
 
-        <AxisCTA config={c} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

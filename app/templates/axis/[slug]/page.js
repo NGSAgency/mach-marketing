@@ -1,11 +1,12 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../tokens.js'
+import { axisTokens as t } from '../tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildComboMetadata, buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { breadcrumbsForCombo, slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisFooter } from '../components/Chrome.js'
 import { AxisCTA } from '../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 function parseComboSlug(slug) {
   for (const svc of config.services) {
@@ -34,7 +35,9 @@ export async function generateMetadata({ params }) {
   return buildComboMetadata(config, parsed.service, parsed.area, { isPreview: true })
 }
 
-export default async function ComboPage({ params }) {
+export default async function ComboPage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const parsed = parseComboSlug(slug)
   if (!parsed) notFound()
@@ -49,7 +52,7 @@ export default async function ComboPage({ params }) {
       <JsonLd data={buildServiceSchema(c, service)} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 128px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -103,8 +106,8 @@ export default async function ComboPage({ params }) {
           </div>
         </section>
 
-        <AxisCTA config={c} headline={`${service.name} in ${area}.`} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} headline={`${service.name} in ${area}.`} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

@@ -1,11 +1,12 @@
 import { config } from '../../../../../lib/templates/configs/example-multi-service.js'
-import { axisTokens as T } from '../../tokens.js'
+import { axisTokens as t } from '../../tokens.js'
 import { ServiceIcon } from '../../../../../lib/templates/shared/icons.js'
 import { buildServiceMetadata, buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../../lib/templates/shared/seo/index.js'
 import { breadcrumbsForService, slugify } from '../../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisFooter } from '../../components/Chrome.js'
 import { AxisCTA } from '../../components/Blocks.js'
 import { notFound } from 'next/navigation'
+import { getBrandOverrides, applyBrand } from '../../../../../lib/templates/shared/brand.js'
 
 export async function generateStaticParams() { return config.services.map(s => ({ slug: s.slug })) }
 
@@ -16,7 +17,9 @@ export async function generateMetadata({ params }) {
   return buildServiceMetadata(config, service, { isPreview: true })
 }
 
-export default async function ServicePage({ params }) {
+export default async function ServicePage({ params, searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const { slug } = await params
   const c = config
   const service = c.services.find(s => s.slug === slug)
@@ -29,7 +32,7 @@ export default async function ServicePage({ params }) {
       <JsonLd data={buildServiceSchema(c, service)} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <AxisHeader config={c} />
+        <AxisHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 128px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -103,8 +106,8 @@ export default async function ServicePage({ params }) {
           </section>
         )}
 
-        <AxisCTA config={c} headline={`Ready for ${service.name.toLowerCase()}?`} />
-        <AxisFooter config={c} />
+        <AxisCTA T={T} config={c} headline={`Ready for ${service.name.toLowerCase()}?`} />
+        <AxisFooter config={c} T={T} />
       </div>
     </>
   )

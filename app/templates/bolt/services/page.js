@@ -1,9 +1,10 @@
 import { config } from '../../../../lib/templates/configs/example-multi-service.js'
-import { boltTokens as T } from '../tokens.js'
+import { boltTokens as t } from '../tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildStaticMetadata, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltFooter } from '../components/Chrome.js'
 import { BoltCTA, BoltPageHero } from '../components/Blocks.js'
+import { getBrandOverrides, applyBrand } from '../../../../lib/templates/shared/brand.js'
 
 export async function generateMetadata() {
   return buildStaticMetadata(config, {
@@ -13,7 +14,9 @@ export async function generateMetadata() {
   }, { isPreview: true })
 }
 
-export default function ServicesIndex() {
+export default async function ServicesIndex({ searchParams }) {
+  const brand = await getBrandOverrides(searchParams)
+  const T = applyBrand(t, brand)
   const c = config
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
 
@@ -21,10 +24,9 @@ export default function ServicesIndex() {
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
-        <BoltHeader config={c} />
+        <BoltHeader config={c} logo={brand.logo} T={T} />
 
-        <BoltPageHero
-          eyebrow="What We Do"
+        <BoltPageHero T={T} eyebrow="What We Do"
           title={<>Full-Service <span style={{ color: T.colors.accent }}>Home Services</span></>}
           sub={`One call for all your home service needs. Licensed, insured, and family-owned since ${c.business.established_year}.`}
         />
@@ -56,8 +58,8 @@ export default function ServicesIndex() {
           </div>
         </section>
 
-        <BoltCTA config={c} />
-        <BoltFooter config={c} />
+        <BoltCTA T={T} config={c} />
+        <BoltFooter config={c} T={T} />
       </div>
     </>
   )
