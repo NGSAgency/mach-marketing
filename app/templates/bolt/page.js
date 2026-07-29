@@ -1,17 +1,21 @@
-"use client"
-
 import { boltTokens as t } from './tokens.js'
 import { ServiceIcon } from '../../../lib/templates/shared/icons.js'
 import { config } from '../../../lib/templates/configs/example-multi-service.js'
-import { useState } from 'react'
+import { buildHomeMetadata, buildLocalBusinessSchema, JsonLd } from '../../../lib/templates/shared/seo/index.js'
 
 const T = t
 
+// SEO metadata for this page - preview mode = noindex
+export async function generateMetadata() {
+  return buildHomeMetadata(config, { isPreview: true })
+}
+
 export default function BoltHome() {
   const c = config
-  const [servicesOpen, setServicesOpen] = useState(false)
 
   return (
+    <>
+      <JsonLd data={buildLocalBusinessSchema(config)} />
     <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
       {/* Sticky top emergency bar */}
       {c.positioning.emergency_service && (
@@ -267,5 +271,6 @@ export default function BoltHome() {
         body { margin: 0; padding: 0; }
       `}</style>
     </div>
+    </>
   )
 }

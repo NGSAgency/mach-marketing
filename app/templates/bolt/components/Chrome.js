@@ -1,0 +1,76 @@
+"use client"
+import { boltTokens as T } from '../tokens.js'
+
+export function BoltHeader({ config }) {
+  const c = config
+  return (
+    <>
+      {c.positioning.emergency_service && (
+        <div style={{ background: T.colors.accent, color: T.colors.bg, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+          <span style={{ animation: 'pulse 2s infinite' }}>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.bg, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+        </div>
+      )}
+      <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+          <a href="/templates/bolt" style={{ textDecoration: 'none' }}>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase' }}>
+              <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
+            </div>
+          </a>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            <a href="/templates/bolt/services" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Services</a>
+            <a href="/templates/bolt/service-areas" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Areas</a>
+            <a href="/templates/bolt/about" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>About</a>
+            <a href="/templates/bolt/faq" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>FAQ</a>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp }}>
+              ☎ {c.business.phone_display}
+            </a>
+          </nav>
+        </div>
+      </header>
+    </>
+  )
+}
+
+export function BoltFooter({ config }) {
+  const c = config
+  return (
+    <footer style={{ background: T.colors.bgAlt, padding: '48px 24px 24px', borderTop: `1px solid ${T.colors.border}` }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 40, marginBottom: 40 }}>
+          <div>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>
+              <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
+            </div>
+            <div style={{ fontSize: 14, color: T.colors.textDim, lineHeight: 1.6 }}>
+              Family-owned since {c.business.established_year}.<br/>Licensed · Bonded · Insured
+            </div>
+          </div>
+          <div>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, color: T.colors.textDim }}>Contact</div>
+            <div style={{ fontSize: 14, marginBottom: 8 }}><a href={`tel:${c.business.phone}`} style={{ color: T.colors.accent, textDecoration: 'none', fontWeight: 700 }}>{c.business.phone_display}</a></div>
+            <div style={{ fontSize: 14, color: T.colors.textDim, marginBottom: 8 }}>{c.business.email}</div>
+            <div style={{ fontSize: 14, color: T.colors.textDim }}>{c.business.hours_display}</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, color: T.colors.textDim }}>Services</div>
+            {c.services.slice(0, 6).map(s => (
+              <div key={s.slug} style={{ fontSize: 13, color: T.colors.textDim, marginBottom: 6 }}>
+                <a href={`/templates/bolt/services/${s.slug}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>{s.name}</a>
+              </div>
+            ))}
+          </div>
+          <div>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, color: T.colors.textDim }}>Service Areas</div>
+            {c.service_areas.slice(0, 6).map(a => (
+              <div key={a} style={{ fontSize: 13, color: T.colors.textDim, marginBottom: 6 }}>{a}</div>
+            ))}
+          </div>
+        </div>
+        <div style={{ paddingTop: 24, borderTop: `1px solid ${T.colors.border}`, fontSize: 12, color: T.colors.textMuted, textAlign: 'center' }}>
+          © {new Date().getFullYear()} {c.business.legal_name}. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  )
+}
