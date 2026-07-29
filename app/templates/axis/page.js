@@ -19,137 +19,173 @@ export default function AxisHome() {
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <AxisHeader config={c} />
 
-        {/* HERO - full-viewport editorial */}
-        <section style={{ background: T.colors.bg, padding: '160px 40px 128px', borderBottom: `1px solid ${T.colors.border}` }}>
-          <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 40 }}>
-              Home Services · Est. {c.business.established_year}
+        {/* HERO - big centered marketing hero (Apple product-launch style) */}
+        <section style={{ background: T.colors.bg, padding: '96px 32px 128px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+            <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 24, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>
+              ★ {c.reviews.google_rating} · {c.reviews.google_count}+ Google reviews
             </div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 144, fontWeight: 400, letterSpacing: -6, lineHeight: 0.9, margin: 0, color: T.colors.text }}>
-              A better way<br/>to <em style={{ fontStyle: 'italic' }}>maintain</em><br/>your home.
+            <h1 style={{ fontSize: 96, fontWeight: 800, letterSpacing: -3.5, lineHeight: 1.02, margin: '0 0 32px 0', color: T.colors.text }}>
+              Premium home services.<br />
+              <span style={{ color: T.colors.accent }}>Simplified.</span>
             </h1>
-            <div style={{ marginTop: 80, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'end' }}>
-              <p style={{ fontSize: 24, color: T.colors.textDim, lineHeight: 1.4, margin: 0, maxWidth: 600 }}>
-                Premium HVAC, plumbing, and electrical care from a single trusted team. Same-day service. Transparent pricing. Financing available.
-              </p>
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-                <a href="/templates/axis/contact" style={{ background: T.colors.text, color: T.colors.bg, textDecoration: 'none', padding: '18px 32px', fontFamily: T.fonts.body, fontSize: 15, fontWeight: 500 }}>
-                  Request quote →
-                </a>
-                <a href={`tel:${c.business.phone}`} style={{ background: 'transparent', color: T.colors.text, textDecoration: 'none', padding: '18px 32px', fontFamily: T.fonts.body, fontSize: 15, fontWeight: 500, border: `1px solid ${T.colors.text}` }}>
-                  {c.business.phone_display}
-                </a>
-              </div>
+            <p style={{ fontSize: 24, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 48px', maxWidth: 720 }}>
+              HVAC, plumbing, and electrical from a single trusted team. Same-day service. Transparent pricing. Family-owned since {c.business.established_year}.
+            </p>
+            <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                Get started
+              </a>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.text, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, border: `1.5px solid ${T.colors.border}`, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                Call {c.business.phone_display}
+              </a>
+            </div>
+          </div>
+
+          {/* Hero visual - clean device/product-style card */}
+          <div style={{ maxWidth: 1080, margin: '96px auto 0', background: T.colors.bgSecondary, borderRadius: T.radius.xl, aspectRatio: '16/9', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${T.colors.borderLight}` }}>
+            <div style={{ textAlign: 'center', color: T.colors.textDim, fontSize: 14, fontWeight: 500 }}>
+              [ Product-style hero image ]<br/>
+              <span style={{ color: T.colors.textMuted, fontSize: 12, marginTop: 8, display: 'block' }}>Real crew · Real work · Real trust</span>
             </div>
           </div>
         </section>
 
-        {/* PROOF STRIP - horizontal minimal */}
-        <section style={{ background: T.colors.bg, padding: '48px 40px', borderBottom: `1px solid ${T.colors.border}` }}>
-          <div style={{ maxWidth: 1440, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 40 }}>
+        {/* METRICS BAR - clean stat row */}
+        <section style={{ background: T.colors.bgSecondary, padding: '64px 32px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 40, textAlign: 'center' }}>
             {[
-              { big: c.reviews.google_rating, small: 'Google rating', huge: '★' },
+              { big: `${c.reviews.google_rating}★`, small: 'Google rating' },
               { big: `${c.reviews.google_count}+`, small: 'Verified reviews' },
-              { big: c.business.years_in_business, small: 'Years in business' },
-              { big: c.service_areas.length, small: 'Areas served' },
+              { big: `${c.business.years_in_business}yr`, small: 'In business' },
+              { big: '24/7', small: 'Emergency service' },
             ].map((s, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 12, paddingRight: 40, borderRight: i < 3 ? `1px solid ${T.colors.border}` : 'none' }}>
-                <div style={{ fontFamily: T.fonts.display, fontSize: 44, fontWeight: 400, color: T.colors.text, letterSpacing: -2 }}>{s.big}{s.huge && <span style={{ color: T.colors.accent, marginLeft: 4 }}>{s.huge}</span>}</div>
-                <div style={{ fontSize: 13, color: T.colors.textDim }}>{s.small}</div>
+              <div key={i}>
+                <div style={{ fontSize: 52, fontWeight: 800, color: T.colors.text, letterSpacing: -2, lineHeight: 1 }}>{s.big}</div>
+                <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 8, fontWeight: 500 }}>{s.small}</div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* NUMBERED SERVICES - editorial magazine style */}
-        <section style={{ background: T.colors.bg, padding: '160px 40px' }}>
-          <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 80, marginBottom: 96 }}>
-              <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase', paddingTop: 12 }}>
-                01 — Services
-              </div>
-              <div>
-                <h2 style={{ fontFamily: T.fonts.display, fontSize: 80, fontWeight: 400, letterSpacing: -3, lineHeight: 0.95, margin: 0, maxWidth: 900 }}>
-                  A single team for <em style={{ fontStyle: 'italic' }}>every</em> part of your home.
-                </h2>
-              </div>
+        {/* SERVICES - product-card grid */}
+        <section style={{ background: T.colors.bg, padding: '120px 32px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 16, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Every home service</div>
+              <h2 style={{ fontSize: 64, fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0, color: T.colors.text }}>
+                One team. <span style={{ color: T.colors.accent }}>Everything.</span>
+              </h2>
+              <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.5, margin: '20px auto 0', maxWidth: 620 }}>
+                {c.services.length} services across HVAC, plumbing, and electrical — from a single licensed team you can trust.
+              </p>
             </div>
 
-            {categories.map((cat, idx) => (
-              <div key={cat} style={{ paddingTop: 64, paddingBottom: 64, borderTop: `1px solid ${T.colors.border}`, display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 80, alignItems: 'start' }}>
-                <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3 }}>
-                  {String(idx + 1).padStart(2, '0')} / {String(categories.length).padStart(2, '0')}
+            {categories.map(cat => {
+              const catServices = c.services.filter(s => s.category === cat)
+              return (
+                <div key={cat} style={{ marginBottom: 48 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 20 }}>
+                    <h3 style={{ fontSize: 24, fontWeight: 700, color: T.colors.text, margin: 0, letterSpacing: -0.5 }}>{cat}</h3>
+                    <div style={{ fontSize: 14, color: T.colors.textMuted }}>{catServices.length} service{catServices.length === 1 ? '' : 's'}</div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+                    {catServices.map(svc => (
+                      <a key={svc.slug} href={`/templates/axis/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
+                        {svc.emergency && (
+                          <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.bg, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>
+                        )}
+                        <div style={{ width: 56, height: 56, background: T.colors.bg, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.colors.accent, marginBottom: 20, boxShadow: T.shadow.subtle }}>
+                          <ServiceIcon name={svc.icon} size={28} />
+                        </div>
+                        <div style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, marginBottom: 8, letterSpacing: -0.5 }}>{svc.name}</div>
+                        <div style={{ fontSize: 14, color: T.colors.textDim, lineHeight: 1.5 }}>{svc.short}</div>
+                        <div style={{ marginTop: 20, color: T.colors.accent, fontSize: 14, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>Learn more →</div>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <h3 style={{ fontFamily: T.fonts.display, fontSize: 56, fontWeight: 400, letterSpacing: -2, lineHeight: 1, margin: 0, color: T.colors.text }}>{cat}</h3>
-                  <p style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.6, margin: '20px 0 0 0', maxWidth: 400 }}>
-                    Licensed {cat.toLowerCase()} services for residential customers throughout {c.primary_service_area}.
-                  </p>
-                </div>
-                <div style={{ display: 'grid', gap: 4 }}>
-                  {c.services.filter(s => s.category === cat).map(svc => (
-                    <a key={svc.slug} href={`/templates/axis/services/${svc.slug}`} style={{ textDecoration: 'none', padding: '20px 0', borderBottom: `1px solid ${T.colors.border}`, display: 'flex', alignItems: 'center', gap: 20 }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 20, color: T.colors.text, fontWeight: 500, letterSpacing: -0.3 }}>{svc.name}</div>
-                        <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 4 }}>{svc.short}</div>
-                      </div>
-                      {svc.emergency && (<div style={{ fontSize: 10, color: T.colors.accent, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase' }}>24/7</div>)}
-                      <div style={{ color: T.colors.text, fontSize: 18 }}>→</div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
-        {/* TESTIMONIAL - full-bleed editorial */}
-        <section style={{ background: T.colors.bgTertiary, padding: '160px 40px' }}>
-          <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 80 }}>
-              <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase' }}>
-                02 — Case
-              </div>
-              <div>
-                <p style={{ fontFamily: T.fonts.display, fontSize: 56, fontWeight: 400, fontStyle: 'italic', color: T.colors.text, lineHeight: 1.15, margin: 0, letterSpacing: -1.5, maxWidth: 1100 }}>
-                  "{c.reviews.featured[0].text}"
-                </p>
-                <div style={{ marginTop: 48, display: 'flex', alignItems: 'center', gap: 20 }}>
-                  <div style={{ width: 48, height: 48, background: T.colors.text, color: T.colors.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontFamily: T.fonts.display }}>
-                    {c.reviews.featured[0].author.charAt(0)}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: T.colors.text }}>{c.reviews.featured[0].author}</div>
-                    <div style={{ fontSize: 13, color: T.colors.textDim, marginTop: 2 }}>{c.reviews.featured[0].service} · {c.reviews.featured[0].location}</div>
-                  </div>
-                </div>
-              </div>
+        {/* FEATURE BAND - value props */}
+        <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: 0, color: T.colors.text }}>
+                Why choose {c.business.display_name.split(' ')[0]}.
+              </h2>
             </div>
-          </div>
-        </section>
-
-        {/* SERVICE AREAS - editorial columns */}
-        <section style={{ background: T.colors.bg, padding: '160px 40px' }}>
-          <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 80, marginBottom: 80 }}>
-              <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase' }}>
-                03 — Coverage
-              </div>
-              <div>
-                <h2 style={{ fontFamily: T.fonts.display, fontSize: 80, fontWeight: 400, letterSpacing: -3, lineHeight: 0.95, margin: 0 }}>
-                  Serving the <em style={{ fontStyle: 'italic' }}>{c.primary_service_area}</em>.
-                </h2>
-                <p style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.6, margin: '32px 0 0 0', maxWidth: 600 }}>
-                  {c.service_areas.length}+ neighborhoods, one licensed team.
-                </p>
-              </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, borderTop: `1px solid ${T.colors.border}` }}>
-              {c.service_areas.map((area, i) => (
-                <div key={area} style={{ padding: '24px 32px', borderRight: (i + 1) % 4 !== 0 ? `1px solid ${T.colors.border}` : 'none', borderBottom: `1px solid ${T.colors.border}`, fontSize: 17, fontFamily: T.fonts.display, fontWeight: 400, color: T.colors.text, letterSpacing: -0.3 }}>
-                  {area}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+              {[
+                { title: 'Same-day service', desc: 'Most jobs completed on the first visit. Emergency response in 2-4 hours.' },
+                { title: 'Transparent pricing', desc: 'Upfront quotes before we start. No surprises, no hidden fees.' },
+                { title: 'Family-owned', desc: `Family-owned since ${c.business.established_year}. Neighbors serving neighbors.` },
+                { title: 'Licensed & insured', desc: 'Master licenses in HVAC, plumbing, and electrical. Fully bonded.' },
+                { title: '100% guarantee', desc: 'We stand behind every job. If you\'re not satisfied, we make it right.' },
+                { title: 'Financing available', desc: 'Flexible payment options through Synchrony, Wells Fargo, and GreenSky.' },
+              ].map(f => (
+                <div key={f.title} style={{ background: T.colors.bg, padding: 32, borderRadius: T.radius.lg, boxShadow: T.shadow.subtle }}>
+                  <div style={{ width: 40, height: 40, background: T.colors.accentGlow, color: T.colors.accent, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 700, marginBottom: 16 }}>✓</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: T.colors.text, marginBottom: 8, letterSpacing: -0.3 }}>{f.title}</div>
+                  <div style={{ fontSize: 14, color: T.colors.textDim, lineHeight: 1.6 }}>{f.desc}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TESTIMONIAL - clean modern card */}
+        <section style={{ background: T.colors.bg, padding: '120px 32px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 16, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Reviews</div>
+              <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: 0 }}>
+                Trusted by <span style={{ color: T.colors.accent }}>{c.reviews.google_count}+ neighbors</span>.
+              </h2>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
+              {c.reviews.featured.map((r, i) => (
+                <div key={i} style={{ background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, boxShadow: T.shadow.subtle }}>
+                  <div style={{ color: T.colors.accent, fontSize: 18, marginBottom: 16, letterSpacing: 2 }}>★★★★★</div>
+                  <p style={{ fontSize: 17, color: T.colors.text, lineHeight: 1.6, margin: '0 0 24px 0', fontWeight: 500 }}>"{r.text}"</p>
+                  <div style={{ paddingTop: 20, borderTop: `1px solid ${T.colors.borderLight}`, display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ width: 40, height: 40, background: T.colors.accent, color: T.colors.bg, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700 }}>
+                      {r.author.charAt(0)}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: T.colors.text }}>{r.author}</div>
+                      <div style={{ fontSize: 13, color: T.colors.textDim, marginTop: 2 }}>{r.service} · {r.location}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICE AREAS */}
+        <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 64, alignItems: 'center' }}>
+              <div>
+                <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 16, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Coverage</div>
+                <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: 0 }}>
+                  Serving the {c.primary_service_area}.
+                </h2>
+                <p style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.6, marginTop: 24 }}>
+                  {c.service_areas.length}+ neighborhoods · Same-day response · 24/7 emergency
+                </p>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                {c.service_areas.map(area => (
+                  <div key={area} style={{ padding: '14px 20px', background: T.colors.bg, fontSize: 15, fontWeight: 600, borderRadius: T.radius.md, color: T.colors.text, boxShadow: T.shadow.subtle, textAlign: 'center', border: `1px solid ${T.colors.borderLight}` }}>
+                    {area}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

@@ -4,20 +4,20 @@ import { axisTokens as T } from '../tokens.js'
 export function AxisCTA({ config, headline, sub }) {
   const c = config
   return (
-    <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '160px 40px', textAlign: 'center' }}>
-      <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: T.fonts.display, fontSize: 80, fontWeight: 400, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.textInverse }}>
-          {headline || <>Ready to <em style={{ fontStyle: 'italic' }}>get started</em>?</>}
+    <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '120px 32px' }}>
+      <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
+        <h2 style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 20px 0', color: T.colors.textInverse }}>
+          {headline || 'Ready to book?'}
         </h2>
-        <p style={{ fontSize: 20, color: T.colors.textInverseDim, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.5 }}>
-          {sub || 'Reach us anytime for a free quote or urgent service.'}
+        <p style={{ fontSize: 20, color: T.colors.textInverseDim, marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.5 }}>
+          {sub || 'Call now for immediate service or request a free quote online.'}
         </p>
-        <div style={{ display: 'inline-flex', gap: 16 }}>
-          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.textInverse, color: T.colors.text, textDecoration: 'none', padding: '18px 36px', fontFamily: T.fonts.body, fontSize: 16, fontWeight: 500 }}>
-            Call {c.business.phone_display} →
+        <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            Call {c.business.phone_display}
           </a>
-          <a href="/templates/axis/contact" style={{ background: 'transparent', color: T.colors.textInverse, textDecoration: 'none', padding: '18px 36px', fontFamily: T.fonts.body, fontSize: 16, fontWeight: 500, border: `1px solid ${T.colors.borderDark}` }}>
-            Get a quote
+          <a href="/templates/axis/contact" style={{ background: T.colors.bgInverseAlt, color: T.colors.textInverse, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, border: `1px solid ${T.colors.borderDark}` }}>
+            Get a free quote →
           </a>
         </div>
       </div>
@@ -27,17 +27,17 @@ export function AxisCTA({ config, headline, sub }) {
 
 export function AxisPageHero({ eyebrow, title, sub }) {
   return (
-    <section style={{ background: T.colors.bg, padding: '160px 40px 96px', borderBottom: `1px solid ${T.colors.border}` }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
+    <section style={{ background: T.colors.bg, padding: '96px 32px 64px', borderBottom: `1px solid ${T.colors.borderLight}` }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
         {eyebrow && (
-          <div style={{ fontSize: 11, color: T.colors.textDim, fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 32 }}>
+          <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>
             {eyebrow}
           </div>
         )}
-        <h1 style={{ fontFamily: T.fonts.display, fontSize: 120, fontWeight: 400, letterSpacing: -5, lineHeight: 0.95, margin: 0, color: T.colors.text, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0, color: T.colors.text, maxWidth: 900, marginLeft: 'auto', marginRight: 'auto' }}>
           {title}
         </h1>
-        {sub && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '40px 0 0 0', maxWidth: 700 }}>{sub}</p>}
+        {sub && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '24px auto 0', maxWidth: 680 }}>{sub}</p>}
       </div>
     </section>
   )
