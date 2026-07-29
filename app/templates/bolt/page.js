@@ -10,7 +10,12 @@ export async function generateMetadata() {
   return buildHomeMetadata(config, { isPreview: true })
 }
 
-export default function BoltHome() {
+export default async function BoltHome({ searchParams }) {
+  const params = await (searchParams || Promise.resolve({}))
+  const accentOverride = params.accent
+  const logoOverride = params.logo
+  // Apply brand overrides to tokens
+  const T = accentOverride ? { ...t, colors: { ...t.colors, accent: accentOverride } } : t
   const c = config
 
   return (

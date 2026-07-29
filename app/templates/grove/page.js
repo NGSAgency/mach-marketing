@@ -1,4 +1,4 @@
-import { groveTokens as T } from './tokens.js'
+import { groveTokens as t } from './tokens.js'
 import { ServiceIcon } from '../../../lib/templates/shared/icons.js'
 import { config } from '../../../lib/templates/configs/example-multi-service.js'
 import { buildHomeMetadata, buildLocalBusinessSchema, JsonLd } from '../../../lib/templates/shared/seo/index.js'
@@ -9,7 +9,11 @@ export async function generateMetadata() {
   return buildHomeMetadata(config, { isPreview: true })
 }
 
-export default function GroveHome() {
+export default async function GroveHome({ searchParams }) {
+  const params = await (searchParams || Promise.resolve({}))
+  const accentOverride = params.accent
+  const logoOverride = params.logo
+  const T = accentOverride ? { ...t, colors: { ...t.colors, accent: accentOverride } } : t
   const c = config
   const categories = [...new Set(c.services.map(s => s.category))]
 
