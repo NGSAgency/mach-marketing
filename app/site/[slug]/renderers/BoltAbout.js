@@ -1,5 +1,6 @@
 import { boltTokens } from '../../../templates/bolt/tokens.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
 
@@ -13,6 +14,7 @@ export default function BoltAbout({ config: c, siteSlug }) {
   return (
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
+        <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <BoltHeader T={T} c={c} logo={logo} base={base} />
 

@@ -2,6 +2,7 @@ import { axisTokens } from '../../../templates/axis/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildLocalBusinessSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
 
 export default function AxisHome({ config: c }) {
   const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
@@ -12,6 +13,7 @@ export default function AxisHome({ config: c }) {
   return (
     <>
       <JsonLd data={buildLocalBusinessSchema(c)} />
+        <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         {/* Header */}
         <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}`, padding: '16px 32px' }}>

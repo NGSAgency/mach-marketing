@@ -1,4 +1,5 @@
 import { fetchSiteConfig } from '../../../lib/site/fetch.js'
+import { trackingMetadata } from '../../../lib/site/tracking.js'
 import { notFound } from 'next/navigation'
 
 // Import all 3 template family homes
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }) {
     title: c.meta?.site_title || c.business?.display_name,
     description: c.meta?.site_description || '',
     alternates: { canonical: c.meta?.canonical },
+    ...trackingMetadata(c.tracking),
   }
 }
 

@@ -1,6 +1,7 @@
 import { boltTokens } from '../../../templates/bolt/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
@@ -18,6 +19,7 @@ export default function BoltCombo({ config: c, siteSlug, service, area }) {
     <>
       <JsonLd data={buildServiceSchema(c, service)} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
+        <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <BoltHeader T={T} c={c} logo={logo} base={base} />
 

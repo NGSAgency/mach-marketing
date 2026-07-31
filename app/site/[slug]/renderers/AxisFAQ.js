@@ -1,5 +1,6 @@
 import { axisTokens } from '../../../templates/axis/tokens.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisCTA, AxisFooter } from './AxisServices.js'
 
@@ -23,6 +24,7 @@ export default function AxisFAQ({ config: c, siteSlug }) {
   return (
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
+        <TrackingScripts tracking={c.tracking} />
       <JsonLd data={buildFAQSchema(faqs)} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <AxisHeader T={T} c={c} logo={logo} base={base} />

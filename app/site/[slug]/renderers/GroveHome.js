@@ -2,6 +2,7 @@ import { groveTokens } from '../../../templates/grove/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildLocalBusinessSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
 
 export default function GroveHome({ config: c }) {
   const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
@@ -12,6 +13,7 @@ export default function GroveHome({ config: c }) {
   return (
     <>
       <JsonLd data={buildLocalBusinessSchema(c)} />
+        <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         {/* Header */}
         <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, padding: '20px 32px' }}>
