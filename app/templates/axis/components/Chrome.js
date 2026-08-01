@@ -12,8 +12,18 @@ export function AxisHeader({ config, logo, T: Toverride }) {
           {logo ? (
             <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(28px, 5vw, 40px)', maxWidth: 'min(50vw, 200px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
           ) : (
-            <div style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
-              {c.business.display_name}
+            <div style={{ fontSize: "clamp(16px, 4vw, 22px)", fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, lineHeight: 1.1, whiteSpace: 'nowrap' }}>
+              {(() => {
+                const words = c.business.display_name.split(' ')
+                if (words.length <= 2) return c.business.display_name
+                const half = Math.ceil(words.length / 2)
+                return (
+                  <>
+                    <div>{words.slice(0, half).join(' ')}</div>
+                    <div>{words.slice(half).join(' ')}</div>
+                  </>
+                )
+              })()}
             </div>
           )}
         </a>

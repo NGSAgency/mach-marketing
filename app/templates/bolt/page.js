@@ -34,8 +34,22 @@ export default async function BoltHome({ searchParams }) {
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase' }}>
-              <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
+            <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(16px, 4.5vw, 22px)", fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', lineHeight: 1.1, whiteSpace: 'nowrap' }}>
+              {(() => {
+                const words = c.business.display_name.split(' ')
+                if (words.length <= 2) {
+                  return <>
+                    <span style={{ color: T.colors.accent }}>{words[0]}</span>{words.length > 1 && <span> {words.slice(1).join(' ')}</span>}
+                  </>
+                }
+                const half = Math.ceil(words.length / 2)
+                return (
+                  <>
+                    <div style={{ color: T.colors.accent }}>{words.slice(0, half).join(' ')}</div>
+                    <div>{words.slice(half).join(' ')}</div>
+                  </>
+                )
+              })()}
             </div>
           </div>
           <MobileMenu
