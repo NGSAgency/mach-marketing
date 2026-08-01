@@ -1,4 +1,5 @@
 import { boltTokens as t } from './tokens.js'
+import { MobileMenu } from '../../../lib/templates/shared/MobileMenu.js'
 import { ServiceIcon } from '../../../lib/templates/shared/icons.js'
 import { config } from '../../../lib/templates/configs/example-multi-service.js'
 import { buildHomeMetadata, buildLocalBusinessSchema, JsonLd } from '../../../lib/templates/shared/seo/index.js'
@@ -37,14 +38,21 @@ export default async function BoltHome({ searchParams }) {
               <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
             </div>
           </div>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <a href="#services" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Services</a>
-            <a href="#areas" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Service Area</a>
-            <a href="#about" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>About</a>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp }}>
-              ☎ {c.business.phone_display}
-            </a>
-          </nav>
+          <MobileMenu
+            items={[
+              { href: '#services', label: 'Services' },
+              { href: '#areas', label: 'Service Area' },
+              { href: '#about', label: 'About' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bg}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.display}
+          />
         </div>
       </header>
 
