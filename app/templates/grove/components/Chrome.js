@@ -18,7 +18,7 @@ export function GroveHeader({ config, logo, T: Toverride }) {
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(36px, 8vw, 48px)', maxWidth: 'min(50vw, 240px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
             ) : (
-              <div style={{ fontFamily: T.fonts.display, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 'min(60vw, 400px)', minWidth: 0, flex: '0 1 auto' }}>
+              <div style={{ fontFamily: T.fonts.display, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 'min(45vw, 260px)', minWidth: 0, flex: '0 1 auto' }}>
                 <div style={{ fontSize: "clamp(16px, 3.5vw, 22px)", lineHeight: 1.15 }}>
                   {c.business.display_name}
                 </div>
