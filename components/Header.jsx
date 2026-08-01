@@ -1,6 +1,13 @@
+"use client"
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Header() {
+  const pathname = usePathname() || ''
+  
+  // Hide on template previews and client sites - they have their own headers
+  if (pathname.startsWith('/templates/') || pathname.startsWith('/site/')) return null
+
   return (
     <header className="border-b border-neutral-200 bg-white">
       <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
