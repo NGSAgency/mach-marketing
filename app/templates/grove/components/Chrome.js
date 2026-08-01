@@ -18,9 +18,19 @@ export function GroveHeader({ config, logo, T: Toverride }) {
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(36px, 8vw, 48px)', maxWidth: 'min(50vw, 240px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
             ) : (
-              <div style={{ fontFamily: T.fonts.display, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 145, minWidth: 0, flex: '0 1 auto' }}>
-                <div style={{ fontSize: 22, lineHeight: 1.15, wordBreak: 'break-word' }}>
-                  {c.business.display_name}
+              <div style={{ fontFamily: T.fonts.display, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, minWidth: 0, flex: '0 1 auto' }}>
+                <div style={{ fontSize: "clamp(18px, 4.5vw, 24px)", lineHeight: 1.15, whiteSpace: 'nowrap' }}>
+                  {(() => {
+                    const words = c.business.display_name.split(' ')
+                    if (words.length <= 2) return c.business.display_name
+                    const half = Math.ceil(words.length / 2)
+                    return (
+                      <>
+                        <div>{words.slice(0, half).join(' ')}</div>
+                        <div>{words.slice(half).join(' ')}</div>
+                      </>
+                    )
+                  })()}
                 </div>
                 {c.business.family_owned && (
                   <div style={{ fontSize: "clamp(9px, 1.5vw, 11px)", fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
