@@ -1,4 +1,3 @@
-import '../responsive.css'
 export const metadata = { title: 'BOLT Template', description: 'BOLT template preview' }
 
 export default function BoltLayout({ children }) {

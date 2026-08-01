@@ -1,4 +1,5 @@
 import './globals.css'
+import './mach-responsive.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
