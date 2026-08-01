@@ -1,6 +1,7 @@
 import { axisTokens } from '../../../templates/axis/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 
@@ -74,14 +75,22 @@ function AxisHeader({ T, c, logo, base }) {
             <div style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>{c.business.display_name}</div>
           )}
         </a>
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <a href={`${base}/services`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>Services</a>
-          <a href={`${base}/service-areas`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>Areas</a>
-          <a href={`${base}/about`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>About</a>
-          <a href={`${base}/faq`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>FAQ</a>
-          <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, padding: '8px 14px' }}>{c.business.phone_display}</a>
-          <a href={`${base}/contact`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '12px 24px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full }}>Get Started</a>
-        </nav>
+        <MobileMenu
+            items={[
+              { href: `${base}/services`, label: 'Services' },
+              { href: `${base}/service-areas`, label: 'Areas' },
+              { href: `${base}/about`, label: 'About' },
+              { href: `${base}/faq`, label: 'FAQ' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bg}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.body}
+          />
       </div>
     </header>
   )

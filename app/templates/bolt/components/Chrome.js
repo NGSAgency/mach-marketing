@@ -1,5 +1,6 @@
 "use client"
 import { boltTokens } from '../tokens.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 
 export function BoltHeader({ config, logo, T: Toverride }) {
   const T = Toverride || boltTokens
@@ -22,15 +23,22 @@ export function BoltHeader({ config, logo, T: Toverride }) {
               </div>
             )}
           </a>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <a href="/templates/bolt/services" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Services</a>
-            <a href="/templates/bolt/service-areas" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>Areas</a>
-            <a href="/templates/bolt/about" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>About</a>
-            <a href="/templates/bolt/faq" style={{ color: T.colors.textDim, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>FAQ</a>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: "clamp(14px, 1.5vw, 18px)", fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp }}>
-              ☎ {c.business.phone_display}
-            </a>
-          </nav>
+          <MobileMenu
+            items={[
+              { href: '/templates/bolt/services', label: 'Services' },
+              { href: '/templates/bolt/service-areas', label: 'Areas' },
+              { href: '/templates/bolt/about', label: 'About' },
+              { href: '/templates/bolt/faq', label: 'FAQ' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bg}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.display}
+          />
         </div>
       </header>
     </>

@@ -1,5 +1,6 @@
 "use client"
 import { axisTokens } from '../tokens.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 
 export function AxisHeader({ config, logo, T: Toverride }) {
   const T = Toverride || axisTokens
@@ -16,19 +17,22 @@ export function AxisHeader({ config, logo, T: Toverride }) {
             </div>
           )}
         </a>
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <a href="/templates/axis/services" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>Services</a>
-          <a href="/templates/axis/service-areas" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>Areas</a>
-          <a href="/templates/axis/about" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>About</a>
-          <a href="/templates/axis/faq" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 500, padding: '8px 14px', borderRadius: T.radius.full }}>FAQ</a>
-          <div style={{ width: 20 }} />
-          <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, padding: '8px 14px' }}>
-            {c.business.phone_display}
-          </a>
-          <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '12px 24px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>
-            Get Started
-          </a>
-        </nav>
+        <MobileMenu
+          items={[
+            { href: '/templates/axis/services', label: 'Services' },
+            { href: '/templates/axis/service-areas', label: 'Areas' },
+            { href: '/templates/axis/about', label: 'About' },
+            { href: '/templates/axis/faq', label: 'FAQ' },
+          ]}
+          phoneNumber={c.business.phone}
+          phoneDisplay={c.business.phone_display}
+          accent={T.colors.accent}
+          bg={T.colors.bg}
+          text={T.colors.text}
+          textDim={T.colors.textDim}
+          borderColor={T.colors.border}
+          fontFamily={T.fonts.body}
+        />
       </div>
     </header>
   )

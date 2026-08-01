@@ -1,5 +1,6 @@
 "use client"
 import { groveTokens } from '../tokens.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 
 export function GroveHeader({ config, logo, T: Toverride }) {
   const T = Toverride || groveTokens
@@ -27,15 +28,22 @@ export function GroveHeader({ config, logo, T: Toverride }) {
               </div>
             )}
           </a>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-            <a href="/templates/grove/services" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Services</a>
-            <a href="/templates/grove/service-areas" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Service Areas</a>
-            <a href="/templates/grove/about" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>About</a>
-            <a href="/templates/grove/faq" style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>FAQ</a>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '12px 22px', fontFamily: T.fonts.body, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.soft }}>
-              ☎ {c.business.phone_display}
-            </a>
-          </nav>
+          <MobileMenu
+            items={[
+              { href: '/templates/grove/services', label: 'Services' },
+              { href: '/templates/grove/service-areas', label: 'Service Areas' },
+              { href: '/templates/grove/about', label: 'About' },
+              { href: '/templates/grove/faq', label: 'FAQ' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bgLight}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.body}
+          />
         </div>
       </header>
     </>

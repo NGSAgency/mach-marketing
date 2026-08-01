@@ -1,6 +1,7 @@
 import { boltTokens } from '../../../templates/bolt/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 
@@ -74,15 +75,22 @@ function BoltHeader({ T, c, logo, base }) {
               </div>
             )}
           </a>
-          <nav style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-            <a href={`${base}/services`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Services</a>
-            <a href={`${base}/service-areas`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Areas</a>
-            <a href={`${base}/about`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>About</a>
-            <a href={`${base}/contact`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Contact</a>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: 15, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, borderRadius: T.radius.sm }}>
-              ☎ {c.business.phone_display}
-            </a>
-          </nav>
+          <MobileMenu
+            items={[
+              { href: `${base}/services`, label: 'Services' },
+              { href: `${base}/service-areas`, label: 'Areas' },
+              { href: `${base}/about`, label: 'About' },
+              { href: `${base}/faq`, label: 'FAQ' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bg}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.display}
+          />
         </div>
       </header>
     </>

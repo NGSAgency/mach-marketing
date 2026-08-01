@@ -1,6 +1,7 @@
 import { groveTokens } from '../../../templates/grove/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 
@@ -80,13 +81,22 @@ function GroveHeader({ T, c, logo, base }) {
               <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>{c.business.display_name}</div>
             )}
           </a>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-            <a href={`${base}/services`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Services</a>
-            <a href={`${base}/service-areas`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Areas</a>
-            <a href={`${base}/about`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>About</a>
-            <a href={`${base}/contact`} style={{ color: T.colors.text, textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>Contact</a>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '12px 22px', fontSize: 15, fontWeight: 600, borderRadius: T.radius.full }}>☎ {c.business.phone_display}</a>
-          </nav>
+          <MobileMenu
+            items={[
+              { href: `${base}/services`, label: 'Services' },
+              { href: `${base}/service-areas`, label: 'Areas' },
+              { href: `${base}/about`, label: 'About' },
+              { href: `${base}/faq`, label: 'FAQ' },
+            ]}
+            phoneNumber={c.business.phone}
+            phoneDisplay={c.business.phone_display}
+            accent={T.colors.accent}
+            bg={T.colors.bgLight}
+            text={T.colors.text}
+            textDim={T.colors.textDim}
+            borderColor={T.colors.border}
+            fontFamily={T.fonts.body}
+          />
         </div>
       </header>
     </>
