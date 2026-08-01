@@ -39,7 +39,7 @@ export default async function GroveHome({ searchParams }) {
               <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px 40px', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
               </a>
-              <a href="#services" style={{ color: T.colors.text, textDecoration: 'underline', textDecorationColor: T.colors.accent, textUnderlineOffset: 6, fontFamily: T.fonts.body, fontSize: 17, fontWeight: 500, padding: '20px 12px' }}>
+              <a href="/templates/grove/services" style={{ color: T.colors.text, textDecoration: 'underline', textDecorationColor: T.colors.accent, textUnderlineOffset: 6, fontFamily: T.fonts.body, fontSize: 17, fontWeight: 500, padding: '20px 12px' }}>
                 See what we do
               </a>
             </div>

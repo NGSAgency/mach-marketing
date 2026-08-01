@@ -92,7 +92,7 @@ export default async function BoltHome({ searchParams }) {
               <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ fontSize: 28 }}>☎</span> Call {c.business.phone_display}
               </a>
-              <a href="#contact" style={{ background: 'transparent', color: T.colors.text, textDecoration: 'none', padding: '18px 30px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', border: `2px solid ${T.colors.text}`, borderRadius: T.radius.sm }}>
+              <a href="/templates/bolt/contact" style={{ background: 'transparent', color: T.colors.text, textDecoration: 'none', padding: '18px 30px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', border: `2px solid ${T.colors.text}`, borderRadius: T.radius.sm }}>
                 Book Online
               </a>
             </div>
