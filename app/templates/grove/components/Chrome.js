@@ -18,11 +18,13 @@ export function GroveHeader({ config, logo, T: Toverride }) {
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 48, width: 'auto', display: 'block' }} />
             ) : (
-              <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>
-                {c.business.display_name}
+              <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 2vw, 22px)", fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 'min(55vw, 320px)', overflow: 'hidden' }}>
+                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {c.business.display_name}
+                </div>
                 {c.business.family_owned && (
-                  <div style={{ fontSize: 11, fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 2 }}>
-                    Family-owned since {c.business.established_year}
+                  <div style={{ fontSize: 10, fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    Family-owned · Est. {c.business.established_year}
                   </div>
                 )}
               </div>
