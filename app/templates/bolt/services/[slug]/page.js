@@ -57,7 +57,7 @@ export default async function ServicePage({ params, searchParams }) {
                 </span>
               ))}
             </nav>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 60, alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 60, alignItems: 'start' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                   <div style={{ background: T.colors.surface, padding: 10, borderRadius: T.radius.sm, color: T.colors.accent }}>
@@ -81,7 +81,7 @@ export default async function ServicePage({ params, searchParams }) {
                 </a>
               </div>
               {/* Sidebar with quick facts */}
-              <aside style={{ background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 24, borderRadius: T.radius.sm }}>
+              <aside style={{ background: T.colors.surface, minWidth: 0, width: '100%', border: `1px solid ${T.colors.border}`, padding: 24, borderRadius: T.radius.sm }}>
                 <div style={{ fontFamily: T.fonts.display, fontSize: 16, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: T.colors.textDim, marginBottom: 20 }}>Quick Facts</div>
                 {[
                   { label: 'Response Time', value: service.emergency ? '2-4 Hours' : 'Same Day' },

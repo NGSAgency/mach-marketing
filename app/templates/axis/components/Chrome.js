@@ -6,7 +6,7 @@ export function AxisHeader({ config, logo, T: Toverride }) {
   const T = Toverride || axisTokens
   const c = config
   return (
-    <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
+    <header style={{ background: T.colors.bg, position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
       <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <a href="/templates/axis" style={{ textDecoration: 'none' }}>
           {logo ? (

@@ -226,9 +226,9 @@ export default async function BoltHome({ searchParams }) {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 8 }}>
             {c.service_areas.map(area => (
-              <div key={area} style={{ padding: '14px 16px', background: T.colors.surface, border: `1px solid ${T.colors.border}`, fontSize: 14, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, textAlign: 'center' }}>
+              <a key={area} href={`/templates/bolt/service-areas/${area.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`} style={{ padding: '14px 16px', background: T.colors.surface, border: `1px solid ${T.colors.border}`, fontSize: 14, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, textAlign: 'center', color: T.colors.text, textDecoration: 'none', display: 'block' }}>
                 {area}
-              </div>
+              </a>
             ))}
           </div>
         </div>
