@@ -16,7 +16,7 @@ export function BoltHeader({ config, logo, T: Toverride }) {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(12px, 2vw, 16px) clamp(16px, 4vw, 24px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
           <a href="/templates/bolt" style={{ textDecoration: 'none' }}>
             {logo ? (
-              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 44, width: 'auto', display: 'block' }} />
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(32px, 7vw, 44px)', maxWidth: 'min(50vw, 240px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
             ) : (
               <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(18px, 2vw, 24px)", fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase' }}>
                 <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>

@@ -13,17 +13,17 @@ export function GroveHeader({ config, logo, T: Toverride }) {
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
-          <a href="/templates/grove" style={{ textDecoration: 'none' }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+          <a href="/templates/grove" style={{ textDecoration: 'none', flex: '0 1 auto', minWidth: 0, overflow: 'hidden' }}>
             {logo ? (
-              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 48, width: 'auto', display: 'block' }} />
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(36px, 8vw, 48px)', maxWidth: 'min(50vw, 240px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
             ) : (
-              <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 2vw, 22px)", fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 'min(55vw, 320px)', overflow: 'hidden' }}>
-                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <div style={{ fontFamily: T.fonts.display, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5, maxWidth: 'min(60vw, 400px)', minWidth: 0, flex: '0 1 auto' }}>
+                <div style={{ fontSize: "clamp(16px, 3.5vw, 22px)", lineHeight: 1.15 }}>
                   {c.business.display_name}
                 </div>
                 {c.business.family_owned && (
-                  <div style={{ fontSize: 10, fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <div style={{ fontSize: "clamp(9px, 1.5vw, 11px)", fontFamily: T.fonts.body, fontWeight: 500, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase', marginTop: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     Family-owned · Est. {c.business.established_year}
                   </div>
                 )}
