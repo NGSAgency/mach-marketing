@@ -59,17 +59,17 @@ export default async function AxisHome({ searchParams }) {
             <section key={cat} style={{
               background: isDark ? T.colors.bgInverse : (alt ? T.colors.bgSecondary : T.colors.bg),
               color: isDark ? T.colors.textInverse : T.colors.text,
-              padding: '160px 32px'
+              padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)'
             }}>
-              <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 96, alignItems: 'center' }}>
+              <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 96, alignItems: 'center' }}>
                 <div style={{ order: alt ? 2 : 1 }}>
                   <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 24, textTransform: 'uppercase', letterSpacing: 2 }}>
                     {cat}
                   </div>
-                  <h2 style={{ fontSize: 96, fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.textInverse : T.colors.text }}>
+                  <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.textInverse : T.colors.text }}>
                     {cat === 'HVAC' ? <>Climate<br/>you control.</> : cat === 'Plumbing' ? <>Water<br/>that works.</> : <>Power<br/>you trust.</>}
                   </h2>
-                  <p style={{ fontSize: 20, color: isDark ? T.colors.textInverseDim : T.colors.textDim, lineHeight: 1.55, marginBottom: 40, maxWidth: 480 }}>
+                  <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: isDark ? T.colors.textInverseDim : T.colors.textDim, lineHeight: 1.55, marginBottom: 40, maxWidth: 480 }}>
                     {cat === 'HVAC' ? 'From summer emergencies to whole-home installations. Certified technicians, transparent pricing, financing available.' : cat === 'Plumbing' ? 'From drain cleaning to water heater installs. 24/7 emergency response, master plumber on every job.' : 'From panel upgrades to EV chargers. Licensed master electricians, safety-first work you can rely on.'}
                   </p>
                   <div style={{ display: 'grid', gap: 12, marginBottom: 32 }}>
@@ -99,11 +99,11 @@ export default async function AxisHome({ searchParams }) {
         })}
 
         {/* COMPARISON TABLE - "Why we're different" */}
-        <section style={{ background: T.colors.bg, padding: '160px 32px' }}>
-          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
+        <section style={{ background: T.colors.bg, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)' }}>
+          <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>
               <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>The difference</div>
-              <h2 style={{ fontSize: 72, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: 0 }}>
+              <h2 style={{ fontSize: "clamp(30px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: 0 }}>
                 Not another <br/><span style={{ color: T.colors.accent }}>service company.</span>
               </h2>
             </div>
@@ -117,7 +117,7 @@ export default async function AxisHome({ searchParams }) {
                 { us: 'Family-owned since 1998', them: 'Private equity roll-up churn' },
               ].map((row, i, arr) => (
                 <div key={i} style={{ display: 'grid', gridTemplateColumns: '40px 1fr 1fr', gap: 24, padding: '20px 0', borderBottom: i < arr.length - 1 ? `1px solid ${T.colors.borderLight}` : 'none', alignItems: 'center' }}>
-                  <div style={{ color: T.colors.accent, fontSize: 20, fontWeight: 700 }}>✓</div>
+                  <div style={{ color: T.colors.accent, fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700 }}>✓</div>
                   <div style={{ fontSize: 17, color: T.colors.text, fontWeight: 600 }}>{row.us}</div>
                   <div style={{ fontSize: 15, color: T.colors.textMuted, textDecoration: 'line-through' }}>{row.them}</div>
                 </div>
@@ -127,14 +127,14 @@ export default async function AxisHome({ searchParams }) {
         </section>
 
         {/* SINGLE MASSIVE TESTIMONIAL */}
-        <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '160px 32px' }}>
-          <div style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center' }}>
-            <div style={{ display: 'inline-flex', gap: 4, color: T.colors.accent, fontSize: 24, marginBottom: 40, letterSpacing: 4 }}>★★★★★</div>
-            <p style={{ fontSize: 48, fontWeight: 500, color: T.colors.textInverse, lineHeight: 1.25, margin: '0 0 48px 0', letterSpacing: -1.5 }}>
+        <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)' }}>
+          <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto', textAlign: 'center' }}>
+            <div style={{ display: 'inline-flex', gap: 4, color: T.colors.accent, fontSize: "clamp(15px, 1.8vw, 24px)", marginBottom: 40, letterSpacing: 4 }}>★★★★★</div>
+            <p style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 500, color: T.colors.textInverse, lineHeight: 1.25, margin: '0 0 48px 0', letterSpacing: -1.5 }}>
               "{c.reviews.featured[0].text}"
             </p>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 56, height: 56, background: T.colors.accent, color: T.colors.bg, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 700 }}>
+              <div style={{ width: 56, height: 56, background: T.colors.accent, color: T.colors.bg, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700 }}>
                 {c.reviews.featured[0].author.charAt(0)}
               </div>
               <div style={{ textAlign: 'left' }}>
@@ -149,15 +149,15 @@ export default async function AxisHome({ searchParams }) {
         </section>
 
         {/* COVERAGE - horizontal band */}
-        <section style={{ background: T.colors.bg, padding: '120px 32px' }}>
+        <section style={{ background: T.colors.bg, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 1400, margin: '0 auto', textAlign: 'center' }}>
-            <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 24px 0' }}>
+            <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 24px 0' }}>
               Serving the <span style={{ color: T.colors.accent }}>{c.primary_service_area}</span>.
             </h2>
             <p style={{ fontSize: 18, color: T.colors.textDim, marginBottom: 48, maxWidth: 620, margin: '0 auto 48px' }}>
               {c.service_areas.length}+ neighborhoods · Same-day response · 24/7 emergency
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', maxWidth: 900, margin: '0 auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
               {c.service_areas.map(area => (
                 <div key={area} style={{ padding: '12px 20px', background: T.colors.bgSecondary, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, color: T.colors.text, border: `1px solid ${T.colors.borderLight}` }}>
                   {area}
@@ -168,12 +168,12 @@ export default async function AxisHome({ searchParams }) {
         </section>
 
         {/* FINAL CTA - bold */}
-        <section style={{ background: T.colors.accent, color: T.colors.bg, padding: '160px 32px', textAlign: 'center' }}>
-          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-            <h2 style={{ fontSize: 96, fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.bg }}>
+        <section style={{ background: T.colors.accent, color: T.colors.bg, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto' }}>
+            <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.bg }}>
               Let's fix it.
             </h2>
-            <p style={{ fontSize: 22, color: T.colors.bg, opacity: 0.9, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
+            <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.bg, opacity: 0.9, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
               Call now or request a free quote online.
             </p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>

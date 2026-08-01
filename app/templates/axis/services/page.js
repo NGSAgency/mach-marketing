@@ -29,13 +29,13 @@ export default async function ServicesIndex({ searchParams }) {
         <AxisPageHero T={T} eyebrow="Services" title={<>Everything you need <span style={{ color: T.colors.accent }}>for your home</span>.</>} sub={`${c.services.length} services across ${categories.length} categories, one licensed team.`} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto' }}>
             {categories.map(cat => {
               const catServices = c.services.filter(s => s.category === cat)
               return (
                 <div key={cat} style={{ marginBottom: 64 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 24, paddingBottom: 20, borderBottom: `1px solid ${T.colors.borderLight}` }}>
-                    <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: -1.5, margin: 0, color: T.colors.text }}>{cat}</h2>
+                    <h2 style={{ fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 800, letterSpacing: -1.5, margin: 0, color: T.colors.text }}>{cat}</h2>
                     <div style={{ fontSize: 15, color: T.colors.textMuted }}>{catServices.length} services</div>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
@@ -45,7 +45,7 @@ export default async function ServicesIndex({ searchParams }) {
                         <div style={{ width: 56, height: 56, background: T.colors.bg, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.colors.accent, marginBottom: 20, boxShadow: T.shadow.subtle }}>
                           <ServiceIcon name={svc.icon} size={28} />
                         </div>
-                        <div style={{ fontSize: 22, fontWeight: 700, color: T.colors.text, marginBottom: 8, letterSpacing: -0.5 }}>{svc.name}</div>
+                        <div style={{ fontSize: "clamp(15px, 1.8vw, 22px)", fontWeight: 700, color: T.colors.text, marginBottom: 8, letterSpacing: -0.5 }}>{svc.name}</div>
                         <div style={{ fontSize: 15, color: T.colors.textDim, lineHeight: 1.5 }}>{svc.short}</div>
                         <div style={{ marginTop: 20, color: T.colors.accent, fontSize: 14, fontWeight: 600 }}>Learn more →</div>
                       </a>

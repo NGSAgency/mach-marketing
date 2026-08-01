@@ -44,7 +44,7 @@ export default async function ServicePage({ params, searchParams }) {
 
         {/* Hero with service info */}
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}` }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
             {/* Breadcrumbs */}
             <nav style={{ marginBottom: 24, fontSize: 12, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase' }}>
               {crumbs.map((cr, i) => (
@@ -73,10 +73,10 @@ export default async function ServicePage({ params, searchParams }) {
                 <h1 style={{ fontFamily: T.fonts.display, fontSize: 68, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
                   {service.name} in {c.primary_service_area}
                 </h1>
-                <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 700 }}>
+                <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 700 }}>
                   {service.description || service.short}
                 </p>
-                <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+                <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
                   <span style={{ fontSize: 28 }}>☎</span> Call {c.business.phone_display}
                 </a>
               </div>
@@ -100,9 +100,9 @@ export default async function ServicePage({ params, searchParams }) {
         </section>
 
         {/* Content section */}
-        <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 36, fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>Why Choose {c.business.display_name} for {service.name}</h2>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>Why Choose {c.business.display_name} for {service.name}</h2>
             <div style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.7 }}>
               <p>When you need reliable {service.name.toLowerCase()} in {c.primary_service_area}, {c.business.display_name} is the trusted choice. Our licensed and insured team has been serving the community since {c.business.established_year}, delivering fast, honest, and professional service to homeowners across {c.service_areas.length}+ neighborhoods.</p>
               <p>With {c.reviews.google_count}+ five-star Google reviews and NATE-certified technicians, we bring expertise and integrity to every job. Whether it's a routine service call or an emergency situation, we're ready to help.</p>
@@ -118,9 +118,9 @@ export default async function ServicePage({ params, searchParams }) {
         </section>
 
         {/* Service areas grid */}
-        <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 36, fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>{service.name} Near You</h2>
+        <section style={{ background: T.colors.bg, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>{service.name} Near You</h2>
             <p style={{ fontSize: 16, color: T.colors.textDim, marginBottom: 32, maxWidth: 700 }}>
               We provide {service.name.toLowerCase()} services throughout the {c.primary_service_area} area:
             </p>
@@ -136,14 +136,14 @@ export default async function ServicePage({ params, searchParams }) {
 
         {/* Related services */}
         {relatedServices.length > 0 && (
-          <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 36, fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Related {service.category} Services</h2>
+          <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+            <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Related {service.category} Services</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
                 {relatedServices.map(svc => (
                   <a key={svc.slug} href={`/templates/bolt/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: 24, display: 'block', borderRadius: T.radius.sm }}>
                     <div style={{ color: T.colors.accent, marginBottom: 12 }}><ServiceIcon name={svc.icon} size={28} /></div>
-                    <div style={{ fontFamily: T.fonts.display, fontSize: 20, fontWeight: 700, color: T.colors.text, textTransform: 'uppercase', letterSpacing: 0.5 }}>{svc.name}</div>
+                    <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700, color: T.colors.text, textTransform: 'uppercase', letterSpacing: 0.5 }}>{svc.name}</div>
                     <div style={{ fontSize: 13, color: T.colors.textDim, marginTop: 6 }}>{svc.short}</div>
                   </a>
                 ))}

@@ -66,11 +66,11 @@ export default async function FAQPage({ searchParams }) {
           sub="Answers to the questions we hear most from customers."
         />
 
-        <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
             {faqs.map((f, i) => (
               <details key={i} style={{ background: T.colors.bg, border: `1px solid ${T.colors.border}`, borderRadius: T.radius.sm, padding: 24, marginBottom: 12 }}>
-                <summary style={{ fontFamily: T.fonts.display, fontSize: 20, fontWeight: 700, color: T.colors.text, textTransform: 'uppercase', letterSpacing: 0.5, cursor: 'pointer', listStyle: 'none' }}>
+                <summary style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700, color: T.colors.text, textTransform: 'uppercase', letterSpacing: 0.5, cursor: 'pointer', listStyle: 'none' }}>
                   {f.question}
                 </summary>
                 <p style={{ fontSize: 16, color: T.colors.textDim, lineHeight: 1.7, marginTop: 16, marginBottom: 0 }}>

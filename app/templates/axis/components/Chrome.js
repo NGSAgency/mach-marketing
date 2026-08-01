@@ -7,7 +7,7 @@ export function AxisHeader({ config, logo, T: Toverride }) {
   const c = config
   return (
     <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+      <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <a href="/templates/axis" style={{ textDecoration: 'none' }}>
           {logo ? (
             <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(28px, 5vw, 40px)', maxWidth: 'min(50vw, 200px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
@@ -53,10 +53,10 @@ export function AxisFooter({ config, T: Toverride }) {
   const c = config
   return (
     <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '80px 32px 32px' }}>
-      <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 64 }}>
+      <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 'clamp(20px, 3.5vw, 48px)', marginBottom: 64 }}>
           <div>
-            <div style={{ fontSize: 24, fontWeight: 700, color: T.colors.textInverse, marginBottom: 16, letterSpacing: -0.5 }}>{c.business.display_name}</div>
+            <div style={{ fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 700, color: T.colors.textInverse, marginBottom: 16, letterSpacing: -0.5 }}>{c.business.display_name}</div>
             <div style={{ fontSize: 15, color: T.colors.textInverseDim, lineHeight: 1.6, maxWidth: 380 }}>
               {c.positioning.tagline}
             </div>

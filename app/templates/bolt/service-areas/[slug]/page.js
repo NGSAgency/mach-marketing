@@ -35,7 +35,7 @@ export default async function AreaPage({ params, searchParams }) {
         <BoltHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}` }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
             <nav style={{ marginBottom: 24, fontSize: 12, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase' }}>
               {crumbs.map((cr, i) => (
                 <span key={i}>
@@ -45,27 +45,27 @@ export default async function AreaPage({ params, searchParams }) {
               ))}
             </nav>
             <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 12 }}>Service Area</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 72, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(30px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
               {c.business.display_name}<br/>
               <span style={{ color: T.colors.accent }}>in {area}</span>
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 800 }}>
+            <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 800 }}>
               {c.services.length}+ home services · Same-day response · Serving {area} homeowners since {c.business.established_year}
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 28 }}>☎</span> {c.business.phone_display}
             </a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 36, fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Services Available in {area}</h2>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Services Available in {area}</h2>
             {[...new Set(c.services.map(s => s.category))].map(cat => (
               <div key={cat} style={{ marginBottom: 40 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
                   <div style={{ height: 2, background: T.colors.accent, width: 40 }} />
-                  <h3 style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', margin: 0 }}>{cat} Services in {area}</h3>
+                  <h3 style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', margin: 0 }}>{cat} Services in {area}</h3>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
                   {c.services.filter(s => s.category === cat).map(svc => (

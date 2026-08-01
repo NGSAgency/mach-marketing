@@ -23,18 +23,18 @@ export default async function ContactPage({ searchParams }) {
         <AxisPageHero T={T} eyebrow="Contact" title={<>Get <span style={{ color: T.colors.accent }}>started</span>.</>} sub={c.positioning.emergency_service ? "Call for immediate service or request a free quote below." : "Call or request a free quote below."} />
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 64 }}>
+          <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 64 }}>
             <div>
               <div style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: 40, borderRadius: T.radius.lg, marginBottom: 16 }}>
                 <div style={{ fontSize: 12, color: T.colors.textInverseDim, textTransform: 'uppercase', letterSpacing: 2, fontWeight: 600, marginBottom: 12 }}>Direct line</div>
-                <a href={`tel:${c.business.phone}`} style={{ fontSize: 48, fontWeight: 800, color: T.colors.textInverse, textDecoration: 'none', display: 'block', letterSpacing: -1.5 }}>
+                <a href={`tel:${c.business.phone}`} style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 800, color: T.colors.textInverse, textDecoration: 'none', display: 'block', letterSpacing: -1.5 }}>
                   {c.business.phone_display}
                 </a>
                 <div style={{ fontSize: 15, color: T.colors.textInverseDim, marginTop: 12 }}>{c.business.hours_display}</div>
               </div>
               <div style={{ background: T.colors.bgSecondary, padding: 28, borderRadius: T.radius.lg, marginBottom: 12 }}>
                 <div style={{ fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Email</div>
-                <a href={`mailto:${c.business.email}`} style={{ fontSize: 20, color: T.colors.text, textDecoration: 'none', fontWeight: 600 }}>{c.business.email}</a>
+                <a href={`mailto:${c.business.email}`} style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.text, textDecoration: 'none', fontWeight: 600 }}>{c.business.email}</a>
               </div>
               <div style={{ background: T.colors.bgSecondary, padding: 28, borderRadius: T.radius.lg }}>
                 <div style={{ fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Office</div>
@@ -44,7 +44,7 @@ export default async function ContactPage({ searchParams }) {
 
             <div>
               <form style={{ background: T.colors.bgSecondary, padding: 40, borderRadius: T.radius.lg }}>
-                <h2 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, margin: '0 0 24px 0', lineHeight: 1.2 }}>Request a free quote.</h2>
+                <h2 style={{ fontSize: "clamp(18px, 2.5vw, 32px)", fontWeight: 800, letterSpacing: -1, margin: '0 0 24px 0', lineHeight: 1.2 }}>Request a free quote.</h2>
                 <div style={{ marginBottom: 16 }}>
                   <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Name</label>
                   <input required style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: '14px 18px', fontSize: 16, borderRadius: T.radius.md }} />

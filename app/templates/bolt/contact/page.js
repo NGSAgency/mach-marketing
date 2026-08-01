@@ -29,11 +29,11 @@ export default async function ContactPage({ searchParams }) {
           sub={c.positioning.emergency_service ? "24/7 emergency service. Same-day appointments. Free estimates on installs." : "Fast response. Free estimates. Family-owned service."}
         />
 
-        <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
+        <section style={{ background: T.colors.bg, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 48 }}>
             {/* Contact info column */}
             <div>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Reach Us Direct</h2>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Reach Us Direct</h2>
               <div style={{ background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32, borderRadius: T.radius.sm, marginBottom: 20 }}>
                 <div style={{ fontSize: 11, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 2, fontWeight: 700, marginBottom: 8 }}>Call Now</div>
                 <a href={`tel:${c.business.phone}`} style={{ fontFamily: T.fonts.display, fontSize: 42, fontWeight: 800, color: T.colors.accent, textDecoration: 'none', display: 'block', letterSpacing: 0.5 }}>
@@ -53,7 +53,7 @@ export default async function ContactPage({ searchParams }) {
 
             {/* Form column */}
             <div>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Request Service</h2>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', margin: '0 0 32px 0' }}>Request Service</h2>
               <form style={{ background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32, borderRadius: T.radius.sm }}>
                 <div style={{ marginBottom: 20 }}>
                   <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 700, marginBottom: 8 }}>Name *</label>
@@ -74,7 +74,7 @@ export default async function ContactPage({ searchParams }) {
                   <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 700, marginBottom: 8 }}>Message</label>
                   <textarea rows={4} style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: '12px 16px', fontSize: 15, fontFamily: T.fonts.body, borderRadius: T.radius.sm, resize: 'vertical' }} />
                 </div>
-                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.bg, border: 'none', padding: '18px 24px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, cursor: 'pointer' }}>
+                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.bg, border: 'none', padding: '18px 24px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, cursor: 'pointer' }}>
                   Send Request
                 </button>
               </form>

@@ -36,10 +36,10 @@ export default async function FAQPage({ searchParams }) {
         <AxisPageHero T={T} eyebrow="FAQ" title={<>Common <span style={{ color: T.colors.accent }}>questions</span>.</>} sub="What we hear most often." />
 
         <section style={{ background: T.colors.bgSecondary, padding: '80px 32px 120px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
             {faqs.map((f, i) => (
               <details key={i} style={{ background: T.colors.bg, border: `1px solid ${T.colors.borderLight}`, borderRadius: T.radius.lg, padding: 28, marginBottom: 12, boxShadow: T.shadow.subtle }}>
-                <summary style={{ fontSize: 20, fontWeight: 700, color: T.colors.text, cursor: 'pointer', listStyle: 'none', letterSpacing: -0.3 }}>
+                <summary style={{ fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700, color: T.colors.text, cursor: 'pointer', listStyle: 'none', letterSpacing: -0.3 }}>
                   {f.question}
                 </summary>
                 <p style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.7, marginTop: 16, marginBottom: 0 }}>

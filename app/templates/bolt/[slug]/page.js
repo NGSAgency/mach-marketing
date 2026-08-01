@@ -59,7 +59,7 @@ export default async function ComboPage({ params, searchParams }) {
         <BoltHeader config={c} logo={brand.logo} T={T} />
 
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}` }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
             <nav style={{ marginBottom: 24, fontSize: 12, color: T.colors.textMuted, letterSpacing: 1, textTransform: 'uppercase' }}>
               {crumbs.map((cr, i) => (
                 <span key={i}>
@@ -76,19 +76,19 @@ export default async function ComboPage({ params, searchParams }) {
             <h1 style={{ fontFamily: T.fonts.display, fontSize: 68, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
               {service.name} in <span style={{ color: T.colors.accent }}>{area}</span>
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 800 }}>
+            <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 800 }}>
               Professional {service.name.toLowerCase()} for {area} homeowners. {service.description || service.short} Family-owned since {c.business.established_year}.
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 28 }}>☎</span> Call {c.business.phone_display}
             </a>
           </div>
         </section>
 
         {/* Body content */}
-        <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 36, fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>Trusted {service.name} in {area}</h2>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0' }}>Trusted {service.name} in {area}</h2>
             <div style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.7 }}>
               <p>{c.business.display_name} has been serving {area} homeowners with expert {service.name.toLowerCase()} services since {c.business.established_year}. Our NATE-certified technicians know {area} homes inside and out.</p>
               <p>With {c.reviews.google_count}+ five-star Google reviews and same-day service throughout {area}, we're the trusted choice when you need {service.name.toLowerCase()} done right the first time.</p>
@@ -103,10 +103,10 @@ export default async function ComboPage({ params, searchParams }) {
         </section>
 
         {/* Cross-linking */}
-        <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40 }}>
+        <section style={{ background: T.colors.bg, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 40 }}>
             <div>
-              <h3 style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 20 }}>{service.name} in Other Areas</h3>
+              <h3 style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 20 }}>{service.name} in Other Areas</h3>
               <div style={{ display: 'grid', gap: 8 }}>
                 {otherAreas.map(a => (
                   <a key={a} href={`/templates/bolt/${service.slug}-in-${slugify(a)}`} style={{ textDecoration: 'none', padding: '12px 16px', background: T.colors.surface, border: `1px solid ${T.colors.border}`, fontSize: 14, fontWeight: 600, letterSpacing: 0.3, color: T.colors.text, borderRadius: T.radius.sm, display: 'flex', justifyContent: 'space-between' }}>
@@ -116,7 +116,7 @@ export default async function ComboPage({ params, searchParams }) {
               </div>
             </div>
             <div>
-              <h3 style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 20 }}>Other {service.category} Services in {area}</h3>
+              <h3 style={{ fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 20 }}>Other {service.category} Services in {area}</h3>
               <div style={{ display: 'grid', gap: 8 }}>
                 {otherServices.map(s => (
                   <a key={s.slug} href={`/templates/bolt/${s.slug}-in-${slugify(area)}`} style={{ textDecoration: 'none', padding: '12px 16px', background: T.colors.surface, border: `1px solid ${T.colors.border}`, fontSize: 14, fontWeight: 600, letterSpacing: 0.3, color: T.colors.text, borderRadius: T.radius.sm, display: 'flex', justifyContent: 'space-between' }}>
