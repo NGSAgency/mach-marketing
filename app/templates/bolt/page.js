@@ -54,9 +54,11 @@ export default async function BoltHome({ searchParams }) {
           </div>
           <MobileMenu
             items={[
-              { href: '#services', label: 'Services' },
-              { href: '#areas', label: 'Service Area' },
-              { href: '#about', label: 'About' },
+              { href: '/templates/bolt/services', label: 'Services' },
+              { href: '/templates/bolt/service-areas', label: 'Areas' },
+              { href: '/templates/bolt/about', label: 'About' },
+              { href: '/templates/bolt/faq', label: 'FAQ' },
+              { href: '/templates/bolt/contact', label: 'Contact' },
             ]}
             phoneNumber={c.business.phone}
             phoneDisplay={c.business.phone_display}
