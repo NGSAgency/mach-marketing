@@ -1,0 +1,139 @@
+/* MACH Template Responsive Foundation */
+
+/* Fluid typography scale - each template maps its sizes to these */
+:root {
+  --mach-hero: clamp(2rem, 7vw, 5rem);        /* 32-80px */
+  --mach-h1: clamp(1.75rem, 5.5vw, 3.5rem);   /* 28-56px */
+  --mach-h2: clamp(1.5rem, 4.5vw, 2.75rem);   /* 24-44px */
+  --mach-h3: clamp(1.25rem, 3.5vw, 2rem);     /* 20-32px */
+  --mach-lg: clamp(1.125rem, 2.5vw, 1.375rem);/* 18-22px */
+  --mach-body: clamp(0.9375rem, 1.6vw, 1rem); /* 15-16px */
+  --mach-sm: clamp(0.8125rem, 1.3vw, 0.875rem);/* 13-14px */
+  --mach-xs: 0.75rem;                          /* 12px */
+  
+  /* Fluid spacing */
+  --mach-section-y: clamp(3rem, 10vw, 7.5rem);  /* 48-120px */
+  --mach-section-x: clamp(1rem, 4vw, 2rem);     /* 16-32px */
+  --mach-card-gap: clamp(0.75rem, 2vw, 1.5rem); /* 12-24px */
+  --mach-block-gap: clamp(1.5rem, 4vw, 3rem);   /* 24-48px */
+}
+
+/* Container - max width with responsive gutters */
+.mach-container {
+  max-width: min(1280px, 100%);
+  margin: 0 auto;
+  padding-left: var(--mach-section-x);
+  padding-right: var(--mach-section-x);
+  box-sizing: border-box;
+}
+
+.mach-container-wide { max-width: min(1440px, 100%); }
+.mach-container-narrow { max-width: min(900px, 100%); }
+
+/* Section - responsive vertical padding */
+.mach-section {
+  padding-top: var(--mach-section-y);
+  padding-bottom: var(--mach-section-y);
+}
+
+.mach-section-tight { padding-top: calc(var(--mach-section-y) * 0.7); padding-bottom: calc(var(--mach-section-y) * 0.7); }
+
+/* Grid utilities that always stack on mobile */
+.mach-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mach-block-gap);
+}
+@media (min-width: 768px) {
+  .mach-grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.mach-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mach-card-gap);
+}
+@media (min-width: 640px) {
+  .mach-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .mach-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.mach-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--mach-card-gap);
+}
+@media (min-width: 640px) {
+  .mach-grid-4 { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .mach-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+}
+
+/* Auto-fit grids for cards */
+.mach-grid-auto-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mach-card-gap);
+}
+@media (min-width: 480px) {
+  .mach-grid-auto-cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+}
+
+/* Header - shared across templates */
+.mach-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.mach-header-inner {
+  max-width: min(1280px, 100%);
+  margin: 0 auto;
+  padding: 12px var(--mach-section-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .mach-header-inner { padding-top: 16px; padding-bottom: 16px; }
+}
+
+.mach-nav-desktop {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .mach-nav-desktop { display: flex; }
+}
+
+.mach-nav-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media (min-width: 768px) {
+  .mach-nav-mobile { display: none; }
+}
+
+/* Prevent horizontal overflow anywhere */
+.mach-site * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.mach-site img, .mach-site video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utility to prevent text overflow */
+.mach-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

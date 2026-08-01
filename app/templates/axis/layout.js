@@ -1,3 +1,4 @@
+import '../responsive.css'
 export const metadata = { title: 'AXIS Template', description: 'AXIS template preview' }
 
 export default function AxisLayout({ children }) {

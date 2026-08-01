@@ -1,3 +1,4 @@
+import '../responsive.css'
 export const metadata = { title: 'GROVE Template', description: 'GROVE template preview' }
 
 export default function GroveLayout({ children }) {
