@@ -165,7 +165,7 @@ export default async function BoltHome({ searchParams }) {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
                   {catServices.map(svc => (
-                    <a key={svc.slug} href={`/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 24, transition: T.transition.normal, position: 'relative', display: 'block', borderRadius: T.radius.sm }}>
+                    <a key={svc.slug} href={`/templates/bolt/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 24, transition: T.transition.normal, position: 'relative', display: 'block', borderRadius: T.radius.sm }}>
                       {svc.emergency && (
                         <div style={{ position: 'absolute', top: 12, right: 12, background: T.colors.urgent, color: T.colors.text, fontSize: 9, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 8px', borderRadius: T.radius.sm }}>
                           24/7
