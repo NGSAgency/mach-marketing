@@ -74,7 +74,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* HERO */}
       <section style={{ background: T.colors.bg, padding: 'clamp(32px, 6vw, 60px) clamp(16px, 4vw, 24px) clamp(40px, 8vw, 80px)', borderBottom: `4px solid ${T.colors.accent}` }}>
-        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px, 4vw, 60px)', alignItems: 'center' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'clamp(24px, 4vw, 60px)', alignItems: 'center' }}>
           <div>
             {/* Category strip */}
             <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
