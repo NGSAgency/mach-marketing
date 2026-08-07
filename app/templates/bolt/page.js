@@ -100,7 +100,7 @@ export default async function BoltHome({ searchParams }) {
             </div>
 
             {/* Trust bar */}
-            <div style={{ display: 'flex', gap: 32, marginTop: 40, paddingTop: 32, borderTop: `1px solid ${T.colors.border}` }}>
+            <div style={{ display: 'flex', gap: 'clamp(16px, 3vw, 32px)', marginTop: 40, paddingTop: 32, borderTop: `1px solid ${T.colors.border}`, flexWrap: 'wrap' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
                   <span style={{ color: T.colors.accent, fontSize: 20, fontWeight: 700 }}>{c.reviews.google_rating}</span>
@@ -120,7 +120,7 @@ export default async function BoltHome({ searchParams }) {
           </div>
           <div style={{ background: `linear-gradient(135deg, ${T.colors.accent} 0%, ${T.colors.accentDim} 100%)`, aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', borderRadius: T.radius.sm, overflow: 'hidden' }}>
             <div style={{ textAlign: 'center', padding: 40 }}>
-              <div style={{ fontFamily: T.fonts.display, fontSize: 200, fontWeight: 900, color: T.colors.bg, opacity: 0.15, lineHeight: 1, letterSpacing: -8 }}>
+              <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(80px, 25vw, 200px)', fontWeight: 900, color: T.colors.bg, opacity: 0.15, lineHeight: 1, letterSpacing: 'clamp(-3px, -0.8vw, -8px)' }}>
                 24/7
               </div>
               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 14, color: T.colors.bg, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase' }}>
