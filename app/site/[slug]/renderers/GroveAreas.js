@@ -20,9 +20,9 @@ export default function GroveAreas({ config: c, siteSlug }) {
         <GroveHeader T={T} c={c} logo={logo} base={base} />
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 72px' }}>
-          <div style={{ maxWidth: 1240, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1240px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ display: 'inline-block', fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, padding: '6px 14px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Where we serve</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 72, fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05 }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05 }}>
               On your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>street</em>.
             </h1>
             <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24 }}>{c.service_areas.length}+ neighborhoods across {c.primary_service_area}</p>
@@ -31,7 +31,7 @@ export default function GroveAreas({ config: c, siteSlug }) {
 
         <section style={{ background: T.colors.bg, padding: '48px 32px 120px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
               {c.service_areas.map(area => (
                 <a key={area} href={`${base}/service-areas/${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32, borderRadius: T.radius.md, boxShadow: T.shadow.soft }}>
                   <h2 style={{ fontFamily: T.fonts.display, fontSize: 32, fontWeight: 500, letterSpacing: -0.8, margin: 0 }}>{area}</h2>

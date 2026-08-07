@@ -25,7 +25,7 @@ export default async function AreasIndex({ searchParams }) {
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
               {c.service_areas.map(area => (
                 <a key={area} href={`/templates/grove/service-areas/${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32, borderRadius: T.radius.md, display: 'block', boxShadow: T.shadow.soft }}>
                   <h2 style={{ fontFamily: T.fonts.display, fontSize: 32, fontWeight: 500, color: T.colors.text, letterSpacing: -0.8, margin: 0 }}>{area}</h2>

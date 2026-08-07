@@ -29,7 +29,7 @@ export default function BoltCombo({ config: c, siteSlug, service, area }) {
               <div style={{ fontFamily: T.fonts.display, fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category} · {area}</div>
               {service.emergency && <div style={{ background: T.colors.accent, color: T.colors.bg, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.sm }}>24/7</div>}
             </div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 68, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6vw, 68px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
               {service.name} <span style={{ color: T.colors.accent }}>in {area}</span>
             </h1>
             <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24, maxWidth: 800 }}>{service.description || service.short}. Serving {area} since {c.business.established_year}.</p>

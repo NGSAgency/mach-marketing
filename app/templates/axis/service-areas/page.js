@@ -25,7 +25,7 @@ export default async function AreasIndex({ searchParams }) {
 
         <section style={{ background: T.colors.bg, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
               {c.service_areas.map(area => (
                 <a key={area} href={`/templates/axis/service-areas/${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, display: 'block', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
                   <h2 style={{ fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 700, letterSpacing: -0.8, margin: 0 }}>{area}</h2>

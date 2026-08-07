@@ -73,7 +73,7 @@ export default async function ComboPage({ params, searchParams }) {
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase' }}>{service.category} · {area}</div>
               {service.emergency && (<div style={{ background: T.colors.urgent, color: T.colors.text, fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.sm }}>24/7 Emergency</div>)}
             </div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 68, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6vw, 68px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
               {service.name} in <span style={{ color: T.colors.accent }}>{area}</span>
             </h1>
             <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.textDim, lineHeight: 1.5, margin: '24px 0 32px 0', maxWidth: 800 }}>

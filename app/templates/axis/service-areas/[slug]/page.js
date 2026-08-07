@@ -39,7 +39,7 @@ export default async function AreaPage({ params, searchParams }) {
               {crumbs.map((cr, i) => (<span key={i}>{i > 0 && <span style={{ margin: '0 8px' }}>/</span>}{i < crumbs.length - 1 ? <a href={`/templates/axis${cr.url}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>{cr.name}</a> : <span style={{ color: T.colors.text, fontWeight: 600 }}>{cr.name}</span>}</span>))}
             </nav>
             <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full, marginBottom: 24 }}>Service Area</div>
-            <h1 style={{ fontSize: 88, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.text }}>
+            <h1 style={{ fontSize: "clamp(32px, 8vw, 88px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.text }}>
               Home service<br /><span style={{ color: T.colors.accent }}>in {area}</span>.
             </h1>
             <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>

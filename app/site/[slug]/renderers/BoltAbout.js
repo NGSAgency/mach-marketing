@@ -21,7 +21,7 @@ export default function BoltAbout({ config: c, siteSlug }) {
         <section style={{ background: T.colors.bgAlt, padding: '80px 24px', borderBottom: `4px solid ${T.colors.accent}` }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <div style={{ fontFamily: T.fonts.display, fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>About Us</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 72, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0 }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0 }}>
               Family-owned since <span style={{ color: T.colors.accent }}>{c.business.established_year}</span>
             </h1>
             <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24 }}>{c.business.years_in_business}+ years serving {c.primary_service_area}.</p>

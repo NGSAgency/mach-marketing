@@ -38,7 +38,7 @@ export default async function ServicesIndex({ searchParams }) {
                     <h2 style={{ fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 800, letterSpacing: -1.5, margin: 0, color: T.colors.text }}>{cat}</h2>
                     <div style={{ fontSize: 15, color: T.colors.textMuted }}>{catServices.length} services</div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
                     {catServices.map(svc => (
                       <a key={svc.slug} href={`/templates/axis/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
                         {svc.emergency && (<div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.bg, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>)}

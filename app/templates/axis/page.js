@@ -61,7 +61,7 @@ export default async function AxisHome({ searchParams }) {
               color: isDark ? T.colors.textInverse : T.colors.text,
               padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)'
             }}>
-              <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 96, alignItems: 'center' }}>
+              <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(32px, 6vw, 96px)', alignItems: 'center' }}>
                 <div style={{ order: alt ? 2 : 1 }}>
                   <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 24, textTransform: 'uppercase', letterSpacing: 2 }}>
                     {cat}

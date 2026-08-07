@@ -23,7 +23,7 @@ export default function AxisServices({ config: c, siteSlug }) {
         <section style={{ background: T.colors.bg, padding: '96px 32px 64px', textAlign: 'center', borderBottom: `1px solid ${T.colors.borderLight}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Services</div>
-            <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0 }}>
+            <h1 style={{ fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0 }}>
               Everything you need <span style={{ color: T.colors.accent }}>for your home</span>.
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '24px auto 0', maxWidth: 680 }}>{c.services.length} services · One licensed team</p>
@@ -40,7 +40,7 @@ export default function AxisServices({ config: c, siteSlug }) {
                     <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: -1.5, margin: 0 }}>{cat}</h2>
                     <div style={{ fontSize: 15, color: T.colors.textMuted }}>{catServices.length} services</div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
                     {catServices.map(svc => (
                       <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
                         {svc.emergency && <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.bg, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>}

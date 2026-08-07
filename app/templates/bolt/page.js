@@ -32,7 +32,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Header */}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(16px, 4.5vw, 22px)", fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', lineHeight: 1.1, whiteSpace: 'nowrap' }}>
               {(() => {
@@ -74,7 +74,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* HERO */}
       <section style={{ background: T.colors.bg, padding: 'clamp(32px, 6vw, 60px) clamp(16px, 4vw, 24px) clamp(40px, 8vw, 80px)', borderBottom: `4px solid ${T.colors.accent}` }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px, 4vw, 60px)', alignItems: 'center' }}>
           <div>
             {/* Category strip */}
             <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
@@ -134,7 +134,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Trust bar continued */}
       <section style={{ background: T.colors.bgAlt, padding: '32px 24px', borderBottom: `1px solid ${T.colors.border}` }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 'clamp(16px, 3vw, 40px)', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 'clamp(16px, 3vw, 40px)', justifyContent: 'center', alignItems: 'center' }}>
           {c.certifications.slice(0, 6).map(cert => (
             <div key={cert.name} style={{ fontSize: 13, color: T.colors.textDim, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ color: T.colors.accent, fontSize: 18 }}>✓</span> {cert.name}
@@ -145,7 +145,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Services */}
       <section id="services" style={{ background: T.colors.bg, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
           <div style={{ marginBottom: 48 }}>
             <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 12 }}>What We Do</div>
             <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 1 }}>
@@ -192,14 +192,14 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Reviews */}
       <section style={{ background: T.colors.bgAlt, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
           <div style={{ marginBottom: 48, textAlign: 'center' }}>
             <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 12 }}>What KC Says</div>
             <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0 }}>
               {c.reviews.google_rating}<span style={{ color: T.colors.accent }}>★</span> · {c.reviews.google_count}+ Reviews
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 24 }}>
             {c.reviews.featured.map((r, i) => (
               <div key={i} style={{ background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: 32, borderRadius: T.radius.sm }}>
                 <div style={{ color: T.colors.accent, fontSize: 20, marginBottom: 16, letterSpacing: 2 }}>★★★★★</div>
@@ -216,7 +216,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Service Areas */}
       <section id="areas" style={{ background: T.colors.bg, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 60, alignItems: 'center' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(24px, 4vw, 60px)', alignItems: 'center' }}>
           <div>
             <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 12 }}>Where We Serve</div>
             <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: '0 0 20px 0', lineHeight: 1 }}>
@@ -245,7 +245,7 @@ export default async function BoltHome({ searchParams }) {
           <p style={{ fontSize: 20, color: T.colors.bg, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
             24/7 emergency service. Free estimates on installs. Financing available.
           </p>
-          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px 48px', fontFamily: T.fonts.display, fontSize: "clamp(18px, 2.5vw, 32px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
+          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: "clamp(18px, 2.5vw, 32px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
             <span style={{ fontSize: 36 }}>☎</span> {c.business.phone_display}
           </a>
         </div>
@@ -253,7 +253,7 @@ export default async function BoltHome({ searchParams }) {
 
       {/* Footer */}
       <footer style={{ background: T.colors.bgAlt, padding: '48px 24px 24px', borderTop: `1px solid ${T.colors.border}` }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(16px, 3vw, 40px)', marginBottom: 40 }}>
             <div>
               <div style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>

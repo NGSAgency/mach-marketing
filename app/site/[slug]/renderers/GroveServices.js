@@ -21,9 +21,9 @@ export default function GroveServices({ config: c, siteSlug }) {
         <GroveHeader T={T} c={c} logo={logo} base={base} />
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 72px' }}>
-          <div style={{ maxWidth: 1240, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1240px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ display: 'inline-block', fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, padding: '6px 14px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Our services</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 72, fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05, color: T.colors.text }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05, color: T.colors.text }}>
               Everything for your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>home</em>.
             </h1>
             <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24 }}>{c.services.length} services · Serving {c.primary_service_area}</p>
@@ -75,7 +75,7 @@ function GroveHeader({ T, c, logo, base }) {
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ maxWidth: 'min(1240px, 100%)', margin: '0 auto', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <a href={base} style={{ textDecoration: 'none' }}>
             {logo ? <img src={logo} alt={c.business.display_name} style={{ maxHeight: 48 }} /> : (
               <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 700, color: T.colors.text, letterSpacing: -0.5 }}>{c.business.display_name}</div>
@@ -106,8 +106,8 @@ function GroveHeader({ T, c, logo, base }) {
 function GroveCTA({ T, c, headline }) {
   return (
     <section style={{ background: T.colors.accent, padding: '96px 32px', textAlign: 'center' }}>
-      <h2 style={{ fontFamily: T.fonts.display, fontSize: 56, fontWeight: 500, letterSpacing: -1, color: T.colors.bgLight, margin: '0 0 32px 0' }}>{headline || 'Ready when you need us.'}</h2>
-      <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bgLight, color: T.colors.accent, textDecoration: 'none', padding: '20px 44px', fontSize: 22, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+      <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 500, letterSpacing: -1, color: T.colors.bgLight, margin: '0 0 32px 0' }}>{headline || 'Ready when you need us.'}</h2>
+      <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bgLight, color: T.colors.accent, textDecoration: 'none', padding: '20px clamp(20px, 5vw, 44px)', fontSize: 22, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
         <span style={{ fontSize: 24 }}>☎</span> {c.business.phone_display}
       </a>
     </section>

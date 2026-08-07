@@ -13,7 +13,7 @@ export function BoltHeader({ config, logo, T: Toverride }) {
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(12px, 2vw, 16px) clamp(16px, 4vw, 24px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: 'clamp(12px, 2vw, 16px) clamp(16px, 4vw, 24px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
           <a href="/templates/bolt" style={{ textDecoration: 'none' }}>
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 'clamp(32px, 7vw, 44px)', maxWidth: 'min(50vw, 240px)', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
@@ -66,7 +66,7 @@ export function BoltFooter({ config, T: Toverride }) {
   const c = config
   return (
     <footer style={{ background: T.colors.bgAlt, padding: '48px 24px 24px', borderTop: `1px solid ${T.colors.border}` }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+      <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 40, marginBottom: 40 }}>
           <div>
             <div style={{ fontFamily: T.fonts.display, fontSize: "clamp(16px, 1.8vw, 22px)", fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 16 }}>

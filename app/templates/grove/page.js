@@ -144,7 +144,7 @@ export default async function GroveHome({ searchParams }) {
         <section style={{ background: T.colors.accent, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ color: T.colors.bgLight, fontSize: 12, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 32, opacity: 0.7 }}>What our neighbors say</div>
-            <div style={{ fontSize: 80, color: T.colors.bgLight, opacity: 0.3, lineHeight: 0.7, marginBottom: 20, fontFamily: T.fonts.display }}>"</div>
+            <div style={{ fontSize: "clamp(30px, 7.5vw, 80px)", color: T.colors.bgLight, opacity: 0.3, lineHeight: 0.7, marginBottom: 20, fontFamily: T.fonts.display }}>"</div>
             <p style={{ fontFamily: T.fonts.display, fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 400, fontStyle: 'italic', color: T.colors.bgLight, lineHeight: 1.3, margin: '0 0 40px 0', letterSpacing: -0.5 }}>
               {c.reviews.featured[0].text}
             </p>

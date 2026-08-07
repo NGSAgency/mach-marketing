@@ -21,7 +21,7 @@ export default function GroveAbout({ config: c, siteSlug }) {
         <section style={{ background: T.colors.bg, padding: '96px 32px 72px', textAlign: 'center' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
             <div style={{ display: 'inline-block', fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, padding: '6px 14px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Family-owned since {c.business.established_year}</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 72, fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05 }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05 }}>
               Who <em style={{ fontStyle: 'italic', color: T.colors.accent }}>we are</em>.
             </h1>
           </div>

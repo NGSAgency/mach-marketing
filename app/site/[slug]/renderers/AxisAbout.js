@@ -21,7 +21,7 @@ export default function AxisAbout({ config: c, siteSlug }) {
         <section style={{ background: T.colors.bg, padding: '96px 32px 64px', textAlign: 'center', borderBottom: `1px solid ${T.colors.borderLight}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Since {c.business.established_year}</div>
-            <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0 }}>
+            <h1 style={{ fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0 }}>
               Built on <span style={{ color: T.colors.accent }}>trust</span>.
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '24px auto 0', maxWidth: 680 }}>{c.business.years_in_business} years. {c.team.size} technicians. One family.</p>
@@ -43,7 +43,7 @@ export default function AxisAbout({ config: c, siteSlug }) {
         {c.certifications.length > 0 && (
           <section style={{ background: T.colors.bg, padding: '120px 32px' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-              <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0' }}>Credentials that matter.</h2>
+              <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0' }}>Credentials that matter.</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
                 {c.certifications.map(cert => (
                   <div key={cert.name} style={{ background: T.colors.bgSecondary, padding: 28, borderRadius: T.radius.lg, border: `1px solid ${T.colors.borderLight}` }}>

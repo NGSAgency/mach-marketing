@@ -37,7 +37,7 @@ export default function AxisAreaDetail({ config: c, siteSlug, area }) {
 
         <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <h2 style={{ fontSize: 56, fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0', lineHeight: 1.05 }}>Services in {area}.</h2>
+            <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0', lineHeight: 1.05 }}>Services in {area}.</h2>
             {categories.map(cat => (
               <div key={cat} style={{ marginBottom: 48 }}>
                 <h3 style={{ fontSize: 28, fontWeight: 700, letterSpacing: -0.5, marginBottom: 20 }}>{cat}</h3>

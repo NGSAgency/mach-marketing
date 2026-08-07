@@ -24,7 +24,7 @@ export default function BoltHome({ config: c }) {
 
         {/* Header */}
         <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 44, width: 'auto' }} />
             ) : (
@@ -41,7 +41,7 @@ export default function BoltHome({ config: c }) {
         {/* Hero */}
         <section style={{ background: T.colors.bg, padding: '60px 24px 80px', borderBottom: `4px solid ${T.colors.accent}`, textAlign: 'center' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 68, lineHeight: 0.95, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: '0 0 20px 0' }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6vw, 68px)", lineHeight: 0.95, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: '0 0 20px 0' }}>
               {c.positioning?.tagline || c.business.display_name}
             </h1>
             {c.positioning?.subtagline && (
@@ -56,8 +56,8 @@ export default function BoltHome({ config: c }) {
         {/* Services */}
         {categories.length > 0 && (
           <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 56, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: '0 0 40px 0', textAlign: 'center', lineHeight: 1 }}>
+            <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: '0 0 40px 0', textAlign: 'center', lineHeight: 1 }}>
                 Our <span style={{ color: T.colors.accent }}>Services</span>
               </h2>
               {categories.map(cat => (
@@ -81,10 +81,10 @@ export default function BoltHome({ config: c }) {
         {/* CTA */}
         <section style={{ background: T.colors.accent, padding: '80px 24px', textAlign: 'center' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 56, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0' }}>
               Need Service?
             </h2>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px 48px', fontFamily: T.fonts.display, fontSize: 32, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: 32, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
               <span style={{ fontSize: 36 }}>☎</span> {c.business.phone_display}
             </a>
           </div>

@@ -43,7 +43,7 @@ export default async function ServicePage({ params, searchParams }) {
               <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category}</div>
               {service.emergency && (<div style={{ fontSize: 12, color: T.colors.bg, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>)}
             </div>
-            <h1 style={{ fontSize: 88, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.text }}>
+            <h1 style={{ fontSize: "clamp(32px, 8vw, 88px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.text }}>
               {service.name}<br /><span style={{ color: T.colors.accent }}>in {c.primary_service_area}.</span>
             </h1>
             <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>

@@ -13,7 +13,7 @@ export function BoltCTA({ config, headline = "Need Service? Call Now.", sub = "2
         <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.bg, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
           {sub}
         </p>
-        <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px 48px', fontFamily: T.fonts.display, fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
+        <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 32 }}>☎</span> {c.business.phone_display}
         </a>
       </div>
@@ -25,7 +25,7 @@ export function BoltPageHero({ eyebrow, title, sub, T: Toverride }) {
   const T = Toverride || boltTokens
   return (
     <section style={{ background: T.colors.bg, padding: '80px 24px 60px', borderBottom: `4px solid ${T.colors.accent}` }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+      <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
         {eyebrow && <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 12 }}>{eyebrow}</div>}
         <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(30px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95, color: T.colors.text }}>
           {title}

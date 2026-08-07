@@ -19,7 +19,7 @@ export default function BoltContact({ config: c, siteSlug }) {
         <BoltHeader T={T} c={c} logo={logo} base={base} />
 
         <section style={{ background: T.colors.bgAlt, padding: '80px 24px', borderBottom: `4px solid ${T.colors.accent}` }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ fontFamily: T.fonts.display, fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>Contact</div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: 64, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0 }}>
               Get in <span style={{ color: T.colors.accent }}>touch</span>

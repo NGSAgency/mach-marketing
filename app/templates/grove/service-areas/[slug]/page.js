@@ -39,13 +39,13 @@ export default async function AreaPage({ params, searchParams }) {
               {crumbs.map((cr, i) => (<span key={i}>{i > 0 && <span style={{ margin: '0 8px' }}>/</span>}{i < crumbs.length - 1 ? <a href={`/templates/grove${cr.url}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>{cr.name}</a> : <span style={{ color: T.colors.accent, fontWeight: 600 }}>{cr.name}</span>}</span>))}
             </nav>
             <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 20 }}>Serving {area}</div>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 76, fontWeight: 500, letterSpacing: -2.5, margin: '0 0 28px 0', lineHeight: 1.02, color: T.colors.text, maxWidth: 900 }}>
+            <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(30px, 7vw, 76px)", fontWeight: 500, letterSpacing: -2.5, margin: '0 0 28px 0', lineHeight: 1.02, color: T.colors.text, maxWidth: 900 }}>
               {c.business.display_name} <em style={{ fontStyle: 'italic', color: T.colors.accent }}>in {area}</em>.
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 700 }}>
               {c.services.length}+ home services. Same-day response. Serving {area} homeowners since {c.business.established_year}.
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px 40px', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>
           </div>

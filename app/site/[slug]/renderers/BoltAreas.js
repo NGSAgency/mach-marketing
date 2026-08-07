@@ -20,7 +20,7 @@ export default function BoltAreas({ config: c, siteSlug }) {
         <BoltHeader T={T} c={c} logo={logo} base={base} />
 
         <section style={{ background: T.colors.bgAlt, padding: '80px 24px', borderBottom: `4px solid ${T.colors.accent}` }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ fontFamily: T.fonts.display, fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>Service Areas</div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: 64, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0 }}>
               Serving <span style={{ color: T.colors.accent }}>{c.primary_service_area}</span>
@@ -30,7 +30,7 @@ export default function BoltAreas({ config: c, siteSlug }) {
         </section>
 
         <section style={{ background: T.colors.bg, padding: '80px 24px 120px' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
               {c.service_areas.map(area => (
                 <a key={area} href={`${base}/service-areas/${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, borderLeft: `4px solid ${T.colors.accent}`, padding: 28, display: 'block' }}>

@@ -41,7 +41,7 @@ export default async function ServicesIndex({ searchParams }) {
                     <div style={{ height: 2, background: T.colors.accent, width: 40 }} />
                     <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', margin: 0 }}>{cat}</h2>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
                     {catServices.map(svc => (
                       <a key={svc.slug} href={`/templates/bolt/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 28, position: 'relative', display: 'block', borderRadius: T.radius.sm }}>
                         {svc.emergency && <div style={{ position: 'absolute', top: 12, right: 12, background: T.colors.urgent, color: T.colors.text, fontSize: 9, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 8px', borderRadius: T.radius.sm }}>24/7</div>}
