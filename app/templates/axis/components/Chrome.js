@@ -52,16 +52,16 @@ export function AxisFooter({ config, T: Toverride }) {
   const T = Toverride || axisTokens
   const c = config
   return (
-    <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '80px 32px 32px' }}>
+    <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: 'clamp(48px, 8vw, 80px) clamp(16px, 4vw, 32px) 32px' }}>
       <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 'clamp(20px, 3.5vw, 48px)', marginBottom: 64 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 'clamp(20px, 3.5vw, 48px)', marginBottom: 64 }}>
           <div>
             <div style={{ fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 700, color: T.colors.textInverse, marginBottom: 16, letterSpacing: -0.5 }}>{c.business.display_name}</div>
             <div style={{ fontSize: 15, color: T.colors.textInverseDim, lineHeight: 1.6, maxWidth: 380 }}>
               {c.positioning.tagline}
             </div>
             <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '12px 20px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full }}>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '12px 20px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full, whiteSpace: 'nowrap', display: 'inline-block' }}>
                 {c.business.phone_display}
               </a>
             </div>
@@ -82,8 +82,8 @@ export function AxisFooter({ config, T: Toverride }) {
           </div>
           <div>
             <div style={{ fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 20, fontWeight: 700 }}>Contact</div>
-            <div style={{ fontSize: 14, marginBottom: 10, color: T.colors.textInverseDim }}>{c.business.email}</div>
-            <div style={{ fontSize: 14, marginBottom: 10, color: T.colors.textInverseDim, lineHeight: 1.5 }}>{c.business.address_line}</div>
+            <div style={{ fontSize: 14, marginBottom: 10, color: T.colors.textInverseDim }}><span style={{ wordBreak: "break-word" }}>{c.business.email}</span></div>
+            <div style={{ fontSize: 14, marginBottom: 10, color: T.colors.textInverseDim, lineHeight: 1.5 }}><span style={{ wordBreak: "break-word" }}>{c.business.address_line}</span></div>
           </div>
         </div>
         <div style={{ paddingTop: 32, borderTop: `1px solid ${T.colors.borderDark}`, display: 'flex', justifyContent: 'space-between', fontSize: 12, color: T.colors.textMuted }}>

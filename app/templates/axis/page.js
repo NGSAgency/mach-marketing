@@ -24,25 +24,25 @@ export default async function AxisHome({ searchParams }) {
 
         {/* HERO - immersive full-viewport */}
         <section style={{ background: T.colors.bg, padding: '80px 32px 0', minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <div style={{ maxWidth: 1400, margin: '0 auto', width: '100%', textAlign: 'center', paddingBottom: 64 }}>
+          <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', width: '100%', textAlign: 'center', paddingBottom: 64 }}>
             <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 32, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>
               ★ {c.reviews.google_rating} · {c.reviews.google_count}+ reviews · Family-owned since {c.business.established_year}
             </div>
-            <h1 style={{ fontSize: 128, fontWeight: 800, letterSpacing: -5, lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.text }}>
+            <h1 style={{ fontSize: "clamp(40px, 11vw, 128px)", fontWeight: 800, letterSpacing: 'clamp(-2px, -0.5vw, -5px)', lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.text }}>
               Your home,<br />
               <span style={{ color: T.colors.accent }}>handled.</span>
             </h1>
-            <p style={{ fontSize: 26, color: T.colors.textDim, lineHeight: 1.4, margin: '0 auto 48px', maxWidth: 780, fontWeight: 400 }}>
+            <p style={{ fontSize: "clamp(16px, 2vw, 26px)", color: T.colors.textDim, lineHeight: 1.4, margin: '0 auto 48px', maxWidth: 780, fontWeight: 400 }}>
               HVAC, plumbing, and electrical. One number. One team. One accountability.
             </p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 40px', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Get started</a>
-              <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text, textDecoration: 'none', padding: '20px 40px', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, border: `1.5px solid ${T.colors.border}` }}>{c.business.phone_display}</a>
+              <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Get started</a>
+              <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, border: `1.5px solid ${T.colors.border}` }}>{c.business.phone_display}</a>
             </div>
           </div>
 
           {/* Product hero visual - clean big card */}
-          <div style={{ maxWidth: 1400, margin: '0 auto', width: '100%', background: T.colors.bgSecondary, borderRadius: `${T.radius.xl} ${T.radius.xl} 0 0`, aspectRatio: '21/9', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${T.colors.borderLight}` }}>
+          <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', width: '100%', background: T.colors.bgSecondary, borderRadius: `${T.radius.xl} ${T.radius.xl} 0 0`, aspectRatio: '21/9', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${T.colors.borderLight}` }}>
             <div style={{ textAlign: 'center', color: T.colors.textDim, fontSize: 14, fontWeight: 500 }}>
               [ Big hero product-style image ]<br/>
               <span style={{ color: T.colors.textMuted, fontSize: 12, marginTop: 8, display: 'block' }}>Full-bleed lifestyle shot</span>
@@ -61,12 +61,12 @@ export default async function AxisHome({ searchParams }) {
               color: isDark ? T.colors.textInverse : T.colors.text,
               padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)'
             }}>
-              <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 96, alignItems: 'center' }}>
+              <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 96, alignItems: 'center' }}>
                 <div style={{ order: alt ? 2 : 1 }}>
                   <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 24, textTransform: 'uppercase', letterSpacing: 2 }}>
                     {cat}
                   </div>
-                  <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.textInverse : T.colors.text }}>
+                  <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.textInverse : T.colors.text }}>
                     {cat === 'HVAC' ? <>Climate<br/>you control.</> : cat === 'Plumbing' ? <>Water<br/>that works.</> : <>Power<br/>you trust.</>}
                   </h2>
                   <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: isDark ? T.colors.textInverseDim : T.colors.textDim, lineHeight: 1.55, marginBottom: 40, maxWidth: 480 }}>
@@ -103,7 +103,7 @@ export default async function AxisHome({ searchParams }) {
           <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>
               <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>The difference</div>
-              <h2 style={{ fontSize: "clamp(30px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: 0 }}>
+              <h2 style={{ fontSize: "clamp(30px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: 'clamp(-1px, -0.3vw, -3px)', lineHeight: 1, margin: 0 }}>
                 Not another <br/><span style={{ color: T.colors.accent }}>service company.</span>
               </h2>
             </div>
@@ -150,7 +150,7 @@ export default async function AxisHome({ searchParams }) {
 
         {/* COVERAGE - horizontal band */}
         <section style={{ background: T.colors.bg, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
-          <div style={{ maxWidth: 1400, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 24px 0' }}>
               Serving the <span style={{ color: T.colors.accent }}>{c.primary_service_area}</span>.
             </h2>
@@ -170,17 +170,17 @@ export default async function AxisHome({ searchParams }) {
         {/* FINAL CTA - bold */}
         <section style={{ background: T.colors.accent, color: T.colors.bg, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)', textAlign: 'center' }}>
           <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto' }}>
-            <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.bg }}>
+            <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.bg }}>
               Let's fix it.
             </h2>
             <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.bg, opacity: 0.9, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
               Call now or request a free quote online.
             </p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.text, textDecoration: 'none', padding: '20px 40px', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full }}>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.text, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full }}>
                 Call {c.business.phone_display}
               </a>
-              <a href="/templates/axis/contact" style={{ background: 'transparent', color: T.colors.bg, textDecoration: 'none', padding: '20px 40px', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full, border: `2px solid ${T.colors.bg}` }}>
+              <a href="/templates/axis/contact" style={{ background: 'transparent', color: T.colors.bg, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full, border: `2px solid ${T.colors.bg}` }}>
                 Get a free quote →
               </a>
             </div>
