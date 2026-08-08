@@ -62,8 +62,8 @@ export function CFooter() {
           </div>
           <div>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: cTokens.fgMuted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16, fontWeight: 500 }}>Offices</div>
-            <div style={{ marginBottom: 8, fontSize: 13, color: cTokens.fgDim }}>Kansas City, MO</div>
-            <div style={{ marginBottom: 8, fontSize: 13, color: cTokens.fgDim }}>Boston, MA</div>
+            <div style={{ marginBottom: 8, fontSize: 13, color: cTokens.fgDim }}>Kansas City</div>
+            <div style={{ marginBottom: 8, fontSize: 13, color: cTokens.fgDim }}>Boston</div>
           </div>
           <div>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: cTokens.fgMuted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16, fontWeight: 500 }}>Contact</div>

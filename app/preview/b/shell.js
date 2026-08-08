@@ -70,8 +70,8 @@ export function BFooter() {
           </div>
           <div>
             <div style={{ fontSize: 11, opacity: 0.5, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 16, fontWeight: 700 }}>Offices</div>
-            <div style={{ marginBottom: 10, fontSize: 14, opacity: 0.75 }}>Kansas City, MO</div>
-            <div style={{ marginBottom: 10, fontSize: 14, opacity: 0.75 }}>Boston, MA</div>
+            <div style={{ marginBottom: 10, fontSize: 14, opacity: 0.75 }}>Kansas City</div>
+            <div style={{ marginBottom: 10, fontSize: 14, opacity: 0.75 }}>Boston</div>
           </div>
         </div>
         <div style={{ paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', fontSize: 12, opacity: 0.5 }}>

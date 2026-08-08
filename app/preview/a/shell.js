@@ -83,8 +83,8 @@ export function AFooter() {
           </div>
           <div>
             <div style={{ fontSize: 11, color: aTokens.fgMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 16, fontWeight: 600 }}>Offices</div>
-            <div style={{ marginBottom: 10, fontSize: 14, color: aTokens.fgDim }}>Kansas City, MO</div>
-            <div style={{ marginBottom: 10, fontSize: 14, color: aTokens.fgDim }}>Boston, MA</div>
+            <div style={{ marginBottom: 10, fontSize: 14, color: aTokens.fgDim }}>Kansas City</div>
+            <div style={{ marginBottom: 10, fontSize: 14, color: aTokens.fgDim }}>Boston</div>
           </div>
           <div>
             <div style={{ fontSize: 11, color: aTokens.fgMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 16, fontWeight: 600 }}>Contact</div>

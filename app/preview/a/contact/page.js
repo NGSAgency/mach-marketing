@@ -43,8 +43,8 @@ export default function AContact() {
             </div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 16 }}>
               <div style={{ fontSize: 11, color: T.accent2, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>Offices</div>
-              <div style={{ fontSize: 16, marginBottom: 6, fontWeight: 500 }}>Kansas City, MO</div>
-              <div style={{ fontSize: 16, fontWeight: 500 }}>Boston, MA</div>
+              <div style={{ fontSize: 16, marginBottom: 6, fontWeight: 500 }}>Kansas City</div>
+              <div style={{ fontSize: 16, fontWeight: 500 }}>Boston</div>
             </div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16 }}>
               <div style={{ fontSize: 11, color: T.accent3, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>Response</div>
