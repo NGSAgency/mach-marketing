@@ -1,45 +1,51 @@
-import { AHeader, AFooter, aTokens as T } from '../shell.js'
+import { AHeader, AFooter, MeshBg, aTokens as T } from '../shell.js'
 import { content } from '../../../../lib/site-content/data.js'
 
 export const metadata = { title: 'Team - MACH', robots: { index: false, follow: false } }
 
 export default function ATeam() {
   return (
-    <div style={{ background: T.bg, color: T.ink, minHeight: '100vh', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ background: T.bg, color: T.fg, minHeight: '100vh', fontFamily: 'Geist, system-ui, sans-serif' }}>
       <AHeader />
-      <section style={{ padding: 'clamp(60px, 10vw, 100px) clamp(16px, 4vw, 40px) 0' }}>
-        <div style={{ maxWidth: 'min(1000px, 100%)', margin: '0 auto' }}>
-          <div style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: T.accent, fontWeight: 600, marginBottom: 32 }}>The Masthead</div>
-          <h1 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(48px, 10vw, 128px)', fontWeight: 300, letterSpacing: -5, lineHeight: 0.92, margin: '0 0 40px 0' }}>Three founders,<br /><em style={{ fontStyle: 'italic', color: T.accent, fontWeight: 400 }}>one mission</em>.</h1>
-          <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(19px, 2.2vw, 24px)', color: T.inkDim, lineHeight: 1.65, columns: 'clamp(280px, 100%, 500px)', columnGap: 48, fontWeight: 400 }}>
-            <p style={{ margin: '0 0 24px 0' }}>{content.mission}</p>
-            <p style={{ margin: 0 }}>{content.why}</p>
-          </div>
+      <section style={{ position: 'relative', padding: 'clamp(60px, 10vw, 100px) clamp(16px, 4vw, 32px) clamp(48px, 8vw, 80px)', overflow: 'hidden' }}>
+        <MeshBg />
+        <div style={{ maxWidth: 'min(1000px, 100%)', margin: '0 auto', position: 'relative', textAlign: 'center' }}>
+          <div style={{ fontSize: 12, color: T.accent1, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 24 }}>Team</div>
+          <h1 style={{ fontSize: 'clamp(44px, 9vw, 96px)', fontWeight: 700, letterSpacing: -4, lineHeight: 0.98, margin: '0 auto 32px', maxWidth: 900 }}>
+            Three founders.<br /><span style={{ background: `linear-gradient(135deg, ${T.accent1}, ${T.accent2}, ${T.accent3})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>One mission.</span>
+          </h1>
+          <p style={{ fontSize: 'clamp(17px, 2vw, 21px)', color: T.fgDim, lineHeight: 1.55, margin: '0 auto 24px', maxWidth: 800 }}>{content.mission}</p>
+          <p style={{ fontSize: 'clamp(17px, 2vw, 21px)', color: T.fgDim, lineHeight: 1.55, margin: '0 auto', maxWidth: 800 }}>{content.why}</p>
         </div>
       </section>
-      {content.bios.map((b, idx) => (
-        <section key={b.name} style={{ padding: 'clamp(80px, 12vw, 140px) clamp(16px, 4vw, 40px)', borderTop: `1px solid ${T.border}`, background: idx % 2 === 1 ? T.bgAlt : T.bg }}>
-          <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'clamp(32px, 6vw, 80px)', alignItems: 'start' }}>
-            <div>
-              <div style={{ background: T.accentSoft, aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${T.border}` }}>
-                <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 'clamp(96px, 18vw, 200px)', color: T.accent, fontWeight: 300, letterSpacing: -8 }}>{b.name[0]}</div>
+
+      <section style={{ padding: 'clamp(48px, 8vw, 96px) clamp(16px, 4vw, 32px) clamp(80px, 12vw, 120px)', borderTop: `1px solid ${T.border}` }}>
+        <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 24 }}>
+          {content.bios.map((b, idx) => (
+            <div key={b.name} style={{ padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 20, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3][idx]}30, transparent 60%)`, filter: 'blur(40px)' }} />
+              <div style={{ position: 'relative' }}>
+                <div style={{ width: '100%', aspectRatio: '4/5', borderRadius: 12, background: `linear-gradient(135deg, ${[T.accent1, T.accent2, T.accent3][idx]}30, ${T.bgAlt})`, display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${T.border}`, marginBottom: 24, overflow: 'hidden' }}>
+                  <div style={{ fontSize: 'clamp(80px, 15vw, 140px)', fontWeight: 700, background: `linear-gradient(135deg, ${T.fg}, ${T.fgDim})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: -6 }}>{b.name[0]}</div>
+                </div>
+                <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: [T.accent1, T.accent2, T.accent3][idx], letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>{b.location} · 0{idx + 1}</div>
+                <h2 style={{ fontSize: 32, fontWeight: 700, letterSpacing: -1.5, margin: '0 0 8px 0' }}>{b.name}</h2>
+                <div style={{ fontSize: 14, color: T.fgDim, marginBottom: 20 }}>{b.role}</div>
+                <p style={{ fontSize: 14, color: T.fgDim, lineHeight: 1.65, margin: 0 }}>{b.text}</p>
               </div>
             </div>
-            <div>
-              <div style={{ fontSize: 11, color: T.accent, letterSpacing: 3, textTransform: 'uppercase', fontWeight: 600, marginBottom: 16, fontFamily: 'Inter, system-ui, sans-serif' }}>№ {String(idx + 1).padStart(2, '0')} · {b.location}</div>
-              <h2 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(48px, 9vw, 112px)', fontWeight: 300, letterSpacing: -4, lineHeight: 0.92, margin: '0 0 12px 0' }}>{b.name}<em style={{ fontStyle: 'italic', color: T.accent, fontWeight: 400 }}>.</em></h2>
-              <div style={{ fontSize: 14, color: T.inkMuted, marginBottom: 32, letterSpacing: 0.5, fontStyle: 'italic', fontFamily: 'Fraunces, Georgia, serif' }}>{b.role}</div>
-              <p style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(17px, 1.8vw, 20px)', color: T.inkDim, lineHeight: 1.7, margin: 0 }}>{b.text}</p>
-            </div>
-          </div>
-        </section>
-      ))}
-      <section style={{ padding: 'clamp(80px, 12vw, 140px) clamp(16px, 4vw, 40px)', textAlign: 'center', borderTop: `1px solid ${T.border}` }}>
-        <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(40px, 8vw, 96px)', fontWeight: 300, letterSpacing: -4, lineHeight: 0.95, margin: '0 0 40px 0' }}>Work <em style={{ fontStyle: 'italic', color: T.accent }}>with us</em>.</h2>
-          <a href="/preview/a/contact" style={{ background: T.ink, color: T.bg, padding: '20px 40px', fontSize: 15, fontWeight: 600, textDecoration: 'none', display: 'inline-block', letterSpacing: 1, textTransform: 'uppercase' }}>Get in touch →</a>
+          ))}
         </div>
       </section>
+
+      <section style={{ padding: 'clamp(80px, 14vw, 160px) clamp(16px, 4vw, 32px)', position: 'relative', overflow: 'hidden' }}>
+        <MeshBg />
+        <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+          <h2 style={{ fontSize: 'clamp(36px, 7vw, 72px)', fontWeight: 700, letterSpacing: -3, lineHeight: 1.05, margin: '0 0 32px 0' }}>Work <span style={{ background: `linear-gradient(135deg, ${T.accent1}, ${T.accent2})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>with us</span>.</h2>
+          <a href="/preview/a/contact" style={{ background: T.fg, color: T.bg, padding: '16px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, textDecoration: 'none', display: 'inline-block', boxShadow: `0 0 40px ${T.glowPurple}` }}>Get in touch →</a>
+        </div>
+      </section>
+
       <AFooter />
     </div>
   )
