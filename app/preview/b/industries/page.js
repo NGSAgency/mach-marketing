@@ -28,8 +28,7 @@ export default function BIndustries() {
             <div key={i.name} style={{ padding: 'clamp(32px, 4vw, 48px)', background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 24, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: `radial-gradient(circle, ${T.accent}20, transparent 60%)`, filter: 'blur(30px)' }} />
               <div style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 32 }}>
-                  <div style={{ fontSize: 44 }}>{i.icon}</div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'start', marginBottom: 40 }}>
                   <div style={{ padding: '4px 10px', background: T.accentSoft, color: T.accentDim, borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: 1 }}>{String(idx + 1).padStart(2, '0')}</div>
                 </div>
                 <div style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(20px, 2.5vw, 24px)', fontWeight: 700, letterSpacing: -0.8 }}>{i.name}</div>

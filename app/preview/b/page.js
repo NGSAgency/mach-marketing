@@ -135,7 +135,7 @@ export default function BHome() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 12 }}>
             {content.industries.map(i => (
               <div key={i.name} style={{ padding: 24, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 16, textAlign: 'center' }}>
-                <div style={{ fontSize: 36, marginBottom: 12 }}>{i.icon}</div>
+                
                 <div style={{ fontSize: 15, fontWeight: 600, color: T.ink }}>{i.name}</div>
               </div>
             ))}

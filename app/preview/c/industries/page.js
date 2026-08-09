@@ -27,7 +27,6 @@ export default function CIndustries() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {content.industries.map((i, idx) => (
               <div key={i.name} style={{ padding: 'clamp(16px, 2vw, 24px) clamp(24px, 3vw, 36px)', background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 100, display: 'flex', alignItems: 'center', gap: 14, fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(18px, 2.5vw, 28px)', fontWeight: 600, letterSpacing: -0.5 }}>
-                <span style={{ fontSize: 'clamp(24px, 3vw, 32px)' }}>{i.icon}</span>
                 <span>{i.name}</span>
                 <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: T.fgMuted, fontWeight: 400 }}>{String(idx + 1).padStart(2, '0')}</span>
               </div>

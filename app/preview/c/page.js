@@ -105,7 +105,6 @@ export default function CHome() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {content.industries.map(i => (
               <div key={i.name} style={{ padding: '14px 22px', background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 100, fontSize: 15, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 18 }}>{i.icon}</span>
                 {i.name}
               </div>
             ))}

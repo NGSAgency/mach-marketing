@@ -26,8 +26,7 @@ export default function AIndustries() {
             <div key={i.name} style={{ padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3][idx % 3]}30, transparent 60%)`, filter: 'blur(30px)' }} />
               <div style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 24 }}>
-                  <div style={{ fontSize: 36 }}>{i.icon}</div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'start', marginBottom: 32 }}>
                   <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: T.fgMuted, letterSpacing: 1 }}>{String(idx + 1).padStart(2, '0')}</div>
                 </div>
                 <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: -0.5 }}>{i.name}</div>
