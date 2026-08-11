@@ -8,10 +8,10 @@ export const bTokens = {
   ink: '#0f0e0c',
   inkDim: '#5a5854',
   inkMuted: '#8a8680',
-  accent: '#f97316',
-  accentDim: '#ea580c',
-  accentSoft: '#fed7aa',
-  accentGlow: '#fb923c40',
+  accent: '#0851cf',
+  accentDim: '#0537a0',
+  accentSoft: '#dbeafe',
+  accentGlow: '#0851cf40',
   purple: '#7c3aed',
   green: '#059669',
   border: 'rgba(15,14,12,0.1)',
@@ -23,9 +23,7 @@ export function BHeader() {
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(253,250,246,0.85)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50, borderBottom: `1px solid ${bTokens.border}` }}>
       <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', padding: '18px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
         <a href="/preview/b" style={{ display: 'flex', alignItems: 'center', gap: 10, color: bTokens.ink, textDecoration: 'none' }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${bTokens.accent}, ${bTokens.accentDim})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ width: 12, height: 12, borderRadius: 2, background: bTokens.bg }} />
-          </div>
+          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block' }} />
           <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 800, fontSize: 18, letterSpacing: -0.5 }}>MACH</span>
         </a>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
@@ -51,9 +49,7 @@ export function BFooter() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 40, marginBottom: 48, paddingTop: 48, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${bTokens.accent}, ${bTokens.accentDim})`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: 12, height: 12, borderRadius: 2, background: bTokens.bg }} />
-              </div>
+              <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
               <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 800, fontSize: 18 }}>MACH</span>
             </div>
             <div style={{ fontSize: 14, opacity: 0.7, lineHeight: 1.6, maxWidth: 260 }}>Growth marketing for service-based businesses that want to build something lasting.</div>

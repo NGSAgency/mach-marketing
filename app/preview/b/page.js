@@ -77,13 +77,13 @@ export default function BHome() {
               <p style={{ fontSize: 14, color: T.inkDim, lineHeight: 1.55, margin: 0 }}>Sustainable organic growth that drives qualified traffic.</p>
             </div>
             <div style={{ padding: 32, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 24 }}>
-              <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.purple, marginBottom: 20 }}>{content.services[2].tag} · Paid Media</div>
+              <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.accent, marginBottom: 20 }}>{content.services[2].tag} · Paid Media</div>
               <h3 style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 700, letterSpacing: -1, lineHeight: 1.15, margin: '0 0 16px 0' }}>{content.services[2].headline}</h3>
               <p style={{ fontSize: 14, color: T.inkDim, lineHeight: 1.55, margin: 0 }}>Measurable returns from Google, Meta, and other leading platforms.</p>
             </div>
             <div style={{ gridColumn: 'span 2', padding: 40, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 32, alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.green, marginBottom: 20 }}>{content.services[3].tag} · Content</div>
+                <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.accentDim, marginBottom: 20 }}>{content.services[3].tag} · Content</div>
                 <h3 style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 700, letterSpacing: -1, lineHeight: 1.15, margin: '0 0 12px 0' }}>{content.services[3].headline}</h3>
                 <p style={{ fontSize: 14, color: T.inkDim, lineHeight: 1.55, margin: 0 }}>Strategic content that educates, builds credibility, and drives action.</p>
               </div>

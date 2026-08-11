@@ -10,10 +10,10 @@ export const aTokens = {
   fg: '#f5f5f7',
   fgDim: '#a1a1aa',
   fgMuted: '#71717a',
-  accent1: '#a855f7',
-  accent2: '#3b82f6',
-  accent3: '#06b6d4',
-  glowPurple: '#a855f733',
+  accent1: '#3b7ce8',
+  accent2: '#0851cf',
+  accent3: '#0537a0',
+  glowPurple: '#0851cf33',
   glowBlue: '#3b82f633',
 }
 
@@ -40,9 +40,7 @@ export function AHeader() {
     <nav style={{ borderBottom: `1px solid ${aTokens.border}`, position: 'sticky', top: 0, background: 'rgba(5,5,8,0.7)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50 }}>
       <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '16px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
         <a href="/preview/a" style={{ display: 'flex', alignItems: 'center', gap: 10, color: aTokens.fg, textDecoration: 'none' }}>
-          <div style={{ width: 28, height: 28, borderRadius: 8, background: `linear-gradient(135deg, ${aTokens.accent1}, ${aTokens.accent2})`, boxShadow: `0 0 24px ${aTokens.glowPurple}`, position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 10, height: 10, borderRadius: 2, background: aTokens.fg }} />
-          </div>
+          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
           <span style={{ fontFamily: 'Geist, system-ui, sans-serif', fontWeight: 700, fontSize: 16, letterSpacing: -0.3 }}>MACH</span>
         </a>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
@@ -63,9 +61,7 @@ export function AFooter() {
       <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 64 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: `linear-gradient(135deg, ${aTokens.accent1}, ${aTokens.accent2})`, boxShadow: `0 0 24px ${aTokens.glowPurple}`, position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 12, height: 12, borderRadius: 2, background: aTokens.fg }} />
-            </div>
+            <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 40, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
             <span style={{ fontFamily: 'Geist, system-ui, sans-serif', fontWeight: 700, fontSize: 20, letterSpacing: -0.5 }}>MACH</span>
           </div>
           <div style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 500, letterSpacing: -1.5, lineHeight: 1.15, maxWidth: 780, background: `linear-gradient(135deg, ${aTokens.fg}, ${aTokens.fgDim})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>The growth engine for service-based businesses.</div>

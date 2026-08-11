@@ -4,7 +4,7 @@ import { content } from '../../../../lib/site-content/data.js'
 export const metadata = { title: 'Services - MACH', robots: { index: false, follow: false } }
 
 const ACCENT_MAP = {
-  '01': { primary: '#f97316', soft: '#fed7aa', dim: '#ea580c' },
+  '01': { primary: '#0851cf', soft: '#dbeafe', dim: '#0537a0' },
   '02': { primary: '#7c3aed', soft: '#ede9fe', dim: '#6d28d9' },
   '03': { primary: '#059669', soft: '#d1fae5', dim: '#047857' },
   '04': { primary: '#2563eb', soft: '#dbeafe', dim: '#1d4ed8' },

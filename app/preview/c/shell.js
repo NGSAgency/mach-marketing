@@ -10,10 +10,10 @@ export const cTokens = {
   fg: '#fafafa',
   fgDim: '#a1a1a3',
   fgMuted: '#6e6e70',
-  accent: '#ff6b47',
-  accentDim: '#ea580c',
-  accentSoft: 'rgba(255,107,71,0.1)',
-  accentGlow: 'rgba(255,107,71,0.3)',
+  accent: '#3b7ce8',
+  accentDim: '#0851cf',
+  accentSoft: 'rgba(59,124,232,0.12)',
+  accentGlow: 'rgba(59,124,232,0.35)',
 }
 
 export function CHeader() {
@@ -21,9 +21,7 @@ export function CHeader() {
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(10,10,11,0.6)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', zIndex: 50, borderBottom: `1px solid ${cTokens.border}` }}>
       <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '14px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
         <a href="/preview/c" style={{ display: 'flex', alignItems: 'center', gap: 10, color: cTokens.fg, textDecoration: 'none' }}>
-          <div style={{ width: 24, height: 24, borderRadius: 6, background: cTokens.accent, boxShadow: `0 0 20px ${cTokens.accentGlow}`, position: 'relative' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(45deg)', width: 8, height: 8, background: cTokens.bg }} />
-          </div>
+          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 28, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
           <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 700, fontSize: 15, letterSpacing: -0.3 }}>MACH</span>
         </a>
         <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>

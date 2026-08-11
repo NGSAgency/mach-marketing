@@ -4,9 +4,9 @@ import { content } from '../../../../lib/site-content/data.js'
 export const metadata = { title: 'Team - MACH', robots: { index: false, follow: false } }
 
 const BIO_COLORS = [
-  { primary: '#f97316', soft: '#fed7aa', dim: '#ea580c' },
-  { primary: '#7c3aed', soft: '#ede9fe', dim: '#6d28d9' },
-  { primary: '#059669', soft: '#d1fae5', dim: '#047857' },
+  { primary: '#0851cf', soft: '#dbeafe', dim: '#0537a0' },
+  { primary: '#3b7ce8', soft: '#dbeafe', dim: '#0851cf' },
+  { primary: '#0537a0', soft: '#dbeafe', dim: '#020c4a' },
 ]
 
 export default function BTeam() {
