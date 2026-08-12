@@ -61,8 +61,8 @@ export default function BHome() {
             <a href="/preview/b/services" style={{ color: T.ink, fontSize: 15, fontWeight: 600, textDecoration: 'none', padding: '10px 20px', border: `1.5px solid ${T.border}`, borderRadius: 100 }}>All services →</a>
           </div>
           {/* Bento layout - featured + smaller cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
-            <div style={{ gridColumn: 'span 2', minHeight: 320, padding: 40, background: `linear-gradient(135deg, ${T.ink} 0%, #2a2620 100%)`, color: T.bg, borderRadius: 24, position: 'relative', overflow: 'hidden' }}>
+          <div className="bento-grid-b" style={{ display: 'grid', gap: 16 }}>
+            <div className="span-2" style={{ minHeight: 320, padding: 40, background: `linear-gradient(135deg, ${T.ink} 0%, #2a2620 100%)`, color: T.bg, borderRadius: 24, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: '-20%', right: '-10%', width: '60%', height: '80%', borderRadius: '50%', background: `radial-gradient(circle, ${T.accent}30, transparent 60%)`, filter: 'blur(60px)' }} />
               <div style={{ position: 'relative' }}>
                 <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.accent, marginBottom: 20 }}>{content.services[0].tag} · {content.services[0].name}</div>
@@ -81,7 +81,7 @@ export default function BHome() {
               <h3 style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 700, letterSpacing: -1, lineHeight: 1.15, margin: '0 0 16px 0' }}>{content.services[2].headline}</h3>
               <p style={{ fontSize: 14, color: T.inkDim, lineHeight: 1.55, margin: 0 }}>Measurable returns from Google, Meta, and other leading platforms.</p>
             </div>
-            <div style={{ gridColumn: 'span 2', padding: 40, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 32, alignItems: 'center' }}>
+            <div className="span-2" style={{ padding: 40, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 32, alignItems: 'center' }}>
               <div>
                 <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: T.accentDim, marginBottom: 20 }}>{content.services[3].tag} · Content</div>
                 <h3 style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 700, letterSpacing: -1, lineHeight: 1.15, margin: '0 0 12px 0' }}>{content.services[3].headline}</h3>

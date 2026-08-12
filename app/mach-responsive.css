@@ -52,3 +52,20 @@ body:has(.mach-menu-check:checked) { overflow: hidden; }
   gap: 12px;
   justify-content: center;
 }
+
+
+/* Option B bento grid */
+.bento-grid-b {
+  grid-template-columns: 1fr;
+}
+.bento-grid-b > * {
+  grid-column: auto !important;
+}
+@media (min-width: 768px) {
+  .bento-grid-b {
+    grid-template-columns: 1fr 1fr;
+  }
+  .bento-grid-b > .span-2 {
+    grid-column: span 2 !important;
+  }
+}
