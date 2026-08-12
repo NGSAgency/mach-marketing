@@ -4,14 +4,14 @@ export const metadata = { title: 'Contact - Sentry Solutions', robots: { index: 
 
 export default function SentryContact() {
   return (
-    <div style={{ background: T.bg, color: T.fg, minHeight: '100vh', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ background: T.bg, color: T.fg, minHeight: '100vh', fontFamily: 'Manrope, system-ui, sans-serif' }}>
       <SHeader />
 
       <section style={{ position: 'relative', padding: 'clamp(80px, 12vw, 140px) clamp(16px, 4vw, 32px) clamp(48px, 8vw, 80px)', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '30%', right: '-15%', width: '50%', height: '70%', borderRadius: '50%', background: `radial-gradient(circle, ${T.accent}15, transparent 60%)`, filter: 'blur(120px)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', position: 'relative' }}>
           <div style={{ fontSize: 12, color: T.accent, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 24 }}>Contact</div>
-          <h1 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(44px, 8vw, 96px)', fontWeight: 400, letterSpacing: -3, lineHeight: 0.98, margin: '0 0 32px 0' }}>
+          <h1 style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(44px, 8vw, 96px)', fontWeight: 400, letterSpacing: -3, lineHeight: 0.98, margin: '0 0 32px 0' }}>
             Schedule a <em style={{ fontStyle: 'italic', color: T.accent }}>complimentary</em> strategy call.
           </h1>
           <p style={{ fontSize: 'clamp(17px, 2vw, 22px)', color: T.fgDim, lineHeight: 1.55, margin: 0, maxWidth: 780 }}>
@@ -34,12 +34,12 @@ export default function SentryContact() {
               ].map(f => (
                 <div key={f.label}>
                   <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>{f.label}</label>
-                  <input type={f.type} style={{ width: '100%', background: T.bg, border: `1px solid ${T.borderStrong}`, borderRadius: 4, padding: '14px 16px', fontSize: 15, fontFamily: 'Inter, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                  <input type={f.type} style={{ width: '100%', background: T.bg, border: `1px solid ${T.borderStrong}`, borderRadius: 4, padding: '14px 16px', fontSize: 15, fontFamily: 'Manrope, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
                 </div>
               ))}
               <div>
                 <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 10 }}>How can we help?</label>
-                <textarea rows={4} style={{ width: '100%', background: T.bg, border: `1px solid ${T.borderStrong}`, borderRadius: 4, padding: '14px 16px', fontSize: 15, fontFamily: 'Inter, system-ui, sans-serif', color: T.fg, outline: 'none', resize: 'vertical' }} />
+                <textarea rows={4} style={{ width: '100%', background: T.bg, border: `1px solid ${T.borderStrong}`, borderRadius: 4, padding: '14px 16px', fontSize: 15, fontFamily: 'Manrope, system-ui, sans-serif', color: T.fg, outline: 'none', resize: 'vertical' }} />
               </div>
               <button type="submit" style={{ background: T.accent, color: T.navy, padding: '16px 28px', borderRadius: 4, fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', justifySelf: 'start', letterSpacing: 0.3 }}>Send Message →</button>
             </form>
@@ -48,7 +48,7 @@ export default function SentryContact() {
           <div style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 12 }}>
               <div style={{ fontSize: 11, color: T.accent, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 12 }}>Response Time</div>
-              <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 22, marginBottom: 8 }}>Within 24 hours</div>
+              <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 22, marginBottom: 8 }}>Within 24 hours</div>
               <div style={{ fontSize: 14, color: T.fgDim, lineHeight: 1.5 }}>Every inquiry receives a personal response from our team.</div>
             </div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 12 }}>

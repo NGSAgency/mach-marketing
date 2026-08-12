@@ -61,7 +61,7 @@ export function SFooter() {
       <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 64 }}>
           <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 48, width: 'auto', marginBottom: 32 }} />
-          <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(28px, 4.5vw, 44px)', fontWeight: 400, letterSpacing: -1.5, lineHeight: 1.15, maxWidth: 780, fontStyle: 'italic' }}>Institutional-grade strategy for entrepreneurial businesses.</div>
+          <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 'clamp(28px, 4.5vw, 44px)', fontWeight: 400, letterSpacing: -1.5, lineHeight: 1.15, maxWidth: 780, fontStyle: 'italic' }}>Institutional-grade strategy for entrepreneurial businesses.</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 40, marginBottom: 48, paddingTop: 48, borderTop: `1px solid ${T.border}` }}>
           <div>
