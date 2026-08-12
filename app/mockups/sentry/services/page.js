@@ -21,7 +21,7 @@ export default function SentryServices() {
       </section>
 
       {SERVICES.map((s, idx) => (
-        <section key={s.tag} style={{ padding: 'clamp(80px, 10vw, 120px) clamp(16px, 4vw, 32px)', borderTop: `1px solid ${T.border}`, background: idx % 2 === 1 ? T.bgAlt : T.bg }}>
+        <a href={`/mockups/sentry/services/${s.slug}`} key={s.tag} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}><section style={{ padding: 'clamp(80px, 10vw, 120px) clamp(16px, 4vw, 32px)', borderTop: `1px solid ${T.border}`, background: idx % 2 === 1 ? T.bgAlt : T.bg }}>
           <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 'clamp(32px, 5vw, 80px)', alignItems: 'start' }}>
             <div>
               <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 'clamp(64px, 12vw, 120px)', color: T.accent, fontWeight: 400, letterSpacing: -3, lineHeight: 0.9 }}>{s.tag}</div>
@@ -32,7 +32,7 @@ export default function SentryServices() {
               <p style={{ fontSize: 'clamp(16px, 1.8vw, 19px)', color: T.fgDim, lineHeight: 1.7, margin: 0 }}>{s.body}</p>
             </div>
           </div>
-        </section>
+        </section></a>
       ))}
 
       <section style={{ padding: 'clamp(80px, 12vw, 140px) clamp(16px, 4vw, 32px)', background: T.bgAlt, borderTop: `1px solid ${T.border}`, textAlign: 'center' }}>

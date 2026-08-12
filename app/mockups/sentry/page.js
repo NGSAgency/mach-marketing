@@ -12,10 +12,6 @@ export default function SentryHome() {
         <div style={{ position: 'absolute', top: '10%', right: '-15%', width: '60%', height: '80%', borderRadius: '50%', background: `radial-gradient(circle, ${T.accent}15, transparent 60%)`, filter: 'blur(120px)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', top: '30%', left: '-10%', width: '40%', height: '60%', borderRadius: '50%', background: `radial-gradient(circle, ${T.accent}08, transparent 60%)`, filter: 'blur(100px)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', position: 'relative' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 14px 6px 8px', background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 100, marginBottom: 40, fontSize: 12, letterSpacing: 0.5 }}>
-            <span style={{ padding: '2px 8px', background: T.accent, color: T.navy, borderRadius: 100, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>Now Accepting</span>
-            <span style={{ color: T.fgDim }}>New engagements starting this quarter</span>
-          </div>
           <h1 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(44px, 8.5vw, 108px)', fontWeight: 400, letterSpacing: -3, lineHeight: 0.98, margin: '0 0 32px 0', maxWidth: 1100 }}>
             Institutional-grade <em style={{ fontStyle: 'italic', color: T.accent }}>strategy</em> for entrepreneurial businesses.
           </h1>
@@ -55,9 +51,9 @@ export default function SentryHome() {
               From growth strategy to exit planning, we bring institutional-level expertise to every phase of your business.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
+          <div className="sentry-services-grid" style={{ display: 'grid', gap: 20 }}>
             {SERVICES.map(s => (
-              <a key={s.tag} href="/mockups/sentry/services" style={{ display: 'block', padding: 32, background: T.bgLift, border: `1px solid ${T.border}`, borderRadius: 12, textDecoration: 'none', color: 'inherit', position: 'relative', overflow: 'hidden' }}>
+              <a key={s.tag} href={`/mockups/sentry/services/${s.slug}`} style={{ display: 'block', padding: 32, background: T.bgLift, border: `1px solid ${T.border}`, borderRadius: 12, textDecoration: 'none', color: 'inherit', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${T.accent}, transparent)`, opacity: 0.6 }} />
                 <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 13, color: T.accent, fontWeight: 500, marginBottom: 20, fontStyle: 'italic' }}>{s.tag}</div>
                 <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 24, fontWeight: 500, letterSpacing: -0.5, marginBottom: 12 }}>{s.name}</div>
@@ -74,16 +70,20 @@ export default function SentryHome() {
         <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto' }}>
           <div style={{ marginBottom: 64, maxWidth: 900 }}>
             <div style={{ fontSize: 12, color: T.accent, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 20 }}>Who We Serve</div>
-            <h2 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(32px, 6vw, 60px)', fontWeight: 400, letterSpacing: -2, lineHeight: 1.05, margin: 0 }}>
+            <h2 style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 'clamp(32px, 6vw, 60px)', fontWeight: 400, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 24px 0' }}>
               Built for <em style={{ fontStyle: 'italic', color: T.accent }}>founders</em>, investors, and entrepreneurs.
             </h2>
+            <p style={{ fontSize: 'clamp(17px, 1.8vw, 20px)', color: T.fgDim, lineHeight: 1.55, margin: 0, maxWidth: 700 }}>
+              We work with owner-operated companies at pivotal moments — planning for growth, evaluating a transaction, or building for an exit.
+            </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 4, borderTop: `1px solid ${T.border}` }}>
+          <div className="sentry-industries-grid" style={{ display: 'grid', gap: 16 }}>
             {INDUSTRIES.map((i, idx) => (
-              <div key={i.name} style={{ padding: 'clamp(28px, 3vw, 40px) 0', borderBottom: `1px solid ${T.border}` }}>
-                <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 13, color: T.fgMuted, marginBottom: 12 }}>0{idx + 1}</div>
-                <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 22, fontWeight: 500, letterSpacing: -0.5, marginBottom: 8 }}>{i.name}</div>
-                <div style={{ fontSize: 14, color: T.fgDim, lineHeight: 1.5 }}>{i.desc}</div>
+              <div key={i.name} style={{ padding: 'clamp(28px, 3vw, 40px)', background: T.bgAlt, border: `1px solid ${T.border}`, borderRadius: 12, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${T.accent}, transparent)`, opacity: 0.4 }} />
+                <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontStyle: 'italic', fontSize: 13, color: T.accent, marginBottom: 16, fontWeight: 500 }}>0{idx + 1}</div>
+                <div style={{ fontFamily: 'Fraunces, Georgia, serif', fontSize: 22, fontWeight: 500, letterSpacing: -0.5, marginBottom: 10 }}>{i.name}</div>
+                <div style={{ fontSize: 14, color: T.fgDim, lineHeight: 1.55 }}>{i.desc}</div>
               </div>
             ))}
           </div>

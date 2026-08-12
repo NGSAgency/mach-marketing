@@ -69,3 +69,26 @@ body:has(.mach-menu-check:checked) { overflow: hidden; }
     grid-column: span 2 !important;
   }
 }
+
+
+/* Sentry mockup - services grid: always 1/2/3 columns */
+.sentry-services-grid {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .sentry-services-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .sentry-services-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* Sentry mockup - industries grid */
+.sentry-industries-grid {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .sentry-industries-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .sentry-industries-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
