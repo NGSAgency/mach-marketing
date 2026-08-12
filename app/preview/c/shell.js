@@ -19,16 +19,17 @@ export const cTokens = {
 export function CHeader() {
   return (
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(10,10,11,0.6)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', zIndex: 50, borderBottom: `1px solid ${cTokens.border}` }}>
-      <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '14px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/c" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 36, width: 'auto', display: 'block' }} />
+      <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '12px clamp(12px, 3vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+        <a href="/preview/c" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flex: '0 0 auto', minWidth: 0 }}>
+          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 'clamp(26px, 5.5vw, 36px)', width: 'auto', display: 'block', maxWidth: 'min(170px, 55vw)' }} />
         </a>
-        <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+        <div className="preview-nav-links">
           <a href="/preview/c/services" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Services</a>
           <a href="/preview/c/industries" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Industries</a>
           <a href="/preview/c/team" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Team</a>
           <a href="/preview/c/contact" style={{ padding: '8px 16px', color: cTokens.bg, background: cTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started</a>
         </div>
+        <a href="/preview/c/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: cTokens.bg, background: cTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap' }}>Start</a>
       </div>
     </nav>
   )

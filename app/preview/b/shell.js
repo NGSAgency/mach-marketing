@@ -21,16 +21,17 @@ export const bTokens = {
 export function BHeader() {
   return (
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(253,250,246,0.85)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50, borderBottom: `1px solid ${bTokens.border}` }}>
-      <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', padding: '18px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/b" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 40, width: 'auto', display: 'block' }} />
+      <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', padding: '14px clamp(12px, 3vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+        <a href="/preview/b" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flex: '0 0 auto', minWidth: 0 }}>
+          <img src="/mach-logo-dark.png" alt="MACH Digital Solutions" style={{ height: 'clamp(28px, 6vw, 40px)', width: 'auto', display: 'block', maxWidth: 'min(180px, 55vw)' }} />
         </a>
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+        <div className="preview-nav-links">
           <a href="/preview/b/services" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Services</a>
           <a href="/preview/b/industries" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Industries</a>
           <a href="/preview/b/team" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Team</a>
           <a href="/preview/b/contact" style={{ padding: '10px 20px', color: bTokens.bg, background: bTokens.ink, textDecoration: 'none', fontSize: 14, fontWeight: 600, borderRadius: 100, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started →</a>
         </div>
+        <a href="/preview/b/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: bTokens.bg, background: bTokens.ink, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 100, whiteSpace: 'nowrap' }}>Start →</a>
       </div>
     </nav>
   )

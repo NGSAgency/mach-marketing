@@ -38,16 +38,17 @@ export function GridBg() {
 export function AHeader() {
   return (
     <nav style={{ borderBottom: `1px solid ${aTokens.border}`, position: 'sticky', top: 0, background: 'rgba(5,5,8,0.7)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50 }}>
-      <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '16px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/a" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 40, width: 'auto', display: 'block' }} />
+      <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '14px clamp(12px, 3vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+        <a href="/preview/a" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flex: '0 0 auto', minWidth: 0 }}>
+          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 'clamp(28px, 6vw, 40px)', width: 'auto', display: 'block', maxWidth: 'min(180px, 55vw)' }} />
         </a>
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+        <div className="preview-nav-links">
           <a href="/preview/a/services" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Services</a>
           <a href="/preview/a/industries" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Industries</a>
           <a href="/preview/a/team" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Team</a>
           <a href="/preview/a/contact" style={{ padding: '10px 18px', color: aTokens.bg, background: aTokens.fg, textDecoration: 'none', fontSize: 14, fontWeight: 600, borderRadius: 8, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started →</a>
         </div>
+        <a href="/preview/a/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: aTokens.bg, background: aTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap' }}>Start →</a>
       </div>
     </nav>
   )

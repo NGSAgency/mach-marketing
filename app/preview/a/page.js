@@ -25,9 +25,9 @@ export default function AHome() {
           <p style={{ fontSize: 'clamp(17px, 2vw, 22px)', color: T.fgDim, lineHeight: 1.55, margin: '0 auto 40px', maxWidth: 640 }}>
             A digital marketing agency for service-based businesses. Websites, SEO, paid media, and content — measured, reported, and always improving.
           </p>
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 80 }}>
-            <a href="/preview/a/contact" style={{ background: T.fg, color: T.bg, padding: '14px 26px', borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, boxShadow: `0 0 30px ${T.glowPurple}` }}>Get started <span>→</span></a>
-            <a href="/preview/a/services" style={{ background: 'rgba(255,255,255,0.05)', color: T.fg, padding: '14px 26px', borderRadius: 10, fontSize: 15, fontWeight: 500, textDecoration: 'none', border: `1px solid ${T.border}`, backdropFilter: 'blur(10px)' }}>See how it works</a>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 80, padding: '0 8px' }}>
+            <a href="/preview/a/contact" style={{ background: T.fg, color: T.bg, padding: 'clamp(12px, 2vw, 14px) clamp(18px, 3vw, 26px)', borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, boxShadow: `0 0 30px ${T.glowPurple}` }}>Get started <span>→</span></a>
+            <a href="/preview/a/services" style={{ background: 'rgba(255,255,255,0.05)', color: T.fg, padding: 'clamp(12px, 2vw, 14px) clamp(18px, 3vw, 26px)', borderRadius: 10, fontSize: 15, fontWeight: 500, textDecoration: 'none', border: `1px solid ${T.border}`, backdropFilter: 'blur(10px)' }}>See how it works</a>
           </div>
           {/* Product mockup */}
           <BrainMockup />

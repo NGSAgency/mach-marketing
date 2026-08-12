@@ -20,3 +20,35 @@ img, video, iframe { max-width: 100%; height: auto; box-sizing: border-box; }
 /* Prevent body scroll when overlay is open */
 .mach-menu-check:checked ~ .mach-mobile-overlay ~ body,
 body:has(.mach-menu-check:checked) { overflow: hidden; }
+
+
+/* Preview nav responsive - hide desktop links on mobile */
+.preview-nav-links {
+  display: none !important;
+  align-items: center;
+  gap: 4px;
+}
+@media (min-width: 768px) {
+  .preview-nav-links {
+    display: flex !important;
+  }
+}
+
+/* Preview mobile CTA - shown on mobile only */
+.preview-nav-cta-mobile {
+  display: flex;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .preview-nav-cta-mobile {
+    display: none;
+  }
+}
+
+/* Ensure preview containers don't overflow */
+.preview-hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
