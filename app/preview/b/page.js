@@ -88,7 +88,7 @@ export default function BHome() {
                 <p style={{ fontSize: 14, color: T.inkDim, lineHeight: 1.55, margin: 0 }}>Strategic content that educates, builds credibility, and drives action.</p>
               </div>
               <div style={{ display: 'grid', gap: 10 }}>
-                {['Blog articles', 'Landing pages', 'Email campaigns', 'Service page copy'].map(t => (
+                {['Blog articles', 'Landing pages', 'Service page copy'].map(t => (
                   <div key={t} style={{ padding: '10px 14px', background: T.bg, borderRadius: 8, fontSize: 13, fontWeight: 500, border: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{ color: T.green }}>✓</span> {t}
                   </div>
