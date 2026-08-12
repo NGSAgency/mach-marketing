@@ -39,9 +39,8 @@ export function AHeader() {
   return (
     <nav style={{ borderBottom: `1px solid ${aTokens.border}`, position: 'sticky', top: 0, background: 'rgba(5,5,8,0.7)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50 }}>
       <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', padding: '16px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/a" style={{ display: 'flex', alignItems: 'center', gap: 10, color: aTokens.fg, textDecoration: 'none' }}>
-          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
-          <span style={{ fontFamily: 'Geist, system-ui, sans-serif', fontWeight: 700, fontSize: 16, letterSpacing: -0.3 }}>MACH</span>
+        <a href="/preview/a" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 40, width: 'auto', display: 'block' }} />
         </a>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           <a href="/preview/a/services" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Services</a>
@@ -60,9 +59,8 @@ export function AFooter() {
       <div style={{ position: 'absolute', bottom: '-40%', left: '50%', transform: 'translateX(-50%)', width: '80%', height: '80%', borderRadius: '50%', background: `radial-gradient(circle, ${aTokens.accent1}15, transparent 60%)`, filter: 'blur(100px)', pointerEvents: 'none' }} />
       <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', position: 'relative' }}>
         <div style={{ marginBottom: 64 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-            <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 40, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
-            <span style={{ fontFamily: 'Geist, system-ui, sans-serif', fontWeight: 700, fontSize: 20, letterSpacing: -0.5 }}>MACH</span>
+          <div style={{ marginBottom: 24 }}>
+            <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 56, width: 'auto', display: 'block' }} />
           </div>
           <div style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 500, letterSpacing: -1.5, lineHeight: 1.15, maxWidth: 780, background: `linear-gradient(135deg, ${aTokens.fg}, ${aTokens.fgDim})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>The growth engine for service-based businesses.</div>
         </div>

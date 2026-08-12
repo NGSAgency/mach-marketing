@@ -20,9 +20,8 @@ export function CHeader() {
   return (
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(10,10,11,0.6)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', zIndex: 50, borderBottom: `1px solid ${cTokens.border}` }}>
       <div style={{ maxWidth: 'min(1440px, 100%)', margin: '0 auto', padding: '14px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/c" style={{ display: 'flex', alignItems: 'center', gap: 10, color: cTokens.fg, textDecoration: 'none' }}>
-          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 28, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
-          <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 700, fontSize: 15, letterSpacing: -0.3 }}>MACH</span>
+        <a href="/preview/c" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 36, width: 'auto', display: 'block' }} />
         </a>
         <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <a href="/preview/c/services" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Services</a>

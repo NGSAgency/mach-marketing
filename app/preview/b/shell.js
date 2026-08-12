@@ -22,9 +22,8 @@ export function BHeader() {
   return (
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(253,250,246,0.85)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50, borderBottom: `1px solid ${bTokens.border}` }}>
       <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', padding: '18px clamp(16px, 4vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
-        <a href="/preview/b" style={{ display: 'flex', alignItems: 'center', gap: 10, color: bTokens.ink, textDecoration: 'none' }}>
-          <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block' }} />
-          <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 800, fontSize: 18, letterSpacing: -0.5 }}>MACH</span>
+        <a href="/preview/b" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 40, width: 'auto', display: 'block' }} />
         </a>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
           <a href="/preview/b/services" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Services</a>
@@ -48,9 +47,8 @@ export function BFooter() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 40, marginBottom: 48, paddingTop: 48, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <img src="/mach-logo-mark.svg" alt="MACH" style={{ height: 32, width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
-              <span style={{ fontFamily: 'Inter Tight, Inter, sans-serif', fontWeight: 800, fontSize: 18 }}>MACH</span>
+            <div style={{ marginBottom: 20 }}>
+              <img src="/mach-logo-main.png" alt="MACH Digital Solutions" style={{ height: 48, width: 'auto', display: 'block' }} />
             </div>
             <div style={{ fontSize: 14, opacity: 0.7, lineHeight: 1.6, maxWidth: 260 }}>Growth marketing for service-based businesses that want to build something lasting.</div>
           </div>
