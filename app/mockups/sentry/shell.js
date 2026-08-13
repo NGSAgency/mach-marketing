@@ -42,9 +42,9 @@ export function SHeader() {
           <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 'clamp(36px, 6vw, 52px)', width: 'auto', display: 'block', maxWidth: 'min(260px, 60vw)' }} />
         </a>
         <div className="preview-nav-links">
-          <a href="/mockups/sentry/services" style={{ padding: '8px 14px', color: T.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Services</a>
-          <a href="/mockups/sentry/about" style={{ padding: '8px 14px', color: T.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>About</a>
-          <a href="/mockups/sentry/contact" style={{ padding: '8px 14px', color: T.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Contact</a>
+          <a href="/mockups/sentry/services" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Services</a>
+          <a href="/mockups/sentry/about" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>About</a>
+          <a href="/mockups/sentry/contact" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Contact</a>
           <a href="/mockups/sentry/contact" style={{ padding: '10px 20px', color: T.navy, background: T.accent, textDecoration: 'none', fontSize: 14, fontWeight: 700, borderRadius: 4, marginLeft: 8, whiteSpace: 'nowrap', letterSpacing: 0.3 }}>Schedule a Call →</a>
         </div>
         <a href="/mockups/sentry/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: T.navy, background: T.accent, textDecoration: 'none', fontSize: 12, fontWeight: 700, borderRadius: 4, whiteSpace: 'nowrap' }}>Contact →</a>
