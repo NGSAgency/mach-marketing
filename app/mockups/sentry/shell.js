@@ -42,7 +42,30 @@ export function SHeader() {
           <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 'clamp(36px, 6vw, 52px)', width: 'auto', display: 'block', maxWidth: 'min(260px, 60vw)' }} />
         </a>
         <div className="preview-nav-links">
-          <a href="/mockups/sentry/services" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Services</a>
+          <div className="sentry-nav-dropdown" style={{ position: 'relative' }}>
+            <a href="/mockups/sentry/services" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              Services
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ opacity: 0.7 }}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+            <div className="sentry-nav-dropdown-menu" style={{ position: 'absolute', top: '100%', left: 0, minWidth: 300, marginTop: 8, background: 'rgba(19,27,43,0.98)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${T.borderStrong}`, borderRadius: 8, padding: 8, boxShadow: '0 20px 40px -12px rgba(0,0,0,0.5)' }}>
+              {SERVICES.map(s => (
+                <a key={s.slug} href={`/mockups/sentry/services/${s.slug}`} style={{ display: 'block', padding: '12px 16px', color: T.fg, textDecoration: 'none', borderRadius: 6, transition: 'background 0.15s' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+                    <span style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontStyle: 'italic', fontSize: 13, color: T.accent }}>{s.tag}</span>
+                    <div>
+                      <div style={{ fontFamily: 'Instrument Serif, Georgia, serif', fontSize: 17, fontWeight: 500, letterSpacing: -0.3, marginBottom: 2 }}>{s.name}</div>
+                      <div style={{ fontSize: 12, color: T.fgDim, lineHeight: 1.4 }}>{s.short}</div>
+                    </div>
+                  </div>
+                </a>
+              ))}
+              <div style={{ borderTop: `1px solid ${T.border}`, marginTop: 8, paddingTop: 8 }}>
+                <a href="/mockups/sentry/services" style={{ display: 'block', padding: '10px 16px', color: T.accent, textDecoration: 'none', fontSize: 13, fontWeight: 700, letterSpacing: 0.3, textTransform: 'uppercase', borderRadius: 6 }}>
+                  View All Services →
+                </a>
+              </div>
+            </div>
+          </div>
           <a href="/mockups/sentry/about" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>About</a>
           <a href="/mockups/sentry/contact" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Contact</a>
           <a href="/mockups/sentry/contact" style={{ padding: '10px 20px', color: T.navy, background: T.accent, textDecoration: 'none', fontSize: 14, fontWeight: 700, borderRadius: 4, marginLeft: 8, whiteSpace: 'nowrap', letterSpacing: 0.3 }}>Schedule a Call →</a>

@@ -92,3 +92,23 @@ body:has(.mach-menu-check:checked) { overflow: hidden; }
 @media (min-width: 1024px) {
   .sentry-industries-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
+
+
+/* Sentry nav dropdown */
+.sentry-nav-dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease;
+  pointer-events: none;
+}
+.sentry-nav-dropdown:hover .sentry-nav-dropdown-menu,
+.sentry-nav-dropdown:focus-within .sentry-nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.sentry-nav-dropdown-menu a:hover {
+  background: rgba(212, 162, 79, 0.08) !important;
+}
