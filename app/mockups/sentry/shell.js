@@ -66,6 +66,7 @@ export function SHeader() {
               </div>
             </div>
           </div>
+          <a href="/mockups/sentry/insights" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Insights</a>
           <a href="/mockups/sentry/about" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>About</a>
           <a href="/mockups/sentry/contact" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2 }}>Contact</a>
           <a href="/mockups/sentry/contact" style={{ padding: '10px 20px', color: T.navy, background: T.accent, textDecoration: 'none', fontSize: 14, fontWeight: 700, borderRadius: 4, marginLeft: 8, whiteSpace: 'nowrap', letterSpacing: 0.3 }}>Schedule a Call →</a>
@@ -95,7 +96,7 @@ export function SFooter() {
             <div style={{ fontSize: 11, color: T.fgMuted, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 16, fontWeight: 700 }}>Firm</div>
             <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/mockups/sentry/about" style={{ color: T.fgDim, textDecoration: 'none' }}>About</a></div>
             <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/mockups/sentry/contact" style={{ color: T.fgDim, textDecoration: 'none' }}>Contact</a></div>
-            <div style={{ marginBottom: 8, fontSize: 13, color: T.fgDim }}>Insights</div>
+            <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/mockups/sentry/insights" style={{ color: T.fgDim, textDecoration: 'none' }}>Insights</a></div>
             <div style={{ marginBottom: 8, fontSize: 13, color: T.fgDim }}>Case Studies</div>
           </div>
           <div>
