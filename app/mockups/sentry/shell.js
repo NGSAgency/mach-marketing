@@ -39,7 +39,7 @@ export function SHeader() {
     <nav style={{ position: 'sticky', top: 0, background: 'rgba(13,20,32,0.85)', backdropFilter: 'blur(20px) saturate(140%)', WebkitBackdropFilter: 'blur(20px) saturate(140%)', zIndex: 50, borderBottom: `1px solid ${T.border}` }}>
       <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', padding: '14px clamp(12px, 3vw, 32px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
         <a href="/mockups/sentry" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flex: '0 0 auto', minWidth: 0 }}>
-          <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 'clamp(28px, 5vw, 40px)', width: 'auto', display: 'block', maxWidth: 'min(220px, 55vw)' }} />
+          <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 'clamp(36px, 6vw, 52px)', width: 'auto', display: 'block', maxWidth: 'min(260px, 60vw)' }} />
         </a>
         <div className="preview-nav-links">
           <a href="/mockups/sentry/services" style={{ padding: '8px 14px', color: T.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Services</a>
