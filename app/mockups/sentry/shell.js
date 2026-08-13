@@ -42,12 +42,12 @@ export function SHeader() {
           <img src="/mockups/sentry-logo.png" alt="Sentry Solutions" style={{ height: 'clamp(36px, 6vw, 52px)', width: 'auto', display: 'block', maxWidth: 'min(260px, 60vw)' }} />
         </a>
         <div className="preview-nav-links">
-          <div className="sentry-nav-dropdown" style={{ position: 'relative', paddingBottom: 16 }}>
+          <div className="sentry-nav-dropdown" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <a href="/mockups/sentry/services" style={{ padding: '10px 18px', color: T.fg, textDecoration: 'none', fontSize: 15, fontWeight: 600, letterSpacing: 0.2, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               Services
               <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ opacity: 0.7 }}><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
-            <div className="sentry-nav-dropdown-menu" style={{ position: 'absolute', top: '100%', left: 0, minWidth: 300, marginTop: 0, paddingTop: 8, background: 'rgba(19,27,43,0.98)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${T.borderStrong}`, borderRadius: 8, padding: 8, boxShadow: '0 20px 40px -12px rgba(0,0,0,0.5)' }}>
+            <div className="sentry-nav-dropdown-menu" style={{ position: 'absolute', top: '100%', left: 0, minWidth: 300, marginTop: 0, background: 'rgba(19,27,43,0.98)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: `1px solid ${T.borderStrong}`, borderRadius: 8, padding: 8, boxShadow: '0 20px 40px -12px rgba(0,0,0,0.5)' }}>
               {SERVICES.map(s => (
                 <a key={s.slug} href={`/mockups/sentry/services/${s.slug}`} style={{ display: 'block', padding: '12px 16px', color: T.fg, textDecoration: 'none', borderRadius: 6, transition: 'background 0.15s' }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>

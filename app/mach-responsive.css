@@ -99,9 +99,18 @@ body:has(.mach-menu-check:checked) { overflow: hidden; }
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
-  /* Instant show, delayed hide so brief cursor gaps don't close menu */
   transition: opacity 0.15s ease 0s, visibility 0s linear 0.3s, transform 0.15s ease 0s;
   pointer-events: none;
+}
+/* Invisible bridge above the menu to cover the gap between trigger and menu */
+.sentry-nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
 }
 .sentry-nav-dropdown:hover .sentry-nav-dropdown-menu,
 .sentry-nav-dropdown:focus-within .sentry-nav-dropdown-menu {
