@@ -26,11 +26,10 @@ export default function AServices() {
           <div style={{ position: 'absolute', top: '50%', left: idx % 2 === 0 ? '-20%' : '60%', width: '60%', height: '80%', borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3, T.accent1][idx]}15, transparent 60%)`, filter: 'blur(120px)', pointerEvents: 'none' }} />
           <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 'clamp(32px, 5vw, 80px)', alignItems: 'start' }}>
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 12px', background: 'rgba(255,255,255,0.05)', border: `1px solid ${T.border}`, borderRadius: 100, marginBottom: 24 }}>
-                <span style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: T.accent1, fontWeight: 600 }}>{s.tag}</span>
-                <span style={{ fontSize: 12, color: T.fgDim }}>{s.name}</span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 14px', background: 'rgba(255,255,255,0.05)', border: `1px solid ${T.borderStrong}`, borderRadius: 100, marginBottom: 24 }}>
+                <span style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: T.accent1, fontWeight: 700, letterSpacing: 1 }}>{s.tag}</span>
               </div>
-              <div style={{ fontSize: 'clamp(52px, 10vw, 88px)', fontWeight: 700, letterSpacing: -4, lineHeight: 0.9, background: `linear-gradient(135deg, ${T.fg}, ${T.fgMuted})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{s.tag}</div>
+              <div style={{ fontSize: 'clamp(40px, 7vw, 72px)', fontWeight: 700, letterSpacing: -3, lineHeight: 0.95, background: `linear-gradient(135deg, ${T.fg}, ${T.fgDim})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 8 }}>{s.name}</div>
             </div>
             <div>
               <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 600, letterSpacing: -1, lineHeight: 1.15, margin: '0 0 24px 0' }}>{s.headline}</h2>

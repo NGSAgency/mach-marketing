@@ -1,8 +1,33 @@
+"use client"
+
+import { useState } from 'react'
 import { AHeader, AFooter, MeshBg, aTokens as T } from '../shell.js'
 
-export const metadata = { title: 'Contact - MACH', robots: { index: false, follow: false } }
-
 export default function AContact() {
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [error, setError] = useState('')
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setStatus('submitting')
+    setError('')
+    const formData = new FormData(e.currentTarget)
+    const payload = Object.fromEntries(formData)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error('Failed to send')
+      setStatus('success')
+      e.currentTarget.reset()
+    } catch (err) {
+      setStatus('error')
+      setError('Something went wrong. Please email us directly at hello@machdigitalsolutions.com')
+    }
+  }
+
   return (
     <div style={{ background: T.bg, color: T.fg, minHeight: '100vh', fontFamily: 'Geist, system-ui, sans-serif' }}>
       <AHeader />
@@ -22,19 +47,30 @@ export default function AContact() {
       <section style={{ padding: 'clamp(48px, 6vw, 64px) clamp(16px, 4vw, 32px) clamp(80px, 12vw, 120px)', borderTop: `1px solid ${T.border}` }}>
         <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'clamp(32px, 6vw, 64px)' }}>
           <div style={{ background: T.panel, border: `1px solid ${T.border}`, borderRadius: 20, padding: 'clamp(28px, 4vw, 40px)' }}>
-            <form style={{ display: 'grid', gap: 20 }}>
-              {[{ label: 'Your name', type: 'text' }, { label: 'Company', type: 'text' }, { label: 'Email', type: 'email' }, { label: 'Phone', type: 'tel' }].map(f => (
-                <div key={f.label}>
-                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{f.label}</label>
-                  <input type={f.type} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.border}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
-                </div>
-              ))}
-              <div>
-                <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Tell us about your business</label>
-                <textarea rows={4} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.border}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none', resize: 'vertical' }} />
+            {status === 'success' ? (
+              <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                <div style={{ fontSize: 48, marginBottom: 20 }}>✓</div>
+                <h3 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 12px 0', color: T.fg }}>Message sent</h3>
+                <p style={{ fontSize: 15, color: T.fgDim, lineHeight: 1.6, margin: 0 }}>Thanks for reaching out. We'll respond within one business day.</p>
               </div>
-              <button type="submit" style={{ background: T.fg, color: T.bg, padding: '14px 24px', borderRadius: 10, fontSize: 15, fontWeight: 600, border: 'none', cursor: 'pointer', justifySelf: 'start', boxShadow: `0 0 30px ${T.glowPurple}` }}>Send message →</button>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 20 }}>
+                {[{ name: 'name', label: 'Your name', type: 'text' }, { name: 'company', label: 'Company', type: 'text' }, { name: 'email', label: 'Email', type: 'email' }, { name: 'phone', label: 'Phone', type: 'tel' }].map(f => (
+                  <div key={f.name}>
+                    <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{f.label} <span style={{ color: T.accent1 }}>*</span></label>
+                    <input required name={f.name} type={f.type} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                  </div>
+                ))}
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Tell us about your business <span style={{ color: T.accent1 }}>*</span></label>
+                  <textarea required name="message" rows={4} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none', resize: 'vertical' }} />
+                </div>
+                {status === 'error' && <div style={{ fontSize: 13, color: '#ef4444', padding: 12, background: '#ef444410', borderRadius: 8 }}>{error}</div>}
+                <button type="submit" disabled={status === 'submitting'} style={{ background: T.fg, color: T.bg, padding: '14px 24px', borderRadius: 10, fontSize: 15, fontWeight: 600, border: 'none', cursor: status === 'submitting' ? 'wait' : 'pointer', justifySelf: 'start', boxShadow: `0 0 30px ${T.glowPurple}`, opacity: status === 'submitting' ? 0.7 : 1 }}>
+                  {status === 'submitting' ? 'Sending...' : 'Send message →'}
+                </button>
+              </form>
+            )}
           </div>
           <div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 16 }}>
@@ -53,7 +89,6 @@ export default function AContact() {
           </div>
         </div>
       </section>
-
       <AFooter />
     </div>
   )
