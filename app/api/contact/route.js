@@ -11,8 +11,7 @@ export async function POST(req) {
 
     const RESEND_KEY = process.env.RESEND_API_KEY
     if (!RESEND_KEY) {
-      console.error('RESEND_API_KEY not set')
-      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
+      return NextResponse.json({ error: 'RESEND_API_KEY missing from env', debug: 'no-key' }, { status: 500 })
     }
 
     const html = `
@@ -28,7 +27,6 @@ export async function POST(req) {
           <div style="font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600;">Message</div>
           <div style="white-space: pre-wrap; line-height: 1.6;">${escapeHtml(message)}</div>
         </div>
-        <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #999;">Submitted via machdigitalsolutions.com contact form</div>
       </div>
     `
 
@@ -44,19 +42,21 @@ export async function POST(req) {
       })
     })
 
+    const respBody = await resp.text()
+
     if (!resp.ok) {
-      const errText = await resp.text()
-      console.error('Resend failed:', errText)
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+      return NextResponse.json({ 
+        error: 'Failed to send email', 
+        debug: { status: resp.status, body: respBody, keyLen: RESEND_KEY.length, keyPrefix: RESEND_KEY.slice(0, 3) }
+      }, { status: 500 })
     }
 
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('Contact form error:', err)
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    return NextResponse.json({ error: err.message, stack: err.stack }, { status: 500 })
   }
 }
 
 function escapeHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
+  return String(s || '').replace(/[&<>"\']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "\'": '&#39;' }[c]))
 }

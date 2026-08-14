@@ -19,12 +19,17 @@ export default function AContact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      if (!res.ok) throw new Error('Failed to send')
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setStatus('error')
+        setError('Server error: ' + (data?.error || 'unknown') + ' | Debug: ' + JSON.stringify(data?.debug || {}))
+        return
+      }
       setStatus('success')
       e.currentTarget.reset()
     } catch (err) {
       setStatus('error')
-      setError('Something went wrong. Please email us directly at hello@machdigitalsolutions.com')
+      setError('Server error: ' + (data?.error || 'unknown') + ' | Debug: ' + JSON.stringify(data?.debug || {}))
     }
   }
 
