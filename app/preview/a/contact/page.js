@@ -60,10 +60,10 @@ export default function AContact() {
         <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', position: 'relative', textAlign: 'center' }}>
           <div style={{ fontSize: 12, color: T.accent1, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, marginBottom: 24 }}>Contact</div>
           <h1 style={{ fontSize: 'clamp(44px, 9vw, 96px)', fontWeight: 700, letterSpacing: -4, lineHeight: 0.98, margin: '0 auto 32px', maxWidth: 800 }}>
-            Let\'s <span style={{ background: `linear-gradient(135deg, ${T.accent1}, ${T.accent2}, ${T.accent3})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>start</span>.
+            Let's <span style={{ background: `linear-gradient(135deg, ${T.accent1}, ${T.accent2}, ${T.accent3})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>start</span>.
           </h1>
           <p style={{ fontSize: 'clamp(17px, 2vw, 21px)', color: T.fgDim, lineHeight: 1.55, margin: '0 auto', maxWidth: 640 }}>
-            Tell us about your business and what you\'re looking to achieve. We respond within one business day.
+            Tell us about your business and what you're looking to achieve. We respond within one business day.
           </p>
         </div>
       </section>
@@ -75,7 +75,7 @@ export default function AContact() {
               <div style={{ textAlign: 'center', padding: '40px 20px' }}>
                 <div style={{ fontSize: 48, marginBottom: 20 }}>✓</div>
                 <h3 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 12px 0', color: T.fg }}>Message sent</h3>
-                <p style={{ fontSize: 15, color: T.fgDim, lineHeight: 1.6, margin: 0 }}>Thanks for reaching out. We\'ll respond within one business day.</p>
+                <p style={{ fontSize: 15, color: T.fgDim, lineHeight: 1.6, margin: 0 }}>Thanks for reaching out. We'll respond within one business day.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 20 }} noValidate>
