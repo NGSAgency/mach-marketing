@@ -55,12 +55,22 @@ export default function AContact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: 20 }}>
-                {[{ name: 'name', label: 'Your name', type: 'text' }, { name: 'company', label: 'Company', type: 'text' }, { name: 'email', label: 'Email', type: 'email' }, { name: 'phone', label: 'Phone', type: 'tel' }].map(f => (
-                  <div key={f.name}>
-                    <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>{f.label} <span style={{ color: T.accent1 }}>*</span></label>
-                    <input required name={f.name} type={f.type} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
-                  </div>
-                ))}
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Your name <span style={{ color: T.accent1 }}>*</span></label>
+                  <input required name="name" type="text" minLength={2} maxLength={100} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Company <span style={{ color: T.accent1 }}>*</span></label>
+                  <input required name="company" type="text" minLength={2} maxLength={200} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Email <span style={{ color: T.accent1 }}>*</span></label>
+                  <input required name="email" type="email" style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Phone <span style={{ color: T.accent1 }}>*</span></label>
+                  <input required name="phone" type="tel" inputMode="tel" pattern="[\\d\\s\\-\\(\\)\\+\\.]{10,20}" title="Please enter a valid phone number" placeholder="(555) 123-4567" style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                </div>
                 <div>
                   <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Tell us about your business <span style={{ color: T.accent1 }}>*</span></label>
                   <textarea required name="message" rows={4} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none', resize: 'vertical' }} />
