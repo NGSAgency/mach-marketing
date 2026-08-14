@@ -113,7 +113,7 @@ export default function AContact() {
           <div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 16 }}>
               <div style={{ fontSize: 11, color: T.accent1, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>Email</div>
-              <a href="mailto:hello@machdigitalsolutions.com" style={{ fontSize: 'clamp(15px, 1.8vw, 18px)', color: T.fg, textDecoration: 'none', fontWeight: 500, wordBreak: 'break-word' }}>hello@machdigitalsolutions.com</a>
+              <a href="mailto:sales@machdigitalsolutions.com" style={{ fontSize: 'clamp(15px, 1.8vw, 18px)', color: T.fg, textDecoration: 'none', fontWeight: 500, wordBreak: 'break-word' }}>sales@machdigitalsolutions.com</a>
             </div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, marginBottom: 16 }}>
               <div style={{ fontSize: 11, color: T.accent2, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>Offices</div>

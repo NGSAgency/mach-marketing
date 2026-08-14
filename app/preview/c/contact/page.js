@@ -49,7 +49,7 @@ export default function CContact() {
           <div style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 12 }}>
               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: T.accent, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12, fontWeight: 600 }}>// direct</div>
-              <a href="mailto:hello@machdigitalsolutions.com" style={{ fontSize: 'clamp(15px, 1.8vw, 18px)', color: T.fg, textDecoration: 'none', fontFamily: 'JetBrains Mono, monospace', wordBreak: 'break-word', fontWeight: 500 }}>hello@machdigital solutions.com</a>
+              <a href="mailto:sales@machdigitalsolutions.com" style={{ fontSize: 'clamp(15px, 1.8vw, 18px)', color: T.fg, textDecoration: 'none', fontFamily: 'JetBrains Mono, monospace', wordBreak: 'break-word', fontWeight: 500 }}>hello@machdigital solutions.com</a>
             </div>
             <div style={{ padding: 24, background: T.panel, border: `1px solid ${T.borderStrong}`, borderRadius: 12 }}>
               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: T.accent, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12, fontWeight: 600 }}>// offices</div>

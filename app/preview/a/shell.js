@@ -83,7 +83,7 @@ export function AFooter() {
           </div>
           <div>
             <div style={{ fontSize: 11, color: aTokens.fgMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 16, fontWeight: 600 }}>Contact</div>
-            <a href="mailto:hello@machdigitalsolutions.com" style={{ color: aTokens.fgDim, fontSize: 14, textDecoration: 'none' }}>hello@machdigitalsolutions.com</a>
+            <a href="mailto:sales@machdigitalsolutions.com" style={{ color: aTokens.fgDim, fontSize: 14, textDecoration: 'none' }}>sales@machdigitalsolutions.com</a>
           </div>
         </div>
         <div style={{ paddingTop: 24, borderTop: `1px solid ${aTokens.border}`, display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', fontSize: 12, color: aTokens.fgMuted }}>

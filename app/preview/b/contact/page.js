@@ -25,7 +25,7 @@ export default function BContact() {
                 <div style={{ width: 40, height: 40, borderRadius: 10, background: T.accentSoft, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>✉</div>
                 <div>
                   <div style={{ fontSize: 12, color: T.inkMuted, marginBottom: 4, fontWeight: 500 }}>Email</div>
-                  <a href="mailto:hello@machdigitalsolutions.com" style={{ fontSize: 15, color: T.ink, textDecoration: 'none', fontWeight: 500, wordBreak: 'break-word' }}>hello@machdigitalsolutions.com</a>
+                  <a href="mailto:sales@machdigitalsolutions.com" style={{ fontSize: 15, color: T.ink, textDecoration: 'none', fontWeight: 500, wordBreak: 'break-word' }}>sales@machdigitalsolutions.com</a>
                 </div>
               </div>
               <div style={{ padding: 24, background: T.bgCard, border: `1px solid ${T.border}`, borderRadius: 16, display: 'flex', alignItems: 'center', gap: 16 }}>

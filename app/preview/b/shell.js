@@ -71,7 +71,7 @@ export function BFooter() {
         </div>
         <div style={{ paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', fontSize: 12, opacity: 0.5 }}>
           <div>© 2026 MACH Digital Solutions · NGS Digital LLC</div>
-          <div>hello@machdigitalsolutions.com</div>
+          <div>sales@machdigitalsolutions.com</div>
         </div>
       </div>
     </footer>

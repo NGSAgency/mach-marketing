@@ -65,7 +65,7 @@ export function CFooter() {
           </div>
           <div>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: cTokens.fgMuted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16, fontWeight: 500 }}>Contact</div>
-            <a href="mailto:hello@machdigitalsolutions.com" style={{ color: cTokens.fgDim, fontSize: 13, textDecoration: 'none' }}>hello@machdigital solutions.com</a>
+            <a href="mailto:sales@machdigitalsolutions.com" style={{ color: cTokens.fgDim, fontSize: 13, textDecoration: 'none' }}>hello@machdigital solutions.com</a>
           </div>
         </div>
         <div style={{ paddingTop: 32, marginTop: 40, borderTop: `1px solid ${cTokens.border}`, display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', fontSize: 11, color: cTokens.fgMuted, fontFamily: 'JetBrains Mono, monospace' }}>

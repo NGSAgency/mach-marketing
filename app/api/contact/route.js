@@ -34,8 +34,8 @@ export async function POST(req) {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'MACH Website <hello@machdigitalsolutions.com>',
-        to: ['hello@machdigitalsolutions.com'],
+        from: 'MACH Website <sales@machdigitalsolutions.com>',
+        to: ['sales@machdigitalsolutions.com'],
         reply_to: email,
         subject: `New inquiry: ${name}${company ? ` (${company})` : ''}`,
         html,
