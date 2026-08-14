@@ -1,33 +1,34 @@
 import './globals.css'
 import './mach-responsive.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export const metadata = {
   metadataBase: new URL('https://machdigitalsolutions.com'),
   title: {
-    default: 'MACH Digital Solutions | Growth Marketing Agency',
+    default: 'MACH Digital Solutions | Growth Marketing for Service Businesses',
     template: '%s | MACH Digital Solutions',
   },
-  description: 'MACH Digital Solutions helps businesses grow through SEO, paid media, and website development. Based in Kansas City and Boston.',
+  description: 'A digital marketing agency for service-based businesses. Websites, SEO, paid media, and content \u2014 engineered as one growth system.',
   openGraph: {
     title: 'MACH Digital Solutions',
-    description: 'Growth marketing agency serving businesses across industries.',
+    description: 'Growth marketing for service-based businesses. Websites, SEO, paid media, and content \u2014 engineered as one growth system.',
     url: 'https://machdigitalsolutions.com',
     siteName: 'MACH Digital Solutions',
     locale: 'en_US',
     type: 'website',
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: '/mach-logo-mark.png',
+    shortcut: '/mach-logo-mark.png',
+    apple: '/mach-logo-mark.png',
+  },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white text-neutral-900 antialiased">
-        <Header />
-        <main className="min-h-[70vh]">{children}</main>
-        <Footer />
+      <body style={{ background: '#050508', color: '#f5f5f7', margin: 0, padding: 0 }} className="antialiased">
+        {children}
       </body>
     </html>
   )
