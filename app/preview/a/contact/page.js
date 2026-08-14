@@ -19,10 +19,12 @@ export default function AContact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      const data = await res.json().catch(() => ({}))
+      const rawText = await res.text()
+      let data = {}
+      try { data = JSON.parse(rawText) } catch { data = { raw: rawText } }
       if (!res.ok) {
         setStatus('error')
-        setError('Server error: ' + (data?.error || 'unknown') + ' | Debug: ' + JSON.stringify(data?.debug || {}))
+        setError('HTTP ' + res.status + ' — ' + (data?.error || rawText || 'unknown'))
         return
       }
       setStatus('success')
@@ -74,7 +76,7 @@ export default function AContact() {
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Phone <span style={{ color: T.accent1 }}>*</span></label>
-                  <input required name="phone" type="tel" inputMode="tel" pattern="[\\d\\s\\-\\(\\)\\+\\.]{10,20}" title="Please enter a valid phone number" placeholder="(555) 123-4567" style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
+                  <input required name="phone" type="tel" inputMode="numeric" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Format: 123-456-7890" placeholder="123-456-7890" maxLength={12} onChange={(e) => { const d = e.target.value.replace(/\\D/g, '').slice(0, 10); e.target.value = d.length > 6 ? `${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}` : d.length > 3 ? `${d.slice(0,3)}-${d.slice(3)}` : d; }} style={{ width: '100%', background: T.bgAlt, border: `1px solid ${T.borderStrong}`, borderRadius: 10, padding: '14px 18px', fontSize: 15, fontFamily: 'Geist, system-ui, sans-serif', color: T.fg, outline: 'none' }} />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: 12, color: T.fgMuted, fontWeight: 600, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 }}>Tell us about your business <span style={{ color: T.accent1 }}>*</span></label>
