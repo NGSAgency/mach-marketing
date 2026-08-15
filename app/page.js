@@ -34,18 +34,6 @@ export default function AHome() {
         </div>
       </section>
 
-      {/* Logo cloud */}
-      <section style={{ padding: 'clamp(48px, 8vw, 80px) clamp(16px, 4vw, 32px)', borderTop: `1px solid ${T.border}`, borderBottom: `1px solid ${T.border}` }}>
-        <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontSize: 12, color: T.fgMuted, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, marginBottom: 32 }}>Powered by best-in-class infrastructure</div>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'clamp(24px, 5vw, 64px)', flexWrap: 'wrap', opacity: 0.5 }}>
-            {['CLAUDE', 'GOOGLE ADS', 'VERCEL', 'SUPABASE', 'STRIPE', 'RESEND'].map(n => (
-              <div key={n} style={{ fontFamily: 'Geist Mono, monospace', fontSize: 15, fontWeight: 600, letterSpacing: 1, color: T.fgDim }}>{n}</div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* SERVICES - feature grid with hover-glow */}
       <section style={{ padding: 'clamp(80px, 12vw, 140px) clamp(16px, 4vw, 32px)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '20%', right: '-20%', width: '60%', height: '60%', borderRadius: '50%', background: `radial-gradient(circle, ${T.accent1}15, transparent 60%)`, filter: 'blur(120px)', pointerEvents: 'none' }} />
