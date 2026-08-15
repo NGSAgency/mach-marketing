@@ -4,7 +4,7 @@ import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 export async function POST(req) {
   try {
     const body = await req.json()
-    const { name, company, email, phone, message } = body
+    const { name, company, website, email, phone, message } = body
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -28,6 +28,7 @@ export async function POST(req) {
           email,
           phone: phone || null,
           company_name: company || null,
+          company_website: website || null,
           source: 'website',
           source_details: 'Contact form on machdigitalsolutions.com',
           notes: message,
@@ -69,6 +70,7 @@ export async function POST(req) {
     const details = [
       ['Name', escape(name)],
       ['Company', escape(company || '—')],
+      ['Website', escape(website || '—')],
       ['Email', escape(email)],
       ['Phone', escape(phone || '—')],
       ['Message', escape(message)],

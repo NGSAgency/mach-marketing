@@ -13,7 +13,7 @@ function formatPhone(input) {
 }
 
 export default function AContact() {
-  const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', message: '' })
+  const [form, setForm] = useState({ name: '', company: '', website: '', email: '', phone: '', message: '' })
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
 
@@ -41,7 +41,7 @@ export default function AContact() {
         return
       }
       setStatus('success')
-      setForm({ name: '', company: '', email: '', phone: '', message: '' })
+      setForm({ name: '', company: '', website: '', email: '', phone: '', message: '' })
     } catch (err) {
       setStatus('error')
       setError('Network error: ' + err.message)
@@ -86,6 +86,10 @@ export default function AContact() {
                 <div>
                   <label style={labelStyle}>Company {req}</label>
                   <input required value={form.company} onChange={e => updateField('company', e.target.value)} type="text" minLength={2} maxLength={200} style={inputStyle} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Website {req}</label>
+                  <input required value={form.website} onChange={e => updateField('website', e.target.value)} type="url" placeholder="https://yourbusiness.com" style={inputStyle} />
                 </div>
                 <div>
                   <label style={labelStyle}>Email {req}</label>
