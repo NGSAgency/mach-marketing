@@ -101,13 +101,12 @@ export default async function SigningPage({ params }) {
 
 
 async function sendViewNotification(contract) {
-  if (!process.env.RESEND_API_KEY) return
-
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
   try {
-    // Fetch client name
+    const { sendMachEmail, MACH_TEAM } = await import('@/lib/email/template.js')
+
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
     let clientName = 'Client'
     if (contract.client_id) {
       const clientRes = await fetch(`${supabaseUrl}/rest/v1/clients?id=eq.${contract.client_id}&select=name`, {
@@ -117,32 +116,28 @@ async function sendViewNotification(contract) {
       if (rows && rows[0]) clientName = rows[0].name
     }
 
-    const html = `<!DOCTYPE html>
-<html><body style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px; color: #111827; line-height: 1.6;">
-  <h1 style="font-size: 20px;">Client viewed contract 👀</h1>
-  <div style="background: #EFF6FF; border-left: 4px solid #60A5FA; padding: 16px; margin: 20px 0;">
-    <div style="font-size: 13px; color: #1E40AF;">${clientName} opened their contract</div>
-    <div style="font-size: 12px; color: #4B5563; margin-top: 4px;">First viewed at ${new Date().toLocaleString()}</div>
-  </div>
-  <p><strong>Monthly Fee:</strong> $${contract.monthly_fee?.toLocaleString() || '?'}</p>
-  <p><strong>Services:</strong> ${(contract.services || []).join(', ')}</p>
-  <p>They haven't signed yet. If they don't sign within a few days, consider a follow-up.</p>
-</body></html>`
+    const monthly = contract.monthly_fee ? `$${Number(contract.monthly_fee).toLocaleString()}` : '—'
+    const services = (contract.services || []).join(', ') || '—'
+    const viewedAt = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' })
 
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
+    await sendMachEmail({
+      to: MACH_TEAM,
+      subject: `${clientName} just opened the contract`,
+      template: {
+        kicker: 'Contract Viewed',
+        headline: `${clientName} just opened the contract.`,
+        paragraphs: [
+          `${clientName} viewed their contract for the first time. This is a great moment to follow up if you haven't heard back in a day or two.`,
+        ],
+        details: [
+          ['Client', clientName],
+          ['Viewed At', viewedAt],
+          ['Monthly Fee', monthly],
+          ['Services', services],
+        ],
       },
-      body: JSON.stringify({
-        from: 'MACH Digital Solutions <team@machdigitalsolutions.com>',
-        to: 'chris@machdigitalsolutions.com',
-        subject: `[Contract Viewed] ${clientName} opened their contract`,
-        html,
-      }),
     })
   } catch (e) {
-    // best-effort
+    // best-effort — don't block the client from viewing their contract
   }
 }
