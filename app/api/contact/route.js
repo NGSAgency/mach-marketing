@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { sendMachEmail } from '@/lib/email/template.js'
+import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 
 export async function POST(req) {
   try {
@@ -13,7 +13,7 @@ export async function POST(req) {
     const escape = (s) => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 
     const result = await sendMachEmail({
-      to: 'sales@machdigitalsolutions.com',
+      to: MACH_TEAM,
       replyTo: email,
       subject: `New inquiry: ${name}${company ? ` (${company})` : ''}`,
       template: {
