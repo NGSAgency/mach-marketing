@@ -43,6 +43,27 @@ export async function POST(req) {
       console.error('Prospect creation error (non-blocking):', err)
     }
 
+    // 1b. Create primary contact on the prospect (best-effort)
+    if (prospectId) {
+      try {
+        const ccUrl = process.env.COMMAND_CENTER_URL || 'https://app.machdigitalsolutions.com'
+        await fetch(`${ccUrl}/api/prospects/contact-create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prospectId,
+            first_name,
+            last_name,
+            email,
+            phone: phone || null,
+            is_primary: true,
+          }),
+        })
+      } catch (err) {
+        console.error('Contact creation error (non-blocking):', err)
+      }
+    }
+
     // 2. Send notification email to team with link to prospect (if created)
     const escape = (s) => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
     const details = [
