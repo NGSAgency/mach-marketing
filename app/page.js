@@ -13,10 +13,8 @@ export default function AHome() {
         <MeshBg />
         <GridBg />
         <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', position: 'relative', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 14px 6px 8px', background: 'rgba(255,255,255,0.05)', border: `1px solid ${T.border}`, borderRadius: 100, marginBottom: 40, fontSize: 13, backdropFilter: 'blur(10px)' }}>
-            <span style={{ padding: '3px 10px', background: `linear-gradient(135deg, ${T.accent1}, ${T.accent2})`, borderRadius: 100, fontSize: 11, fontWeight: 600 }}>NEW</span>
-            <span style={{ color: T.fgDim }}>AI-powered automation for service businesses</span>
-            <span style={{ color: T.fgMuted }}>→</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '7px 16px', background: 'rgba(255,255,255,0.05)', border: `1px solid ${T.border}`, borderRadius: 100, marginBottom: 40, fontSize: 13, backdropFilter: 'blur(10px)' }}>
+            <span style={{ color: T.fgDim }}>Marketing built on data, not guesswork</span>
           </div>
           <h1 style={{ fontSize: 'clamp(40px, 8vw, 96px)', fontWeight: 700, letterSpacing: -4, lineHeight: 1, margin: '0 0 32px 0' }}>
             Growth marketing,<br />
