@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import BoltAreas from '../renderers/BoltAreas.js'
 import GroveAreas from '../renderers/GroveAreas.js'
 import AxisAreas from '../renderers/AxisAreas.js'
+import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
 
 const RENDERERS = { bolt: BoltAreas, grove: GroveAreas, axis: AxisAreas }
 
@@ -11,7 +12,11 @@ export async function generateMetadata({ params }) {
   const result = await fetchSiteConfig({ slug })
   if (!result) return {}
   const c = result.config
-  return { title: `Service Areas | ${c.business.display_name}`, description: `${c.service_areas.length}+ neighborhoods across ${c.primary_service_area}` }
+  return buildStaticMetadata(c, {
+    slug: 'service-areas',
+    title: 'Service Areas',
+    description: `${c.business.display_name} serves ${c.service_areas.length} areas including ${(c.service_areas || []).slice(0, 3).join(', ')}.`,
+  })
 }
 
 export default async function ClientAreasPage({ params }) {

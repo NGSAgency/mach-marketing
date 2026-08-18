@@ -4,6 +4,7 @@ import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import BoltCombo from '../renderers/BoltCombo.js'
 import GroveCombo from '../renderers/GroveCombo.js'
 import AxisCombo from '../renderers/AxisCombo.js'
+import { buildComboMetadata } from '../../../../lib/templates/shared/seo/index.js'
 
 const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo }
 
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }) {
   const parsed = parseComboSlug(comboSlug, result.config)
   if (!parsed) return {}
   const c = result.config
-  return { title: `${parsed.service.name} in ${parsed.area} | ${c.business.display_name}`, description: `${parsed.service.name} for ${parsed.area} homes. Same-day service.` }
+  return buildComboMetadata(c, parsed.service, parsed.area)
 }
 
 export default async function ClientComboPage({ params }) {

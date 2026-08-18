@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import BoltContact from '../renderers/BoltContact.js'
 import GroveContact from '../renderers/GroveContact.js'
 import AxisContact from '../renderers/AxisContact.js'
+import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
 
 const RENDERERS = { bolt: BoltContact, grove: GroveContact, axis: AxisContact }
 
@@ -11,7 +12,11 @@ export async function generateMetadata({ params }) {
   const result = await fetchSiteConfig({ slug })
   if (!result) return {}
   const c = result.config
-  return { title: `Contact | ${c.business.display_name}`, description: `Contact ${c.business.display_name} for service in ${c.primary_service_area}.` }
+  return buildStaticMetadata(c, {
+    slug: 'contact',
+    title: 'Contact',
+    description: `Contact ${c.business.display_name} for service in ${c.primary_service_area}${c.business.phone_display ? '. Call ' + c.business.phone_display : ''}.`,
+  })
 }
 
 export default async function ClientContactPage({ params }) {

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import BoltServiceDetail from '../../renderers/BoltServiceDetail.js'
 import GroveServiceDetail from '../../renderers/GroveServiceDetail.js'
 import AxisServiceDetail from '../../renderers/AxisServiceDetail.js'
+import { buildServiceMetadata } from '../../../../../lib/templates/shared/seo/index.js'
 
 const RENDERERS = { bolt: BoltServiceDetail, grove: GroveServiceDetail, axis: AxisServiceDetail }
 
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }) {
   const c = result.config
   const service = c.services.find(s => s.slug === serviceSlug)
   if (!service) return {}
-  return { title: `${service.name} in ${c.primary_service_area} | ${c.business.display_name}`, description: service.description || service.short }
+  return buildServiceMetadata(c, service)
 }
 
 export default async function ClientServiceDetailPage({ params }) {

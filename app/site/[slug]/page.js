@@ -1,5 +1,6 @@
 import { fetchSiteConfig } from '../../../lib/site/fetch.js'
 import { trackingMetadata } from '../../../lib/site/tracking.js'
+import { buildHomeMetadata } from '../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
 
 // Import all 3 template family homes
@@ -19,9 +20,7 @@ export async function generateMetadata({ params }) {
   if (!result) return {}
   const c = result.config
   return {
-    title: c.meta?.site_title || c.business?.display_name,
-    description: c.meta?.site_description || '',
-    alternates: { canonical: c.meta?.canonical },
+    ...buildHomeMetadata(c),
     ...trackingMetadata(c.tracking),
   }
 }
