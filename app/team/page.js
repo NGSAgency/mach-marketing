@@ -25,8 +25,15 @@ export default function ATeam() {
             <div key={b.name} style={{ padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 20, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3][idx]}30, transparent 60%)`, filter: 'blur(40px)' }} />
               <div style={{ position: 'relative' }}>
-                <div style={{ width: '100%', aspectRatio: '4/5', borderRadius: 12, background: `linear-gradient(135deg, ${[T.accent1, T.accent2, T.accent3][idx]}30, ${T.bgAlt})`, display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${T.border}`, marginBottom: 24, overflow: 'hidden' }}>
-                  <div style={{ fontSize: 'clamp(80px, 15vw, 140px)', fontWeight: 700, background: `linear-gradient(135deg, ${T.fg}, ${T.fgDim})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: -6 }}>{b.name[0]}</div>
+                <div style={{ width: '100%', aspectRatio: '4/5', borderRadius: 12, background: `linear-gradient(135deg, ${[T.accent1, T.accent2, T.accent3][idx]}30, ${T.bgAlt})`, border: `1px solid ${T.border}`, marginBottom: 24, overflow: 'hidden' }}>
+                  <img
+                    src={`/team/${b.name.toLowerCase()}.jpg`}
+                    alt={`${b.name}, ${b.role}`}
+                    width={800}
+                    height={1000}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
                 </div>
                 <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: [T.accent1, T.accent2, T.accent3][idx], letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, marginBottom: 12 }}>{b.location} · 0{idx + 1}</div>
                 <h2 style={{ fontSize: 32, fontWeight: 700, letterSpacing: -1.5, margin: '0 0 8px 0' }}>{b.name}</h2>
