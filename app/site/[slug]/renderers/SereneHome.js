@@ -9,6 +9,15 @@ export default function SereneHome({ config: c, siteSlug }) {
   const base = `/site/${siteSlug}`
   const labels = navLabels(c)
   const gen = c.generated || {}
+  const imgs = c.images || {}
+  const hero = imgs.home_hero
+  const secondary = imgs.home_secondary
+
+  const visibleServices = (c.services || []).slice(0, 9)
+  // A grid mixing image cards and text-only cards looks broken, so only use
+  // images when most of the visible cards can actually be filled.
+  const withImages = visibleServices.filter(s => imgs[`service_${s.slug}`]).length
+  const useCardImages = withImages >= Math.ceil(visibleServices.length / 2)
 
   return (
     <>
@@ -17,16 +26,43 @@ export default function SereneHome({ config: c, siteSlug }) {
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
 
-        {/* Hero. Restrained on purpose: in this vertical whitespace reads as
-            quality, and a loud hero undercuts the clinical half of the pitch. */}
-        <section style={{ padding: 'clamp(72px, 12vw, 160px) 32px clamp(56px, 8vw, 100px)' }}>
+        {/* Hero. Image-led when we have a photo, typography-led when we do not.
+            Both are intentional compositions rather than one being a fallback:
+            in this vertical an empty space reads as restraint, but a real image
+            does far more work. */}
+        {hero && (
+          <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden' }}>
+            <img
+              src={hero.url}
+              alt={hero.alt || c.business.display_name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(43,39,36,0.15) 0%, rgba(43,39,36,0.55) 100%)' }} />
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'flex-end', padding: 'clamp(32px, 6vw, 72px)' }}>
+              <div style={{ maxWidth: 720 }}>
+                <h1 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(38px, 7vw, 72px)', fontWeight: 400, letterSpacing: 0.5, lineHeight: 1.08, margin: 0, color: '#fff' }}>
+                  {c.business.display_name}
+                </h1>
+                <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'rgba(255,255,255,0.92)', marginTop: 18, lineHeight: 1.6, maxWidth: 560 }}>
+                  {gen['home|hero_subheadline'] || c.positioning?.tagline}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section style={{ padding: hero ? 'clamp(48px, 7vw, 88px) 32px clamp(40px, 6vw, 72px)' : 'clamp(72px, 12vw, 160px) 32px clamp(56px, 8vw, 100px)' }}>
           <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(40px, 8vw, 76px)', fontWeight: 400, letterSpacing: 0.5, lineHeight: 1.08, margin: 0, color: T.colors.text }}>
-              {c.business.display_name}
-            </h1>
-            <p style={{ fontSize: 'clamp(17px, 2.2vw, 21px)', color: T.colors.textDim, marginTop: 24, lineHeight: 1.7, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
-              {gen['home|hero_subheadline'] || c.positioning?.tagline}
-            </p>
+            {!hero && (
+              <>
+                <h1 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(40px, 8vw, 76px)', fontWeight: 400, letterSpacing: 0.5, lineHeight: 1.08, margin: 0, color: T.colors.text }}>
+                  {c.business.display_name}
+                </h1>
+                <p style={{ fontSize: 'clamp(17px, 2.2vw, 21px)', color: T.colors.textDim, marginTop: 24, lineHeight: 1.7, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
+                  {gen['home|hero_subheadline'] || c.positioning?.tagline}
+                </p>
+              </>
+            )}
             {c.business.phone_display && (
               <a
                 href={`tel:${c.business.phone}`}
@@ -64,24 +100,40 @@ export default function SereneHome({ config: c, siteSlug }) {
               {labels.offering}
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 24, marginTop: 40 }}>
-              {(c.services || []).slice(0, 9).map(s => (
-                <a
-                  key={s.slug}
-                  href={`${base}${urlService(s.slug, c)}`}
-                  style={{
-                    background: T.colors.surface,
-                    border: `1px solid ${T.colors.borderLight}`,
-                    borderRadius: T.radius.lg,
-                    padding: 28,
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    display: 'block',
-                  }}
-                >
-                  <div style={{ fontFamily: T.fonts.display, fontSize: 21, fontWeight: 400, color: T.colors.text }}>{s.name}</div>
-                  {s.short && <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 10, lineHeight: 1.65 }}>{s.short}</div>}
-                </a>
-              ))}
+              {visibleServices.map(s => {
+                const img = imgs[`service_${s.slug}`]
+                return (
+                  <a
+                    key={s.slug}
+                    href={`${base}${urlService(s.slug, c)}`}
+                    style={{
+                      background: T.colors.surface,
+                      border: `1px solid ${T.colors.borderLight}`,
+                      borderRadius: T.radius.lg,
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      display: 'block',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {useCardImages && (
+                      <div style={{ aspectRatio: '4/3', background: T.colors.bgAlt, overflow: 'hidden' }}>
+                        {img && (
+                          <img
+                            src={img.url}
+                            alt={img.alt || s.name}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    <div style={{ padding: 28 }}>
+                      <div style={{ fontFamily: T.fonts.display, fontSize: 21, fontWeight: 400, color: T.colors.text }}>{s.name}</div>
+                      {s.short && <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 10, lineHeight: 1.65 }}>{s.short}</div>}
+                    </div>
+                  </a>
+                )
+              })}
             </div>
             {(c.services || []).length > 9 && (
               <a href={`${base}${urlServices(c)}`} style={{ display: 'inline-block', marginTop: 32, color: T.colors.accentDim, fontSize: 15 }}>
