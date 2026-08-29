@@ -7,11 +7,13 @@ import { notFound } from 'next/navigation'
 import BoltHomeRender from './renderers/BoltHome.js'
 import GroveHomeRender from './renderers/GroveHome.js'
 import AxisHomeRender from './renderers/AxisHome.js'
+import SereneHomeRender from './renderers/SereneHome.js'
 
 const RENDERERS = {
   bolt: BoltHomeRender,
   grove: GroveHomeRender,
   axis: AxisHomeRender,
+  serene: SereneHomeRender,
 }
 
 export async function generateMetadata({ params }) {

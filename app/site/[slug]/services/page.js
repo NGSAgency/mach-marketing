@@ -4,8 +4,9 @@ import BoltServices from '../renderers/BoltServices.js'
 import GroveServices from '../renderers/GroveServices.js'
 import AxisServices from '../renderers/AxisServices.js'
 import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
+import SereneServices from '../renderers/SereneServices.js'
 
-const RENDERERS = { bolt: BoltServices, grove: GroveServices, axis: AxisServices }
+const RENDERERS = { bolt: BoltServices, grove: GroveServices, axis: AxisServices, serene: SereneServices }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
