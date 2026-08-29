@@ -22,34 +22,138 @@ function navLabels(c) {
 function SereneHeader({ T, c, logo, base }) {
   const labels = navLabels(c)
 
+  const links = [
+    { href: `${base}${urlServices(c)}`, label: labels.offering },
+    { href: `${base}${urlServiceAreas(c)}`, label: labels.place },
+    { href: `${base}/about`, label: 'About' },
+    { href: `${base}/faq`, label: 'FAQ' },
+  ]
+
   return (
-    <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.borderLight}`, position: 'sticky', top: 0, zIndex: 40 }}>
-      <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', padding: '24px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href={base} style={{ textDecoration: 'none' }}>
-          {logo ? <img src={logo} alt={c.business.display_name} style={{ maxHeight: 52 }} /> : (
-            <div style={{ fontFamily: T.fonts.display, fontSize: 30, fontWeight: 400, color: T.colors.text, letterSpacing: 0.5 }}>
-              {c.business.display_name}
-            </div>
+    <>
+      {/* Thin utility strip. Puts the phone number and location within reach
+          without competing with the main navigation. */}
+      <div style={{
+        background: T.colors.bgAlt,
+        borderBottom: `1px solid ${T.colors.borderLight}`,
+        fontSize: T.type.xs,
+        letterSpacing: '0.06em',
+        color: T.colors.textMuted,
+      }}>
+        <div style={{
+          maxWidth: 1400,
+          margin: '0 auto',
+          padding: '10px clamp(24px, 5vw, 96px)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 16,
+        }}>
+          <span>{c.business.address_line}</span>
+          {c.business.phone_display && (
+            <a href={`tel:${c.business.phone}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>
+              {c.business.phone_display}
+            </a>
           )}
-        </a>
-        <MobileMenu
-          items={[
-            { href: `${base}${urlServices(c)}`, label: labels.offering },
-            { href: `${base}${urlServiceAreas(c)}`, label: labels.place },
-            { href: `${base}/about`, label: 'About' },
-            { href: `${base}/faq`, label: 'FAQ' },
-          ]}
-          phoneNumber={c.business.phone}
-          phoneDisplay={c.business.phone_display}
-          accent={T.colors.accent}
-          bg={T.colors.bgLight}
-          text={T.colors.text}
-          textDim={T.colors.textDim}
-          borderColor={T.colors.border}
-          fontFamily={T.fonts.body}
-        />
+        </div>
       </div>
-    </header>
+
+      <header style={{
+        background: T.colors.bg,
+        borderBottom: `1px solid ${T.colors.borderLight}`,
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+      }}>
+        <div style={{
+          maxWidth: 1400,
+          margin: '0 auto',
+          padding: 'clamp(20px, 3vw, 32px) clamp(24px, 5vw, 96px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 32,
+        }}>
+          <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
+            {logo ? (
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 44, display: 'block' }} />
+            ) : (
+              <div style={{
+                fontFamily: T.fonts.display,
+                fontSize: 'clamp(22px, 2.4vw, 30px)',
+                fontWeight: 300,
+                letterSpacing: '0.02em',
+                color: T.colors.text,
+                lineHeight: 1,
+              }}>
+                {c.business.display_name}
+              </div>
+            )}
+          </a>
+
+          {/* Inline navigation on desktop. A bare hamburger on a wide screen
+              hides the treatment range, which is the main thing a visitor is
+              trying to assess. */}
+          <nav className="serene-nav" style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+            {links.map(l => (
+              <a
+                key={l.href}
+                href={l.href}
+                style={{
+                  color: T.colors.textDim,
+                  textDecoration: 'none',
+                  fontSize: T.type.sm,
+                  letterSpacing: '0.03em',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0 }}>
+            {(c.business.booking_url || c.business.phone) && (
+              <a
+                href={c.business.booking_url || `tel:${c.business.phone}`}
+                style={{
+                  background: T.colors.accent,
+                  color: T.colors.bg,
+                  padding: '12px 28px',
+                  borderRadius: T.radius.full,
+                  textDecoration: 'none',
+                  fontSize: T.type.sm,
+                  letterSpacing: '0.04em',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {labels.conversion.replace(/\b\w/g, ch => ch.toUpperCase())}
+              </a>
+            )}
+
+            <div className="serene-menu" style={{ display: 'none' }}>
+              <MobileMenu
+                items={links}
+                phoneNumber={c.business.phone}
+                phoneDisplay={c.business.phone_display}
+                accent={T.colors.accent}
+                bg={T.colors.bgAlt}
+                text={T.colors.text}
+                textDim={T.colors.textDim}
+                borderColor={T.colors.border}
+                fontFamily={T.fonts.body}
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 1024px) {
+          .serene-nav { display: none !important; }
+          .serene-menu { display: block !important; }
+        }
+      ` }} />
+    </>
   )
 }
 

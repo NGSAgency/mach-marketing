@@ -1,84 +1,93 @@
-// SERENE Template - Design Tokens
+// SERENE — dark editorial luxury for medical aesthetics
 //
-// Built for medical aesthetics, wellness, and boutique professional services.
-// The brief from research on this vertical is that winning sites hold clinical
-// credibility and luxury appeal at the same time. A practice that looks purely
-// spa-like undercuts the medical part; one that looks purely clinical loses the
-// aspirational part that drives the purchase.
+// Design principles this family is built on, in priority order:
 //
-// So: warm neutrals rather than clinical white, generous whitespace, light
-// typographic weight, and restraint. Nothing shouts.
+// 1. HIERARCHY FIRST. Layouts fail at hierarchy, not aesthetics. Every section
+//    has one dominant element; nothing competes.
+// 2. SCALE CONTRAST. Display type runs 5-8x body size. Timid contrast is what
+//    makes a layout read as templated.
+// 3. ASYMMETRY. Split compositions and off-center emphasis create tension and
+//    direct the eye. Centered everything creates neither.
+// 4. NEGATIVE SPACE AS STRUCTURE. Space is an active element, not leftover.
+// 5. 8PT GRID. Every spacing value is a multiple of 8, which is why standard
+//    sizes are 16, 24, 32, 48, 64, 96.
+//
+// Palette is dark because the luxury editorial archetype reads as a fashion
+// house rather than a medical office, which is what high-ticket aesthetic work
+// sells on. Light cream is what every generic spa template uses.
 export const sereneTokens = {
   colors: {
-    // Warm, soft base. Avoids both sterile white and spa-cliche beige.
-    bg: '#fbf9f7',
-    bgAlt: '#f4efe9',
-    bgLight: '#ffffff',
-    surface: '#ffffff',
-    surfaceAlt: '#f7f3ef',
+    bg: '#0f0e0d',          // warm near-black; pure black reads cheap on screens
+    bgAlt: '#171512',
+    bgLight: '#1f1c18',
+    surface: '#171512',
+    surfaceAlt: '#211d19',
 
-    // Text - warm charcoal rather than black, which reads softer at length
-    text: '#2b2724',
-    textDim: '#635c56',
-    textMuted: '#948b83',
+    text: '#f4efe8',        // warm cream; pure white is harsh at body sizes
+    textDim: '#a99f94',
+    textMuted: '#6e665f',
 
-    // Accent - muted sage. Calm and credible, and unlike the saturated
-    // pinks and golds most medspa templates default to.
-    accent: '#7d8f7b',
-    accentDim: '#63735f',
-    accentLight: '#9dab99',
-    accentGlow: '#eef1ec',
+    accent: '#b8975f',      // brass, not gold; gold reads gaudy
+    accentDim: '#96784a',
+    accentLight: '#d4b884',
+    accentGlow: 'rgba(184,151,95,0.12)',
 
-    // Secondary - warm clay for CTAs that need to feel warmer than sage
-    secondary: '#b8896b',
-    secondaryLight: '#d9b299',
+    secondary: '#b8975f',
+    secondaryLight: '#d4b884',
 
-    // Semantic
-    success: '#7d8f7b',
-    urgent: '#a8635a',
-    warning: '#b8896b',
+    success: '#7d9070',
+    urgent: '#c07a6a',
+    warning: '#b8975f',
 
-    // Borders - barely there. Structure through space, not lines.
-    border: '#e5ddd4',
-    borderLight: '#f0eae3',
+    border: 'rgba(244,239,232,0.12)',
+    borderLight: 'rgba(244,239,232,0.06)',
   },
 
   fonts: {
-    // Light serif display reads as considered and premium without ornament
-    display: "'Cormorant Garamond', Georgia, serif",
+    display: "'Cormorant Garamond', 'Times New Roman', serif",
     body: "'Inter', system-ui, sans-serif",
     mono: "ui-monospace, monospace",
   },
 
-  // Deliberately larger than the other families. Whitespace is the primary
-  // signal of quality in this vertical.
+  // Type scale at a 1.5 ratio. Wide gaps between steps are what produce
+  // hierarchy; a scale that steps 16, 18, 20 produces none.
+  type: {
+    xs: '13px',
+    sm: '15px',
+    base: '17px',
+    lg: '21px',
+    xl: '32px',
+    display: 'clamp(44px, 7vw, 88px)',
+    hero: 'clamp(56px, 11vw, 152px)',
+  },
+
+  // Strict 8pt grid
   spacing: {
-    xs: '6px',
-    sm: '12px',
-    md: '24px',
-    lg: '48px',
-    xl: '80px',
-    xxl: '120px',
-    xxxl: '160px',
+    xs: '8px',
+    sm: '16px',
+    md: '32px',
+    lg: '64px',
+    xl: '96px',
+    xxl: '144px',
+    xxxl: '192px',
   },
 
   radius: {
     none: '0',
-    sm: '4px',
-    md: '10px',
-    lg: '18px',
+    sm: '2px',
+    md: '4px',
+    lg: '8px',
     full: '9999px',
   },
 
-  // Soft and diffuse. Hard shadows read as cheap here.
   shadow: {
-    soft: '0 2px 12px rgba(43,39,36,0.05)',
-    warm: '0 12px 40px rgba(43,39,36,0.08)',
-    inset: 'inset 0 1px 0 rgba(255,255,255,0.8)',
+    soft: 'none',
+    warm: '0 24px 80px rgba(0,0,0,0.55)',
+    inset: 'none',
   },
 
   transition: {
-    slow: '500ms cubic-bezier(0.22, 1, 0.36, 1)',
-    normal: '320ms cubic-bezier(0.22, 1, 0.36, 1)',
+    slow: '700ms cubic-bezier(0.16, 1, 0.3, 1)',
+    normal: '400ms cubic-bezier(0.16, 1, 0.3, 1)',
   },
 }
