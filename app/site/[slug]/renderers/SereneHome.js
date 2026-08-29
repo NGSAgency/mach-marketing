@@ -3,6 +3,7 @@ import { applyBrand } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildLocalBusinessSchema, JsonLd, urlService, urlServices } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
+import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 
 export default function SereneHome({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -12,6 +13,11 @@ export default function SereneHome({ config: c, siteSlug }) {
   const imgs = c.images || {}
   const hero = imgs.home_hero
   const secondary = imgs.home_secondary
+
+  // Which components this industry calls for, and its concern list
+  const components = c.profile?.components || []
+  const hasComponent = (key) => components.includes(key)
+  const concerns = c.concerns || []
 
   const visibleServices = (c.services || []).slice(0, 9)
   // A grid mixing image cards and text-only cards looks broken, so only use
@@ -153,8 +159,18 @@ export default function SereneHome({ config: c, siteSlug }) {
           </section>
         )}
 
+        {/* Components this vertical requires. Each renders an honest placeholder
+            when the practice has not supplied the underlying data, rather than
+            filling the space with stock imagery or invented credentials. */}
+        {hasComponent('trust_bar') && <TrustBar T={T} c={c} />}
+        {hasComponent('concerns_grid') && <ConcernsGrid T={T} c={c} base={base} concerns={concerns} />}
+        {hasComponent('reviews') && <Reviews T={T} c={c} />}
+        {hasComponent('before_after') && <BeforeAfterGallery T={T} c={c} cases={c.before_after || []} />}
+        {hasComponent('providers') && <Providers T={T} c={c} providers={c.providers || []} base={base} />}
+
         <SereneCTA T={T} c={c} />
         <SereneFooter T={T} c={c} />
+        {hasComponent('sticky_booking') && <StickyBooking T={T} c={c} />}
       </div>
     </>
   )
