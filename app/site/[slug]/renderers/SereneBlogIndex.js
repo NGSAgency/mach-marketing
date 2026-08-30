@@ -86,7 +86,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                     />
                   )}
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,14,13,0.1) 0%, rgba(15,14,13,0.9) 100%)' }} />
-                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(320px, 46vh, 480px)' }}>
+                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(280px, 36vh, 380px)' }}>
                     <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 18 }}>
                       Latest
                     </div>
