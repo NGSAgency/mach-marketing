@@ -10,6 +10,7 @@ import {
   JsonLd,
 } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 /**
  * Service + area page. This is the highest-intent page type we generate and the
@@ -35,6 +36,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
 
   return (
     <>
+      <SereneResponsive />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 

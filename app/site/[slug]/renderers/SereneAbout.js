@@ -4,6 +4,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { TrustBar, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneAbout({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -16,6 +17,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
 
   return (
     <>
+      <SereneResponsive />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <TrackingScripts tracking={c.tracking} />
 

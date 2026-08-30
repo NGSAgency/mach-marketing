@@ -3,6 +3,7 @@ import { applyBrand } from '../../../../lib/templates/shared/brand.js'
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -48,9 +49,10 @@ function SereneHeader({ T, c, logo, base }) {
 
   return (
     <>
+      <SereneResponsive />
       {/* Thin utility strip. Puts the phone number and location within reach
           without competing with the main navigation. */}
-      <div style={{
+      <div className="serene-utility" style={{
         background: T.colors.bgAlt,
         borderBottom: `1px solid ${T.colors.borderLight}`,
         fontSize: T.type.xs,
@@ -102,7 +104,7 @@ function SereneHeader({ T, c, logo, base }) {
                 padding: '12px 22px',
                 borderRadius: T.radius.sm,
               }}>
-                <img src={logo} alt={c.business.display_name} style={{ height: 64, width: 'auto', display: 'block' }} />
+                <img src={logo} alt={c.business.display_name} className="serene-logo" style={{ height: 64, width: 'auto', display: 'block' }} />
               </span>
             ) : (
               <div style={{
@@ -196,6 +198,14 @@ function SereneHeader({ T, c, logo, base }) {
           .serene-nav { display: none !important; }
           .serene-menu { display: block !important; }
           .serene-header-inner { grid-template-columns: auto auto !important; justify-content: space-between !important; }
+        }
+        @media (max-width: 640px) {
+          /* Booking is already pinned to the bottom of the screen on mobile, so
+             a second button crowds a narrow header for no gain. */
+          .serene-book-header { display: none !important; }
+          .serene-header-inner { padding-left: 20px !important; padding-right: 20px !important; }
+          .serene-utility { display: none !important; }
+          .serene-logo { height: 44px !important; }
         }
       ` }} />
     </>

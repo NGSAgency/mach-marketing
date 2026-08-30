@@ -4,6 +4,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildPersonSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 /**
  * Provider profiles.
@@ -28,6 +29,7 @@ export default function SereneTeam({ config: c, siteSlug }) {
 
   return (
     <>
+      <SereneResponsive />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 

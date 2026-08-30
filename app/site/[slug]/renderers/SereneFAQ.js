@@ -5,6 +5,7 @@ import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/t
 import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import FAQAccordion from './FAQAccordion.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneFAQ({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -22,6 +23,7 @@ export default function SereneFAQ({ config: c, siteSlug }) {
 
   return (
     <>
+      <SereneResponsive />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       {faqs.length > 0 && <JsonLd data={buildFAQSchema(faqs)} />}
       <TrackingScripts tracking={c.tracking} />

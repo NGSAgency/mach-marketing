@@ -4,6 +4,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 /**
  * A page about a concern rather than a treatment.
@@ -56,6 +57,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
 
   return (
     <>
+      <SereneResponsive />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 

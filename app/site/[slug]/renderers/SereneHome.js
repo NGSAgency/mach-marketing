@@ -4,6 +4,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildLocalBusinessSchema, JsonLd, urlService, urlServices } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneHome({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -54,6 +55,7 @@ export default function SereneHome({ config: c, siteSlug }) {
 
   return (
     <>
+      <SereneResponsive />
       <JsonLd data={buildLocalBusinessSchema(c)} />
       <TrackingScripts tracking={c.tracking} />
 

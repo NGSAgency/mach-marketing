@@ -11,6 +11,7 @@ import {
 } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -57,6 +58,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
 
   return (
     <>
+      <SereneResponsive />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 
