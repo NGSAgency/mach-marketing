@@ -28,7 +28,15 @@ export default function SereneHome({ config: c, siteSlug }) {
   // written to include services and locations, which is correct for a
   // subheadline and much too long set at display size, so take its first clause
   // and keep the full sentence for the supporting line beneath.
-  const rawPromise = gen['home|hero_subheadline'] || c.positioning?.tagline || ''
+  // Their own tagline beats a generated service description. "KC Skin &
+  // Wellness offers laser hair removal" is a sentence about inventory, not a
+  // reason to choose them.
+  const ownTagline = c.positioning?.tagline
+  const generated = gen['home|hero_subheadline'] || ''
+  const describesServices = /\boffers?\b|\bprovides?\b|\bspecializ/i.test(generated)
+  const rawPromise = (ownTagline && ownTagline.length < 90 && !describesServices)
+    ? ownTagline
+    : (generated || ownTagline || '')
 
   // A hero headline is a phrase. Generated subheadlines run to a full sentence
   // with services and cities in them, which is right for a subheadline and far
@@ -170,14 +178,17 @@ export default function SereneHome({ config: c, siteSlug }) {
                   {labels.offering}
                 </h2>
                 <a href={`${base}${urlServices(c)}`} style={{
+                  border: `1px solid ${T.colors.accent}`,
                   color: T.colors.accent,
                   fontSize: T.type.sm,
                   textDecoration: 'none',
-                  letterSpacing: '0.04em',
-                  borderBottom: `1px solid ${T.colors.accent}`,
-                  paddingBottom: 4,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  padding: '14px 32px',
+                  borderRadius: T.radius.full,
+                  whiteSpace: 'nowrap',
                 }}>
-                  All {labels.offering.toLowerCase()}
+                  All {(c.services || []).length} {labels.offering.toLowerCase()}
                 </a>
               </div>
 

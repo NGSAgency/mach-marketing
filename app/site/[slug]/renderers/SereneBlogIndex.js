@@ -10,8 +10,20 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
   const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }]
 
-  const featured = posts[0]
-  const rest = posts.slice(1)
+  const imgs = c.images || {}
+
+  const imageFor = (post) => {
+    const t = String(post.title || '').toLowerCase()
+    const match = (c.services || []).find(s => {
+      const name = String(s.name || '').toLowerCase()
+      return name && (t.includes(name) || name.split(' ').every(w => w.length > 3 && t.includes(w)))
+    })
+    return match ? imgs[`service_${match.slug}`] : null
+  }
+
+  const withImages = posts.map(p => ({ ...p, image: imageFor(p) }))
+  const featured = withImages[0]
+  const rest = withImages.slice(1)
 
   return (
     <>
@@ -51,38 +63,45 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
             {/* Lead post at scale, the rest in a grid. A single long list of
                 titles reads as an archive rather than something to read. */}
             {featured && (
-              <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
+              <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(32px, 4vw, 56px)' }}>
                 <a
                   href={`${base}/blog/${featured.slug}`}
                   style={{
+                    position: 'relative',
                     display: 'block',
                     maxWidth: 1400,
                     margin: '0 auto',
+                    minHeight: 'clamp(320px, 46vh, 480px)',
+                    overflow: 'hidden',
                     textDecoration: 'none',
-                    color: 'inherit',
-                    borderTop: `1px solid ${T.colors.border}`,
-                    paddingTop: 40,
+                    color: T.colors.text,
+                    background: T.colors.surface,
                   }}
                 >
-                  <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 18 }}>
-                    Latest
-                  </div>
-                  <h2 style={{
-                    fontFamily: T.fonts.display,
-                    fontSize: 'clamp(28px, 4vw, 52px)',
-                    fontWeight: 300,
-                    lineHeight: 1.12,
-                    letterSpacing: '-0.02em',
-                    margin: 0,
-                    maxWidth: 960,
-                  }}>
-                    {featured.title}
-                  </h2>
-                  {featured.excerpt && (
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, marginTop: 20, maxWidth: 640 }}>
-                      {featured.excerpt}
-                    </p>
+                  {featured.image && (
+                    <img
+                      src={featured.image.url}
+                      alt={featured.image.alt || featured.title}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
                   )}
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,14,13,0.1) 0%, rgba(15,14,13,0.9) 100%)' }} />
+                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(320px, 46vh, 480px)' }}>
+                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 18 }}>
+                      Latest
+                    </div>
+                    <h2 style={{
+                      fontFamily: T.fonts.display,
+                      fontSize: 'clamp(26px, 3.6vw, 46px)',
+                      fontWeight: 300,
+                      lineHeight: 1.12,
+                      letterSpacing: '-0.02em',
+                      margin: 0,
+                      maxWidth: 820,
+                    }}>
+                      {featured.title}
+                    </h2>
+                  </div>
                 </a>
               </section>
             )}
@@ -93,41 +112,42 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                   maxWidth: 1400,
                   margin: '0 auto',
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
-                  gap: 'clamp(24px, 3vw, 48px)',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
+                  gap: 8,
                 }}>
                   {rest.map((post, i) => (
                     <a
                       key={post.slug || i}
                       href={`${base}/blog/${post.slug}`}
                       style={{
+                        position: 'relative',
                         display: 'block',
+                        minHeight: 260,
+                        overflow: 'hidden',
                         textDecoration: 'none',
-                        color: 'inherit',
-                        borderTop: `1px solid ${T.colors.borderLight}`,
-                        paddingTop: 24,
+                        color: T.colors.text,
+                        background: T.colors.surface,
                       }}
                     >
-                      <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', color: T.colors.textMuted, marginBottom: 12 }}>
-                        {post.published_at
-                          ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-                          : String(i + 2).padStart(2, '0')}
-                      </div>
-                      <h3 style={{
-                        fontFamily: T.fonts.display,
-                        fontSize: 'clamp(19px, 2.1vw, 24px)',
-                        fontWeight: 300,
-                        lineHeight: 1.28,
-                        margin: 0,
-                        color: T.colors.text,
-                      }}>
-                        {post.title}
-                      </h3>
-                      {post.excerpt && (
-                        <p style={{ fontSize: T.type.sm, lineHeight: 1.75, color: T.colors.textDim, margin: '12px 0 0' }}>
-                          {post.excerpt}
-                        </p>
+                      {post.image && (
+                        <img
+                          src={post.image.url}
+                          alt={post.image.alt || post.title}
+                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }}
+                        />
                       )}
+                      <div style={{ position: 'absolute', inset: 0, background: post.image ? 'linear-gradient(180deg, rgba(15,14,13,0.05) 0%, rgba(15,14,13,0.9) 100%)' : 'none' }} />
+                      <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28, minHeight: 260 }}>
+                        <h3 style={{
+                          fontFamily: T.fonts.display,
+                          fontSize: 'clamp(18px, 2vw, 23px)',
+                          fontWeight: 300,
+                          lineHeight: 1.25,
+                          margin: 0,
+                        }}>
+                          {post.title}
+                        </h3>
+                      </div>
                     </a>
                   ))}
                 </div>

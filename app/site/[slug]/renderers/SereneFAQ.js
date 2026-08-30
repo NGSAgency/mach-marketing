@@ -4,6 +4,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+import FAQAccordion from './FAQAccordion.js'
 
 export default function SereneFAQ({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
@@ -46,41 +47,46 @@ export default function SereneFAQ({ config: c, siteSlug }) {
           </div>
         </section>
 
-        {/* Two columns with the question as the anchor. A single long list
-            gives the eye nowhere to rest and nothing to scan by. */}
         <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
           <div style={{
             maxWidth: 1400,
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(400px, 100%), 1fr))',
-            gap: 'clamp(24px, 4vw, 64px)',
+            gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)',
+            gap: 'clamp(24px, 5vw, 80px)',
+            alignItems: 'start',
           }}>
-            {faqs.length > 0 ? faqs.map((f, i) => (
-              <div key={i} style={{ borderTop: `1px solid ${T.colors.borderLight}`, paddingTop: 28 }}>
-                <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
-                  {String(i + 1).padStart(2, '0')}
-                </div>
-                <h2 style={{
-                  fontFamily: T.fonts.display,
-                  fontSize: 'clamp(19px, 2.2vw, 25px)',
-                  fontWeight: 300,
-                  lineHeight: 1.25,
-                  margin: '0 0 14px',
-                  color: T.colors.text,
-                }}>
-                  {f.question}
-                </h2>
-                <p style={{ fontSize: T.type.sm, lineHeight: 1.85, color: T.colors.textDim, margin: 0 }}>
-                  {f.answer}
+            <div style={{ fontSize: T.type.sm, lineHeight: 1.8, color: T.colors.textDim }}>
+              Cannot find what you are looking for?
+              {c.business.phone_display && (
+                <>
+                  {' '}
+                  <a href={`tel:${c.business.phone}`} style={{ color: T.colors.accent, textDecoration: 'none', borderBottom: `1px solid ${T.colors.accent}` }}>
+                    Call {c.business.phone_display}
+                  </a>
+                </>
+              )}
+            </div>
+
+            <div>
+              {faqs.length > 0 ? (
+                <FAQAccordion
+                  items={faqs}
+                  tokens={{
+                    display: T.fonts.display,
+                    text: T.colors.text,
+                    textDim: T.colors.textDim,
+                    accent: T.colors.accent,
+                    borderLight: T.colors.borderLight,
+                  }}
+                />
+              ) : (
+                <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
+                  Questions your clients actually ask, answered here and marked up with FAQ
+                  schema so search engines can surface the answers directly.
                 </p>
-              </div>
-            )) : (
-              <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
-                Questions your clients actually ask, answered here and marked up with FAQ
-                schema so search engines can surface the answers directly.
-              </p>
-            )}
+              )}
+            </div>
           </div>
         </section>
 

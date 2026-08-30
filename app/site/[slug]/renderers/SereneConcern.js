@@ -36,7 +36,15 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
   const Block = ({ label, body }) => body ? (
     <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 9fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, paddingTop: 8 }}>
+        <div style={{
+          fontFamily: T.fonts.display,
+          fontSize: 'clamp(21px, 2.4vw, 30px)',
+          fontWeight: 300,
+          lineHeight: 1.2,
+          letterSpacing: '-0.01em',
+          color: T.colors.text,
+          paddingTop: 4,
+        }}>
           {label}
         </div>
         <div style={{ maxWidth: 780, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
@@ -55,26 +63,64 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
 
         <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 5vw, 56px)', borderBottom: `1px solid ${T.colors.borderLight}` }}>
-          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-            <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 24 }}>
-              Concern
+          <div style={{
+            maxWidth: 1400,
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 4fr)',
+            gap: 'clamp(32px, 6vw, 88px)',
+            alignItems: 'end',
+          }}>
+            <div>
+              <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 24 }}>
+                Concern
+              </div>
+              <h1 style={{
+                fontFamily: T.fonts.display,
+                fontSize: 'clamp(32px, 4.6vw, 60px)',
+                fontWeight: 300,
+                lineHeight: 1.05,
+                letterSpacing: '-0.02em',
+                margin: 0,
+              }}>
+                {concern.label}
+              </h1>
+              {gen['concern_detail|hero_subheadline'] && (
+                <p style={{ fontSize: T.type.lg, lineHeight: 1.6, color: T.colors.textDim, margin: '24px 0 0', maxWidth: 620, fontWeight: 300 }}>
+                  {gen['concern_detail|hero_subheadline']}
+                </p>
+              )}
             </div>
-            <h1 style={{
-              fontFamily: T.fonts.display,
-              fontSize: 'clamp(32px, 4.6vw, 60px)',
-              fontWeight: 300,
-              lineHeight: 1.05,
-              letterSpacing: '-0.02em',
-              margin: 0,
-              maxWidth: 820,
-            }}>
-              {concern.label}
-            </h1>
-            {gen['concern_detail|hero_subheadline'] && (
-              <p style={{ fontSize: T.type.lg, lineHeight: 1.6, color: T.colors.textDim, margin: '24px 0 0', maxWidth: 620, fontWeight: 300 }}>
-                {gen['concern_detail|hero_subheadline']}
-              </p>
-            )}
+
+            {/* The right column was empty. A count and an action fill it and
+                give the page something to do besides read. */}
+            <div style={{ borderLeft: `1px solid ${T.colors.borderLight}`, paddingLeft: 'clamp(20px, 3vw, 40px)' }}>
+              {treatments.length > 0 && (
+                <>
+                  <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(38px, 5vw, 64px)', fontWeight: 300, color: T.colors.accent, lineHeight: 1 }}>
+                    {String(treatments.length).padStart(2, '0')}
+                  </div>
+                  <div style={{ fontSize: T.type.sm, color: T.colors.textDim, marginTop: 12, lineHeight: 1.6 }}>
+                    {labels.offering.toLowerCase()} we offer that address this
+                  </div>
+                </>
+              )}
+              {c.business.phone_display && (
+                <a href={`tel:${c.business.phone}`} style={{
+                  display: 'inline-block',
+                  marginTop: 28,
+                  background: T.colors.accent,
+                  color: T.colors.bg,
+                  padding: '14px 32px',
+                  borderRadius: T.radius.full,
+                  textDecoration: 'none',
+                  fontSize: T.type.sm,
+                  letterSpacing: '0.04em',
+                }}>
+                  {labels.conversion.replace(/\b\w/g, ch => ch.toUpperCase())}
+                </a>
+              )}
+            </div>
           </div>
         </section>
 

@@ -324,7 +324,7 @@ function SereneFooter({ T, c }) {
 
         {areas.length > 0 && (
           <div>
-            <div style={colHead}>{labels.place}</div>
+            <div style={colHead}>Areas We Serve</div>
             {areas.slice(0, 8).map(area => (
               <a key={area} href={`${base}${urlArea(area, c)}`} style={linkStyle}>
                 {area}
