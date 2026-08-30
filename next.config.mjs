@@ -11,6 +11,9 @@ const nextConfig = {
       // URL keywords are a weak ranking signal, but changing URLs after launch
       // is harmful, so the segment is fixed correctly at build time.
       beforeFiles: [
+        // /concept reads better than /mockup when sending a link to a prospect
+        { source: '/concept/:token', destination: '/mockup/:token' },
+        { source: '/concept/:token/:path*', destination: '/mockup/:token/:path*' },
         // Offering segments
         { source: '/site/:slug/treatments', destination: '/site/:slug/services' },
         { source: '/site/:slug/treatments/:item', destination: '/site/:slug/services/:item' },
