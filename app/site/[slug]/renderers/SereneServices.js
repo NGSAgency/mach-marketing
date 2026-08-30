@@ -64,13 +64,14 @@ function SereneHeader({ T, c, logo, base }) {
         top: 0,
         zIndex: 40,
       }}>
-        <div style={{
+        <div className="serene-header-inner" style={{
           maxWidth: 1400,
           margin: '0 auto',
           padding: '16px clamp(24px, 5vw, 96px)',
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr auto',
           alignItems: 'center',
-          gap: 24,
+          gap: 32,
         }}>
           <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
             {logo ? (
@@ -103,7 +104,7 @@ function SereneHeader({ T, c, logo, base }) {
           {/* Inline navigation on desktop. A bare hamburger on a wide screen
               hides the treatment range, which is the main thing a visitor is
               trying to assess. */}
-          <nav className="serene-nav" style={{ display: 'flex', alignItems: 'center', gap: 32, marginLeft: 48 }}>
+          <nav className="serene-nav" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 36 }}>
             {links.map(l => (
               <a
                 key={l.href}
@@ -125,7 +126,7 @@ function SereneHeader({ T, c, logo, base }) {
             ))}
           </nav>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0, marginLeft: 'auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0, justifySelf: 'end' }}>
             {(c.business.booking_url || c.business.phone) && (
               <a
                 href={c.business.booking_url || `tel:${c.business.phone}`}
@@ -177,6 +178,7 @@ function SereneHeader({ T, c, logo, base }) {
         @media (max-width: 1024px) {
           .serene-nav { display: none !important; }
           .serene-menu { display: block !important; }
+          .serene-header-inner { grid-template-columns: auto auto !important; justify-content: space-between !important; }
         }
       ` }} />
     </>
