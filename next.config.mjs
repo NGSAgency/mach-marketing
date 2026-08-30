@@ -21,9 +21,9 @@ const nextConfig = {
         { source: '/site/:slug/locations', destination: '/site/:slug/service-areas' },
         { source: '/site/:slug/locations/:item', destination: '/site/:slug/service-areas/:item' },
 
-        // Same mappings for the mockup preview route
-        { source: '/mockup/:token/treatments/:item', destination: '/mockup/:token' },
-        { source: '/mockup/:token/packages/:item', destination: '/mockup/:token' },
+        // Mockups previously rendered as a single scrolling page, so treatment
+        // URLs were rewritten back to it. They are real routes now, and leaving
+        // these in place sent every treatment click to the home page.
       ],
       afterFiles: [],
       fallback: [],
