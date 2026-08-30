@@ -75,7 +75,18 @@ function SereneHeader({ T, c, logo, base }) {
         }}>
           <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
             {logo ? (
-              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 56, width: 'auto', display: 'block' }} />
+              /* Logo sits on a light plate. A practice often has only one
+                 variant, and dark artwork on a dark background disappears
+                 entirely, so the plate guarantees it is visible either way. */
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: '#ffffff',
+                padding: '10px 18px',
+                borderRadius: T.radius.sm,
+              }}>
+                <img src={logo} alt={c.business.display_name} style={{ maxHeight: 40, width: 'auto', display: 'block' }} />
+              </span>
             ) : (
               <div style={{
                 fontFamily: T.fonts.display,
