@@ -33,11 +33,16 @@ function SereneHeader({ T, c, logo, base }) {
   // medical verticals, so the team earns nav placement over coverage.
   const showTeam = (c.profile?.pages || []).includes('practitioners')
 
+  // Practices that publish regularly need the blog reachable, and it is a real
+  // ranking asset rather than an afterthought.
+  const hasBlog = (c.profile?.pages || []).includes('blog')
+
   const links = [
     { href: `${base}${urlServices(c)}`, label: labels.offering },
     ...(showTeam ? [{ href: `${base}/team`, label: 'Our Team' }] : []),
     ...(showPlaces ? [{ href: `${base}${urlServiceAreas(c)}`, label: labels.place }] : []),
     { href: `${base}/about`, label: 'About' },
+    ...(hasBlog ? [{ href: `${base}/blog`, label: 'Blog' }] : []),
     { href: `${base}/faq`, label: 'FAQ' },
   ]
 

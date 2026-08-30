@@ -259,7 +259,7 @@ export default function SereneHome({ config: c, siteSlug }) {
           const rest = pullIdx >= 0 ? body.filter((_, i) => i !== pullIdx) : body
 
           return (
-            <section style={{ padding: 'clamp(80px, 12vw, 176px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
+            <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
               <div style={{ maxWidth: 1400, margin: '0 auto' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)', gap: 'clamp(32px, 6vw, 96px)', alignItems: 'start' }}>
                   <div>
@@ -288,7 +288,7 @@ export default function SereneHome({ config: c, siteSlug }) {
                     </div>
                   </div>
 
-                  <div style={{ position: 'sticky', top: 96 }}>
+                  <div>
                     {secondary && (
                       <div style={{ aspectRatio: '3/4', overflow: 'hidden', marginBottom: pull ? 48 : 0 }}>
                         <img src={secondary.url} alt={secondary.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />

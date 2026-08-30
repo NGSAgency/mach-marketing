@@ -1,0 +1,73 @@
+import { sereneTokens } from '../../../templates/serene/tokens.js'
+import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { TrackingScripts } from '../../../../lib/site/tracking.js'
+import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
+import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
+import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
+
+export default function SereneFAQ({ config: c, siteSlug }) {
+  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const base = c.base_path || `/site/${siteSlug}`
+  const gen = c.generated || {}
+
+  const raw = gen['faq|questions']
+  let faqs = []
+  if (Array.isArray(raw)) faqs = raw
+  else if (typeof raw === 'string') {
+    try { faqs = JSON.parse(raw.replace(/```json/gi, '').replace(/```/g, '').trim()) } catch { faqs = [] }
+  }
+
+  const crumbs = [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
+
+  return (
+    <>
+      <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
+      {faqs.length > 0 && <JsonLd data={buildFAQSchema(faqs)} />}
+      <TrackingScripts tracking={c.tracking} />
+
+      <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
+        <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+
+        <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 5vw, 56px)' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+            <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 24 }}>
+              Questions
+            </div>
+            <h1 style={{
+              fontFamily: T.fonts.display,
+              fontSize: 'clamp(32px, 4.6vw, 60px)',
+              fontWeight: 300,
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              margin: 0,
+            }}>
+              Frequently asked
+            </h1>
+          </div>
+        </section>
+
+        <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
+          <div style={{ maxWidth: 820, margin: '0 auto' }}>
+            {faqs.length > 0 ? faqs.map((f, i) => (
+              <div key={i} style={{ padding: '28px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
+                <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(20px, 2.4vw, 27px)', fontWeight: 300, margin: '0 0 12px' }}>
+                  {f.question}
+                </h2>
+                <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
+              </div>
+            )) : (
+              <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
+                Questions your clients actually ask, answered here and marked up with FAQ
+                schema so search engines can surface the answers directly.
+              </p>
+            )}
+          </div>
+        </section>
+
+        <SereneCTA T={T} c={c} />
+        <SereneFooter T={T} c={c} />
+        <StickyBooking T={T} c={c} />
+      </div>
+    </>
+  )
+}

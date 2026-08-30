@@ -4,12 +4,12 @@ import { notFound } from 'next/navigation'
 import { BoltBlogIndex } from '../renderers/BoltBlog.js'
 import { GroveBlogIndex } from '../renderers/GroveBlog.js'
 import { AxisBlogIndex } from '../renderers/AxisBlog.js'
+import SereneBlogIndex from '../renderers/SereneBlogIndex.js'
 
 const RENDERERS = {
   bolt: BoltBlogIndex,
   grove: GroveBlogIndex,
-  axis: AxisBlogIndex,
-}
+  axis: AxisBlogIndex, serene: SereneBlogIndex }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
