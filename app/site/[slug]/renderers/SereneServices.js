@@ -75,7 +75,7 @@ function SereneHeader({ T, c, logo, base }) {
         }}>
           <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
             {logo ? (
-              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 44, display: 'block' }} />
+              <img src={logo} alt={c.business.display_name} style={{ maxHeight: 56, width: 'auto', display: 'block' }} />
             ) : (
               <div style={{
                 fontFamily: T.fonts.display,
@@ -98,12 +98,16 @@ function SereneHeader({ T, c, logo, base }) {
               <a
                 key={l.href}
                 href={l.href}
+                className="serene-navlink"
                 style={{
-                  color: T.colors.textDim,
+                  position: 'relative',
+                  color: T.colors.text,
                   textDecoration: 'none',
-                  fontSize: T.type.sm,
-                  letterSpacing: '0.03em',
+                  fontSize: T.type.base,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
                   whiteSpace: 'nowrap',
+                  paddingBottom: 6,
                 }}
               >
                 {l.label}
@@ -148,6 +152,18 @@ function SereneHeader({ T, c, logo, base }) {
       </header>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        .serene-navlink::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 0;
+          height: 1px;
+          background: ${T.colors.accent};
+          transition: width 320ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .serene-navlink:hover::after { width: 100%; }
+        .serene-navlink:hover { color: ${T.colors.accentLight}; }
         @media (max-width: 1024px) {
           .serene-nav { display: none !important; }
           .serene-menu { display: block !important; }
