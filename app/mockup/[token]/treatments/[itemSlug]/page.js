@@ -26,11 +26,12 @@ export default async function MockupTreatmentPage({ params }) {
   const service = (config.services || []).find(s => s.slug === itemSlug)
   if (!service) notFound()
 
-  // Only the first treatment has generated copy: a concept demonstrates the
-  // pattern rather than building every page. Others route back to the index so
-  // a click never lands on an empty page.
-  const isGenerated = (config.services || [])[0]?.slug === itemSlug
-  if (!isGenerated) redirect(`/mockup/${token}`)
+  // A concept generates copy for one treatment rather than all of them. Compare
+  // against what was actually generated rather than assuming array position,
+  // since ordering can differ between generation and render.
+  const hasCopy = Boolean((config.generated || {})['service_detail|intro'])
+  const generatedSlug = config.generated_for?.service || (config.services || [])[0]?.slug
+  if (!hasCopy || generatedSlug !== itemSlug) redirect(`/mockup/${token}/treatments`)
 
   const Renderer = RENDERERS[config.template_slug] || RENDERERS.bolt
 
