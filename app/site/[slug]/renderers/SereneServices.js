@@ -82,10 +82,10 @@ function SereneHeader({ T, c, logo, base }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 background: '#ffffff',
-                padding: '10px 18px',
+                padding: '14px 24px',
                 borderRadius: T.radius.sm,
               }}>
-                <img src={logo} alt={c.business.display_name} style={{ maxHeight: 40, width: 'auto', display: 'block' }} />
+                <img src={logo} alt={c.business.display_name} style={{ height: 68, width: 'auto', display: 'block' }} />
               </span>
             ) : (
               <div style={{
