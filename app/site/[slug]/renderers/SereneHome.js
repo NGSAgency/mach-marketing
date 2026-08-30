@@ -41,14 +41,14 @@ export default function SereneHome({ config: c, siteSlug }) {
           display: 'grid',
           gridTemplateColumns: hero ? 'minmax(0, 1fr) minmax(0, 0.85fr)' : '1fr',
           alignItems: 'stretch',
-          minHeight: 'clamp(520px, 78vh, 820px)',
+          minHeight: 'clamp(440px, 58vh, 600px)',
           borderBottom: `1px solid ${T.colors.borderLight}`,
         }}>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            padding: 'clamp(48px, 8vw, 128px) clamp(24px, 5vw, 96px)',
+            padding: 'clamp(40px, 5vw, 72px) clamp(24px, 5vw, 96px)',
           }}>
             <div style={{
               fontFamily: T.fonts.body,
@@ -64,7 +64,7 @@ export default function SereneHome({ config: c, siteSlug }) {
 
             <h1 style={{
               fontFamily: T.fonts.display,
-              fontSize: T.type.hero,
+              fontSize: 'clamp(34px, 4.6vw, 62px)',
               fontWeight: 300,
               lineHeight: 0.94,
               letterSpacing: '-0.02em',
@@ -106,7 +106,7 @@ export default function SereneHome({ config: c, siteSlug }) {
             /* Source images are 1920px, so a full-bleed hero on a wide display
                stretches them past native size and reads as blurry. Capping the
                column keeps the image close to its actual resolution. */
-            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(320px, 40vh, 820px)', maxWidth: 900, justifySelf: 'end', width: '100%' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(280px, 38vh, 600px)', maxWidth: 760, justifySelf: 'end', width: '100%' }}>
               <img
                 src={hero.url}
                 alt={hero.alt || c.business.display_name}
