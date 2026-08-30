@@ -22,7 +22,13 @@ export default function SereneHome({ config: c, siteSlug }) {
   // The hero carries one clear promise, not the business name. The name is
   // already in the header; repeating it wastes the most valuable space on the
   // page.
-  const promise = gen['home|hero_subheadline'] || c.positioning?.tagline
+  // The hero needs a short phrase, not a sentence. The generated subheadline is
+  // written to include services and locations, which is correct for a
+  // subheadline and much too long set at display size, so take its first clause
+  // and keep the full sentence for the supporting line beneath.
+  const rawPromise = gen['home|hero_subheadline'] || c.positioning?.tagline || ''
+  const promise = rawPromise.split(/[.·|]|\s+for\s+clients\s+/i)[0].trim().replace(/,\s*$/, '')
+  const promiseSupport = rawPromise.length > promise.length + 10 ? rawPromise : null
 
   return (
     <>
@@ -41,7 +47,7 @@ export default function SereneHome({ config: c, siteSlug }) {
           display: 'grid',
           gridTemplateColumns: hero ? 'minmax(0, 1fr) minmax(0, 0.85fr)' : '1fr',
           alignItems: 'stretch',
-          minHeight: 'clamp(440px, 58vh, 600px)',
+          minHeight: 'clamp(380px, 48vh, 520px)',
           borderBottom: `1px solid ${T.colors.borderLight}`,
         }}>
           <div style={{
@@ -64,7 +70,7 @@ export default function SereneHome({ config: c, siteSlug }) {
 
             <h1 style={{
               fontFamily: T.fonts.display,
-              fontSize: 'clamp(34px, 4.6vw, 62px)',
+              fontSize: 'clamp(30px, 3.8vw, 52px)',
               fontWeight: 300,
               lineHeight: 0.94,
               letterSpacing: '-0.02em',
@@ -74,7 +80,19 @@ export default function SereneHome({ config: c, siteSlug }) {
               {promise}
             </h1>
 
-            <div style={{ display: 'flex', gap: 16, marginTop: 48, flexWrap: 'wrap' }}>
+            {promiseSupport && (
+              <p style={{
+                fontSize: T.type.base,
+                lineHeight: 1.7,
+                color: T.colors.textDim,
+                margin: '24px 0 0',
+                maxWidth: 480,
+              }}>
+                {promiseSupport}
+              </p>
+            )}
+
+            <div style={{ display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' }}>
               {c.business.phone_display && (
                 <a href={`tel:${c.business.phone}`} style={{
                   background: T.colors.accent,
@@ -106,7 +124,7 @@ export default function SereneHome({ config: c, siteSlug }) {
             /* Source images are 1920px, so a full-bleed hero on a wide display
                stretches them past native size and reads as blurry. Capping the
                column keeps the image close to its actual resolution. */
-            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(280px, 38vh, 600px)', maxWidth: 760, justifySelf: 'end', width: '100%' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(240px, 32vh, 520px)', maxWidth: 700, justifySelf: 'end', width: '100%' }}>
               <img
                 src={hero.url}
                 alt={hero.alt || c.business.display_name}
