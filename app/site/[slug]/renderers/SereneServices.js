@@ -22,9 +22,21 @@ function navLabels(c) {
 function SereneHeader({ T, c, logo, base }) {
   const labels = navLabels(c)
 
+  // Whether service areas belong in primary navigation is an industry decision
+  // carried on the profile. Home services buyers check coverage first because
+  // urgency drives the search; aesthetics buyers choose on provider and
+  // treatment, so a coverage tab is noise. Those pages stay live and linked
+  // from the footer, which is where they carry SEO weight.
+  const showPlaces = c.profile?.nav?.show_places !== false
+
+  // Who performs a treatment is a stronger trust signal than the device in
+  // medical verticals, so the team earns nav placement over coverage.
+  const showTeam = (c.profile?.pages || []).includes('practitioners')
+
   const links = [
     { href: `${base}${urlServices(c)}`, label: labels.offering },
-    { href: `${base}${urlServiceAreas(c)}`, label: labels.place },
+    ...(showTeam ? [{ href: `${base}/team`, label: 'Our Team' }] : []),
+    ...(showPlaces ? [{ href: `${base}${urlServiceAreas(c)}`, label: labels.place }] : []),
     { href: `${base}/about`, label: 'About' },
     { href: `${base}/faq`, label: 'FAQ' },
   ]
