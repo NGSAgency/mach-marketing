@@ -161,21 +161,35 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
               <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 32 }}>
                 {service.name} near you
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(200px, 100%), 1fr))', gap: 8 }}>
                 {areas.map(area => (
                   <a
                     key={area}
                     href={`${base}${urlCombo(service, area)}`}
                     style={{
-                      border: `1px solid ${T.colors.border}`,
-                      borderRadius: T.radius.full,
-                      padding: '10px 22px',
+                      position: 'relative',
+                      display: 'block',
+                      minHeight: 150,
+                      overflow: 'hidden',
+                      background: T.colors.surface,
                       textDecoration: 'none',
-                      color: T.colors.textDim,
-                      fontSize: T.type.sm,
+                      color: T.colors.text,
                     }}
                   >
-                    {area}
+                    {img && (
+                      <img src={img.url} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.32 }} />
+                    )}
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,14,13,0.2) 0%, rgba(15,14,13,0.85) 100%)' }} />
+                    <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 20, minHeight: 150 }}>
+                      <div>
+                        <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', color: T.colors.accent, marginBottom: 6 }}>
+                          {service.name}
+                        </div>
+                        <div style={{ fontFamily: T.fonts.display, fontSize: 20, fontWeight: 300, lineHeight: 1.15 }}>
+                          {area}
+                        </div>
+                      </div>
+                    </div>
                   </a>
                 ))}
               </div>

@@ -6,6 +6,7 @@ import {
   buildFAQSchema,
   buildMedicalProcedureSchema,
   breadcrumbsForCombo,
+  urlCombo,
   JsonLd,
 } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -146,6 +147,56 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
               </div>
               <div style={{ fontSize: 15, lineHeight: 2, color: T.colors.textDim }}>
                 {c.service_areas.filter(a => a !== area).join(' · ')}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Other treatments in this area. Gives the page imagery it did not
+            have and cross-links every combo page for this location, which is
+            how they get crawled. */}
+        {(c.services || []).length > 1 && (
+          <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+              <h2 style={{
+                fontFamily: T.fonts.display,
+                fontSize: 'clamp(24px, 3.2vw, 38px)',
+                fontWeight: 300,
+                letterSpacing: '-0.015em',
+                margin: '0 0 40px',
+              }}>
+                Also available in {area}
+              </h2>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))', gap: 8 }}>
+                {(c.services || []).filter(s => s.slug !== service.slug).slice(0, 6).map((s, i) => {
+                  const img = (c.images || {})[`service_${s.slug}`]
+                  return (
+                    <a
+                      key={s.slug}
+                      href={`${base}${urlCombo(s, area)}`}
+                      style={{
+                        position: 'relative',
+                        display: 'block',
+                        minHeight: 220,
+                        overflow: 'hidden',
+                        textDecoration: 'none',
+                        color: T.colors.text,
+                        background: T.colors.surface,
+                      }}
+                    >
+                      {img && (
+                        <img src={img.url} alt={img.alt || s.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
+                      )}
+                      <div style={{ position: 'absolute', inset: 0, background: img ? 'linear-gradient(180deg, rgba(15,14,13,0.05) 0%, rgba(15,14,13,0.88) 100%)' : 'none' }} />
+                      <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 24, minHeight: 220 }}>
+                        <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(17px, 1.9vw, 22px)', fontWeight: 300, lineHeight: 1.2 }}>
+                          {s.name} in {area}
+                        </div>
+                      </div>
+                    </a>
+                  )
+                })}
               </div>
             </div>
           </section>
