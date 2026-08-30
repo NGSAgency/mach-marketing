@@ -17,7 +17,9 @@ import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServic
  */
 export default function SereneCombo({ config: c, siteSlug, service, area }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
-  const base = `/site/${siteSlug}`
+  // Mockups render the same pages under /mockup/<token>, so the base path
+  // comes from the config when present rather than being hardcoded.
+  const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
   const gen = c.generated || {}
   const hero = (c.images || {}).combo_hero || (c.images || {})[`service_${service.slug}`]

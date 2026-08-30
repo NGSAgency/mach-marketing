@@ -7,7 +7,9 @@ import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyB
 
 export default function SereneHome({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
-  const base = `/site/${siteSlug}`
+  // Mockups render the same pages under /mockup/<token>, so the base path
+  // comes from the config when present rather than being hardcoded.
+  const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
   const gen = c.generated || {}
   const imgs = c.images || {}

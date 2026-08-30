@@ -266,7 +266,9 @@ function SereneFooter({ T, c }) {
 export default function SereneServices({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  // Mockups render the same pages under /mockup/<token>, so the base path
+  // comes from the config when present rather than being hardcoded.
+  const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
   const crumbs = [{ name: 'Home', url: '/' }, { name: labels.offering, url: urlServices(c) }]
 
