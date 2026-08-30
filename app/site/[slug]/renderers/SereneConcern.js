@@ -35,11 +35,11 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
 
   const Block = ({ label, body }) => body ? (
     <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 9fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
         <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, paddingTop: 8 }}>
           {label}
         </div>
-        <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
+        <div style={{ maxWidth: 780, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
           {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
         </div>
       </div>
@@ -77,12 +77,6 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
             )}
           </div>
         </section>
-
-        <div style={{ paddingTop: 'clamp(40px, 6vw, 72px)' }}>
-          <Block label="About this" body={gen['concern_detail|intro']} />
-          <Block label="What contributes" body={gen['concern_detail|causes']} />
-          <Block label="Approaches" body={gen['concern_detail|treatment_options']} />
-        </div>
 
         {/* Only treatments explicitly mapped to this concern. The mapping is a
             fixed table rather than a judgment, so an unrelated service can never
@@ -134,9 +128,15 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
           </section>
         )}
 
+        <div style={{ paddingTop: 'clamp(40px, 6vw, 72px)' }}>
+          <Block label="About this" body={gen['concern_detail|intro']} />
+          <Block label="What contributes" body={gen['concern_detail|causes']} />
+          <Block label="Approaches" body={gen['concern_detail|treatment_options']} />
+        </div>
+
         {faqs.length > 0 && (
           <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 9fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
               <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.2vw, 40px)', fontWeight: 300, margin: 0, letterSpacing: '-0.015em' }}>
                 Questions
               </h2>

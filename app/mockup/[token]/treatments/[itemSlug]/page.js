@@ -1,5 +1,5 @@
 import { fetchMockup } from '../../../../../lib/site/fetch.js'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import BoltServiceDetail from '../../../../site/[slug]/renderers/BoltServiceDetail.js'
 import GroveServiceDetail from '../../../../site/[slug]/renderers/GroveServiceDetail.js'
 import AxisServiceDetail from '../../../../site/[slug]/renderers/AxisServiceDetail.js'
@@ -26,12 +26,13 @@ export default async function MockupTreatmentPage({ params }) {
   const service = (config.services || []).find(s => s.slug === itemSlug)
   if (!service) notFound()
 
-  // A concept generates copy for one treatment rather than all of them. Compare
-  // against what was actually generated rather than assuming array position,
-  // since ordering can differ between generation and render.
-  const hasCopy = Boolean((config.generated || {})['service_detail|intro'])
+  // A concept generates copy for one treatment rather than all of them.
+  // Redirecting the others sends someone who clicked a specific treatment
+  // somewhere they did not ask to go, which reads as broken. Instead the page
+  // renders with its real image and structure, and the renderer shows an honest
+  // note where the written copy would be.
   const generatedSlug = config.generated_for?.service || (config.services || [])[0]?.slug
-  if (!hasCopy || generatedSlug !== itemSlug) redirect(`/mockup/${token}/treatments`)
+  const isGenerated = generatedSlug === itemSlug
 
   const Renderer = RENDERERS[config.template_slug] || RENDERERS.bolt
 
@@ -39,7 +40,7 @@ export default async function MockupTreatmentPage({ params }) {
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <div style={{ paddingTop: 44 }}>
-        <Renderer config={config} siteSlug={token} service={service} />
+        <Renderer config={config} siteSlug={token} service={service} conceptOnly={!isGenerated} />
       </div>
     </>
   )

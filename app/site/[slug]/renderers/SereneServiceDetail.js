@@ -12,7 +12,7 @@ import {
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 
-export default function SereneServiceDetail({ config: c, siteSlug, service }) {
+export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
@@ -101,7 +101,28 @@ export default function SereneServiceDetail({ config: c, siteSlug, service }) {
           )}
         </section>
 
-        <div style={{ paddingTop: 'clamp(48px, 7vw, 88px)' }}>
+        {conceptOnly && (
+          <section style={{ padding: 'clamp(40px, 6vw, 72px) clamp(24px, 5vw, 96px) 0' }}>
+            <div style={{
+              maxWidth: 1400,
+              margin: '0 auto',
+              padding: '28px 32px',
+              border: `1px solid ${T.colors.border}`,
+              borderRadius: T.radius.md,
+            }}>
+              <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 12 }}>
+                Concept
+              </div>
+              <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0, maxWidth: 720 }}>
+                Shown in structure only. Every treatment gets a page written like the one
+                for {(c.services || [])[0]?.name}, with its own overview, what to expect,
+                aftercare, FAQ schema, and links to each area you serve.
+              </p>
+            </div>
+          </section>
+        )}
+
+        <div style={{ paddingTop: conceptOnly ? 'clamp(32px, 4vw, 56px)' : 'clamp(48px, 7vw, 88px)' }}>
           <Section label="Overview" body={gen['service_detail|intro']} />
           <Section label="What to expect" body={gen['service_detail|what_to_expect']} />
           <Section label="Our approach" body={gen['service_detail|materials_and_methods']} />

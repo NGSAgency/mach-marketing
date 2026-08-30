@@ -48,6 +48,8 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
           </section>
         ) : (
           <>
+            {/* Lead post at scale, the rest in a grid. A single long list of
+                titles reads as an archive rather than something to read. */}
             {featured && (
               <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
                 <a
@@ -58,26 +60,26 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                     margin: '0 auto',
                     textDecoration: 'none',
                     color: 'inherit',
-                    borderTop: `1px solid ${T.colors.borderLight}`,
+                    borderTop: `1px solid ${T.colors.border}`,
                     paddingTop: 40,
                   }}
                 >
-                  <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 16 }}>
+                  <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 18 }}>
                     Latest
                   </div>
                   <h2 style={{
                     fontFamily: T.fonts.display,
-                    fontSize: 'clamp(26px, 3.6vw, 46px)',
+                    fontSize: 'clamp(28px, 4vw, 52px)',
                     fontWeight: 300,
-                    lineHeight: 1.15,
-                    letterSpacing: '-0.015em',
+                    lineHeight: 1.12,
+                    letterSpacing: '-0.02em',
                     margin: 0,
-                    maxWidth: 900,
+                    maxWidth: 960,
                   }}>
                     {featured.title}
                   </h2>
                   {featured.excerpt && (
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, marginTop: 18, maxWidth: 640 }}>
+                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, marginTop: 20, maxWidth: 640 }}>
                       {featured.excerpt}
                     </p>
                   )}
@@ -87,40 +89,45 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
 
             {rest.length > 0 && (
               <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
-                <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                <div style={{
+                  maxWidth: 1400,
+                  margin: '0 auto',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
+                  gap: 'clamp(24px, 3vw, 48px)',
+                }}>
                   {rest.map((post, i) => (
                     <a
                       key={post.slug || i}
                       href={`${base}/blog/${post.slug}`}
                       style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)',
-                        gap: 'clamp(16px, 4vw, 56px)',
-                        padding: '28px 0',
-                        borderTop: `1px solid ${T.colors.borderLight}`,
+                        display: 'block',
                         textDecoration: 'none',
                         color: 'inherit',
+                        borderTop: `1px solid ${T.colors.borderLight}`,
+                        paddingTop: 24,
                       }}
                     >
-                      <div style={{ fontSize: T.type.xs, letterSpacing: '0.1em', color: T.colors.textMuted, paddingTop: 6 }}>
-                        {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : ''}
+                      <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', color: T.colors.textMuted, marginBottom: 12 }}>
+                        {post.published_at
+                          ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+                          : String(i + 2).padStart(2, '0')}
                       </div>
-                      <div>
-                        <h3 style={{
-                          fontFamily: T.fonts.display,
-                          fontSize: 'clamp(19px, 2.2vw, 26px)',
-                          fontWeight: 300,
-                          lineHeight: 1.25,
-                          margin: 0,
-                        }}>
-                          {post.title}
-                        </h3>
-                        {post.excerpt && (
-                          <p style={{ fontSize: T.type.sm, lineHeight: 1.75, color: T.colors.textDim, margin: '10px 0 0', maxWidth: 620 }}>
-                            {post.excerpt}
-                          </p>
-                        )}
-                      </div>
+                      <h3 style={{
+                        fontFamily: T.fonts.display,
+                        fontSize: 'clamp(19px, 2.1vw, 24px)',
+                        fontWeight: 300,
+                        lineHeight: 1.28,
+                        margin: 0,
+                        color: T.colors.text,
+                      }}>
+                        {post.title}
+                      </h3>
+                      {post.excerpt && (
+                        <p style={{ fontSize: T.type.sm, lineHeight: 1.75, color: T.colors.textDim, margin: '12px 0 0' }}>
+                          {post.excerpt}
+                        </p>
+                      )}
                     </a>
                   ))}
                 </div>

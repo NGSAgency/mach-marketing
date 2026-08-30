@@ -2,7 +2,7 @@ import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand } from '../../../../lib/templates/shared/brand.js'
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
-import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService } from '../../../../lib/templates/shared/seo/index.js'
+import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -235,32 +235,124 @@ function SereneCTA({ T, c, headline }) {
 
 function SereneFooter({ T, c }) {
   const labels = navLabels(c)
+  const base = c.base_path || ''
+  const services = (c.services || []).slice(0, 6)
+  const areas = c.service_areas || []
+  const showTeam = (c.profile?.pages || []).includes('practitioners')
+  const hasBlog = (c.profile?.pages || []).includes('blog')
+
+  const colHead = {
+    fontSize: T.type.xs,
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+    color: T.colors.accent,
+    marginBottom: 20,
+  }
+
+  const linkStyle = {
+    display: 'block',
+    color: T.colors.textDim,
+    textDecoration: 'none',
+    fontSize: T.type.sm,
+    lineHeight: 2.1,
+  }
+
   return (
-    <footer style={{ background: T.colors.text, color: T.colors.bgAlt, padding: 'clamp(48px, 7vw, 80px) 32px 40px' }}>
-      <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto' }}>
-        <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 400, marginBottom: 20 }}>
-          {c.business.display_name}
-        </div>
-        <div style={{ fontSize: 14, lineHeight: 1.9, opacity: 0.75 }}>
-          {c.business.address_line && <div>{c.business.address_line}</div>}
-          {c.business.phone_display && <div>{c.business.phone_display}</div>}
-          {c.business.email && <div>{c.business.email}</div>}
-          {c.business.hours_display && <div style={{ marginTop: 10 }}>{c.business.hours_display}</div>}
+    <footer style={{ background: T.colors.bgAlt, borderTop: `1px solid ${T.colors.borderLight}` }}>
+      {/* Four columns rather than a stack of lines. Service and area links here
+          are also how those pages get crawled, so the footer is doing SEO work
+          rather than just closing the page. */}
+      <div style={{
+        maxWidth: 1400,
+        margin: '0 auto',
+        padding: 'clamp(56px, 8vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 4vw, 56px)',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',
+        gap: 'clamp(32px, 5vw, 64px)',
+      }}>
+        <div>
+          <div style={{
+            fontFamily: T.fonts.display,
+            fontSize: 'clamp(22px, 2.4vw, 28px)',
+            fontWeight: 300,
+            color: T.colors.text,
+            marginBottom: 20,
+            lineHeight: 1.2,
+          }}>
+            {c.business.display_name}
+          </div>
+          <div style={{ fontSize: T.type.sm, lineHeight: 2, color: T.colors.textDim }}>
+            {c.business.address_line && <div>{c.business.address_line}</div>}
+            {c.business.phone_display && (
+              <a href={`tel:${c.business.phone}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>
+                {c.business.phone_display}
+              </a>
+            )}
+            {c.business.email && <div>{c.business.email}</div>}
+          </div>
+          {c.business.hours_display && (
+            <div style={{ fontSize: T.type.xs, color: T.colors.textMuted, marginTop: 16, lineHeight: 1.9 }}>
+              {c.business.hours_display}
+            </div>
+          )}
         </div>
 
-        {(c.service_areas || []).length > 0 && (
-          <div style={{ marginTop: 32, fontSize: 13, opacity: 0.6, lineHeight: 1.8 }}>
-            <div style={{ marginBottom: 6, letterSpacing: 1, textTransform: 'uppercase', fontSize: 11 }}>{labels.place}</div>
-            {c.service_areas.join(' · ')}
+        {services.length > 0 && (
+          <div>
+            <div style={colHead}>{labels.offering}</div>
+            {services.map(s => (
+              <a key={s.slug} href={`${base}${urlService(s.slug, c)}`} style={linkStyle}>
+                {s.name}
+              </a>
+            ))}
+            {(c.services || []).length > services.length && (
+              <a href={`${base}${urlServices(c)}`} style={{ ...linkStyle, color: T.colors.accent }}>
+                All {labels.offering.toLowerCase()}
+              </a>
+            )}
           </div>
         )}
 
-        <div style={{ marginTop: 40, paddingTop: 24, borderTop: `1px solid rgba(255,255,255,0.12)`, fontSize: 12, opacity: 0.5 }}>
-          © {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}
+        <div>
+          <div style={colHead}>Practice</div>
+          <a href={`${base}/about`} style={linkStyle}>About</a>
+          {showTeam && <a href={`${base}/team`} style={linkStyle}>Our Team</a>}
+          {hasBlog && <a href={`${base}/blog`} style={linkStyle}>Journal</a>}
+          <a href={`${base}/faq`} style={linkStyle}>Questions</a>
+          <a href={`${base}/contact`} style={linkStyle}>Contact</a>
+        </div>
+
+        {areas.length > 0 && (
+          <div>
+            <div style={colHead}>{labels.place}</div>
+            {areas.slice(0, 8).map(area => (
+              <a key={area} href={`${base}${urlArea(area, c)}`} style={linkStyle}>
+                {area}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div style={{
+        borderTop: `1px solid ${T.colors.borderLight}`,
+      }}>
+        <div style={{
+          maxWidth: 1400,
+          margin: '0 auto',
+          padding: '24px clamp(24px, 5vw, 96px) 32px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: 24,
+          flexWrap: 'wrap',
+          fontSize: T.type.xs,
+          color: T.colors.textMuted,
+        }}>
+          <span>© {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}</span>
           {c.profile?.compliance_level === 'medical' && (
-            <div style={{ marginTop: 8 }}>
-              Individual results vary. A consultation is required to determine whether a treatment is appropriate for you.
-            </div>
+            <span style={{ maxWidth: 520, textAlign: 'right', lineHeight: 1.6 }}>
+              Individual results vary. A consultation determines whether a treatment is appropriate for you.
+            </span>
           )}
         </div>
       </div>
@@ -284,42 +376,82 @@ export default function SereneServices({ config: c, siteSlug }) {
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={logo} base={base} />
 
-        <section style={{ padding: 'clamp(64px, 10vw, 120px) 32px 48px' }}>
-          <div style={{ maxWidth: 'min(1100px, 100%)', margin: '0 auto' }}>
-            <h1 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(38px, 7vw, 68px)', fontWeight: 400, letterSpacing: 0.5, lineHeight: 1.1, margin: 0, color: T.colors.text }}>
+        <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 4vw, 56px)' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+            <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 24 }}>
               {labels.offering}
+            </div>
+            <h1 style={{
+              fontFamily: T.fonts.display,
+              fontSize: 'clamp(32px, 4.6vw, 60px)',
+              fontWeight: 300,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
+              margin: 0,
+              maxWidth: 820,
+            }}>
+              Everything we offer
             </h1>
-            <p style={{ fontSize: 18, color: T.colors.textDim, marginTop: 20, maxWidth: 620, lineHeight: 1.7 }}>
+            <p style={{ fontSize: T.type.lg, color: T.colors.textDim, marginTop: 20, maxWidth: 560, lineHeight: 1.65, fontWeight: 300 }}>
               {c.positioning?.tagline}
             </p>
           </div>
         </section>
 
-        <section style={{ padding: '0 32px clamp(64px, 10vw, 120px)' }}>
-          <div style={{ maxWidth: 'min(1100px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 28 }}>
-            {(c.services || []).map(s => (
-              <a
-                key={s.slug}
-                href={`${base}${urlService(s.slug, c)}`}
-                style={{
-                  background: T.colors.surface,
-                  border: `1px solid ${T.colors.borderLight}`,
-                  borderRadius: T.radius.lg,
-                  padding: 32,
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  display: 'block',
-                  boxShadow: T.shadow.soft,
-                }}
-              >
-                <h2 style={{ fontFamily: T.fonts.display, fontSize: 24, fontWeight: 400, margin: '0 0 12px', color: T.colors.text }}>
-                  {s.name}
-                </h2>
-                <p style={{ fontSize: 15, color: T.colors.textDim, lineHeight: 1.7, margin: 0 }}>
-                  {s.short}
-                </p>
-              </a>
-            ))}
+        {/* Image-led tiles rather than text cards. This is a visual industry and
+            a list of names reads as a price sheet. */}
+        <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
+          <div style={{
+            maxWidth: 1400,
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
+            gap: 8,
+          }}>
+            {(c.services || []).map((s, i) => {
+              const img = (c.images || {})[`service_${s.slug}`]
+              return (
+                <a
+                  key={s.slug}
+                  href={`${base}${urlService(s.slug, c)}`}
+                  style={{
+                    position: 'relative',
+                    display: 'block',
+                    minHeight: 300,
+                    textDecoration: 'none',
+                    color: T.colors.text,
+                    background: T.colors.surface,
+                    overflow: 'hidden',
+                  }}
+                >
+                  {img && (
+                    <img
+                      src={img.url}
+                      alt={img.alt || s.name}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
+                  )}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: img ? 'linear-gradient(180deg, rgba(15,14,13,0.05) 0%, rgba(15,14,13,0.88) 100%)' : 'none',
+                  }} />
+                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
+                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+                    <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(21px, 2.4vw, 27px)', fontWeight: 300, lineHeight: 1.15 }}>
+                      {s.name}
+                    </div>
+                    {s.short && (
+                      <div style={{ fontSize: T.type.sm, color: 'rgba(244,239,232,0.72)', marginTop: 12, lineHeight: 1.6 }}>
+                        {s.short}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              )
+            })}
           </div>
         </section>
 

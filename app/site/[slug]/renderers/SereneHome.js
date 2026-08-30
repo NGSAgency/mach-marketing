@@ -29,8 +29,20 @@ export default function SereneHome({ config: c, siteSlug }) {
   // subheadline and much too long set at display size, so take its first clause
   // and keep the full sentence for the supporting line beneath.
   const rawPromise = gen['home|hero_subheadline'] || c.positioning?.tagline || ''
-  const promise = rawPromise.split(/[.·|]|\s+for\s+clients\s+/i)[0].trim().replace(/,\s*$/, '')
-  const promiseSupport = rawPromise.length > promise.length + 10 ? rawPromise : null
+
+  // A hero headline is a phrase. Generated subheadlines run to a full sentence
+  // with services and cities in them, which is right for a subheadline and far
+  // too long at display size, so cut at the first natural break and cap length.
+  const firstClause = rawPromise
+    .split(/[.·|]|\s+(?:to|for)\s+(?:clients|customers|patients)\s+/i)[0]
+    .trim()
+    .replace(/[,;]\s*$/, '')
+
+  const promise = firstClause.length > 68
+    ? firstClause.split(/,\s*/)[0].trim()
+    : firstClause
+
+  const promiseSupport = rawPromise.length > promise.length + 15 ? rawPromise : null
 
   return (
     <>

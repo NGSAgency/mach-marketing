@@ -46,14 +46,34 @@ export default function SereneFAQ({ config: c, siteSlug }) {
           </div>
         </section>
 
+        {/* Two columns with the question as the anchor. A single long list
+            gives the eye nowhere to rest and nothing to scan by. */}
         <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
-          <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <div style={{
+            maxWidth: 1400,
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(400px, 100%), 1fr))',
+            gap: 'clamp(24px, 4vw, 64px)',
+          }}>
             {faqs.length > 0 ? faqs.map((f, i) => (
-              <div key={i} style={{ padding: '28px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-                <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(20px, 2.4vw, 27px)', fontWeight: 300, margin: '0 0 12px' }}>
+              <div key={i} style={{ borderTop: `1px solid ${T.colors.borderLight}`, paddingTop: 28 }}>
+                <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h2 style={{
+                  fontFamily: T.fonts.display,
+                  fontSize: 'clamp(19px, 2.2vw, 25px)',
+                  fontWeight: 300,
+                  lineHeight: 1.25,
+                  margin: '0 0 14px',
+                  color: T.colors.text,
+                }}>
                   {f.question}
                 </h2>
-                <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
+                <p style={{ fontSize: T.type.sm, lineHeight: 1.85, color: T.colors.textDim, margin: 0 }}>
+                  {f.answer}
+                </p>
               </div>
             )) : (
               <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
