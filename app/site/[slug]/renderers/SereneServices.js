@@ -67,11 +67,10 @@ function SereneHeader({ T, c, logo, base }) {
         <div style={{
           maxWidth: 1400,
           margin: '0 auto',
-          padding: 'clamp(20px, 3vw, 32px) clamp(24px, 5vw, 96px)',
+          padding: '16px clamp(24px, 5vw, 96px)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 32,
+          gap: 24,
         }}>
           <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
             {logo ? (
@@ -82,10 +81,10 @@ function SereneHeader({ T, c, logo, base }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 background: '#ffffff',
-                padding: '14px 24px',
+                padding: '10px 20px',
                 borderRadius: T.radius.sm,
               }}>
-                <img src={logo} alt={c.business.display_name} style={{ height: 68, width: 'auto', display: 'block' }} />
+                <img src={logo} alt={c.business.display_name} style={{ height: 52, width: 'auto', display: 'block' }} />
               </span>
             ) : (
               <div style={{
@@ -104,7 +103,7 @@ function SereneHeader({ T, c, logo, base }) {
           {/* Inline navigation on desktop. A bare hamburger on a wide screen
               hides the treatment range, which is the main thing a visitor is
               trying to assess. */}
-          <nav className="serene-nav" style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
+          <nav className="serene-nav" style={{ display: 'flex', alignItems: 'center', gap: 28, marginLeft: 'auto', marginRight: 32 }}>
             {links.map(l => (
               <a
                 key={l.href}
@@ -114,8 +113,8 @@ function SereneHeader({ T, c, logo, base }) {
                   position: 'relative',
                   color: T.colors.text,
                   textDecoration: 'none',
-                  fontSize: T.type.base,
-                  letterSpacing: '0.08em',
+                  fontSize: T.type.sm,
+                  letterSpacing: '0.06em',
                   textTransform: 'uppercase',
                   whiteSpace: 'nowrap',
                   paddingBottom: 6,
