@@ -30,10 +30,22 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
     faqs.length > 0 ? buildFAQSchema(faqs) : null,
   ].filter(Boolean)
 
-  const Section = ({ label, body }) => body ? (
-    <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(48px, 7vw, 88px)' }}>
+  const Section = ({ label, body, index = 0 }) => body ? (
+    <section style={{
+      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
+      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
+      borderTop: `1px solid ${T.colors.borderLight}`,
+    }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, paddingTop: 8 }}>
+        <div style={{
+          fontFamily: T.fonts.display,
+          fontSize: 'clamp(20px, 2.3vw, 28px)',
+          fontWeight: 300,
+          lineHeight: 1.2,
+          letterSpacing: '-0.01em',
+          color: T.colors.text,
+          paddingTop: 2,
+        }}>
           {label}
         </div>
         <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
@@ -123,13 +135,13 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
         )}
 
         <div style={{ paddingTop: conceptOnly ? 'clamp(32px, 4vw, 56px)' : 'clamp(48px, 7vw, 88px)' }}>
-          <Section label="Overview" body={gen['service_detail|intro']} />
-          <Section label="What to expect" body={gen['service_detail|what_to_expect']} />
-          <Section label="Our approach" body={gen['service_detail|materials_and_methods']} />
+          <Section label="Overview" body={gen['service_detail|intro']} index={0} />
+          <Section label="What to expect" body={gen['service_detail|what_to_expect']} index={1} />
+          <Section label="Our approach" body={gen['service_detail|materials_and_methods']} index={2} />
           {c.profile?.compliance_level === 'medical' && (
             <>
-              <Section label="Candidacy" body={gen['service_detail|candidacy']} />
-              <Section label="Aftercare" body={gen['service_detail|aftercare']} />
+              <Section label="Candidacy" body={gen['service_detail|candidacy']} index={3} />
+              <Section label="Aftercare" body={gen['service_detail|aftercare']} index={4} />
             </>
           )}
         </div>
@@ -169,18 +181,17 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
                     style={{
                       position: 'relative',
                       display: 'block',
-                      minHeight: 150,
+                      minHeight: 130,
                       overflow: 'hidden',
                       background: T.colors.surface,
+                      border: `1px solid ${T.colors.borderLight}`,
                       textDecoration: 'none',
                       color: T.colors.text,
                     }}
                   >
-                    {img && (
-                      <img src={img.url} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.32 }} />
-                    )}
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(15,14,13,0.2) 0%, rgba(15,14,13,0.85) 100%)' }} />
-                    <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 20, minHeight: 150 }}>
+                    {/* Deliberately no image: the same treatment photo repeated
+                        across eight area tiles reads as a mistake. */}
+                    <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 20, minHeight: 130 }}>
                       <div>
                         <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', color: T.colors.accent, marginBottom: 6 }}>
                           {service.name}

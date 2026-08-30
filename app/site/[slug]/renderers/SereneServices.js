@@ -405,8 +405,8 @@ export default function SereneServices({ config: c, siteSlug }) {
             maxWidth: 1400,
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
-            gap: 8,
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
+            gap: 'clamp(16px, 2vw, 28px)',
           }}>
             {(c.services || []).map((s, i) => {
               const img = (c.images || {})[`service_${s.slug}`]
