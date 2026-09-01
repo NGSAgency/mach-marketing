@@ -55,6 +55,15 @@ export async function POST(request) {
         client_signature_user_agent: userAgent,
         client_consent_electronic: consented,
         contract_hash_at_signing: contractHash,
+        // The Effective Date is the date of signature. Recording it here rather
+        // than guessing when the contract was sent means the document, the term
+        // calculation, and the subscription all reference the same real date.
+        contract_data: {
+          ...(contract.contract_data || {}),
+          start_date: new Date(signedAt).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Chicago',
+          }),
+        },
       }),
     })
 
