@@ -15,13 +15,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
  * practice actually offers for it.
  */
 export default function SereneConcern({ config: c, siteSlug, concern }) {
-  const T = applyBrand(sereneTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
   const gen = c.generated || {}

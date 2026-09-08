@@ -8,13 +8,7 @@ import FAQAccordion from './FAQAccordion.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneFAQ({ config: c, siteSlug }) {
-  const T = applyBrand(sereneTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const base = c.base_path || `/site/${siteSlug}`
   const gen = c.generated || {}
 

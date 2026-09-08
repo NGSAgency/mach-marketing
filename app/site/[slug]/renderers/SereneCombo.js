@@ -18,13 +18,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
  * treatment page and stop, leaving every "treatment in city" query uncontested.
  */
 export default function SereneCombo({ config: c, siteSlug, service, area }) {
-  const T = applyBrand(sereneTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`

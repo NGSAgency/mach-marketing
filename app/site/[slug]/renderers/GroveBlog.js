@@ -22,25 +22,13 @@ function makeChrome(T, c, logo, base) {
 }
 
 export function GroveBlogIndex({ config: c, siteSlug, posts }) {
-  const T = applyBrand(groveTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(groveTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const base = `/site/${siteSlug}`
   return <BlogIndexCore T={T} config={c} posts={posts} base={base} Chrome={makeChrome(T, c, c.brand?.logo_url, base)} />
 }
 
 export function GroveBlogPost({ config: c, siteSlug, post, prev, next }) {
-  const T = applyBrand(groveTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(groveTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const base = `/site/${siteSlug}`
   return <BlogPostCore T={T} config={c} post={post} prev={prev} next={next} base={base} Chrome={makeChrome(T, c, c.brand?.logo_url, base)} />
 }

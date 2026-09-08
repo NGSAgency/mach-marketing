@@ -7,13 +7,7 @@ import { StickyBooking } from '../../../../lib/templates/shared/components/medic
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
-  const T = applyBrand(sereneTokens, {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  })
+  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
   const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }]
 

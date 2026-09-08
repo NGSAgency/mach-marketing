@@ -6,13 +6,7 @@ import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisCTA, AxisFooter } from './AxisServices.js'
 
 export default function AxisCombo({ config: c, siteSlug, service, area }) {
-  const brand = {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  }
+  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`

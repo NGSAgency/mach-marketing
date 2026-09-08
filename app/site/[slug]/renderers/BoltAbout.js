@@ -5,13 +5,7 @@ import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
 
 export default function BoltAbout({ config: c, siteSlug }) {
-  const brand = {
-    accent: c.brand?.primary_accent,
-    secondary: c.brand?.secondary,
-    mode: c.brand?.mode,
-    palette: c.brand?.palette,
-    logo: c.brand?.logo_url,
-  }
+  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`
