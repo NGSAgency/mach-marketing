@@ -4,6 +4,7 @@ import GroveHome from '../../site/[slug]/renderers/GroveHome.js'
 import AxisHome from '../../site/[slug]/renderers/AxisHome.js'
 import SereneHome from '../../site/[slug]/renderers/SereneHome.js'
 import MockupBanner from './MockupBanner.js'
+import TemplateTabs from './TemplateTabs.js'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -30,8 +31,25 @@ function Notice({ heading, body }) {
   )
 }
 
-export default async function MockupPage({ params }) {
+// Layout options a prospect can switch between. Content is generated once and
+// rendered through each skin, so they are comparing structure rather than
+// colour: every option uses their own brand palette.
+const LAYOUT_OPTIONS = {
+  medspa: [
+    { key: 'serene', label: 'Editorial' },
+    { key: 'axis', label: 'Clinical' },
+    { key: 'grove', label: 'Warm' },
+  ],
+  default: [
+    { key: 'bolt', label: 'Bold' },
+    { key: 'grove', label: 'Warm' },
+    { key: 'axis', label: 'Clean' },
+  ],
+}
+
+export default async function MockupPage({ params, searchParams }) {
   const { token } = await params
+  const query = await searchParams
   const result = await fetchMockup(token)
 
   if (result?.error === 'expired') {
@@ -43,7 +61,14 @@ export default async function MockupPage({ params }) {
   }
 
   const config = result.config
-  const family = config.template_slug || 'bolt'
+  const options = LAYOUT_OPTIONS[config.profile?.key] || LAYOUT_OPTIONS.default
+
+  // A requested layout wins, provided it is one of the offered options
+  const requested = query?.t
+  const family = (requested && options.some(o => o.key === requested))
+    ? requested
+    : (config.template_slug || options[0].key)
+
   const Home = HOME[family] || HOME.bolt
 
   // A single clickable home page rather than three pages stacked with dividers.
@@ -52,8 +77,9 @@ export default async function MockupPage({ params }) {
   return (
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
-      <div style={{ paddingTop: 44 }}>
-        <Home config={config} siteSlug={token} />
+      <TemplateTabs current={family} options={options} token={token} />
+      <div style={{ paddingTop: 88 }}>
+        <Home config={{ ...config, template_slug: family }} siteSlug={token} />
       </div>
     </>
   )
