@@ -6,7 +6,13 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 
 export default function GroveServices({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = {
+    accent: c.brand?.primary_accent,
+    secondary: c.brand?.secondary,
+    mode: c.brand?.mode,
+    palette: c.brand?.palette,
+    logo: c.brand?.logo_url,
+  }
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]

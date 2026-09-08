@@ -5,7 +5,13 @@ import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/
 import { AxisHeader, AxisFooter } from './AxisServices.js'
 
 export default function AxisContact({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = {
+    accent: c.brand?.primary_accent,
+    secondary: c.brand?.secondary,
+    mode: c.brand?.mode,
+    palette: c.brand?.palette,
+    logo: c.brand?.logo_url,
+  }
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`

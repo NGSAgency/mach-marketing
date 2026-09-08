@@ -5,7 +5,13 @@ import { applyBrand } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 
 export default function AxisHome({ config: c }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = {
+    accent: c.brand?.primary_accent,
+    secondary: c.brand?.secondary,
+    mode: c.brand?.mode,
+    palette: c.brand?.palette,
+    logo: c.brand?.logo_url,
+  }
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]

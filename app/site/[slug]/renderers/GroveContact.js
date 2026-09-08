@@ -5,7 +5,13 @@ import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/
 import { GroveHeader, GroveFooter } from './GroveServices.js'
 
 export default function GroveContact({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = {
+    accent: c.brand?.primary_accent,
+    secondary: c.brand?.secondary,
+    mode: c.brand?.mode,
+    palette: c.brand?.palette,
+    logo: c.brand?.logo_url,
+  }
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`
