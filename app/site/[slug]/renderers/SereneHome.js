@@ -229,7 +229,7 @@ export default function SereneHome({ config: c, siteSlug }) {
                         position: 'absolute',
                         inset: 0,
                         background: img
-                          ? 'linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)'
+                          ? `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)`
                           : 'none',
                       }} />
                       <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: featured ? 48 : 32 }}>

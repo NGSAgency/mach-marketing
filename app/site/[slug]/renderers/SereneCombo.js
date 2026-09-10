@@ -50,7 +50,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
               alt={hero.alt || `${service.name} in ${area}`}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)' }} />
+            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` }} />
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'flex-end', padding: 'clamp(28px, 5vw, 64px)' }}>
               <div>
                 <div style={{ fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginBottom: 14 }}>{area}</div>
@@ -190,7 +190,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                       {img && (
                         <img src={img.url} alt={img.alt || s.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
                       )}
-                      <div style={{ position: 'absolute', inset: 0, background: img ? 'linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)' : 'none' }} />
+                      <div style={{ position: 'absolute', inset: 0, background: img ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
                       <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 24, minHeight: 220 }}>
                         <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(17px, 1.9vw, 22px)', fontWeight: 300, lineHeight: 1.2 }}>
                           {s.name} in {area}
