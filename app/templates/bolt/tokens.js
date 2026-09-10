@@ -28,6 +28,12 @@ export const boltTokens = {
 
     // Borders
     border: '#27272a',
+
+    // Image overlay stops, derived from this family's background so an overlay
+    // follows the palette rather than assuming a fixed colour.
+    overlayFaint: 'rgba(10,10,12,0.05)',
+    overlayLight: 'rgba(10,10,12,0.15)',
+    overlayStrong: 'rgba(10,10,12,0.88)',
     borderLight: '#e4e4e7',
   },
   fonts: {

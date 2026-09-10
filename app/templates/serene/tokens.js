@@ -40,6 +40,14 @@ export const sereneTokens = {
     warning: '#b8975f',
 
     border: 'rgba(244,239,232,0.12)',
+
+    // Image overlay stops. Derived from the background rather than hardcoded,
+    // so an overlay follows the palette instead of silently assuming the
+    // template's original colour. Text sits on top of these, so getting them
+    // wrong is a legibility failure rather than a cosmetic one.
+    overlayFaint: 'rgba(15,14,13,0.05)',
+    overlayLight: 'rgba(15,14,13,0.15)',
+    overlayStrong: 'rgba(15,14,13,0.88)',
     borderLight: 'rgba(244,239,232,0.06)',
   },
 

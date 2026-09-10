@@ -31,6 +31,12 @@ export const groveTokens = {
 
     // Borders
     border: '#d9d1c2',
+
+    // Image overlay stops, derived from this family's background so an overlay
+    // follows the palette rather than assuming a fixed colour.
+    overlayFaint: 'rgba(42,40,32,0.05)',
+    overlayLight: 'rgba(42,40,32,0.15)',
+    overlayStrong: 'rgba(42,40,32,0.88)',
     borderLight: '#e8e2d5',
   },
   fonts: {

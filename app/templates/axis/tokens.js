@@ -21,6 +21,12 @@ export const axisTokens = {
     accentSubtle: '#f0f6ff',
 
     border: '#d2d2d7',
+
+    // Image overlay stops, derived from this family's background so an overlay
+    // follows the palette rather than assuming a fixed colour.
+    overlayFaint: 'rgba(15,17,21,0.05)',
+    overlayLight: 'rgba(15,17,21,0.15)',
+    overlayStrong: 'rgba(15,17,21,0.88)',
     borderLight: '#e8e8ed',
     borderDark: '#424245',
 

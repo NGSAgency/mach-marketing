@@ -444,7 +444,7 @@ export default function SereneServices({ config: c, siteSlug }) {
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: img ? 'linear-gradient(180deg, rgba(15,14,13,0.05) 0%, rgba(15,14,13,0.88) 100%)' : 'none',
+                    background: img ? 'linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)' : 'none',
                   }} />
                   <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
                     <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
