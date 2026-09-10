@@ -4,6 +4,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
+import { emergencyLabel, serviceEmergencyBadge, joinParts, countLabel } from '../../../../lib/templates/shared/claims.js'
 
 export default function BoltServices({ config: c, siteSlug }) {
   const brand = brandFrom(c)
@@ -12,6 +13,7 @@ export default function BoltServices({ config: c, siteSlug }) {
   const categories = [...new Set((c.services || []).map(s => s.category))]
   const base = `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
+  const summary = joinParts([countLabel((c.services || []).length, 'service', 'services'), c.primary_service_area ? `Serving ${c.primary_service_area}` : null])
 
   return (
     <>
@@ -22,11 +24,11 @@ export default function BoltServices({ config: c, siteSlug }) {
 
         <section style={{ background: T.colors.bgAlt, padding: '80px 24px', borderBottom: `4px solid ${T.colors.accent}` }}>
           <div style={{ maxWidth: 'min(1280px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{ fontFamily: T.fonts.display, fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>Our Services</div>
+            <div style={{ fontFamily: T.fonts.display, fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>Services</div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: 64, fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
-              Everything for <span style={{ color: T.colors.accent }}>your home</span>
+              Our <span style={{ color: T.colors.accent }}>services</span>
             </h1>
-            <p style={{ fontSize: 18, color: T.colors.textDim, marginTop: 24 }}>{c.services.length} services · Serving {c.primary_service_area}</p>
+            {summary && <p style={{ fontSize: 18, color: T.colors.textDim, marginTop: 24 }}>{summary}</p>}
           </div>
         </section>
 
@@ -36,14 +38,17 @@ export default function BoltServices({ config: c, siteSlug }) {
               <div key={cat} style={{ marginBottom: 64 }}>
                 <div style={{ fontFamily: T.fonts.display, fontSize: 32, fontWeight: 800, letterSpacing: -0.5, textTransform: 'uppercase', margin: '0 0 24px 0', paddingBottom: 12, borderBottom: `2px solid ${T.colors.accent}` }}>{cat}</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-                  {c.services.filter(s => s.category === cat).map(svc => (
+                  {c.services.filter(s => s.category === cat).map(svc => {
+                    const badge = serviceEmergencyBadge(c, svc)
+                    return (
                     <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 24, borderRadius: T.radius.sm, display: 'block' }}>
                       <div style={{ color: T.colors.accent, marginBottom: 16 }}><ServiceIcon name={svc.icon} size={36} /></div>
                       <div style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, color: T.colors.text }}>{svc.name}</div>
                       <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 8 }}>{svc.short}</div>
-                      {svc.emergency && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.sm, display: 'inline-block', marginTop: 12 }}>24/7</div>}
+                      {badge && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.sm, display: 'inline-block', marginTop: 12 }}>{badge}</div>}
                     </a>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             ))}
@@ -59,11 +64,12 @@ export default function BoltServices({ config: c, siteSlug }) {
 
 // Shared components - kept here for simplicity
 function BoltHeader({ T, c, logo, base }) {
+  const emergency = emergencyLabel(c)
   return (
     <>
-      {c.positioning?.emergency_service && (
+      {emergency && (
         <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>
-          24/7 Emergency · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+          {emergency}{c.business?.phone_display && <> · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a></>}
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>

@@ -4,6 +4,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
+import { credentialLabel, serviceEmergencyBadge, joinParts, countLabel } from '../../../../lib/templates/shared/claims.js'
 
 export default function AxisServices({ config: c, siteSlug }) {
   const brand = brandFrom(c)
@@ -12,6 +13,7 @@ export default function AxisServices({ config: c, siteSlug }) {
   const categories = [...new Set((c.services || []).map(s => s.category))]
   const base = `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
+  const summary = joinParts([countLabel((c.services || []).length, 'service', 'services'), credentialLabel(c)])
 
   return (
     <>
@@ -24,9 +26,9 @@ export default function AxisServices({ config: c, siteSlug }) {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 20, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Services</div>
             <h1 style={{ fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -2.5, lineHeight: 1.05, margin: 0 }}>
-              Everything you need <span style={{ color: T.colors.accent }}>for your home</span>.
+              Our <span style={{ color: T.colors.accent }}>services</span>.
             </h1>
-            <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '24px auto 0', maxWidth: 680 }}>{c.services.length} services · One licensed team</p>
+            {summary && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '24px auto 0', maxWidth: 680 }}>{summary}</p>}
           </div>
         </section>
 
@@ -38,12 +40,14 @@ export default function AxisServices({ config: c, siteSlug }) {
                 <div key={cat} style={{ marginBottom: 64 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 24, paddingBottom: 20, borderBottom: `1px solid ${T.colors.borderLight}` }}>
                     <h2 style={{ fontSize: 40, fontWeight: 800, letterSpacing: -1.5, margin: 0 }}>{cat}</h2>
-                    <div style={{ fontSize: 15, color: T.colors.textMuted }}>{catServices.length} services</div>
+                    <div style={{ fontSize: 15, color: T.colors.textMuted }}>{countLabel(catServices.length, 'service', 'services')}</div>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
-                    {catServices.map(svc => (
+                    {catServices.map(svc => {
+                      const badge = serviceEmergencyBadge(c, svc)
+                      return (
                       <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
-                        {svc.emergency && <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>}
+                        {badge && <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>{badge}</div>}
                         <div style={{ width: 56, height: 56, background: T.colors.bg, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.colors.accent, marginBottom: 20, boxShadow: T.shadow.subtle }}>
                           <ServiceIcon name={svc.icon} size={28} />
                         </div>
@@ -51,7 +55,8 @@ export default function AxisServices({ config: c, siteSlug }) {
                         <div style={{ fontSize: 15, color: T.colors.textDim, lineHeight: 1.5 }}>{svc.short}</div>
                         <div style={{ marginTop: 20, color: T.colors.accent, fontSize: 14, fontWeight: 600 }}>Learn more →</div>
                       </a>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )

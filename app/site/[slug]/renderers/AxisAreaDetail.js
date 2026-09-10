@@ -4,6 +4,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
+import { emergencyLabel, sinceYear, joinParts, countLabel } from '../../../../lib/templates/shared/claims.js'
 import { AxisHeader, AxisCTA, AxisFooter } from './AxisServices.js'
 
 export default function AxisAreaDetail({ config: c, siteSlug, area }) {
@@ -13,6 +14,7 @@ export default function AxisAreaDetail({ config: c, siteSlug, area }) {
   const base = `/site/${siteSlug}`
   const categories = [...new Set(c.services.map(s => s.category))]
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }, { name: area, url: `/service-areas/${slugify(area)}` }]
+  const summary = joinParts([countLabel((c.services || []).length, 'service', 'services'), emergencyLabel(c), sinceYear(c)])
 
   return (
     <>
@@ -30,7 +32,7 @@ export default function AxisAreaDetail({ config: c, siteSlug, area }) {
             <h1 style={{ fontSize: 84, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0' }}>
               Home service<br /><span style={{ color: T.colors.accent }}>in {area}</span>.
             </h1>
-            <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{c.services.length}+ services · Same-day response · Since {c.business.established_year}</p>
+            {summary && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{summary}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>

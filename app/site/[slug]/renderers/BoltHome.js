@@ -3,22 +3,24 @@ import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildLocalBusinessSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
+import { emergencyLabel } from '../../../../lib/templates/shared/claims.js'
 
 export default function BoltHome({ config: c }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]
+  const emergency = emergencyLabel(c)
 
   return (
     <>
-      <JsonLd data={buildLocalBusinessSchema(c)} />
+      {!c.concept && <JsonLd data={buildLocalBusinessSchema(c)} />}
         <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         {/* Emergency bar */}
-        {c.positioning?.emergency_service && (
+        {emergency && (
           <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
-            <span>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+            <span>●</span> {emergency}{c.business?.phone_display && <> · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a></>}
           </div>
         )}
 

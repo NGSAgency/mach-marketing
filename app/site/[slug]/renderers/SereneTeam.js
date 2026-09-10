@@ -52,10 +52,6 @@ export default function SereneTeam({ config: c, siteSlug }) {
             }}>
               The people behind your care
             </h1>
-            <p style={{ fontSize: T.type.lg, lineHeight: 1.65, color: T.colors.textDim, marginTop: 24, maxWidth: 560, fontWeight: 300 }}>
-              Every treatment is performed by a trained provider who will talk through
-              your goals before anything begins.
-            </p>
           </div>
         </section>
 
@@ -136,7 +132,7 @@ export default function SereneTeam({ config: c, siteSlug }) {
               ))}
             </div>
           </section>
-        ) : (
+        ) : c.concept === true ? (
           <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 120px)' }}>
             <div style={{ maxWidth: 720, margin: '0 auto', fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
               Provider profiles go here, one for each member of your team, with a photo,
@@ -145,7 +141,7 @@ export default function SereneTeam({ config: c, siteSlug }) {
               most practices in this field do not publish at all.
             </div>
           </section>
-        )}
+        ) : null}
 
         <SereneCTA T={T} c={c} />
         <SereneFooter T={T} c={c} />

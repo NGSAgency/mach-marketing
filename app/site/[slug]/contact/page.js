@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
   return buildStaticMetadata(c, {
     slug: 'contact',
     title: 'Contact',
-    description: `Contact ${c.business.display_name} for service in ${c.primary_service_area}${c.business.phone_display ? '. Call ' + c.business.phone_display : ''}.`,
+    description: `Contact ${c.business.display_name}${c.primary_service_area ? ' for service in ' + c.primary_service_area : ''}${c.business.phone_display ? '. Call ' + c.business.phone_display : ''}.`,
   })
 }
 

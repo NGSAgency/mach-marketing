@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
+import { serviceEmergencyBadge } from '../../../../lib/templates/shared/claims.js'
 import { GroveHeader, GroveCTA, GroveFooter } from './GroveServices.js'
 
 export default function GroveCombo({ config: c, siteSlug, service, area }) {
@@ -13,6 +14,8 @@ export default function GroveCombo({ config: c, siteSlug, service, area }) {
   const otherAreas = c.service_areas.filter(a => a !== area).slice(0, 6)
   const otherServices = c.services.filter(s => s.slug !== service.slug && s.category === service.category).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: service.name, url: `/services/${service.slug}` }, { name: `${service.name} in ${area}`, url: `/${service.slug}-in-${slugify(area)}` }]
+  const badge = serviceEmergencyBadge(c, service)
+  const intro = service.description || service.short
 
   return (
     <>
@@ -26,12 +29,12 @@ export default function GroveCombo({ config: c, siteSlug, service, area }) {
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20 }}>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category} · {area}</div>
-              {service.emergency && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7</div>}
+              {badge && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>{badge}</div>}
             </div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6vw, 68px)", fontWeight: 500, letterSpacing: -2, margin: '0 0 28px 0', lineHeight: 1.05 }}>
               {service.name} <em style={{ fontStyle: 'italic', color: T.colors.accent }}>in {area}</em>.
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 720 }}>{service.description || service.short}. Serving {area} homes since {c.business.established_year}.</p>
+            {intro && <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 720 }}>{intro}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>

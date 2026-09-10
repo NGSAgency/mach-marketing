@@ -4,6 +4,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
+import { emergencyLabel, countLabel } from '../../../../lib/templates/shared/claims.js'
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
 
 export default function BoltAreaDetail({ config: c, siteSlug, area }) {
@@ -13,6 +14,9 @@ export default function BoltAreaDetail({ config: c, siteSlug, area }) {
   const base = `/site/${siteSlug}`
   const categories = [...new Set(c.services.map(s => s.category))]
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }, { name: area, url: `/service-areas/${slugify(area)}` }]
+  const emergency = emergencyLabel(c)
+  const servicesCount = countLabel((c.services || []).length, 'service', 'services')
+  const summary = [emergency ? `${emergency}.` : null, servicesCount ? `${servicesCount} in ${area}.` : null].filter(Boolean).join(' ')
 
   return (
     <>
@@ -30,7 +34,7 @@ export default function BoltAreaDetail({ config: c, siteSlug, area }) {
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
               Home service <span style={{ color: T.colors.accent }}>in {area}</span>
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24, maxWidth: 800 }}>Same-day response, 24/7 emergency service. {c.services.length}+ services for {area} homeowners.</p>
+            {summary && <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24, maxWidth: 800 }}>{summary}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 12, marginTop: 32 }}>
               ☎ {c.business.phone_display}
             </a>

@@ -46,7 +46,7 @@ export default function AxisContact({ config: c, siteSlug }) {
             </div>
             <div>
               <form style={{ background: T.colors.surface, padding: 40, borderRadius: T.radius.lg }}>
-                <h2 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, margin: '0 0 24px 0' }}>Request a free quote.</h2>
+                <h2 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, margin: '0 0 24px 0' }}>Request a quote.</h2>
                 <div style={{ marginBottom: 16 }}>
                   <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Name</label>
                   <input required style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: '14px 18px', fontSize: 16, borderRadius: T.radius.md }} />

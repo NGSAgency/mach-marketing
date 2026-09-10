@@ -82,12 +82,12 @@ export default function SereneFAQ({ config: c, siteSlug }) {
                     borderLight: T.colors.borderLight,
                   }}
                 />
-              ) : (
+              ) : c.concept === true ? (
                 <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
                   Questions your clients actually ask, answered here and marked up with FAQ
                   schema so search engines can surface the answers directly.
                 </p>
-              )}
+              ) : null}
             </div>
           </div>
         </section>

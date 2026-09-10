@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
+import { serviceEmergencyBadge } from '../../../../lib/templates/shared/claims.js'
 import { AxisHeader, AxisCTA, AxisFooter } from './AxisServices.js'
 
 export default function AxisCombo({ config: c, siteSlug, service, area }) {
@@ -13,6 +14,8 @@ export default function AxisCombo({ config: c, siteSlug, service, area }) {
   const otherAreas = c.service_areas.filter(a => a !== area).slice(0, 6)
   const otherServices = c.services.filter(s => s.slug !== service.slug && s.category === service.category).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: service.name, url: `/services/${service.slug}` }, { name: `${service.name} in ${area}`, url: `/${service.slug}-in-${slugify(area)}` }]
+  const badge = serviceEmergencyBadge(c, service)
+  const intro = service.description || service.short
 
   return (
     <>
@@ -26,12 +29,12 @@ export default function AxisCombo({ config: c, siteSlug, service, area }) {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'inline-flex', gap: 12, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category} · {area}</div>
-              {service.emergency && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7</div>}
+              {badge && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>{badge}</div>}
             </div>
             <h1 style={{ fontSize: 84, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0' }}>
               {service.name}<br /><span style={{ color: T.colors.accent }}>in {area}</span>.
             </h1>
-            <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>
+            {intro && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{intro}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>

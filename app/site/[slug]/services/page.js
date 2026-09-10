@@ -16,7 +16,10 @@ export async function generateMetadata({ params }) {
   return buildStaticMetadata(c, {
     slug: 'services',
     title: 'Services',
-    description: `${c.services.length} services offered across ${c.primary_service_area}. ${c.positioning?.tagline || ''}`,
+    description: [
+      `${c.business.display_name ? c.business.display_name + ' services' : 'Services'}${c.primary_service_area ? ' in ' + c.primary_service_area : ''}.`,
+      c.positioning?.tagline || null,
+    ].filter(Boolean).join(' '),
   })
 }
 

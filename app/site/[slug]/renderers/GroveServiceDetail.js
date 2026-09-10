@@ -5,6 +5,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { GroveHeader, GroveCTA, GroveFooter } from './GroveServices.js'
+import { whyUsItems, serviceEmergencyBadge } from '../../../../lib/templates/shared/claims.js'
 
 export default function GroveServiceDetail({ config: c, siteSlug, service }) {
   const brand = brandFrom(c)
@@ -13,6 +14,10 @@ export default function GroveServiceDetail({ config: c, siteSlug, service }) {
   const base = `/site/${siteSlug}`
   const relatedServices = c.services.filter(s => s.category === service.category && s.slug !== service.slug).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: service.name, url: `/services/${service.slug}` }]
+  const whyItems = whyUsItems(c, service)
+  const whyText = service.generated?.why_us || null
+  const badge = serviceEmergencyBadge(c, service, { long: true })
+  const intro = service.description || service.short
 
   return (
     <>
@@ -30,33 +35,37 @@ export default function GroveServiceDetail({ config: c, siteSlug, service }) {
             <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ color: T.colors.accent, background: T.colors.accentGlow, padding: 14, borderRadius: T.radius.md }}><ServiceIcon name={service.icon} size={32} /></div>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category}</div>
-              {service.emergency && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7 Emergency</div>}
+              {badge && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>{badge}</div>}
             </div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2.5, margin: '0 0 28px 0', lineHeight: 1.02 }}>
-              <em style={{ fontStyle: 'italic', color: T.colors.accent }}>{service.name}</em> in {c.primary_service_area}.
+              <em style={{ fontStyle: 'italic', color: T.colors.accent }}>{service.name}</em>{c.primary_service_area ? ` in ${c.primary_service_area}` : ''}.
             </h1>
-            <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 700 }}>{service.description || service.short}</p>
+            {intro && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 700 }}>{intro}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgAlt, padding: '96px 32px' }}>
-          <div style={{ maxWidth: 780, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 500, letterSpacing: -1, margin: '0 0 24px 0', lineHeight: 1.15 }}>Why families choose us.</h2>
-            <div style={{ marginTop: 32, padding: 32, background: T.colors.bgRaised, borderRadius: T.radius.md, border: `1px solid ${T.colors.border}` }}>
-              <div style={{ fontFamily: T.fonts.display, fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Every job includes:</div>
-              <div style={{ display: 'grid', gap: 12 }}>
-                {['Upfront pricing before we start', 'Licensed, insured, background-checked', 'Clean workspace', '100% satisfaction guarantee', 'Financing available'].map(item => (
-                  <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 15 }}>
-                    <span style={{ color: T.colors.accent, fontWeight: 700 }}>✓</span> {item}
+        {(whyItems.length > 0 || whyText) && (
+          <section style={{ background: T.colors.bgAlt, padding: '96px 32px' }}>
+            <div style={{ maxWidth: 780, margin: '0 auto' }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 500, letterSpacing: -1, margin: '0 0 24px 0', lineHeight: 1.15 }}>Why choose us.</h2>
+              {whyText && <p style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.7, margin: 0 }}>{whyText}</p>}
+              {whyItems.length > 0 && (
+                <div style={{ marginTop: 32, padding: 32, background: T.colors.bgRaised, borderRadius: T.radius.md, border: `1px solid ${T.colors.border}` }}>
+                  <div style={{ display: 'grid', gap: 12 }}>
+                    {whyItems.map(item => (
+                      <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: 15 }}>
+                        <span style={{ color: T.colors.accent, fontWeight: 700 }}>✓</span> {item}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section style={{ background: T.colors.bg, padding: '96px 32px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>

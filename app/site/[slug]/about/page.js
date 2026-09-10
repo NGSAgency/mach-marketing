@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   return buildStaticMetadata(c, {
     slug: 'about',
     title: 'About',
-    description: `Learn about ${c.business.display_name}${c.business.established_year ? ', serving the area since ' + c.business.established_year : ''}.`,
+    description: `Learn about ${c.business.display_name}${c.business.established_year ? ', established ' + c.business.established_year : ''}.`,
   })
 }
 

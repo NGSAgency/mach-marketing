@@ -56,7 +56,7 @@ export default function SereneHome({ config: c, siteSlug }) {
   return (
     <>
       <SereneResponsive border={T.colors.border} />
-      <JsonLd data={buildLocalBusinessSchema(c)} />
+      {!c.concept && <JsonLd data={buildLocalBusinessSchema(c)} />}
       <TrackingScripts tracking={c.tracking} />
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>

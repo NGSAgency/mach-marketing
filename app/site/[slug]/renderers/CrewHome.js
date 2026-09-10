@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildLocalBusinessSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
+import { emergencyLabel } from '../../../../lib/templates/shared/claims.js'
 import CrewMobileBar from './CrewMobileBar.js'
 
 // CREW home page. Section order and the reasoning behind each one are in the
@@ -96,10 +97,14 @@ export default function CrewHome({ config: c, siteSlug }) {
   const reviews = c.reviews || {}
   const years = biz.years_in_business || (biz.established_year ? new Date().getFullYear() - biz.established_year : null)
   const proof = []
+  // A rating stated on their own website is not a Google rating, so it isn't called one.
+  const fromGoogle = reviews.source !== 'their_site'
   if (reviews.google_rating) {
     proof.push({
       value: <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>{Number(reviews.google_rating).toFixed(1)}<Star size={26} /></span>,
-      label: reviews.google_count ? `${reviews.google_count.toLocaleString()} Google reviews` : 'Google rating',
+      label: reviews.google_count
+        ? `${reviews.google_count.toLocaleString()} ${fromGoogle ? 'Google reviews' : 'reviews'}`
+        : (fromGoogle ? 'Google rating' : 'Rating'),
       short: `${Number(reviews.google_rating).toFixed(1)} rating${reviews.google_count ? ` · ${reviews.google_count.toLocaleString()} reviews` : ''}`,
     })
   }
@@ -112,9 +117,10 @@ export default function CrewHome({ config: c, siteSlug }) {
   const guarantee = (pos.warranties || [])[0]
   if (guarantee) {
     const g = typeof guarantee === 'string' ? guarantee : guarantee.name || guarantee.description
-    if (g) proof.push({ value: 'Guaranteed', label: g, short: null })
+    if (g) proof.push({ value: 'Warranty', label: g, short: null })
   }
   const statedOnTheirSite = concept && reviews.source === 'their_site'
+  const emergency = emergencyLabel(c)
 
   // ---- Services --------------------------------------------------------------
   const categories = [...new Set(services.map(s => s.category).filter(Boolean))]
@@ -180,7 +186,7 @@ export default function CrewHome({ config: c, siteSlug }) {
             <span className="crew-utiltext">
               {areas.length > 0 && <>Serving {listAreas(areas)}</>}
               {biz.hours_display && <> · {biz.hours_display}</>}
-              {pos.emergency_service && <> · <span style={{ color: C.inverseText, fontWeight: 600 }}>24/7 emergency service</span></>}
+              {emergency && <> · <span style={{ color: C.inverseText, fontWeight: 600 }}>{emergency}</span></>}
             </span>
             {phone && (
               <a className="crew-utilphone" href={`tel:${phone}`} style={{ color: C.inverseText, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
@@ -239,7 +245,7 @@ export default function CrewHome({ config: c, siteSlug }) {
               </div>
               {concept && (
                 <ConceptNote T={T} inverse minHeight={320} title="Your crew photo goes here">
-                  Your team, your trucks, a job in progress. A real photo of the people who show up does more for trust than anything written on the page, and outperforms stock photography in testing.
+                  Your team, your trucks, a job in progress: a real photo of the people who show up, not stock photography.
                 </ConceptNote>
               )}
             </div>
@@ -267,7 +273,7 @@ export default function CrewHome({ config: c, siteSlug }) {
           <section style={{ background: C.surface, borderBottom: `1px solid ${C.borderLight}` }}>
             <div style={{ ...wrap, paddingBlock: 28 }}>
               <ConceptNote T={T} title="Your proof, next to the call button">
-                Your Google rating and review count, years in business, licence number and guarantee sit here. 47% of people won't hire a business with fewer than 20 reviews, so this strip does a lot of work.
+                Your Google rating and review count, years in business, licence number and guarantee sit here, next to the call button.
               </ConceptNote>
             </div>
           </section>
@@ -310,8 +316,8 @@ export default function CrewHome({ config: c, siteSlug }) {
               </div>
               <ConceptNote T={T} title={c.industry_key === 'pest_control' ? 'Your plans and what each covers' : 'Your starting prices'}>
                 {c.industry_key === 'pest_control'
-                  ? 'Recurring plans are how most homeowners buy pest control. Your plan tiers, what each one covers, and a starting price go here, so people can choose before they call.'
-                  : 'Starting prices for your main services, and any fees you don’t charge. Most homeowners say they’re more likely to contact a company that shows prices, and most companies don’t.'}
+                  ? 'Your plan tiers, what each one covers, and a starting price go here, so people can choose before they call.'
+                  : 'Starting prices for your main services, and any fees you don’t charge, so people can see what to expect before they call.'}
               </ConceptNote>
             </div>
           </section>
@@ -352,15 +358,22 @@ export default function CrewHome({ config: c, siteSlug }) {
               <div style={eyebrow(C.textMuted)}>Reviews</div>
               <h2 style={{ ...h2, marginTop: 12, marginBottom: 36 }}>What customers say</h2>
               <div className="crew-services">
-                {featuredReviews.map((r, i) => (
+                {featuredReviews.map((r, i) => {
+                  // Stars only from a rating the review actually carries.
+                  const rating = Number(r.rating)
+                  const hasRating = Number.isFinite(rating) && rating > 0
+                  return (
                   <figure key={i} style={{ margin: 0, background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: T.radius.lg, padding: 28 }}>
-                    <div style={{ display: 'flex', gap: 2, color: C.accent, marginBottom: 12 }} aria-label={`${r.rating || 5} stars`}>
-                      {Array.from({ length: Math.round(r.rating || 5) }).map((_, k) => <Star key={k} />)}
-                    </div>
+                    {hasRating && (
+                      <div role="img" style={{ display: 'flex', gap: 2, color: C.accent, marginBottom: 12 }} aria-label={`${rating} out of 5 stars`}>
+                        {Array.from({ length: Math.min(5, Math.round(rating)) }).map((_, k) => <Star key={k} />)}
+                      </div>
+                    )}
                     <blockquote style={{ margin: 0, fontSize: 17 }}>{r.text}</blockquote>
                     <figcaption style={{ marginTop: 16, fontSize: 15, color: C.textDim }}>{r.author}{r.date ? ` · ${r.date}` : ''}</figcaption>
                   </figure>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </section>
@@ -370,7 +383,7 @@ export default function CrewHome({ config: c, siteSlug }) {
               <div style={eyebrow(C.textMuted)}>Reviews</div>
               <h2 style={{ ...h2, marginTop: 12, marginBottom: 32 }}>What customers say</h2>
               <ConceptNote T={T} title="Your latest Google reviews, automatically">
-                Your three most recent reviews appear here with their dates, pulled from Google and updated as new ones arrive. Never selected or written by us: people look for reviews from the last few months, and recent real ones are what they trust.
+                Your three most recent reviews appear here with their dates, pulled from Google and updated as new ones arrive. Never selected or written by us.
               </ConceptNote>
             </div>
           </section>
@@ -385,7 +398,7 @@ export default function CrewHome({ config: c, siteSlug }) {
                   <div style={eyebrow(C.textMuted)}>Service areas</div>
                   <h2 style={{ ...h2, marginTop: 12 }}>Where we work</h2>
                 </div>
-                {primaryArea && <p style={{ color: C.textDim, margin: 0, maxWidth: '40ch' }}>Based in {primaryArea} and serving the surrounding area.</p>}
+                <p style={{ color: C.textDim, margin: 0, maxWidth: '40ch' }}>Serving {listAreas(areas)}.</p>
               </div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
                 {areas.map(a => (

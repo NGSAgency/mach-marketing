@@ -5,6 +5,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { AxisHeader, AxisCTA, AxisFooter } from './AxisServices.js'
+import { whyUsItems, serviceEmergencyBadge } from '../../../../lib/templates/shared/claims.js'
 
 export default function AxisServiceDetail({ config: c, siteSlug, service }) {
   const brand = brandFrom(c)
@@ -13,6 +14,10 @@ export default function AxisServiceDetail({ config: c, siteSlug, service }) {
   const base = `/site/${siteSlug}`
   const relatedServices = c.services.filter(s => s.category === service.category && s.slug !== service.slug).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: service.name, url: `/services/${service.slug}` }]
+  const whyItems = whyUsItems(c, service)
+  const whyText = service.generated?.why_us || null
+  const badge = serviceEmergencyBadge(c, service, { long: true })
+  const intro = service.description || service.short
 
   return (
     <>
@@ -29,31 +34,36 @@ export default function AxisServiceDetail({ config: c, siteSlug, service }) {
             </nav>
             <div style={{ display: 'inline-flex', gap: 12, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category}</div>
-              {service.emergency && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>}
+              {badge && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>{badge}</div>}
             </div>
             <h1 style={{ fontSize: 84, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0' }}>
-              {service.name}<br /><span style={{ color: T.colors.accent }}>in {c.primary_service_area}.</span>
+              {c.primary_service_area ? <>{service.name}<br /><span style={{ color: T.colors.accent }}>in {c.primary_service_area}.</span></> : <>{service.name}.</>}
             </h1>
-            <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>
+            {intro && <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{intro}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: -1.5, margin: '0 0 32px 0' }}>Why us.</h2>
-            <div style={{ background: T.colors.bg, padding: 40, borderRadius: T.radius.lg, boxShadow: T.shadow.subtle }}>
-              <div style={{ display: 'grid', gap: 16 }}>
-                {['Same-day service', 'Upfront pricing', 'Licensed & insured', '100% satisfaction guarantee', 'Financing options'].map(item => (
-                  <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: 16 }}>
-                    <div style={{ width: 24, height: 24, background: T.colors.accentGlow, color: T.colors.accent, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 }}>✓</div>
-                    {item}
+        {(whyItems.length > 0 || whyText) && (
+          <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
+            <div style={{ maxWidth: 900, margin: '0 auto' }}>
+              <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: -1.5, margin: '0 0 32px 0' }}>Why us.</h2>
+              {whyText && <p style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.7, margin: '0 0 32px 0' }}>{whyText}</p>}
+              {whyItems.length > 0 && (
+                <div style={{ background: T.colors.bg, padding: 40, borderRadius: T.radius.lg, boxShadow: T.shadow.subtle }}>
+                  <div style={{ display: 'grid', gap: 16 }}>
+                    {whyItems.map(item => (
+                      <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: 16 }}>
+                        <div style={{ width: 24, height: 24, background: T.colors.accentGlow, color: T.colors.accent, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 }}>✓</div>
+                        {item}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section style={{ background: T.colors.bg, padding: '120px 32px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>

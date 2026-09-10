@@ -5,6 +5,7 @@ import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildServiceSchema, buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
+import { whyUsItems, serviceEmergencyBadge } from '../../../../lib/templates/shared/claims.js'
 
 export default function BoltServiceDetail({ config: c, siteSlug, service }) {
   const brand = brandFrom(c)
@@ -13,6 +14,11 @@ export default function BoltServiceDetail({ config: c, siteSlug, service }) {
   const base = `/site/${siteSlug}`
   const relatedServices = c.services.filter(s => s.category === service.category && s.slug !== service.slug).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: service.name, url: `/services/${service.slug}` }]
+  const whyItems = whyUsItems(c, service)
+  const whyText = service.generated?.why_us || null
+  const badge = serviceEmergencyBadge(c, service)
+  const intro = service.description || service.short
+  const shortName = (c.business?.display_name || '').split(' ')[0]
 
   return (
     <>
@@ -30,32 +36,37 @@ export default function BoltServiceDetail({ config: c, siteSlug, service }) {
             <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 20 }}>
               <div style={{ color: T.colors.accent, background: T.colors.surface, padding: 14, borderRadius: T.radius.sm }}><ServiceIcon name={service.icon} size={40} /></div>
               <div style={{ fontFamily: T.fonts.display, fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category}</div>
-              {service.emergency && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.sm }}>24/7</div>}
+              {badge && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.sm }}>{badge}</div>}
             </div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', margin: 0, lineHeight: 0.95 }}>
-              {service.name} <span style={{ color: T.colors.accent }}>in {c.primary_service_area}</span>
+              {service.name}{c.primary_service_area && <> <span style={{ color: T.colors.accent }}>in {c.primary_service_area}</span></>}
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24, maxWidth: 800 }}>{service.description || service.short}</p>
+            {intro && <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24, maxWidth: 800 }}>{intro}</p>}
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 12, marginTop: 32 }}>
               ☎ {c.business.phone_display}
             </a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
-          <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 800, textTransform: 'uppercase', marginBottom: 24 }}>
-              Why <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span>?
-            </h2>
-            <div style={{ display: 'grid', gap: 12 }}>
-              {['Same-day service · Free estimates', 'Licensed, bonded, insured', 'Upfront pricing · No surprises', '100% satisfaction guarantee', 'Financing available'].map(item => (
-                <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: 17, color: T.colors.text, padding: 16, background: T.colors.surface, borderLeft: `4px solid ${T.colors.accent}` }}>
-                  <span style={{ color: T.colors.accent, fontSize: 20, fontWeight: 700 }}>✓</span> {item}
+        {(whyItems.length > 0 || whyText) && (
+          <section style={{ background: T.colors.bg, padding: '80px 24px' }}>
+            <div style={{ maxWidth: 900, margin: '0 auto' }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 800, textTransform: 'uppercase', marginBottom: 24 }}>
+                {shortName ? <>Why <span style={{ color: T.colors.accent }}>{shortName}</span>?</> : <>Why <span style={{ color: T.colors.accent }}>us</span>?</>}
+              </h2>
+              {whyText && <p style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.7, margin: '0 0 24px 0' }}>{whyText}</p>}
+              {whyItems.length > 0 && (
+                <div style={{ display: 'grid', gap: 12 }}>
+                  {whyItems.map(item => (
+                    <div key={item} style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: 17, color: T.colors.text, padding: 16, background: T.colors.surface, borderLeft: `4px solid ${T.colors.accent}` }}>
+                      <span style={{ color: T.colors.accent, fontSize: 20, fontWeight: 700 }}>✓</span> {item}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <section style={{ background: T.colors.bgAlt, padding: '80px 24px' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>

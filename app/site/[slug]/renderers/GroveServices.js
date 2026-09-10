@@ -4,6 +4,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
+import { emergencyLabel, serviceEmergencyBadge, joinParts, countLabel } from '../../../../lib/templates/shared/claims.js'
 
 export default function GroveServices({ config: c, siteSlug }) {
   const brand = brandFrom(c)
@@ -12,6 +13,7 @@ export default function GroveServices({ config: c, siteSlug }) {
   const categories = [...new Set((c.services || []).map(s => s.category))]
   const base = `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
+  const summary = joinParts([countLabel((c.services || []).length, 'service', 'services'), c.primary_service_area ? `Serving ${c.primary_service_area}` : null])
 
   return (
     <>
@@ -22,11 +24,11 @@ export default function GroveServices({ config: c, siteSlug }) {
 
         <section style={{ background: T.colors.bg, padding: '96px 32px 72px' }}>
           <div style={{ maxWidth: 'min(1240px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{ display: 'inline-block', fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, padding: '6px 14px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Our services</div>
+            <div style={{ display: 'inline-block', fontSize: 12, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16, padding: '6px 14px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>Services</div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2, margin: 0, lineHeight: 1.05, color: T.colors.text }}>
-              Everything for your <em style={{ fontStyle: 'italic', color: T.colors.accent }}>home</em>.
+              Our <em style={{ fontStyle: 'italic', color: T.colors.accent }}>services</em>.
             </h1>
-            <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24 }}>{c.services.length} services · Serving {c.primary_service_area}</p>
+            {summary && <p style={{ fontSize: 20, color: T.colors.textDim, marginTop: 24 }}>{summary}</p>}
           </div>
         </section>
 
@@ -38,20 +40,23 @@ export default function GroveServices({ config: c, siteSlug }) {
                 <div key={cat} style={{ marginBottom: 72 }}>
                   <div style={{ paddingBottom: 20, borderBottom: `1px solid ${T.colors.border}`, marginBottom: 32 }}>
                     <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 500, letterSpacing: -1, margin: 0, color: T.colors.text }}>{cat}</h2>
-                    <div style={{ fontSize: 14, color: T.colors.textMuted, marginTop: 8 }}>{catServices.length} services</div>
+                    <div style={{ fontSize: 14, color: T.colors.textMuted, marginTop: 8 }}>{countLabel(catServices.length, 'service', 'services')}</div>
                   </div>
                   <div style={{ display: 'grid', gap: 12 }}>
-                    {catServices.map(svc => (
+                    {catServices.map(svc => {
+                      const badge = serviceEmergencyBadge(c, svc)
+                      return (
                       <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 28, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', gap: 24, boxShadow: T.shadow.soft }}>
                         <div style={{ color: T.colors.accent, flexShrink: 0 }}><ServiceIcon name={svc.icon} size={40} /></div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontFamily: T.fonts.display, fontSize: 26, fontWeight: 500, color: T.colors.text, letterSpacing: -0.5 }}>{svc.name}</div>
                           <div style={{ fontSize: 15, color: T.colors.textDim, marginTop: 6 }}>{svc.short}</div>
                         </div>
-                        {svc.emergency && <div style={{ background: T.colors.accentGlow, color: T.colors.accent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7</div>}
+                        {badge && <div style={{ background: T.colors.accentGlow, color: T.colors.accent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>{badge}</div>}
                         <div style={{ color: T.colors.accent, fontSize: 20 }}>→</div>
                       </a>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )
@@ -67,11 +72,12 @@ export default function GroveServices({ config: c, siteSlug }) {
 }
 
 function GroveHeader({ T, c, logo, base }) {
+  const emergency = emergencyLabel(c)
   return (
     <>
-      {c.positioning?.emergency_service && (
+      {emergency && (
         <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '10px 20px', textAlign: 'center', fontSize: 13, fontWeight: 500, letterSpacing: 0.3 }}>
-          24/7 emergency · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+          {emergency}{c.business?.phone_display && <> · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a></>}
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
@@ -106,7 +112,7 @@ function GroveHeader({ T, c, logo, base }) {
 function GroveCTA({ T, c, headline }) {
   return (
     <section style={{ background: T.colors.accent, padding: '96px 32px', textAlign: 'center' }}>
-      <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 500, letterSpacing: -1, color: T.colors.onAccent, margin: '0 0 32px 0' }}>{headline || 'Ready when you need us.'}</h2>
+      <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 500, letterSpacing: -1, color: T.colors.onAccent, margin: '0 0 32px 0' }}>{headline || 'Ready when you are.'}</h2>
       <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bgRaised, color: T.colors.accent, textDecoration: 'none', padding: '20px clamp(20px, 5vw, 44px)', fontSize: 22, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
         <span style={{ fontSize: 24 }}>☎</span> {c.business.phone_display}
       </a>

@@ -53,14 +53,14 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
           </div>
         </section>
 
-        {posts.length === 0 ? (
+        {posts.length === 0 ? (c.concept === true && (
           <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
             <div style={{ maxWidth: 720, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
               Posts appear here, each written around a question your clients actually ask
               and structured so search engines can lift the answer directly.
             </div>
           </section>
-        ) : (
+        )) : (
           <>
             {/* Lead post at scale, the rest in a grid. A single long list of
                 titles reads as an archive rather than something to read. */}
