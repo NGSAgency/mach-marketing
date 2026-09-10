@@ -3,7 +3,7 @@
 // this family's tokens and chrome, so a new template family needs a file this
 // size rather than a full renderer.
 import { boltTokens } from '../../../templates/bolt/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { BlogIndexCore, BlogPostCore } from '../../../../lib/templates/shared/blog/BlogCore.js'
 import { BoltHeader, BoltFooter } from './BoltServices.js'
@@ -22,13 +22,13 @@ function makeChrome(T, c, logo, base) {
 }
 
 export function BoltBlogIndex({ config: c, siteSlug, posts }) {
-  const T = applyBrand(boltTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(boltTokens, brandFrom(c))
   const base = `/site/${siteSlug}`
   return <BlogIndexCore T={T} config={c} posts={posts} base={base} Chrome={makeChrome(T, c, c.brand?.logo_url, base)} />
 }
 
 export function BoltBlogPost({ config: c, siteSlug, post, prev, next }) {
-  const T = applyBrand(boltTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(boltTokens, brandFrom(c))
   const base = `/site/${siteSlug}`
   return <BlogPostCore T={T} config={c} post={post} prev={prev} next={next} base={base} Chrome={makeChrome(T, c, c.brand?.logo_url, base)} />
 }

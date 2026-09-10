@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
@@ -7,7 +7,7 @@ import { StickyBooking } from '../../../../lib/templates/shared/components/medic
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }]
 
@@ -88,8 +88,8 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                     />
                   )}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` }} />
-                  <div style={{ color: T.colors.textOnImage, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(280px, 36vh, 380px)' }}>
-                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 18 }}>
+                  <div data-on-image="" style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: T.colors.textOnImage, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(280px, 36vh, 380px)' }}>
+                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.textOnImageDim, marginBottom: 18 }}>
                       Latest
                     </div>
                     <h2 style={{
@@ -139,7 +139,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                         />
                       )}
                       <div style={{ position: 'absolute', inset: 0, background: post.image ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
-                      <div style={{ color: post.image ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28, minHeight: 260 }}>
+                      <div data-on-image={post.image ? '' : undefined} style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: post.image ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28, minHeight: 260 }}>
                         <h3 style={{
                           fontFamily: T.fonts.display,
                           fontSize: 'clamp(18px, 2vw, 23px)',

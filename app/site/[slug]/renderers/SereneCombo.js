@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import {
   buildBreadcrumbSchema,
@@ -18,7 +18,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
  * treatment page and stop, leaving every "treatment in city" query uncontested.
  */
 export default function SereneCombo({ config: c, siteSlug, service, area }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`
@@ -51,7 +51,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
             <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` }} />
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'flex-end', padding: 'clamp(28px, 5vw, 64px)' }}>
+            <div data-on-image="" style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: T.colors.textOnImage, position: 'absolute', inset: 0, display: 'flex', alignItems: 'flex-end', padding: 'clamp(28px, 5vw, 64px)' }}>
               <div>
                 <div style={{ fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', color: T.colors.textOnImageDim, marginBottom: 14 }}>{area}</div>
                 <h1 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(32px, 6vw, 58px)', fontWeight: 400, letterSpacing: 0.5, lineHeight: 1.1, margin: 0, color: T.colors.textOnImage }}>
@@ -191,7 +191,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                         <img src={img.url} alt={img.alt || s.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
                       )}
                       <div style={{ position: 'absolute', inset: 0, background: img ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
-                      <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 24, minHeight: 220 }}>
+                      <div data-on-image={img ? '' : undefined} style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', alignItems: 'flex-end', padding: 24, minHeight: 220 }}>
                         <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(17px, 1.9vw, 22px)', fontWeight: 300, lineHeight: 1.2 }}>
                           {s.name} in {area}
                         </div>

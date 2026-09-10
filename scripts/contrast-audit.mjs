@@ -17,7 +17,11 @@
 //   node /path/to/scripts/contrast-audit.mjs http://localhost:3000 /site/slug /site/slug/about
 // Options (env): AUDIT_OUT=report.json  AUDIT_FAIL=1.5  AUDIT_WARN=3  CHROMIUM=/path/to/chrome
 //
-// Exit code 1 if any text falls below AUDIT_FAIL (median across its box).
+// Exit code 1 if any text falls below AUDIT_FAIL (median across its box), or
+// breaks the text-on-photo rule: inside an element marked data-on-image, text
+// must be the container's --on-image or --on-image-dim colour. A brand colour
+// can't be relied on to read against a client's own photography, so accent
+// text on photos isn't allowed at all, whatever its measured contrast.
 
 import { chromium } from 'playwright'
 import { PNG } from 'pngjs'
@@ -66,7 +70,17 @@ for (const path of paths) {
       for (let n = el; n; n = n.parentElement) opacity *= +getComputedStyle(n).opacity
       if (opacity < 0.05) continue
       const m = cs.color.match(/[\d.]+/g).map(Number)
-      out.push({
+      // Text-on-photo rule: the nearest data-on-image container declares the
+      // only colours allowed on it.
+      let onImage = null
+      const holder = el.closest('[data-on-image]')
+      if (holder) {
+        const hs = getComputedStyle(holder)
+        const norm = v => { const probe = document.createElement('span'); probe.style.color = v.trim(); document.body.appendChild(probe); const c = getComputedStyle(probe).color; probe.remove(); return c }
+        const allowed = ['--on-image', '--on-image-dim'].map(k => hs.getPropertyValue(k)).filter(Boolean).map(norm)
+        onImage = { ok: allowed.includes(cs.color), color: cs.color }
+      }
+      out.push({ onImage,
         text: text.slice(0, 60), tag: el.tagName.toLowerCase(),
         color: m.slice(0, 3), alpha: (m[3] ?? 1) * opacity,
         x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height,
@@ -94,12 +108,14 @@ for (const path of paths) {
     return { ...e, worst: +rs[0].toFixed(2), median: +rs[Math.floor(rs.length / 2)].toFixed(2) }
   })
 
+  const offRule = items.filter(i => i.onImage && !i.onImage.ok)
   const bad = items.filter(i => i.median < FAIL)
   const low = items.filter(i => i.median >= FAIL && i.median < WARN)
-  failures += bad.length
+  failures += bad.length + offRule.length
   report[path] = { status: resp.status(), items }
-  console.log(`${resp.status()} ${path}  text=${items.length}  unreadable=${bad.length}  low=${low.length}`)
+  console.log(`${resp.status()} ${path}  text=${items.length}  unreadable=${bad.length}  low=${low.length}  photo-rule=${offRule.length}`)
   for (const i of bad) console.log(`   FAIL ${i.median.toFixed(2)}  "${i.text}"  rgb(${i.color.join(',')})  at y=${Math.round(i.y)}`)
+  for (const i of offRule) console.log(`   RULE text on a photo must use textOnImage roles: "${i.text}"  ${i.onImage.color}  at y=${Math.round(i.y)}`)
   await page.close()
 }
 

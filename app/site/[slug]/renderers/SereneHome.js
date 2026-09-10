@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildLocalBusinessSchema, JsonLd, urlService, urlServices } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -7,7 +7,7 @@ import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyB
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneHome({ config: c, siteSlug }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`
@@ -232,11 +232,11 @@ export default function SereneHome({ config: c, siteSlug }) {
                           ? `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)`
                           : 'none',
                       }} />
-                      <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: featured ? 48 : 32 }}>
+                      <div data-on-image={img ? '' : undefined} style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: featured ? 48 : 32 }}>
                         <div style={{
                           fontSize: T.type.xs,
                           letterSpacing: '0.18em',
-                          color: T.colors.accent,
+                          color: img ? T.colors.textOnImageDim : T.colors.accent,
                           marginBottom: 16,
                         }}>
                           {String(i + 1).padStart(2, '0')}

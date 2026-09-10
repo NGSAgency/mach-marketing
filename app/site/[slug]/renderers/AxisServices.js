@@ -1,12 +1,12 @@
 import { axisTokens } from '../../../templates/axis/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 
 export default function AxisServices({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = brandFrom(c)
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]

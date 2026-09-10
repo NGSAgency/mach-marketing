@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildPersonSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -15,7 +15,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
  * which most competitors in this vertical omit entirely.
  */
 export default function SereneTeam({ config: c, siteSlug }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`

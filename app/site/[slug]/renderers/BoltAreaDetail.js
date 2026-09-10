@@ -1,13 +1,13 @@
 import { boltTokens } from '../../../templates/bolt/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { BoltHeader, BoltCTA, BoltFooter } from './BoltServices.js'
 
 export default function BoltAreaDetail({ config: c, siteSlug, area }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`

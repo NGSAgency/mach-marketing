@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -7,7 +7,7 @@ import { TrustBar, StickyBooking } from '../../../../lib/templates/shared/compon
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneAbout({ config: c, siteSlug }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   const base = c.base_path || `/site/${siteSlug}`
   const gen = c.generated || {}
   const labels = navLabels(c)

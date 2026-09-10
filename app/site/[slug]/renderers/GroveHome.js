@@ -1,11 +1,11 @@
 import { groveTokens } from '../../../templates/grove/tokens.js'
 import { ServiceIcon } from '../../../../lib/templates/shared/icons.js'
 import { buildLocalBusinessSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 
 export default function GroveHome({ config: c }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = brandFrom(c)
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]

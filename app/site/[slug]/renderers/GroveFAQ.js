@@ -1,5 +1,5 @@
 import { groveTokens } from '../../../templates/grove/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { GroveHeader, GroveCTA, GroveFooter } from './GroveServices.js'
@@ -14,7 +14,7 @@ const DEFAULT_FAQS = [
 ]
 
 export default function GroveFAQ({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = brandFrom(c)
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`

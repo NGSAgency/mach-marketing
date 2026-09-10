@@ -1,11 +1,11 @@
 import { axisTokens } from '../../../templates/axis/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisFooter } from './AxisServices.js'
 
 export default function AxisContact({ config: c, siteSlug }) {
-  const brand = { accent: c.brand?.primary_accent, logo: c.brand?.logo_url }
+  const brand = brandFrom(c)
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
   const base = `/site/${siteSlug}`

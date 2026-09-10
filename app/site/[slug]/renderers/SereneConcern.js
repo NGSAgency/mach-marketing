@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -15,7 +15,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
  * practice actually offers for it.
  */
 export default function SereneConcern({ config: c, siteSlug, concern }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
   const gen = c.generated || {}
@@ -160,8 +160,8 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
                         <img src={img.url} alt={img.alt || t.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
                       )}
                       <div style={{ position: 'absolute', inset: 0, background: img ? `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
-                      <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28 }}>
-                        <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 12 }}>
+                      <div data-on-image={img ? '' : undefined} style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28 }}>
+                        <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: img ? T.colors.textOnImageDim : T.colors.accent, marginBottom: 12 }}>
                           {String(i + 1).padStart(2, '0')}
                         </div>
                         <div style={{ fontFamily: T.fonts.display, fontSize: T.type.lg, fontWeight: 300, lineHeight: 1.15 }}>

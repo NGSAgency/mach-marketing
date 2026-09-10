@@ -1,5 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
-import { applyBrand } from '../../../../lib/templates/shared/brand.js'
+import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
@@ -371,7 +371,7 @@ function SereneFooter({ T, c }) {
 }
 
 export default function SereneServices({ config: c, siteSlug }) {
-  const T = applyBrand(sereneTokens, { accent: c.brand?.primary_accent, logo: c.brand?.logo_url })
+  const T = applyBrand(sereneTokens, brandFrom(c))
   const logo = c.brand?.logo_url
   // Mockups render the same pages under /mockup/<token>, so the base path
   // comes from the config when present rather than being hardcoded.
@@ -446,8 +446,8 @@ export default function SereneServices({ config: c, siteSlug }) {
                     inset: 0,
                     background: img ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none',
                   }} />
-                  <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
-                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
+                  <div data-on-image={img ? '' : undefined} style={{ '--on-image': T.colors.textOnImage, '--on-image-dim': T.colors.textOnImageDim, color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
+                    <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: img ? T.colors.textOnImageDim : T.colors.accent, marginBottom: 14 }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
                     <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(21px, 2.4vw, 27px)', fontWeight: 300, lineHeight: 1.15 }}>
