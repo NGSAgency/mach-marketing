@@ -19,7 +19,8 @@
 //
 // Exit code 1 if any text falls below AUDIT_FAIL (median across its box), or
 // breaks the text-on-photo rule: inside an element marked data-on-image, text
-// must be the container's --on-image or --on-image-dim colour. A brand colour
+// must be the container's --on-image or --on-image-dim colour, unless it sits
+// on its own opaque fill such as a button. A brand colour
 // can't be relied on to read against a client's own photography, so accent
 // text on photos isn't allowed at all, whatever its measured contrast.
 
@@ -74,7 +75,13 @@ for (const path of paths) {
       // only colours allowed on it.
       let onImage = null
       const holder = el.closest('[data-on-image]')
-      if (holder) {
+      // Text on its own opaque fill (a button) sits on that fill, not the photo.
+      let ownFill = false
+      for (let n = el; n && n !== holder; n = n.parentElement) {
+        const bg = getComputedStyle(n).backgroundColor.match(/[\d.]+/g)
+        if (bg && (bg[3] === undefined || +bg[3] >= 0.95)) { ownFill = true; break }
+      }
+      if (holder && !ownFill) {
         const hs = getComputedStyle(holder)
         const norm = v => { const probe = document.createElement('span'); probe.style.color = v.trim(); document.body.appendChild(probe); const c = getComputedStyle(probe).color; probe.remove(); return c }
         const allowed = ['--on-image', '--on-image-dim'].map(k => hs.getPropertyValue(k)).filter(Boolean).map(norm)

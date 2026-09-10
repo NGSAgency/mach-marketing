@@ -8,15 +8,20 @@ const BAR = {
   zIndex: 99999,
   background: 'linear-gradient(135deg, #050508 0%, #0851cf 100%)',
   color: '#fff',
-  padding: '10px 20px',
+  // One row at every width. The page underneath is offset by exactly this
+  // height, so a wrapping banner used to cover the site's own header on phones.
+  height: 44,
+  padding: '0 16px',
   fontFamily: '-apple-system, "Helvetica Neue", Arial, sans-serif',
   fontSize: 13,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: 14,
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   textAlign: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
   boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
 }
 
@@ -45,9 +50,11 @@ const CTA = {
 export default function MockupBanner({ businessName }) {
   return (
     <div style={BAR}>
+      <style>{`.mb-short{display:none}@media (max-width:640px){.mb-long{display:none}.mb-short{display:inline}}`}</style>
       <span style={PILL}>Concept</span>
-      <span>
-        A website concept for {businessName}, built by MACH Digital Solutions.
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>
+        <span className="mb-long">A website concept for {businessName}, built by MACH Digital Solutions.</span>
+        <span className="mb-short">A concept for {businessName}</span>
       </span>
       <a href="mailto:sales@machdigitalsolutions.com?subject=Website%20concept" style={CTA}>
         Talk to us

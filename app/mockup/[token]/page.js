@@ -3,6 +3,7 @@ import BoltHome from '../../site/[slug]/renderers/BoltHome.js'
 import GroveHome from '../../site/[slug]/renderers/GroveHome.js'
 import AxisHome from '../../site/[slug]/renderers/AxisHome.js'
 import SereneHome from '../../site/[slug]/renderers/SereneHome.js'
+import CrewHome from '../../site/[slug]/renderers/CrewHome.js'
 import MockupBanner from './MockupBanner.js'
 import TemplateTabs from './TemplateTabs.js'
 import { familyMode } from '../../../lib/templates/shared/brand.js'
@@ -10,6 +11,7 @@ import { boltTokens } from '../../templates/bolt/tokens.js'
 import { groveTokens } from '../../templates/grove/tokens.js'
 import { axisTokens } from '../../templates/axis/tokens.js'
 import { sereneTokens } from '../../templates/serene/tokens.js'
+import { crewTokens } from '../../templates/crew/tokens.js'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -19,8 +21,8 @@ export const metadata = {
   robots: { index: false, follow: false, nocache: true },
 }
 
-const HOME = { bolt: BoltHome, grove: GroveHome, axis: AxisHome, serene: SereneHome }
-const TOKENS = { bolt: boltTokens, grove: groveTokens, axis: axisTokens, serene: sereneTokens }
+const HOME = { bolt: BoltHome, grove: GroveHome, axis: AxisHome, serene: SereneHome, crew: CrewHome }
+const TOKENS = { bolt: boltTokens, grove: groveTokens, axis: axisTokens, serene: sereneTokens, crew: crewTokens }
 
 // Tab labels describe the layout, not the family name. Serene and AXIS read
 // differently for a medical practice than for a trade.
@@ -31,6 +33,7 @@ function layoutLabel(family, industry) {
     axis: medical ? 'Clinical' : 'Clean',
     grove: 'Warm',
     bolt: 'Bold',
+    crew: 'Local',
   }[family] || family
 }
 
@@ -100,7 +103,7 @@ export default async function MockupPage({ params, searchParams }) {
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <TemplateTabs current={family} options={options} token={token} />
       <div style={{ paddingTop: options.length > 1 ? 88 : 44 }}>
-        <Home config={{ ...config, brand, template_slug: family }} siteSlug={token} />
+        <Home config={{ ...config, brand, template_slug: family, chrome_offset: options.length > 1 ? 88 : 44 }} siteSlug={token} />
       </div>
     </>
   )

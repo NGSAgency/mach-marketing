@@ -8,12 +8,14 @@ import BoltHomeRender from './renderers/BoltHome.js'
 import GroveHomeRender from './renderers/GroveHome.js'
 import AxisHomeRender from './renderers/AxisHome.js'
 import SereneHomeRender from './renderers/SereneHome.js'
+import CrewHomeRender from './renderers/CrewHome.js'
 
 const RENDERERS = {
   bolt: BoltHomeRender,
   grove: GroveHomeRender,
   axis: AxisHomeRender,
   serene: SereneHomeRender,
+  crew: CrewHomeRender,
 }
 
 export async function generateMetadata({ params }) {
