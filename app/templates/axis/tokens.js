@@ -44,6 +44,8 @@ export const axisTokens = {
     body: "'Inter', system-ui, sans-serif",
     mono: "'JetBrains Mono', monospace",
   },
+  // Loaded on client sites and concepts by FamilyFonts. Keep in step with fonts above.
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap',
   spacing: {
     xs: '8px',
     sm: '16px',

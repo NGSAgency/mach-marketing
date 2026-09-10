@@ -63,6 +63,10 @@ export const sereneTokens = {
     mono: "ui-monospace, monospace",
   },
 
+  // Loaded on client sites and concepts by FamilyFonts. Keep in step with fonts above.
+
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap',
+
   // Type scale at a 1.5 ratio. Wide gaps between steps are what produce
   // hierarchy; a scale that steps 16, 18, 20 produces none.
   type: {

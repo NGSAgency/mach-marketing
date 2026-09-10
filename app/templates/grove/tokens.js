@@ -50,6 +50,8 @@ export const groveTokens = {
     body: "'Manrope', system-ui, sans-serif",  // humanist sans
     mono: "ui-monospace, monospace",
   },
+  // Loaded on client sites and concepts by FamilyFonts. Keep in step with fonts above.
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@400;500;600;700&display=swap',
   spacing: {
     xs: '4px',
     sm: '8px',

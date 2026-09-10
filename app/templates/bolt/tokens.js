@@ -48,6 +48,8 @@ export const boltTokens = {
     body: "'Inter', system-ui, sans-serif",
     mono: "'JetBrains Mono', ui-monospace, monospace",
   },
+  // Loaded on client sites and concepts by FamilyFonts. Keep in step with fonts above.
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap',
   spacing: {
     xs: '4px',
     sm: '8px',
