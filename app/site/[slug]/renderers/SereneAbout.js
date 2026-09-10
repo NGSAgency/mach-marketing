@@ -146,7 +146,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
 
         <TrustBar T={T} c={c} />
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

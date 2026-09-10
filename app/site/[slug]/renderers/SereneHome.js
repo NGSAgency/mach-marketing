@@ -347,7 +347,7 @@ export default function SereneHome({ config: c, siteSlug }) {
         {has('providers') && <Providers T={T} c={c} providers={c.providers || []} base={base} />}
 
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         {has('sticky_booking') && <StickyBooking T={T} c={c} />}
       </div>
 

@@ -144,7 +144,7 @@ export default function SereneTeam({ config: c, siteSlug }) {
         ) : null}
 
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

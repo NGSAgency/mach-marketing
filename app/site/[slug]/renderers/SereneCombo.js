@@ -11,6 +11,7 @@ import {
 } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 
 /**
  * Service + area page. This is the highest-intent page type we generate and the
@@ -23,10 +24,13 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
-  const gen = c.generated || {}
+  const copy = pageCopy(c, 'combo')
+  const subhead = copy('hero_subheadline')
+  const intro = asText(copy('intro'))
+  const local = asText(copy('local_considerations'))
   const hero = (c.images || {}).combo_hero || (c.images || {})[`service_${service.slug}`]
 
-  const faqs = Array.isArray(gen['combo|faq']) ? gen['combo|faq'] : []
+  const faqs = faqList(copy('faq'))
 
   const schemas = [
     buildBreadcrumbSchema(c, breadcrumbsForCombo(service, area, c)),
@@ -74,9 +78,9 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                 {service.name} in {area}
               </h1>
             )}
-            {gen['combo|hero_subheadline'] && (
+            {subhead && (
               <p style={{ fontSize: 'clamp(17px, 2.2vw, 20px)', color: T.colors.textDim, marginTop: 22, lineHeight: 1.7, maxWidth: 640 }}>
-                {gen['combo|hero_subheadline']}
+                {subhead}
               </p>
             )}
             {c.business.phone_display && (
@@ -100,24 +104,24 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
           </div>
         </section>
 
-        {gen['combo|intro'] && (
+        {intro && (
           <section style={{ padding: '0 32px clamp(48px, 7vw, 88px)' }}>
             <div style={{ maxWidth: 720, margin: '0 auto', fontSize: 17, lineHeight: 1.85, color: T.colors.textDim }}>
-              {gen['combo|intro'].split('\n\n').map((p, i) => (
+              {intro.split('\n\n').map((p, i) => (
                 <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>
               ))}
             </div>
           </section>
         )}
 
-        {gen['combo|local_considerations'] && (
+        {local && (
           <section style={{ background: T.colors.bgAlt, padding: 'clamp(56px, 8vw, 100px) 32px' }}>
             <div style={{ maxWidth: 720, margin: '0 auto' }}>
               <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 4vw, 38px)', fontWeight: 400, margin: '0 0 24px', color: T.colors.text }}>
                 {service.name} in {area}
               </h2>
               <div style={{ fontSize: 17, lineHeight: 1.85, color: T.colors.textDim }}>
-                {gen['combo|local_considerations'].split('\n\n').map((p, i) => (
+                {local.split('\n\n').map((p, i) => (
                   <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>
                 ))}
               </div>
@@ -205,7 +209,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
         )}
 
         <SereneCTA T={T} c={c} headline={`${service.name} in ${area}`} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
       </div>
     </>
   )

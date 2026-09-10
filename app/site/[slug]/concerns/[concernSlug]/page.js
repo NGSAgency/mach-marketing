@@ -11,7 +11,7 @@ function findConcern(config, slug) {
 
 export async function generateMetadata({ params }) {
   const { slug, concernSlug } = await params
-  const result = await fetchSiteConfig({ slug })
+  const result = await fetchSiteConfig({ slug, page: 'concern_detail', id: concernSlug })
   if (!result) return {}
   const concern = findConcern(result.config, concernSlug)
   if (!concern) return {}
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ConcernPage({ params }) {
   const { slug, concernSlug } = await params
-  const result = await fetchSiteConfig({ slug })
+  const result = await fetchSiteConfig({ slug, page: 'concern_detail', id: concernSlug })
   if (!result) notFound()
 
   const concern = findConcern(result.config, concernSlug)

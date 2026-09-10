@@ -12,6 +12,7 @@ import {
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -19,17 +20,19 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
   // comes from the config when present rather than being hardcoded.
   const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
-  const gen = c.generated || {}
+  // On a concept only the first treatment has copy; the others show structure.
+  const copy = pageCopy(c, 'service_detail', { concept: !conceptOnly })
   const img = (c.images || {})[`service_${service.slug}`]
   const areas = c.service_areas || []
 
-  const faqs = Array.isArray(gen['service_detail|faq']) ? gen['service_detail|faq'] : []
+  const faqs = faqList(copy('faq'))
 
   const schemas = [
     buildBreadcrumbSchema(c, breadcrumbsForService(service, c)),
     buildMedicalProcedureSchema(c, service),
     faqs.length > 0 ? buildFAQSchema(faqs) : null,
   ].filter(Boolean)
+  const subhead = copy('hero_subheadline')
 
   const Section = ({ label, body, index = 0 }) => body ? (
     <section style={{
@@ -85,9 +88,9 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
             }}>
               {service.name}
             </h1>
-            {gen['service_detail|hero_subheadline'] && (
+            {subhead && (
               <p style={{ fontSize: T.type.lg, lineHeight: 1.6, color: T.colors.textDim, margin: '24px 0 0', maxWidth: 480, fontWeight: 300 }}>
-                {gen['service_detail|hero_subheadline']}
+                {subhead}
               </p>
             )}
             {c.business.phone_display && (
@@ -137,15 +140,11 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
         )}
 
         <div style={{ paddingTop: conceptOnly ? 'clamp(32px, 4vw, 56px)' : 'clamp(48px, 7vw, 88px)' }}>
-          <Section label="Overview" body={gen['service_detail|intro']} index={0} />
-          <Section label="What to expect" body={gen['service_detail|what_to_expect']} index={1} />
-          <Section label="Our approach" body={gen['service_detail|materials_and_methods']} index={2} />
-          {c.profile?.compliance_level === 'medical' && (
-            <>
-              <Section label="Candidacy" body={gen['service_detail|candidacy']} index={3} />
-              <Section label="Aftercare" body={gen['service_detail|aftercare']} index={4} />
-            </>
-          )}
+          <Section label="Overview" body={asText(copy('intro'))} index={0} />
+          <Section label="What to expect" body={asText(copy('what_to_expect'))} index={1} />
+          <Section label="Our approach" body={asText(copy('materials_and_methods'))} index={2} />
+          <Section label="Who it suits" body={asText(copy('candidacy'))} index={3} />
+          <Section label="Aftercare" body={asText(copy('aftercare'))} index={4} />
         </div>
 
         {faqs.length > 0 && (
@@ -211,7 +210,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
         )}
 
         <SereneCTA T={T} c={c} headline={service.name} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

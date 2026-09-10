@@ -159,7 +159,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
         )}
 
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

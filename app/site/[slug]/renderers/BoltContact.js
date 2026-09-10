@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { BoltHeader, BoltFooter } from './BoltServices.js'
+import ContactForm from '../../../../lib/templates/shared/components/ContactForm.js'
 
 export default function BoltContact({ config: c, siteSlug }) {
   const brand = brandFrom(c)
@@ -47,21 +48,16 @@ export default function BoltContact({ config: c, siteSlug }) {
             </div>
             <div>
               <h2 style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 800, textTransform: 'uppercase', marginBottom: 24 }}>Request service</h2>
-              <form style={{ background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32 }}>
-                <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 6 }}>Name</label>
-                  <input required style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: 12, fontSize: 15 }} />
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 6 }}>Phone</label>
-                  <input required type="tel" style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: 12, fontSize: 15 }} />
-                </div>
-                <div style={{ marginBottom: 20 }}>
-                  <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 6 }}>Message</label>
-                  <textarea rows={4} style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: 12, fontSize: 15, resize: 'vertical' }} />
-                </div>
-                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.onAccent, border: 'none', padding: '16px 24px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, cursor: 'pointer' }}>Send</button>
-              </form>
+              <div style={{ background: T.colors.surface, border: `1px solid ${T.colors.border}`, padding: 32 }}>
+                <ContactForm
+                  slug={siteSlug}
+                  concept={c.concept === true}
+                  colors={{ text: T.colors.text, textDim: T.colors.textDim, textMuted: T.colors.textMuted, border: T.colors.border, field: T.colors.bg, fieldText: T.colors.text, accent: T.colors.accent, onAccent: T.colors.onAccent, success: T.colors.success, urgent: T.colors.urgent }}
+                  fonts={T.fonts}
+                  radius={0}
+                  submitLabel="Send"
+                />
+              </div>
             </div>
           </div>
         </section>

@@ -93,7 +93,7 @@ export default function SereneFAQ({ config: c, siteSlug }) {
         </section>
 
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

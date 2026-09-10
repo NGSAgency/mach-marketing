@@ -45,7 +45,11 @@ export async function middleware(request) {
     if (lookupRes.ok) {
       const data = await lookupRes.json()
       if (data.slug) {
-        url.pathname = `/site/${data.slug}${url.pathname === '/' ? '' : url.pathname}`
+        // Site links carry the /site/<slug> prefix (the same pages serve
+        // subdomains and previews), so don't add it a second time.
+        const prefix = `/site/${data.slug}`
+        if (url.pathname === prefix || url.pathname.startsWith(`${prefix}/`)) return NextResponse.rewrite(url)
+        url.pathname = `${prefix}${url.pathname === '/' ? '' : url.pathname}`
         return NextResponse.rewrite(url)
       }
     }

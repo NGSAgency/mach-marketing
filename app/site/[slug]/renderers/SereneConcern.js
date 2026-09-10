@@ -1,5 +1,6 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
+import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
@@ -18,14 +19,14 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
   const base = c.base_path || `/site/${siteSlug}`
   const labels = navLabels(c)
-  const gen = c.generated || {}
+  const copy = pageCopy(c, 'concern_detail')
+  const subhead = copy('hero_subheadline')
   const treatments = concern.treatments || []
 
-  const faqs = Array.isArray(gen['concern_detail|faq']) ? gen['concern_detail|faq'] : []
+  const faqs = faqList(copy('faq'))
 
   const crumbs = [
     { name: 'Home', url: '/' },
-    { name: 'Concerns', url: '/concerns' },
     { name: concern.label, url: `/concerns/${concern.slug}` },
   ]
 
@@ -87,9 +88,9 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
               }}>
                 {concern.label}
               </h1>
-              {gen['concern_detail|hero_subheadline'] && (
+              {subhead && (
                 <p style={{ fontSize: T.type.lg, lineHeight: 1.6, color: T.colors.textDim, margin: '24px 0 0', maxWidth: 620, fontWeight: 300 }}>
-                  {gen['concern_detail|hero_subheadline']}
+                  {subhead}
                 </p>
               )}
             </div>
@@ -177,9 +178,9 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
         )}
 
         <div style={{ paddingTop: 'clamp(40px, 6vw, 72px)' }}>
-          <Block label="About this" body={gen['concern_detail|intro']} />
-          <Block label="What contributes" body={gen['concern_detail|causes']} />
-          <Block label="Approaches" body={gen['concern_detail|treatment_options']} />
+          <Block label="About this" body={asText(copy('intro'))} />
+          <Block label="What contributes" body={asText(copy('causes'))} />
+          <Block label="Approaches" body={asText(copy('treatment_options'))} />
         </div>
 
         {faqs.length > 0 && (
@@ -201,7 +202,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
         )}
 
         <SereneCTA T={T} c={c} headline={concern.label} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
     </>

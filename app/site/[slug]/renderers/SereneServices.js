@@ -149,6 +149,7 @@ function SereneHeader({ T, c, logo, base }) {
             {(c.business.booking_url || c.business.phone) && (
               <a
                 href={c.business.booking_url || `tel:${c.business.phone}`}
+                className="serene-book-header"
                 style={{
                   background: T.colors.accent,
                   color: T.colors.onAccent,
@@ -243,9 +244,11 @@ function SereneCTA({ T, c, headline }) {
   )
 }
 
-function SereneFooter({ T, c }) {
+function SereneFooter({ T, c, base: baseProp }) {
   const labels = navLabels(c)
-  const base = c.base_path || ''
+  // The same base as the header. It used to be c.base_path || '', which sent
+  // every footer link on a client site to the domain root.
+  const base = baseProp ?? c.base_path ?? ''
   const services = (c.services || []).slice(0, 6)
   const areas = c.service_areas || []
   const showTeam = (c.profile?.pages || []).includes('practitioners')
@@ -466,7 +469,7 @@ export default function SereneServices({ config: c, siteSlug }) {
         </section>
 
         <SereneCTA T={T} c={c} />
-        <SereneFooter T={T} c={c} />
+        <SereneFooter T={T} c={c} base={base} />
       </div>
     </>
   )

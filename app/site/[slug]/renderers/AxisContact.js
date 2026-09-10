@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { AxisHeader, AxisFooter } from './AxisServices.js'
+import ContactForm from '../../../../lib/templates/shared/components/ContactForm.js'
 
 export default function AxisContact({ config: c, siteSlug }) {
   const brand = brandFrom(c)
@@ -45,22 +46,17 @@ export default function AxisContact({ config: c, siteSlug }) {
               </div>
             </div>
             <div>
-              <form style={{ background: T.colors.surface, padding: 40, borderRadius: T.radius.lg }}>
+              <div style={{ background: T.colors.surface, padding: 40, borderRadius: T.radius.lg }}>
                 <h2 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, margin: '0 0 24px 0' }}>Request a quote.</h2>
-                <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Name</label>
-                  <input required style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: '14px 18px', fontSize: 16, borderRadius: T.radius.md }} />
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                  <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Phone</label>
-                  <input required type="tel" style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: '14px 18px', fontSize: 16, borderRadius: T.radius.md }} />
-                </div>
-                <div style={{ marginBottom: 24 }}>
-                  <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 600, marginBottom: 8 }}>Message</label>
-                  <textarea rows={4} style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, padding: '14px 18px', fontSize: 16, borderRadius: T.radius.md, resize: 'vertical' }} />
-                </div>
-                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.onAccent, border: 'none', padding: '18px 24px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, cursor: 'pointer' }}>Request quote →</button>
-              </form>
+                <ContactForm
+                  slug={siteSlug}
+                  concept={c.concept === true}
+                  colors={{ text: T.colors.text, textDim: T.colors.textDim, textMuted: T.colors.textMuted, border: T.colors.border, field: T.colors.bg, fieldText: T.colors.text, accent: T.colors.accent, onAccent: T.colors.onAccent, success: T.colors.success, urgent: T.colors.urgent }}
+                  fonts={T.fonts}
+                  radius={T.radius.md}
+                  submitLabel="Request quote →"
+                />
+              </div>
             </div>
           </div>
         </section>

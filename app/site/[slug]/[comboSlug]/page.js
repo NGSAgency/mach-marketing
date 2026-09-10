@@ -21,28 +21,34 @@ function parseComboSlug(comboSlug, config) {
   return null
 }
 
+// The combo's copy is stored under "<area>/<service>". The slug has to be
+// parsed against the service list first, so the plain config is fetched, then
+// the one carrying this page's copy (both requests are shared with the page).
+async function loadCombo(slug, comboSlug) {
+  const base = await fetchSiteConfig({ slug })
+  if (!base) return null
+  const parsed = parseComboSlug(comboSlug, base.config)
+  if (!parsed) return null
+  const withCopy = await fetchSiteConfig({ slug, page: 'combo', id: `${slugify(parsed.area)}/${parsed.service.slug}` })
+  return { config: (withCopy || base).config, ...parsed }
+}
+
 export async function generateMetadata({ params }) {
   const { slug, comboSlug } = await params
-  const result = await fetchSiteConfig({ slug })
-  if (!result) return {}
-  const parsed = parseComboSlug(comboSlug, result.config)
-  if (!parsed) return {}
-  const c = result.config
-  return buildComboMetadata(c, parsed.service, parsed.area)
+  const combo = await loadCombo(slug, comboSlug)
+  if (!combo) return {}
+  return buildComboMetadata(combo.config, combo.service, combo.area)
 }
 
 export default async function ClientComboPage({ params }) {
   const { slug, comboSlug } = await params
-  const result = await fetchSiteConfig({ slug })
-  if (!result) notFound()
-
-  // If this slug is a reserved static path, defer to that page (about, contact, faq handled by their own routes)
-  const RESERVED = ['about', 'contact', 'faq', 'services', 'service-areas']
+  // Reserved paths have their own routes.
+  const RESERVED = ['about', 'contact', 'faq', 'services', 'service-areas', 'treatments', 'locations', 'concerns', 'team', 'blog']
   if (RESERVED.includes(comboSlug)) notFound()
 
-  const parsed = parseComboSlug(comboSlug, result.config)
-  if (!parsed) notFound()
+  const combo = await loadCombo(slug, comboSlug)
+  if (!combo) notFound()
 
-  const Renderer = RENDERERS[result.config.template_slug] || BoltCombo
-  return <Renderer config={result.config} siteSlug={slug} service={parsed.service} area={parsed.area} />
+  const Renderer = RENDERERS[combo.config.template_slug] || BoltCombo
+  return <Renderer config={combo.config} siteSlug={slug} service={combo.service} area={combo.area} />
 }
