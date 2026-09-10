@@ -55,7 +55,7 @@ export default function SereneHome({ config: c, siteSlug }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       <JsonLd data={buildLocalBusinessSchema(c)} />
       <TrackingScripts tracking={c.tracking} />
 
@@ -120,7 +120,7 @@ export default function SereneHome({ config: c, siteSlug }) {
               {c.business.phone_display && (
                 <a href={`tel:${c.business.phone}`} style={{
                   background: T.colors.accent,
-                  color: T.colors.bg,
+                  color: T.colors.onAccent,
                   padding: '16px 40px',
                   borderRadius: T.radius.full,
                   textDecoration: 'none',
@@ -232,7 +232,7 @@ export default function SereneHome({ config: c, siteSlug }) {
                           ? `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)`
                           : 'none',
                       }} />
-                      <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: featured ? 48 : 32 }}>
+                      <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: featured ? 48 : 32 }}>
                         <div style={{
                           fontSize: T.type.xs,
                           letterSpacing: '0.18em',
@@ -251,7 +251,7 @@ export default function SereneHome({ config: c, siteSlug }) {
                           {s.name}
                         </div>
                         {featured && s.short && (
-                          <div style={{ fontSize: T.type.sm, color: T.colors.textDim, marginTop: 16, maxWidth: 420, lineHeight: 1.7 }}>
+                          <div style={{ fontSize: T.type.sm, color: img ? T.colors.textOnImageDim : T.colors.textDim, marginTop: 16, maxWidth: 420, lineHeight: 1.7 }}>
                             {s.short}
                           </div>
                         )}

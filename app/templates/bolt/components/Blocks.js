@@ -7,10 +7,10 @@ export function BoltCTA({ config, headline = "Need Service? Call Now.", sub = "2
   return (
     <section style={{ background: T.colors.accent, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)', textAlign: 'center' }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0', lineHeight: 1 }}>
+        <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.onAccent, margin: '0 0 20px 0', lineHeight: 1 }}>
           {headline}
         </h2>
-        <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.bg, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
+        <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.onAccent, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
           {sub}
         </p>
         <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: "clamp(16px, 2vw, 28px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>

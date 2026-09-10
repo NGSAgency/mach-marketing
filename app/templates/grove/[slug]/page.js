@@ -62,7 +62,7 @@ export default async function ComboPage({ params, searchParams }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
               <div style={{ color: T.colors.accent, background: T.colors.accentGlow, padding: 14, borderRadius: T.radius.md }}><ServiceIcon name={service.icon} size={32} /></div>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category} · {area}</div>
-              {service.emergency && (<div style={{ background: T.colors.accent, color: T.colors.bgLight, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7 Emergency</div>)}
+              {service.emergency && (<div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7 Emergency</div>)}
             </div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6vw, 68px)", fontWeight: 500, letterSpacing: -2, margin: '0 0 28px 0', lineHeight: 1.05, color: T.colors.text }}>
               {service.name} <em style={{ fontStyle: 'italic', color: T.colors.accent }}>in {area}</em>.
@@ -70,7 +70,7 @@ export default async function ComboPage({ params, searchParams }) {
             <p style={{ fontSize: 20, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 720 }}>
               {service.description || service.short} Serving {area} homes since {c.business.established_year}.
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>
           </div>

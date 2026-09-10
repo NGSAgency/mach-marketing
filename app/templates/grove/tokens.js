@@ -1,11 +1,13 @@
 // GROVE Template - Design Tokens
 // Warm, organic, approachable, humanist
+import { defineColors } from '../../../lib/templates/shared/colors.js'
 export const groveTokens = {
-  colors: {
+  // Colours use the shared roles in lib/templates/shared/colors.js.
+  colors: defineColors('grove', {
     // Warm base palette
     bg: '#faf8f4',           // off-white cream
     bgAlt: '#f0ebe0',        // warmer cream
-    bgLight: '#ffffff',
+    bgRaised: '#ffffff',
     surface: '#ffffff',
     surfaceAlt: '#f5f1e8',
 
@@ -19,26 +21,30 @@ export const groveTokens = {
     accentDim: '#3a5628',
     accentLight: '#6d8b5e',
     accentGlow: '#e8f0e3',
+    onAccent: '#ffffff',
 
     // Secondary warm accent
     secondary: '#c17c3f',    // warm terracotta
     secondaryLight: '#e8b985',
+
+    // Borders
+    border: '#d9d1c2',
+    borderLight: '#e8e2d5',
+
+    // Dark bands inside the light page
+    inverseBg: '#2a2820',
+    inverseBgAlt: '#3a372d',
+    inverseText: '#faf8f4',
+    inverseTextDim: '#c9c2b4',
+    inverseBorder: '#4a463a',
 
     // Semantic
     success: '#4a6b3a',
     urgent: '#b8482d',
     warning: '#c17c3f',
 
-    // Borders
-    border: '#d9d1c2',
-
-    // Image overlay stops, derived from this family's background so an overlay
-    // follows the palette rather than assuming a fixed colour.
-    overlayFaint: 'rgba(42,40,32,0.05)',
-    overlayLight: 'rgba(42,40,32,0.15)',
-    overlayStrong: 'rgba(42,40,32,0.88)',
-    borderLight: '#e8e2d5',
-  },
+    logoPlate: '#ffffff',
+  }),
   fonts: {
     display: "'Fraunces', Georgia, serif",     // warm serif w/ personality
     body: "'Manrope', system-ui, sans-serif",  // humanist sans

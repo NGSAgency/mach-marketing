@@ -59,7 +59,7 @@ export default function GroveContact({ config: c, siteSlug }) {
                   <label style={{ display: 'block', fontSize: 12, color: T.colors.textMuted, textTransform: 'uppercase', letterSpacing: 1.5, fontWeight: 700, marginBottom: 8 }}>Message</label>
                   <textarea rows={4} style={{ width: '100%', background: T.colors.bg, border: `1.5px solid ${T.colors.border}`, padding: '14px 16px', fontSize: 16, borderRadius: T.radius.sm, resize: 'vertical' }} />
                 </div>
-                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.bgLight, border: 'none', padding: '18px 24px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, cursor: 'pointer' }}>Send your note →</button>
+                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.onAccent, border: 'none', padding: '18px 24px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, cursor: 'pointer' }}>Send your note →</button>
               </form>
             </div>
           </div>

@@ -8,8 +8,8 @@ export function GroveHeader({ config, logo, T: Toverride }) {
   return (
     <>
       {c.positioning.emergency_service && (
-        <div style={{ background: T.colors.accent, color: T.colors.bgLight, padding: '10px clamp(12px, 3vw, 20px)', textAlign: 'center', fontSize: 13, fontWeight: 500, letterSpacing: 0.3 }}>
-          24/7 emergency service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.bgLight, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+        <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '10px clamp(12px, 3vw, 20px)', textAlign: 'center', fontSize: 13, fontWeight: 500, letterSpacing: 0.3 }}>
+          24/7 emergency service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
@@ -50,7 +50,7 @@ export function GroveHeader({ config, logo, T: Toverride }) {
             phoneNumber={c.business.phone}
             phoneDisplay={c.business.phone_display}
             accent={T.colors.accent}
-            bg={T.colors.bgLight}
+            bg={T.colors.bgRaised}
             text={T.colors.text}
             textDim={T.colors.textDim}
             borderColor={T.colors.border}

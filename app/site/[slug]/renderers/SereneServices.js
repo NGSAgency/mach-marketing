@@ -49,7 +49,7 @@ function SereneHeader({ T, c, logo, base }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       {/* Thin utility strip. Puts the phone number and location within reach
           without competing with the main navigation. */}
       <div className="serene-utility" style={{
@@ -100,7 +100,7 @@ function SereneHeader({ T, c, logo, base }) {
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                background: '#ffffff',
+                background: T.colors.logoPlate,
                 padding: '12px 22px',
                 borderRadius: T.radius.sm,
               }}>
@@ -151,7 +151,7 @@ function SereneHeader({ T, c, logo, base }) {
                 href={c.business.booking_url || `tel:${c.business.phone}`}
                 style={{
                   background: T.colors.accent,
-                  color: T.colors.bg,
+                  color: T.colors.onAccent,
                   padding: '12px 28px',
                   borderRadius: T.radius.full,
                   textDecoration: 'none',
@@ -226,7 +226,7 @@ function SereneCTA({ T, c, headline }) {
             style={{
               display: 'inline-block',
               background: T.colors.secondary,
-              color: T.colors.bgLight,
+              color: T.colors.onAccent,
               padding: '16px 40px',
               borderRadius: T.radius.full,
               textDecoration: 'none',
@@ -446,7 +446,7 @@ export default function SereneServices({ config: c, siteSlug }) {
                     inset: 0,
                     background: img ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none',
                   }} />
-                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
+                  <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 32 }}>
                     <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 14 }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
@@ -454,7 +454,7 @@ export default function SereneServices({ config: c, siteSlug }) {
                       {s.name}
                     </div>
                     {s.short && (
-                      <div style={{ fontSize: T.type.sm, color: 'rgba(244,239,232,0.72)', marginTop: 12, lineHeight: 1.6 }}>
+                      <div style={{ fontSize: T.type.sm, color: img ? T.colors.textOnImageDim : T.colors.textDim, marginTop: 12, lineHeight: 1.6 }}>
                         {s.short}
                       </div>
                     )}

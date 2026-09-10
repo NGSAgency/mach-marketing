@@ -17,8 +17,8 @@ export default function BoltHome({ config: c }) {
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         {/* Emergency bar */}
         {c.positioning?.emergency_service && (
-          <div style={{ background: T.colors.accent, color: T.colors.bg, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
-            <span>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.bg, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+          <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+            <span>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
           </div>
         )}
 
@@ -32,7 +32,7 @@ export default function BoltHome({ config: c }) {
                 <span style={{ color: T.colors.accent }}>{c.business.display_name.split(' ')[0]}</span> <span style={{ color: T.colors.text }}>{c.business.display_name.split(' ').slice(1).join(' ')}</span>
               </div>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '10px 20px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm }}>
               ☎ {c.business.phone_display}
             </a>
           </div>
@@ -47,7 +47,7 @@ export default function BoltHome({ config: c }) {
             {c.positioning?.subtagline && (
               <p style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.5, margin: '0 0 32px 0' }}>{c.positioning.subtagline}</p>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: 24, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 28 }}>☎</span> Call {c.business.phone_display}
             </a>
           </div>
@@ -81,7 +81,7 @@ export default function BoltHome({ config: c }) {
         {/* CTA */}
         <section style={{ background: T.colors.accent, padding: '80px 24px', textAlign: 'center' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
-            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0' }}>
+            <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.onAccent, margin: '0 0 20px 0' }}>
               Need Service?
             </h2>
             <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: 32, fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 16 }}>

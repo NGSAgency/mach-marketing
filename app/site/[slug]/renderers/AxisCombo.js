@@ -26,13 +26,13 @@ export default function AxisCombo({ config: c, siteSlug, service, area }) {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ display: 'inline-flex', gap: 12, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category} · {area}</div>
-              {service.emergency && <div style={{ fontSize: 12, color: T.colors.bg, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7</div>}
+              {service.emergency && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7</div>}
             </div>
             <h1 style={{ fontSize: 84, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0' }}>
               {service.name}<br /><span style={{ color: T.colors.accent }}>in {area}</span>.
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>
 
@@ -42,7 +42,7 @@ export default function AxisCombo({ config: c, siteSlug, service, area }) {
               <h3 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, marginBottom: 24 }}>{service.name} in other areas.</h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {otherAreas.map(a => (
-                  <a key={a} href={`${base}/${service.slug}-in-${slugify(a)}`} style={{ padding: '10px 18px', background: T.colors.bgSecondary, color: T.colors.text, fontSize: 14, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>{a}</a>
+                  <a key={a} href={`${base}/${service.slug}-in-${slugify(a)}`} style={{ padding: '10px 18px', background: T.colors.surface, color: T.colors.text, fontSize: 14, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>{a}</a>
                 ))}
               </div>
             </div>
@@ -50,7 +50,7 @@ export default function AxisCombo({ config: c, siteSlug, service, area }) {
               <h3 style={{ fontSize: 32, fontWeight: 800, letterSpacing: -1, marginBottom: 24 }}>Other {service.category.toLowerCase()} in {area}.</h3>
               <div style={{ display: 'grid', gap: 8 }}>
                 {otherServices.map(s => (
-                  <a key={s.slug} href={`${base}/${s.slug}-in-${slugify(area)}`} style={{ padding: '14px 20px', background: T.colors.bgSecondary, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.md, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>{s.name} in {area}</a>
+                  <a key={s.slug} href={`${base}/${s.slug}-in-${slugify(area)}`} style={{ padding: '14px 20px', background: T.colors.surface, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.md, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>{s.name} in {area}</a>
                 ))}
               </div>
             </div>

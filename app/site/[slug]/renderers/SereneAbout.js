@@ -17,7 +17,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <TrackingScripts tracking={c.tracking} />
 

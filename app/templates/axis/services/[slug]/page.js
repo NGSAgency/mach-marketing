@@ -41,20 +41,20 @@ export default async function ServicePage({ params, searchParams }) {
             </nav>
             <div style={{ display: 'inline-flex', gap: 12, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ display: 'inline-block', fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category}</div>
-              {service.emergency && (<div style={{ fontSize: 12, color: T.colors.bg, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>)}
+              {service.emergency && (<div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>)}
             </div>
             <h1 style={{ fontSize: "clamp(32px, 8vw, 88px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0', color: T.colors.text }}>
               {service.name}<br /><span style={{ color: T.colors.accent }}>in {c.primary_service_area}.</span>
             </h1>
             <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Call {c.business.phone_display}</a>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Call {c.business.phone_display}</a>
               <a href="/templates/axis/contact" style={{ background: T.colors.bg, color: T.colors.text, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, border: `1.5px solid ${T.colors.border}` }}>Request quote →</a>
             </div>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
             <h2 style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 800, letterSpacing: -1.5, margin: '0 0 32px 0', lineHeight: 1.1 }}>Why {c.business.display_name.split(' ')[0]} for {service.name.toLowerCase()}.</h2>
             <div style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.7 }}>
@@ -81,7 +81,7 @@ export default async function ServicePage({ params, searchParams }) {
             <p style={{ fontSize: 17, color: T.colors.textDim, marginBottom: 32 }}>Serving {c.service_areas.length}+ neighborhoods across {c.primary_service_area}.</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {c.service_areas.map(area => (
-                <a key={area} href={`/templates/axis/${service.slug}-in-${slugify(area)}`} style={{ padding: '12px 20px', background: T.colors.bgSecondary, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>
+                <a key={area} href={`/templates/axis/${service.slug}-in-${slugify(area)}`} style={{ padding: '12px 20px', background: T.colors.surface, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>
                   {service.name} in {area}
                 </a>
               ))}
@@ -90,7 +90,7 @@ export default async function ServicePage({ params, searchParams }) {
         </section>
 
         {relatedServices.length > 0 && (
-          <section style={{ background: T.colors.bgSecondary, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
+          <section style={{ background: T.colors.bgAlt, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
             <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto' }}>
               <h2 style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 800, letterSpacing: -1.5, margin: '0 0 40px 0' }}>Related {service.category.toLowerCase()} services.</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>

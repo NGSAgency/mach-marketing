@@ -29,7 +29,7 @@ export default function SereneTeam({ config: c, siteSlug }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 

@@ -16,14 +16,14 @@ export default function AxisHome({ config: c }) {
         <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         {/* Header */}
-        <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}`, padding: '16px 32px' }}>
+        <header style={{ background: T.colors.bgTranslucent, backdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}`, padding: '16px 32px' }}>
           <div style={{ maxWidth: 1440, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             {logo ? (
               <img src={logo} alt={c.business.display_name} style={{ maxHeight: 32, width: 'auto' }} />
             ) : (
               <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: -0.5 }}>{c.business.display_name}</div>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '12px 24px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '12px 24px', fontSize: 14, fontWeight: 600, borderRadius: T.radius.full }}>
               {c.business.phone_display}
             </a>
           </div>
@@ -38,7 +38,7 @@ export default function AxisHome({ config: c }) {
             {c.positioning?.subtagline && (
               <p style={{ fontSize: 24, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 48px', maxWidth: 720 }}>{c.positioning.subtagline}</p>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>
               Call {c.business.phone_display}
             </a>
           </div>
@@ -54,7 +54,7 @@ export default function AxisHome({ config: c }) {
                   <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 20, letterSpacing: -0.5 }}>{cat}</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
                     {c.services.filter(s => s.category === cat).map(svc => (
-                      <div key={svc.slug} style={{ background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, border: `1px solid ${T.colors.borderLight}` }}>
+                      <div key={svc.slug} style={{ background: T.colors.surface, padding: 32, borderRadius: T.radius.lg, border: `1px solid ${T.colors.borderLight}` }}>
                         <div style={{ width: 56, height: 56, background: T.colors.bg, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.colors.accent, marginBottom: 20 }}>
                           <ServiceIcon name={svc.icon} size={28} />
                         </div>
@@ -70,14 +70,14 @@ export default function AxisHome({ config: c }) {
         )}
 
         {/* CTA */}
-        <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '120px 32px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, margin: '0 0 32px 0', color: T.colors.textInverse }}>Ready to book?</h2>
-          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>
+        <section style={{ background: T.colors.inverseBg, color: T.colors.inverseText, padding: '120px 32px', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, margin: '0 0 32px 0', color: T.colors.inverseText }}>Ready to book?</h2>
+          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>
             Call {c.business.phone_display}
           </a>
         </section>
 
-        <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '48px 32px', textAlign: 'center', fontSize: 12, color: T.colors.textMuted }}>
+        <footer style={{ background: T.colors.inverseBg, color: T.colors.inverseText, padding: '48px 32px', textAlign: 'center', fontSize: 12, color: T.colors.textMuted }}>
           © {new Date().getFullYear()} {c.business.legal_name}. All rights reserved.
         </footer>
       </div>

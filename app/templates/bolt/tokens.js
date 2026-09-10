@@ -1,41 +1,48 @@
 // BOLT Template — Design Tokens
 // Bold, industrial, high-contrast, energetic
+import { defineColors } from '../../../lib/templates/shared/colors.js'
 export const boltTokens = {
-  colors: {
+  // Colours use the shared roles in lib/templates/shared/colors.js.
+  colors: defineColors('bolt', {
     // Dark base
     bg: '#0a0a0b',
     bgAlt: '#151517',
-    bgLight: '#ffffff',
+    bgRaised: '#1f1f22',
     surface: '#1c1c1f',
-    surfaceLight: '#f4f4f5',
+    surfaceAlt: '#232326',
 
     // Text
     text: '#ffffff',
     textDim: '#a1a1aa',
     textMuted: '#71717a',
-    textDark: '#0a0a0b',
-    textDarkDim: '#52525b',
 
     // Accent (client can override; default: electric orange)
     accent: '#f97316',
     accentDim: '#c2410c',
-    accentBright: '#fb923c',
+    accentLight: '#fb923c',
+    accentGlow: 'rgba(249,115,22,0.12)',
+    onAccent: '#0a0a0b',
+    secondary: '#f97316',
+    secondaryLight: '#fb923c',
+
+    // Borders
+    border: '#27272a',
+    borderLight: '#1f1f22',
+
+    // Light bands inside the dark page
+    inverseBg: '#ffffff',
+    inverseBgAlt: '#f4f4f5',
+    inverseText: '#0a0a0b',
+    inverseTextDim: '#52525b',
+    inverseBorder: '#e4e4e7',
 
     // Semantic
     success: '#10b981',
     urgent: '#ef4444',
     warning: '#f59e0b',
 
-    // Borders
-    border: '#27272a',
-
-    // Image overlay stops, derived from this family's background so an overlay
-    // follows the palette rather than assuming a fixed colour.
-    overlayFaint: 'rgba(10,10,12,0.05)',
-    overlayLight: 'rgba(10,10,12,0.15)',
-    overlayStrong: 'rgba(10,10,12,0.88)',
-    borderLight: '#e4e4e7',
-  },
+    logoPlate: '#ffffff',
+  }),
   fonts: {
     display: "'Anton', 'Impact', system-ui, sans-serif",
     body: "'Inter', system-ui, sans-serif",

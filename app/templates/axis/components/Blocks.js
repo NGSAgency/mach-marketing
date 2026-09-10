@@ -5,19 +5,19 @@ export function AxisCTA({ config, headline, sub , T: Toverride }) {
   const T = Toverride || axisTokens
   const c = config
   return (
-    <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
+    <section style={{ background: T.colors.inverseBg, color: T.colors.inverseText, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
       <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-        <h2 style={{ fontSize: "clamp(28px, 5.5vw, 64px)", fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 20px 0', color: T.colors.textInverse }}>
+        <h2 style={{ fontSize: "clamp(28px, 5.5vw, 64px)", fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 20px 0', color: T.colors.inverseText }}>
           {headline || 'Ready to book?'}
         </h2>
-        <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.textInverseDim, marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.5 }}>
+        <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: T.colors.inverseTextDim, marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.5 }}>
           {sub || 'Call now for immediate service or request a free quote online.'}
         </p>
         <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             Call {c.business.phone_display}
           </a>
-          <a href="/templates/axis/contact" style={{ background: T.colors.bgInverseAlt, color: T.colors.textInverse, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, border: `1px solid ${T.colors.borderDark}` }}>
+          <a href="/templates/axis/contact" style={{ background: T.colors.inverseBgAlt, color: T.colors.inverseText, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, border: `1px solid ${T.colors.inverseBorder}` }}>
             Get a free quote →
           </a>
         </div>

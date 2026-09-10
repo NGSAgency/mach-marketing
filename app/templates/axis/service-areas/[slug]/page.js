@@ -45,11 +45,11 @@ export default async function AreaPage({ params, searchParams }) {
             <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>
               {c.services.length}+ services · Same-day response · Serving {area} homeowners since {c.business.established_year}.
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>Call {c.business.phone_display}</a>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow, display: 'inline-flex', alignItems: 'center', gap: 8 }}>Call {c.business.phone_display}</a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
+        <section style={{ background: T.colors.bgAlt, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto' }}>
             <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0', lineHeight: 1.05 }}>Services in {area}.</h2>
             {categories.map(cat => (

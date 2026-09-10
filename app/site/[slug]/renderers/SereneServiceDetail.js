@@ -58,7 +58,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 
@@ -96,7 +96,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
                 marginTop: 40,
                 alignSelf: 'flex-start',
                 background: T.colors.accent,
-                color: T.colors.bg,
+                color: T.colors.onAccent,
                 padding: '16px 40px',
                 borderRadius: T.radius.full,
                 textDecoration: 'none',

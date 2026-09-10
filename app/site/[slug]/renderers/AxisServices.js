@@ -42,8 +42,8 @@ export default function AxisServices({ config: c, siteSlug }) {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 16 }}>
                     {catServices.map(svc => (
-                      <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgSecondary, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
-                        {svc.emergency && <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.bg, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>}
+                      <a key={svc.slug} href={`${base}/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.surface, padding: 32, borderRadius: T.radius.lg, display: 'block', position: 'relative', boxShadow: T.shadow.subtle, border: `1px solid ${T.colors.borderLight}` }}>
+                        {svc.emergency && <div style={{ position: 'absolute', top: 20, right: 20, background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full }}>24/7</div>}
                         <div style={{ width: 56, height: 56, background: T.colors.bg, borderRadius: T.radius.md, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T.colors.accent, marginBottom: 20, boxShadow: T.shadow.subtle }}>
                           <ServiceIcon name={svc.icon} size={28} />
                         </div>
@@ -68,7 +68,7 @@ export default function AxisServices({ config: c, siteSlug }) {
 
 function AxisHeader({ T, c, logo, base }) {
   return (
-    <header style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
+    <header style={{ background: T.colors.bgTranslucent, backdropFilter: 'blur(20px)', position: 'sticky', top: 0, zIndex: 40, borderBottom: `1px solid ${T.colors.borderLight}` }}>
       <div style={{ maxWidth: 1440, margin: '0 auto', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href={base} style={{ textDecoration: 'none' }}>
           {logo ? <img src={logo} alt={c.business.display_name} style={{ maxHeight: 32 }} /> : (
@@ -98,10 +98,10 @@ function AxisHeader({ T, c, logo, base }) {
 
 function AxisCTA({ T, c, headline }) {
   return (
-    <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: '120px 32px', textAlign: 'center' }}>
+    <section style={{ background: T.colors.inverseBg, color: T.colors.inverseText, padding: '120px 32px', textAlign: 'center' }}>
       <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-        <h2 style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 20px 0', color: T.colors.textInverse }}>{headline || 'Ready to book?'}</h2>
-        <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
+        <h2 style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, margin: '0 0 20px 0', color: T.colors.inverseText }}>{headline || 'Ready to book?'}</h2>
+        <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
       </div>
     </section>
   )
@@ -109,7 +109,7 @@ function AxisCTA({ T, c, headline }) {
 
 function AxisFooter({ T, c }) {
   return (
-    <footer style={{ background: T.colors.bgInverse, color: T.colors.textInverseDim, padding: '48px 32px', textAlign: 'center', fontSize: 12 }}>
+    <footer style={{ background: T.colors.inverseBg, color: T.colors.inverseTextDim, padding: '48px 32px', textAlign: 'center', fontSize: 12 }}>
       © {new Date().getFullYear()} {c.business.legal_name}. All rights reserved.
     </footer>
   )

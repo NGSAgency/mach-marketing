@@ -36,7 +36,7 @@ export default async function GroveHome({ searchParams }) {
               HVAC, plumbing, and electrical care from the same family, on the same street corner, for {c.business.years_in_business}+ years.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: "clamp(15px, 1.5vw, 18px)", fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: "clamp(15px, 1.5vw, 18px)", fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
               </a>
               <a href="/templates/grove/services" style={{ color: T.colors.text, textDecoration: 'underline', textDecorationColor: T.colors.accent, textUnderlineOffset: 6, fontFamily: T.fonts.body, fontSize: "clamp(14px, 1.4vw, 17px)", fontWeight: 500, padding: 'clamp(14px, 2vw, 20px) clamp(8px, 2vw, 12px)' }}>
@@ -143,14 +143,14 @@ export default async function GroveHome({ searchParams }) {
         {/* SINGLE FEATURED TESTIMONIAL - magazine editorial */}
         <section style={{ background: T.colors.accent, padding: 'clamp(48px, 10vw, 120px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 'min(900px, 100%)', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{ color: T.colors.bgLight, fontSize: 12, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 32, opacity: 0.7 }}>What our neighbors say</div>
-            <div style={{ fontSize: "clamp(30px, 7.5vw, 80px)", color: T.colors.bgLight, opacity: 0.3, lineHeight: 0.7, marginBottom: 20, fontFamily: T.fonts.display }}>"</div>
-            <p style={{ fontFamily: T.fonts.display, fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 400, fontStyle: 'italic', color: T.colors.bgLight, lineHeight: 1.3, margin: '0 0 40px 0', letterSpacing: -0.5 }}>
+            <div style={{ color: T.colors.onAccent, fontSize: 12, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 32, opacity: 0.7 }}>What our neighbors say</div>
+            <div style={{ fontSize: "clamp(30px, 7.5vw, 80px)", color: T.colors.onAccent, opacity: 0.3, lineHeight: 0.7, marginBottom: 20, fontFamily: T.fonts.display }}>"</div>
+            <p style={{ fontFamily: T.fonts.display, fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 400, fontStyle: 'italic', color: T.colors.onAccent, lineHeight: 1.3, margin: '0 0 40px 0', letterSpacing: -0.5 }}>
               {c.reviews.featured[0].text}
             </p>
-            <div style={{ color: T.colors.bgLight, fontSize: 16, fontWeight: 600, marginBottom: 4 }}>{c.reviews.featured[0].author}</div>
-            <div style={{ color: T.colors.bgLight, opacity: 0.75, fontSize: 14 }}>{c.reviews.featured[0].service} · {c.reviews.featured[0].location}</div>
-            <div style={{ marginTop: 48, display: 'inline-flex', gap: 8, alignItems: 'center', color: T.colors.bgLight, fontSize: 15 }}>
+            <div style={{ color: T.colors.onAccent, fontSize: 16, fontWeight: 600, marginBottom: 4 }}>{c.reviews.featured[0].author}</div>
+            <div style={{ color: T.colors.onAccent, opacity: 0.75, fontSize: 14 }}>{c.reviews.featured[0].service} · {c.reviews.featured[0].location}</div>
+            <div style={{ marginTop: 48, display: 'inline-flex', gap: 8, alignItems: 'center', color: T.colors.onAccent, fontSize: 15 }}>
               <span style={{ letterSpacing: 3, fontSize: 18 }}>★★★★★</span>
               <span style={{ opacity: 0.9 }}>{c.reviews.google_rating} across {c.reviews.google_count}+ Google reviews</span>
             </div>

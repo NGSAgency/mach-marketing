@@ -23,7 +23,7 @@ export default function SereneFAQ({ config: c, siteSlug }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       {faqs.length > 0 && <JsonLd data={buildFAQSchema(faqs)} />}
       <TrackingScripts tracking={c.tracking} />

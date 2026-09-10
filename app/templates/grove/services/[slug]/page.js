@@ -49,7 +49,7 @@ export default async function ServicePage({ params, searchParams }) {
                 <ServiceIcon name={service.icon} size={32} />
               </div>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase' }}>{service.category}</div>
-              {service.emergency && (<div style={{ background: T.colors.accent, color: T.colors.bgLight, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7 Emergency</div>)}
+              {service.emergency && (<div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '5px 12px', borderRadius: T.radius.full }}>24/7 Emergency</div>)}
             </div>
             <h1 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 6.5vw, 72px)", fontWeight: 500, letterSpacing: -2.5, margin: '0 0 28px 0', lineHeight: 1.02, color: T.colors.text, maxWidth: 800 }}>
               <em style={{ fontStyle: 'italic', color: T.colors.accent }}>{service.name}</em> in {c.primary_service_area}.
@@ -58,7 +58,7 @@ export default async function ServicePage({ params, searchParams }) {
               {service.description || service.short}
             </p>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
               </a>
               <a href="/templates/grove/contact" style={{ color: T.colors.text, textDecoration: 'underline', textDecorationColor: T.colors.accent, textUnderlineOffset: 6, fontSize: 17, fontWeight: 500, padding: '20px 12px' }}>Request a quote →</a>
@@ -75,7 +75,7 @@ export default async function ServicePage({ params, searchParams }) {
             <div style={{ fontSize: 18, color: T.colors.textDim, lineHeight: 1.75 }}>
               <p>When you need {service.name.toLowerCase()} in {c.primary_service_area}, you don't want a stranger showing up to your home. You want someone who cares about your home like their own.</p>
               <p>That's what we've been doing since {c.business.established_year}. {c.reviews.google_count}+ five-star Google reviews later, it still feels like the neighborhood job we started with.</p>
-              <div style={{ marginTop: 40, padding: 32, background: T.colors.bgLight, borderRadius: T.radius.md, border: `1px solid ${T.colors.border}` }}>
+              <div style={{ marginTop: 40, padding: 32, background: T.colors.bgRaised, borderRadius: T.radius.md, border: `1px solid ${T.colors.border}` }}>
                 <div style={{ fontFamily: T.fonts.display, fontSize: 18, fontWeight: 600, color: T.colors.text, marginBottom: 16 }}>Every job includes:</div>
                 <div style={{ display: 'grid', gap: 12 }}>
                   {['Upfront pricing before we start', 'Licensed, insured, background-checked techs', 'Clean workspace, tools packed out', '100% satisfaction guarantee', 'Financing available for larger jobs'].map(item => (
@@ -110,7 +110,7 @@ export default async function ServicePage({ params, searchParams }) {
               <h2 style={{ fontFamily: T.fonts.display, fontSize: 40, fontWeight: 500, letterSpacing: -1, margin: '0 0 32px 0', color: T.colors.text }}>Other {service.category} services</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
                 {relatedServices.map(svc => (
-                  <a key={svc.slug} href={`/templates/grove/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgLight, border: `1px solid ${T.colors.border}`, padding: 28, borderRadius: T.radius.md, display: 'block', boxShadow: T.shadow.soft }}>
+                  <a key={svc.slug} href={`/templates/grove/services/${svc.slug}`} style={{ textDecoration: 'none', background: T.colors.bgRaised, border: `1px solid ${T.colors.border}`, padding: 28, borderRadius: T.radius.md, display: 'block', boxShadow: T.shadow.soft }}>
                     <div style={{ color: T.colors.accent, marginBottom: 12 }}><ServiceIcon name={svc.icon} size={28} /></div>
                     <div style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 500, color: T.colors.text, letterSpacing: -0.3 }}>{svc.name}</div>
                     <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 6 }}>{svc.short}</div>

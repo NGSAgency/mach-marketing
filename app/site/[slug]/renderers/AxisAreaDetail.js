@@ -31,11 +31,11 @@ export default function AxisAreaDetail({ config: c, siteSlug, area }) {
               Home service<br /><span style={{ color: T.colors.accent }}>in {area}</span>.
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{c.services.length}+ services · Same-day response · Since {c.business.established_year}</p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+        <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0', lineHeight: 1.05 }}>Services in {area}.</h2>
             {categories.map(cat => (

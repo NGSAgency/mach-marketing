@@ -25,7 +25,7 @@ export default function GroveHome({ config: c }) {
                 {c.business.display_name}
               </div>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '12px 22px', fontFamily: T.fonts.body, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '12px 22px', fontFamily: T.fonts.body, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full }}>
               ☎ {c.business.phone_display}
             </a>
           </div>
@@ -40,7 +40,7 @@ export default function GroveHome({ config: c }) {
             {c.positioning?.subtagline && (
               <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.55, margin: '0 auto 48px', maxWidth: 620 }}>{c.positioning.subtagline}</p>
             )}
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>
           </div>
@@ -71,8 +71,8 @@ export default function GroveHome({ config: c }) {
 
         {/* CTA */}
         <section style={{ background: T.colors.accent, padding: '96px 32px', textAlign: 'center' }}>
-          <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 500, letterSpacing: -1, color: T.colors.bgLight, margin: '0 0 32px 0' }}>Ready when you need us.</h2>
-          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bgLight, color: T.colors.accent, textDecoration: 'none', padding: '20px clamp(20px, 5vw, 44px)', fontSize: 22, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+          <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 500, letterSpacing: -1, color: T.colors.onAccent, margin: '0 0 32px 0' }}>Ready when you need us.</h2>
+          <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bgRaised, color: T.colors.accent, textDecoration: 'none', padding: '20px clamp(20px, 5vw, 44px)', fontSize: 22, fontWeight: 600, borderRadius: T.radius.full, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontSize: 24 }}>☎</span> {c.business.phone_display}
           </a>
         </section>

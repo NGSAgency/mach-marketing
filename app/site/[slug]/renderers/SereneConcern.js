@@ -57,7 +57,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
       <TrackingScripts tracking={c.tracking} />
 
@@ -112,7 +112,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
                   display: 'inline-block',
                   marginTop: 28,
                   background: T.colors.accent,
-                  color: T.colors.bg,
+                  color: T.colors.onAccent,
                   padding: '14px 32px',
                   borderRadius: T.radius.full,
                   textDecoration: 'none',
@@ -160,7 +160,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
                         <img src={img.url} alt={img.alt || t.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
                       )}
                       <div style={{ position: 'absolute', inset: 0, background: img ? `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
-                      <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28 }}>
+                      <div style={{ color: img ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28 }}>
                         <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', color: T.colors.accent, marginBottom: 12 }}>
                           {String(i + 1).padStart(2, '0')}
                         </div>

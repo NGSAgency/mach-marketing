@@ -60,7 +60,7 @@ export default function BoltContact({ config: c, siteSlug }) {
                   <label style={{ display: 'block', fontSize: 11, color: T.colors.textDim, textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 6 }}>Message</label>
                   <textarea rows={4} style={{ width: '100%', background: T.colors.bg, border: `1px solid ${T.colors.border}`, color: T.colors.text, padding: 12, fontSize: 15, resize: 'vertical' }} />
                 </div>
-                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.bg, border: 'none', padding: '16px 24px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, cursor: 'pointer' }}>Send</button>
+                <button type="submit" style={{ width: '100%', background: T.colors.accent, color: T.colors.onAccent, border: 'none', padding: '16px 24px', fontFamily: T.fonts.display, fontSize: 18, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, cursor: 'pointer' }}>Send</button>
               </form>
             </div>
           </div>

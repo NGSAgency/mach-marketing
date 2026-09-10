@@ -28,7 +28,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
 
   return (
     <>
-      <SereneResponsive />
+      <SereneResponsive border={T.colors.border} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
       <TrackingScripts tracking={c.tracking} />
 
@@ -88,7 +88,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                     />
                   )}
                   <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${T.colors.overlayLight} 0%, ${T.colors.overlayStrong} 100%)` }} />
-                  <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(280px, 36vh, 380px)' }}>
+                  <div style={{ color: T.colors.textOnImage, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(28px, 4vw, 56px)', minHeight: 'clamp(280px, 36vh, 380px)' }}>
                     <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 18 }}>
                       Latest
                     </div>
@@ -139,7 +139,7 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
                         />
                       )}
                       <div style={{ position: 'absolute', inset: 0, background: post.image ? `linear-gradient(180deg, ${T.colors.overlayFaint} 0%, ${T.colors.overlayStrong} 100%)` : 'none' }} />
-                      <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28, minHeight: 260 }}>
+                      <div style={{ color: post.image ? T.colors.textOnImage : T.colors.text, position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 28, minHeight: 260 }}>
                         <h3 style={{
                           fontFamily: T.fonts.display,
                           fontSize: 'clamp(18px, 2vw, 23px)',

@@ -41,7 +41,7 @@ export default function BoltServices({ config: c, siteSlug }) {
                       <div style={{ color: T.colors.accent, marginBottom: 16 }}><ServiceIcon name={svc.icon} size={36} /></div>
                       <div style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, color: T.colors.text }}>{svc.name}</div>
                       <div style={{ fontSize: 14, color: T.colors.textDim, marginTop: 8 }}>{svc.short}</div>
-                      {svc.emergency && <div style={{ background: T.colors.accent, color: T.colors.bg, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.sm, display: 'inline-block', marginTop: 12 }}>24/7</div>}
+                      {svc.emergency && <div style={{ background: T.colors.accent, color: T.colors.onAccent, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.sm, display: 'inline-block', marginTop: 12 }}>24/7</div>}
                     </a>
                   ))}
                 </div>
@@ -62,8 +62,8 @@ function BoltHeader({ T, c, logo, base }) {
   return (
     <>
       {c.positioning?.emergency_service && (
-        <div style={{ background: T.colors.accent, color: T.colors.bg, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>
-          24/7 Emergency · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.bg, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+        <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, textTransform: 'uppercase' }}>
+          24/7 Emergency · <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
         </div>
       )}
       <header style={{ background: T.colors.bg, borderBottom: `1px solid ${T.colors.border}`, position: 'sticky', top: 0, zIndex: 40 }}>
@@ -100,7 +100,7 @@ function BoltHeader({ T, c, logo, base }) {
 function BoltCTA({ T, c, headline }) {
   return (
     <section style={{ background: T.colors.accent, padding: '80px 24px', textAlign: 'center' }}>
-      <h2 style={{ fontFamily: T.fonts.display, fontSize: 48, fontWeight: 800, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0', letterSpacing: -0.5 }}>
+      <h2 style={{ fontFamily: T.fonts.display, fontSize: 48, fontWeight: 800, textTransform: 'uppercase', color: T.colors.onAccent, margin: '0 0 20px 0', letterSpacing: -0.5 }}>
         {headline || 'Ready to book?'}
       </h2>
       <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.display, fontSize: 28, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, borderRadius: T.radius.sm, display: 'inline-flex', alignItems: 'center', gap: 12 }}>

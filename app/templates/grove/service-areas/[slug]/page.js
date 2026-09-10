@@ -45,7 +45,7 @@ export default async function AreaPage({ params, searchParams }) {
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.55, margin: '0 0 40px 0', maxWidth: 700 }}>
               {c.services.length}+ home services. Same-day response. Serving {area} homeowners since {c.business.established_year}.
             </p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bgLight, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px clamp(20px, 4vw, 40px)', fontFamily: T.fonts.body, fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.warm, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 20 }}>☎</span> {c.business.phone_display}
             </a>
           </div>
@@ -59,7 +59,7 @@ export default async function AreaPage({ params, searchParams }) {
                 <h3 style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 500, letterSpacing: -0.5, color: T.colors.accent, marginBottom: 20 }}>{cat} in {area}</h3>
                 <div style={{ display: 'grid', gap: 10 }}>
                   {c.services.filter(s => s.category === cat).map(svc => (
-                    <a key={svc.slug} href={`/templates/grove/${svc.slug}-in-${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.bgLight, border: `1px solid ${T.colors.border}`, padding: '18px 24px', borderRadius: T.radius.sm, display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <a key={svc.slug} href={`/templates/grove/${svc.slug}-in-${slugify(area)}`} style={{ textDecoration: 'none', background: T.colors.bgRaised, border: `1px solid ${T.colors.border}`, padding: '18px 24px', borderRadius: T.radius.sm, display: 'flex', alignItems: 'center', gap: 16 }}>
                       <div style={{ color: T.colors.accent }}><ServiceIcon name={svc.icon} size={24} /></div>
                       <div style={{ flex: 1, fontSize: 16, color: T.colors.text, fontWeight: 500 }}>{svc.name} in {area}</div>
                       <div style={{ color: T.colors.accent }}>→</div>

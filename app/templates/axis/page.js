@@ -36,13 +36,13 @@ export default async function AxisHome({ searchParams }) {
               HVAC, plumbing, and electrical. One number. One team. One accountability.
             </p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Get started</a>
+              <a href="/templates/axis/contact" style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, boxShadow: T.shadow.glow }}>Get started</a>
               <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 600, borderRadius: T.radius.full, border: `1.5px solid ${T.colors.border}` }}>{c.business.phone_display}</a>
             </div>
           </div>
 
           {/* Product hero visual - clean big card */}
-          <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', width: '100%', background: T.colors.bgSecondary, borderRadius: `${T.radius.xl} ${T.radius.xl} 0 0`, aspectRatio: '21/9', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${T.colors.borderLight}` }}>
+          <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', width: '100%', background: T.colors.surface, borderRadius: `${T.radius.xl} ${T.radius.xl} 0 0`, aspectRatio: '21/9', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${T.colors.borderLight}` }}>
             <div style={{ textAlign: 'center', color: T.colors.textDim, fontSize: 14, fontWeight: 500 }}>
               [ Big hero product-style image ]<br/>
               <span style={{ color: T.colors.textMuted, fontSize: 12, marginTop: 8, display: 'block' }}>Full-bleed lifestyle shot</span>
@@ -57,8 +57,8 @@ export default async function AxisHome({ searchParams }) {
           const isDark = idx === 1  // Middle category on dark bg for contrast
           return (
             <section key={cat} style={{
-              background: isDark ? T.colors.bgInverse : (alt ? T.colors.bgSecondary : T.colors.bg),
-              color: isDark ? T.colors.textInverse : T.colors.text,
+              background: isDark ? T.colors.inverseBg : (alt ? T.colors.bgAlt : T.colors.bg),
+              color: isDark ? T.colors.inverseText : T.colors.text,
               padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)'
             }}>
               <div style={{ maxWidth: 'min(1400px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(32px, 6vw, 96px)', alignItems: 'center' }}>
@@ -66,21 +66,21 @@ export default async function AxisHome({ searchParams }) {
                   <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, marginBottom: 24, textTransform: 'uppercase', letterSpacing: 2 }}>
                     {cat}
                   </div>
-                  <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.textInverse : T.colors.text }}>
+                  <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: isDark ? T.colors.inverseText : T.colors.text }}>
                     {cat === 'HVAC' ? <>Climate<br/>you control.</> : cat === 'Plumbing' ? <>Water<br/>that works.</> : <>Power<br/>you trust.</>}
                   </h2>
-                  <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: isDark ? T.colors.textInverseDim : T.colors.textDim, lineHeight: 1.55, marginBottom: 40, maxWidth: 480 }}>
+                  <p style={{ fontSize: "clamp(15px, 1.6vw, 20px)", color: isDark ? T.colors.inverseTextDim : T.colors.textDim, lineHeight: 1.55, marginBottom: 40, maxWidth: 480 }}>
                     {cat === 'HVAC' ? 'From summer emergencies to whole-home installations. Certified technicians, transparent pricing, financing available.' : cat === 'Plumbing' ? 'From drain cleaning to water heater installs. 24/7 emergency response, master plumber on every job.' : 'From panel upgrades to EV chargers. Licensed master electricians, safety-first work you can rely on.'}
                   </p>
                   <div style={{ display: 'grid', gap: 12, marginBottom: 32 }}>
                     {catServices.slice(0, 4).map(svc => (
-                      <a key={svc.slug} href={`/templates/axis/services/${svc.slug}`} style={{ textDecoration: 'none', background: isDark ? T.colors.bgInverseAlt : T.colors.bg, padding: '18px 24px', borderRadius: T.radius.md, display: 'flex', alignItems: 'center', gap: 16, border: `1px solid ${isDark ? T.colors.borderDark : T.colors.borderLight}` }}>
+                      <a key={svc.slug} href={`/templates/axis/services/${svc.slug}`} style={{ textDecoration: 'none', background: isDark ? T.colors.inverseBgAlt : T.colors.bg, padding: '18px 24px', borderRadius: T.radius.md, display: 'flex', alignItems: 'center', gap: 16, border: `1px solid ${isDark ? T.colors.inverseBorder : T.colors.borderLight}` }}>
                         <div style={{ color: T.colors.accent, flexShrink: 0 }}><ServiceIcon name={svc.icon} size={22} /></div>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: 16, fontWeight: 600, color: isDark ? T.colors.textInverse : T.colors.text }}>{svc.name}</div>
+                          <div style={{ fontSize: 16, fontWeight: 600, color: isDark ? T.colors.inverseText : T.colors.text }}>{svc.name}</div>
                         </div>
                         {svc.emergency && (<div style={{ fontSize: 10, color: T.colors.accent, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase' }}>24/7</div>)}
-                        <div style={{ color: isDark ? T.colors.textInverseDim : T.colors.textDim, fontSize: 18 }}>→</div>
+                        <div style={{ color: isDark ? T.colors.inverseTextDim : T.colors.textDim, fontSize: 18 }}>→</div>
                       </a>
                     ))}
                   </div>
@@ -88,8 +88,8 @@ export default async function AxisHome({ searchParams }) {
                     Explore all {cat.toLowerCase()} services →
                   </a>
                 </div>
-                <div style={{ order: alt ? 1 : 2, background: isDark ? T.colors.bgInverseAlt : T.colors.bgTertiary, aspectRatio: '4/5', borderRadius: T.radius.xl, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${isDark ? T.colors.borderDark : T.colors.borderLight}` }}>
-                  <div style={{ textAlign: 'center', color: isDark ? T.colors.textInverseDim : T.colors.textDim, fontSize: 14 }}>
+                <div style={{ order: alt ? 1 : 2, background: isDark ? T.colors.inverseBgAlt : T.colors.surfaceAlt, aspectRatio: '4/5', borderRadius: T.radius.xl, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: T.shadow.lift, border: `1px solid ${isDark ? T.colors.inverseBorder : T.colors.borderLight}` }}>
+                  <div style={{ textAlign: 'center', color: isDark ? T.colors.inverseTextDim : T.colors.textDim, fontSize: 14 }}>
                     [ {cat} image ]
                   </div>
                 </div>
@@ -107,7 +107,7 @@ export default async function AxisHome({ searchParams }) {
                 Not another <br/><span style={{ color: T.colors.accent }}>service company.</span>
               </h2>
             </div>
-            <div style={{ background: T.colors.bgSecondary, borderRadius: T.radius.xl, padding: 48, border: `1px solid ${T.colors.borderLight}` }}>
+            <div style={{ background: T.colors.surface, borderRadius: T.radius.xl, padding: 48, border: `1px solid ${T.colors.borderLight}` }}>
               {[
                 { us: 'Master licensed on every truck', them: 'Untrained apprentices doing the work' },
                 { us: 'Upfront pricing before we start', them: 'Surprise charges after the work is done' },
@@ -127,22 +127,22 @@ export default async function AxisHome({ searchParams }) {
         </section>
 
         {/* SINGLE MASSIVE TESTIMONIAL */}
-        <section style={{ background: T.colors.bgInverse, color: T.colors.textInverse, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)' }}>
+        <section style={{ background: T.colors.inverseBg, color: T.colors.inverseText, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)' }}>
           <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto', textAlign: 'center' }}>
             <div style={{ display: 'inline-flex', gap: 4, color: T.colors.accent, fontSize: "clamp(15px, 1.8vw, 24px)", marginBottom: 40, letterSpacing: 4 }}>★★★★★</div>
-            <p style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 500, color: T.colors.textInverse, lineHeight: 1.25, margin: '0 0 48px 0', letterSpacing: -1.5 }}>
+            <p style={{ fontSize: "clamp(22px, 4vw, 48px)", fontWeight: 500, color: T.colors.inverseText, lineHeight: 1.25, margin: '0 0 48px 0', letterSpacing: -1.5 }}>
               "{c.reviews.featured[0].text}"
             </p>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 56, height: 56, background: T.colors.accent, color: T.colors.bg, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700 }}>
+              <div style={{ width: 56, height: 56, background: T.colors.accent, color: T.colors.onAccent, borderRadius: T.radius.full, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: "clamp(15px, 1.6vw, 20px)", fontWeight: 700 }}>
                 {c.reviews.featured[0].author.charAt(0)}
               </div>
               <div style={{ textAlign: 'left' }}>
                 <div style={{ fontSize: 17, fontWeight: 700 }}>{c.reviews.featured[0].author}</div>
-                <div style={{ fontSize: 14, color: T.colors.textInverseDim, marginTop: 4 }}>{c.reviews.featured[0].service} · {c.reviews.featured[0].location}</div>
+                <div style={{ fontSize: 14, color: T.colors.inverseTextDim, marginTop: 4 }}>{c.reviews.featured[0].service} · {c.reviews.featured[0].location}</div>
               </div>
             </div>
-            <div style={{ marginTop: 64, fontSize: 15, color: T.colors.textInverseDim }}>
+            <div style={{ marginTop: 64, fontSize: 15, color: T.colors.inverseTextDim }}>
               Join {c.reviews.google_count.toLocaleString()}+ neighbors who trust {c.business.display_name}.
             </div>
           </div>
@@ -159,7 +159,7 @@ export default async function AxisHome({ searchParams }) {
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', maxWidth: 'min(900px, 100%)', margin: '0 auto' }}>
               {c.service_areas.map(area => (
-                <div key={area} style={{ padding: '12px 20px', background: T.colors.bgSecondary, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, color: T.colors.text, border: `1px solid ${T.colors.borderLight}` }}>
+                <div key={area} style={{ padding: '12px 20px', background: T.colors.surface, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, color: T.colors.text, border: `1px solid ${T.colors.borderLight}` }}>
                   {area}
                 </div>
               ))}
@@ -168,19 +168,19 @@ export default async function AxisHome({ searchParams }) {
         </section>
 
         {/* FINAL CTA - bold */}
-        <section style={{ background: T.colors.accent, color: T.colors.bg, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)', textAlign: 'center' }}>
+        <section style={{ background: T.colors.accent, color: T.colors.onAccent, padding: 'clamp(56px, 12vw, 160px) clamp(16px, 4vw, 32px)', textAlign: 'center' }}>
           <div style={{ maxWidth: 'min(1080px, 100%)', margin: '0 auto' }}>
-            <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.bg }}>
+            <h2 style={{ fontSize: "clamp(36px, 8vw, 96px)", fontWeight: 800, letterSpacing: 'clamp(-1.5px, -0.4vw, -4px)', lineHeight: 0.95, margin: '0 0 32px 0', color: T.colors.onAccent }}>
               Let's fix it.
             </h2>
-            <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.bg, opacity: 0.9, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
+            <p style={{ fontSize: "clamp(15px, 1.8vw, 22px)", color: T.colors.onAccent, opacity: 0.9, marginBottom: 48, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
               Call now or request a free quote online.
             </p>
             <div style={{ display: 'inline-flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
               <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.text, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full }}>
                 Call {c.business.phone_display}
               </a>
-              <a href="/templates/axis/contact" style={{ background: 'transparent', color: T.colors.bg, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full, border: `2px solid ${T.colors.bg}` }}>
+              <a href="/templates/axis/contact" style={{ background: 'transparent', color: T.colors.onAccent, textDecoration: 'none', padding: 'clamp(14px, 2vw, 20px) clamp(20px, 4vw, 40px)', fontSize: 18, fontWeight: 700, borderRadius: T.radius.full, border: `2px solid ${T.colors.onAccent}` }}>
                 Get a free quote →
               </a>
             </div>

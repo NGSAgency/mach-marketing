@@ -38,7 +38,7 @@ export default async function FAQPage({ searchParams }) {
         <section style={{ background: T.colors.bgAlt, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
             {faqs.map((f, i) => (
-              <details key={i} style={{ background: T.colors.bgLight, border: `1px solid ${T.colors.border}`, borderRadius: T.radius.md, padding: 28, marginBottom: 12, boxShadow: T.shadow.soft }}>
+              <details key={i} style={{ background: T.colors.bgRaised, border: `1px solid ${T.colors.border}`, borderRadius: T.radius.md, padding: 28, marginBottom: 12, boxShadow: T.shadow.soft }}>
                 <summary style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 500, color: T.colors.text, cursor: 'pointer', listStyle: 'none', letterSpacing: -0.3 }}>
                   {f.question}
                 </summary>

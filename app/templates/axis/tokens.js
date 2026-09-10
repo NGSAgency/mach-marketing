@@ -1,38 +1,44 @@
 // AXIS Template - Design Tokens
 // Modern Tech - Apple/Tesla premium consumer vibe
+import { defineColors } from '../../../lib/templates/shared/colors.js'
 export const axisTokens = {
-  colors: {
+  // Colours use the shared roles in lib/templates/shared/colors.js.
+  colors: defineColors('axis', {
     bg: '#ffffff',
-    bgSecondary: '#f5f5f7',      // Apple-style off-white
-    bgTertiary: '#fafafa',
-    bgInverse: '#000000',
-    bgInverseAlt: '#1d1d1f',
+    bgAlt: '#f5f5f7',             // Apple-style off-white sections
+    bgRaised: '#ffffff',
+    surface: '#f5f5f7',           // cards and chips on white
+    surfaceAlt: '#fafafa',
 
     text: '#1d1d1f',              // Apple's dark text
-    textInverse: '#ffffff',
     textDim: '#6e6e73',           // Apple's secondary text
     textMuted: '#86868b',
-    textInverseDim: '#a1a1a6',
 
     // Bold single accent (client can override)
     accent: '#0066ff',            // Electric blue
-    accentHover: '#0052cc',
+    accentDim: '#0052cc',
+    accentLight: '#4d94ff',
     accentGlow: '#ebf4ff',
-    accentSubtle: '#f0f6ff',
+    onAccent: '#ffffff',
+    secondary: '#0066ff',
+    secondaryLight: '#4d94ff',
 
     border: '#d2d2d7',
-
-    // Image overlay stops, derived from this family's background so an overlay
-    // follows the palette rather than assuming a fixed colour.
-    overlayFaint: 'rgba(15,17,21,0.05)',
-    overlayLight: 'rgba(15,17,21,0.15)',
-    overlayStrong: 'rgba(15,17,21,0.88)',
     borderLight: '#e8e8ed',
-    borderDark: '#424245',
+
+    // Black bands
+    inverseBg: '#000000',
+    inverseBgAlt: '#1d1d1f',
+    inverseText: '#ffffff',
+    inverseTextDim: '#a1a1a6',
+    inverseBorder: '#424245',
 
     success: '#00c853',
     urgent: '#ff3b30',
-  },
+    warning: '#ff9500',
+
+    logoPlate: '#ffffff',
+  }),
   fonts: {
     display: "'Inter Display', 'Inter', system-ui, sans-serif",
     body: "'Inter', system-ui, sans-serif",

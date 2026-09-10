@@ -41,7 +41,7 @@ export default function GroveFAQ({ config: c, siteSlug }) {
         <section style={{ background: T.colors.bgAlt, padding: '48px 32px 120px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
             {faqs.map((f, i) => (
-              <details key={i} style={{ background: T.colors.bgLight, border: `1px solid ${T.colors.border}`, borderRadius: T.radius.md, padding: 28, marginBottom: 12, boxShadow: T.shadow.soft }}>
+              <details key={i} style={{ background: T.colors.bgRaised, border: `1px solid ${T.colors.border}`, borderRadius: T.radius.md, padding: 28, marginBottom: 12, boxShadow: T.shadow.soft }}>
                 <summary style={{ fontFamily: T.fonts.display, fontSize: 22, fontWeight: 500, color: T.colors.text, cursor: 'pointer', listStyle: 'none', letterSpacing: -0.3 }}>{f.question}</summary>
                 <p style={{ fontSize: 17, color: T.colors.textDim, lineHeight: 1.7, marginTop: 16, marginBottom: 0 }}>{f.answer}</p>
               </details>

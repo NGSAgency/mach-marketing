@@ -28,7 +28,7 @@ export default function AxisAbout({ config: c, siteSlug }) {
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+        <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
             <p style={{ fontSize: 32, fontWeight: 500, lineHeight: 1.3, letterSpacing: -0.8, marginBottom: 40 }}>
               We started with a handshake, a truck, and a promise: treat every home like our own.
@@ -46,7 +46,7 @@ export default function AxisAbout({ config: c, siteSlug }) {
               <h2 style={{ fontSize: "clamp(24px, 5vw, 56px)", fontWeight: 800, letterSpacing: -2, margin: '0 0 48px 0' }}>Credentials that matter.</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
                 {c.certifications.map(cert => (
-                  <div key={cert.name} style={{ background: T.colors.bgSecondary, padding: 28, borderRadius: T.radius.lg, border: `1px solid ${T.colors.borderLight}` }}>
+                  <div key={cert.name} style={{ background: T.colors.surface, padding: 28, borderRadius: T.radius.lg, border: `1px solid ${T.colors.borderLight}` }}>
                     <div style={{ color: T.colors.accent, fontSize: 20, marginBottom: 12 }}>✓</div>
                     <div style={{ fontSize: 18, fontWeight: 700, color: T.colors.text }}>{cert.name}</div>
                   </div>

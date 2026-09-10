@@ -38,7 +38,7 @@ export default function AxisFAQ({ config: c, siteSlug }) {
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: '80px 32px 120px' }}>
+        <section style={{ background: T.colors.bgAlt, padding: '80px 32px 120px' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             {faqs.map((f, i) => (
               <details key={i} style={{ background: T.colors.bg, border: `1px solid ${T.colors.borderLight}`, borderRadius: T.radius.lg, padding: 28, marginBottom: 12, boxShadow: T.shadow.subtle }}>

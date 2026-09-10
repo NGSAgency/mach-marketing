@@ -25,8 +25,8 @@ export default async function BoltHome({ searchParams }) {
     <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
       {/* Sticky top emergency bar */}
       {c.positioning.emergency_service && (
-        <div style={{ background: T.colors.accent, color: T.colors.bg, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
-          <span style={{ animation: 'pulse 2s infinite' }}>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.bg, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
+        <div style={{ background: T.colors.accent, color: T.colors.onAccent, padding: '8px 20px', textAlign: 'center', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>
+          <span style={{ animation: 'pulse 2s infinite' }}>●</span> 24/7 Emergency Service · Call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.onAccent, textDecoration: 'underline', fontWeight: 700 }}>{c.business.phone_display}</a>
         </div>
       )}
 
@@ -91,7 +91,7 @@ export default async function BoltHome({ searchParams }) {
               {c.positioning.subtagline}
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'flex', alignItems: 'center', gap: 12 }}>
+              <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '20px 32px', fontFamily: T.fonts.display, fontSize: "clamp(15px, 1.8vw, 24px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.sharp, display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ fontSize: 28 }}>☎</span> Call {c.business.phone_display}
               </a>
               <a href="/templates/bolt/contact" style={{ background: 'transparent', color: T.colors.text, textDecoration: 'none', padding: '18px 30px', fontFamily: T.fonts.display, fontSize: 20, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', border: `2px solid ${T.colors.text}`, borderRadius: T.radius.sm }}>
@@ -120,10 +120,10 @@ export default async function BoltHome({ searchParams }) {
           </div>
           <div style={{ background: `linear-gradient(135deg, ${T.colors.accent} 0%, ${T.colors.accentDim} 100%)`, aspectRatio: '4/5', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', borderRadius: T.radius.sm, overflow: 'hidden' }}>
             <div style={{ textAlign: 'center', padding: 40 }}>
-              <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(80px, 25vw, 200px)', fontWeight: 900, color: T.colors.bg, opacity: 0.15, lineHeight: 1, letterSpacing: 'clamp(-3px, -0.8vw, -8px)' }}>
+              <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(80px, 25vw, 200px)', fontWeight: 900, color: T.colors.onAccent, opacity: 0.15, lineHeight: 1, letterSpacing: 'clamp(-3px, -0.8vw, -8px)' }}>
                 24/7
               </div>
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 14, color: T.colors.bg, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase' }}>
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 14, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase' }}>
                 [ HERO IMAGE PLACEHOLDER ]<br/>
                 <span style={{ opacity: 0.6, fontSize: 12 }}>Real crew + truck photo</span>
               </div>
@@ -239,10 +239,10 @@ export default async function BoltHome({ searchParams }) {
       {/* CTA */}
       <section style={{ background: T.colors.accent, padding: 'clamp(40px, 8vw, 80px) clamp(16px, 4vw, 24px)', textAlign: 'center' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 5.5vw, 64px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.bg, margin: '0 0 20px 0', lineHeight: 1 }}>
+          <h2 style={{ fontFamily: T.fonts.display, fontSize: "clamp(28px, 5.5vw, 64px)", fontWeight: 800, letterSpacing: -1, textTransform: 'uppercase', color: T.colors.onAccent, margin: '0 0 20px 0', lineHeight: 1 }}>
             Need Service? Call Now.
           </h2>
-          <p style={{ fontSize: 20, color: T.colors.bg, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
+          <p style={{ fontSize: 20, color: T.colors.onAccent, opacity: 0.85, marginBottom: 32, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
             24/7 emergency service. Free estimates on installs. Financing available.
           </p>
           <a href={`tel:${c.business.phone}`} style={{ background: T.colors.bg, color: T.colors.accent, textDecoration: 'none', padding: '24px clamp(20px, 5vw, 48px)', fontFamily: T.fonts.display, fontSize: "clamp(18px, 2.5vw, 32px)", fontWeight: 800, letterSpacing: 0.5, textTransform: 'uppercase', borderRadius: T.radius.sm, boxShadow: T.shadow.heavy, display: 'inline-flex', alignItems: 'center', gap: 16 }}>

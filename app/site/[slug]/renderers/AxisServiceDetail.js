@@ -29,17 +29,17 @@ export default function AxisServiceDetail({ config: c, siteSlug, service }) {
             </nav>
             <div style={{ display: 'inline-flex', gap: 12, alignItems: 'center', marginBottom: 24 }}>
               <div style={{ fontSize: 13, color: T.colors.accent, fontWeight: 600, padding: '6px 16px', background: T.colors.accentGlow, borderRadius: T.radius.full }}>{service.category}</div>
-              {service.emergency && <div style={{ fontSize: 12, color: T.colors.bg, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>}
+              {service.emergency && <div style={{ fontSize: 12, color: T.colors.onAccent, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '6px 14px', background: T.colors.accent, borderRadius: T.radius.full }}>24/7 Emergency</div>}
             </div>
             <h1 style={{ fontSize: 84, fontWeight: 800, letterSpacing: -3, lineHeight: 1, margin: '0 0 32px 0' }}>
               {service.name}<br /><span style={{ color: T.colors.accent }}>in {c.primary_service_area}.</span>
             </h1>
             <p style={{ fontSize: 22, color: T.colors.textDim, lineHeight: 1.5, margin: '0 auto 40px', maxWidth: 720 }}>{service.description || service.short}</p>
-            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.bg, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
+            <a href={`tel:${c.business.phone}`} style={{ background: T.colors.accent, color: T.colors.onAccent, textDecoration: 'none', padding: '18px 36px', fontSize: 17, fontWeight: 600, borderRadius: T.radius.full }}>Call {c.business.phone_display}</a>
           </div>
         </section>
 
-        <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+        <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: -1.5, margin: '0 0 32px 0' }}>Why us.</h2>
             <div style={{ background: T.colors.bg, padding: 40, borderRadius: T.radius.lg, boxShadow: T.shadow.subtle }}>
@@ -60,7 +60,7 @@ export default function AxisServiceDetail({ config: c, siteSlug, service }) {
             <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: -1.5, marginBottom: 32 }}>{service.name} near you.</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {c.service_areas.map(area => (
-                <a key={area} href={`${base}/${service.slug}-in-${slugify(area)}`} style={{ padding: '12px 20px', background: T.colors.bgSecondary, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>
+                <a key={area} href={`${base}/${service.slug}-in-${slugify(area)}`} style={{ padding: '12px 20px', background: T.colors.surface, color: T.colors.text, fontSize: 15, fontWeight: 600, borderRadius: T.radius.full, textDecoration: 'none', border: `1px solid ${T.colors.borderLight}` }}>
                   {service.name} in {area}
                 </a>
               ))}
@@ -69,7 +69,7 @@ export default function AxisServiceDetail({ config: c, siteSlug, service }) {
         </section>
 
         {relatedServices.length > 0 && (
-          <section style={{ background: T.colors.bgSecondary, padding: '120px 32px' }}>
+          <section style={{ background: T.colors.bgAlt, padding: '120px 32px' }}>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
               <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: -1.5, marginBottom: 40 }}>Related {service.category.toLowerCase()} services.</h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>

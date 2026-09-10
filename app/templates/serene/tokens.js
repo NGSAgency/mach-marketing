@@ -15,11 +15,15 @@
 // Palette is dark because the luxury editorial archetype reads as a fashion
 // house rather than a medical office, which is what high-ticket aesthetic work
 // sells on. Light cream is what every generic spa template uses.
+import { defineColors } from '../../../lib/templates/shared/colors.js'
 export const sereneTokens = {
-  colors: {
+  // Colours use the shared roles in lib/templates/shared/colors.js. Serene is
+  // the reference family those roles were named from. Image scrims, text on
+  // photos and translucent headers are derived from these, not set here.
+  colors: defineColors('serene', {
     bg: '#0f0e0d',          // warm near-black; pure black reads cheap on screens
     bgAlt: '#171512',
-    bgLight: '#1f1c18',
+    bgRaised: '#1f1c18',
     surface: '#171512',
     surfaceAlt: '#211d19',
 
@@ -31,25 +35,27 @@ export const sereneTokens = {
     accentDim: '#96784a',
     accentLight: '#d4b884',
     accentGlow: 'rgba(184,151,95,0.12)',
+    onAccent: '#0f0e0d',
 
     secondary: '#b8975f',
     secondaryLight: '#d4b884',
+
+    border: 'rgba(244,239,232,0.12)',
+    borderLight: 'rgba(244,239,232,0.06)',
+
+    // Serene has no inverse bands yet; these are what one would use.
+    inverseBg: '#f4efe8',
+    inverseBgAlt: '#e9e2d8',
+    inverseText: '#0f0e0d',
+    inverseTextDim: '#5c544c',
+    inverseBorder: 'rgba(15,14,13,0.12)',
 
     success: '#7d9070',
     urgent: '#c07a6a',
     warning: '#b8975f',
 
-    border: 'rgba(244,239,232,0.12)',
-
-    // Image overlay stops. Derived from the background rather than hardcoded,
-    // so an overlay follows the palette instead of silently assuming the
-    // template's original colour. Text sits on top of these, so getting them
-    // wrong is a legibility failure rather than a cosmetic one.
-    overlayFaint: 'rgba(15,14,13,0.05)',
-    overlayLight: 'rgba(15,14,13,0.15)',
-    overlayStrong: 'rgba(15,14,13,0.88)',
-    borderLight: 'rgba(244,239,232,0.06)',
-  },
+    logoPlate: '#ffffff',
+  }),
 
   fonts: {
     display: "'Cormorant Garamond', 'Times New Roman', serif",
