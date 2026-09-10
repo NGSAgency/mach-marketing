@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server'
 import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 
+// Command Center requires this on server-to-server calls to its API. It must
+// match INTERNAL_API_SECRET in the Command Center project.
+function internalHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'x-internal-secret': process.env.INTERNAL_API_SECRET || '',
+  }
+}
+
 export async function POST(req) {
   try {
     const body = await req.json()
@@ -21,7 +30,7 @@ export async function POST(req) {
       const ccUrl = process.env.COMMAND_CENTER_URL || 'https://app.machdigitalsolutions.com'
       const resp = await fetch(`${ccUrl}/api/prospects/create`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: internalHeaders(),
         body: JSON.stringify({
           first_name,
           last_name,
@@ -50,7 +59,7 @@ export async function POST(req) {
         const ccUrl = process.env.COMMAND_CENTER_URL || 'https://app.machdigitalsolutions.com'
         await fetch(`${ccUrl}/api/prospects/contact-create`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: internalHeaders(),
           body: JSON.stringify({
             prospectId,
             first_name,
