@@ -55,7 +55,8 @@ export default function SereneAbout({ config: c, siteSlug }) {
                     margin: 0,
                     maxWidth: 880,
                   }}>
-                    {lead}
+                    {/* Without a story yet the page still needs its one heading. */}
+                    {lead || `About ${c.business.display_name}`}
                   </h1>
                 </div>
               </section>

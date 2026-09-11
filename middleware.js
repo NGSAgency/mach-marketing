@@ -17,9 +17,14 @@ export async function middleware(request) {
   const hostname = (request.headers.get('host') || '').toLowerCase()
   const url = request.nextUrl.clone()
 
-  // Root domain: pass through (marketing site)
-  if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`) {
-    return NextResponse.next()
+  // Root domain: pass through (marketing site). A visitor holding a private
+  // preview cookie is looking at an unpublished site: keep it out of search
+  // even if the page were shared (search engines never carry the cookie, and
+  // without it an unpublished site doesn't load at all).
+  if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname.endsWith('.vercel.app') || !hostname.includes('.')) {
+    const res = NextResponse.next()
+    if (url.pathname.startsWith('/site/') && request.cookies.get('mach_preview')) res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+    return res
   }
 
   // Subdomain of our root: extract subdomain

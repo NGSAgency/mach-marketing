@@ -343,6 +343,11 @@ function SereneFooter({ T, c, base: baseProp }) {
                 {area}
               </a>
             ))}
+            {/* The locations index is otherwise unlinked when the header
+                leaves places out of the navigation (med spas). */}
+            <a href={`${base}${urlServiceAreas(c)}`} style={{ ...linkStyle, color: T.colors.accent }}>
+              All {labels.place.toLowerCase()}
+            </a>
           </div>
         )}
       </div>
