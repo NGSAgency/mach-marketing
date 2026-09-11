@@ -5,9 +5,10 @@ import BoltCombo from '../renderers/BoltCombo.js'
 import GroveCombo from '../renderers/GroveCombo.js'
 import AxisCombo from '../renderers/AxisCombo.js'
 import SereneCombo from '../renderers/SereneCombo.js'
+import CrewCombo from '../renderers/CrewCombo.js'
 import { buildComboMetadata } from '../../../../lib/templates/shared/seo/index.js'
 
-const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo }
+const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo, crew: CrewCombo }
 
 function parseComboSlug(comboSlug, config) {
   for (const svc of config.services) {

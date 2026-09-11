@@ -5,6 +5,7 @@ import BoltAreaDetail from '../../../../site/[slug]/renderers/BoltAreaDetail.js'
 import GroveAreaDetail from '../../../../site/[slug]/renderers/GroveAreaDetail.js'
 import AxisAreaDetail from '../../../../site/[slug]/renderers/AxisAreaDetail.js'
 import SereneAreaDetail from '../../../../site/[slug]/renderers/SereneAreaDetail.js'
+import CrewAreaDetail from '../../../../site/[slug]/renderers/CrewAreaDetail.js'
 import MockupBanner from '../../MockupBanner.js'
 
 export const runtime = 'nodejs'
@@ -16,6 +17,7 @@ const RENDERERS = {
   grove: GroveAreaDetail,
   axis: AxisAreaDetail,
   serene: SereneAreaDetail,
+  crew: CrewAreaDetail,
 }
 
 // Served at /locations/<area> and, through a re-export, /service-areas/<area>.
@@ -34,7 +36,7 @@ export default async function MockupAreaDetailPage({ params }) {
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <div style={{ paddingTop: 44 }}>
-        <Renderer config={config} siteSlug={token} area={area} />
+        <Renderer config={{ ...config, chrome_offset: 44 }} siteSlug={token} area={area} />
       </div>
     </>
   )

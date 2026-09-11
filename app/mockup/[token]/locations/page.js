@@ -4,6 +4,7 @@ import BoltAreas from '../../../site/[slug]/renderers/BoltAreas.js'
 import GroveAreas from '../../../site/[slug]/renderers/GroveAreas.js'
 import AxisAreas from '../../../site/[slug]/renderers/AxisAreas.js'
 import SereneAreas from '../../../site/[slug]/renderers/SereneAreas.js'
+import CrewAreas from '../../../site/[slug]/renderers/CrewAreas.js'
 import MockupBanner from '../MockupBanner.js'
 
 export const runtime = 'nodejs'
@@ -15,6 +16,7 @@ const RENDERERS = {
   grove: GroveAreas,
   axis: AxisAreas,
   serene: SereneAreas,
+  crew: CrewAreas,
 }
 
 // Served at /locations and, through a re-export, /service-areas: the place
@@ -30,7 +32,7 @@ export default async function MockupAreasPage({ params }) {
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <div style={{ paddingTop: 44 }}>
-        <Renderer config={result.config} siteSlug={token} />
+        <Renderer config={{ ...result.config, chrome_offset: 44 }} siteSlug={token} />
       </div>
     </>
   )

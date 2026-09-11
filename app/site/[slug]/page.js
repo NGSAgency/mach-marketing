@@ -38,5 +38,5 @@ export default async function ClientSitePage({ params }) {
   const templateSlug = config.template_slug || 'bolt'
   const Renderer = RENDERERS[templateSlug] || RENDERERS.bolt
 
-  return <Renderer config={config} />
+  return <Renderer config={config} siteSlug={slug} />
 }

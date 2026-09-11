@@ -4,6 +4,7 @@ import BoltContact from '../../../site/[slug]/renderers/BoltContact.js'
 import GroveContact from '../../../site/[slug]/renderers/GroveContact.js'
 import AxisContact from '../../../site/[slug]/renderers/AxisContact.js'
 import SereneContact from '../../../site/[slug]/renderers/SereneContact.js'
+import CrewContact from '../../../site/[slug]/renderers/CrewContact.js'
 import MockupBanner from '../MockupBanner.js'
 
 export const runtime = 'nodejs'
@@ -15,6 +16,7 @@ const RENDERERS = {
   grove: GroveContact,
   axis: AxisContact,
   serene: SereneContact,
+  crew: CrewContact,
 }
 
 export default async function MockupContactPage({ params }) {
@@ -28,7 +30,7 @@ export default async function MockupContactPage({ params }) {
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <div style={{ paddingTop: 44 }}>
-        <Renderer config={result.config} siteSlug={token} />
+        <Renderer config={{ ...result.config, chrome_offset: 44 }} siteSlug={token} />
       </div>
     </>
   )

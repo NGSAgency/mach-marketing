@@ -12,9 +12,11 @@ import BoltAreaDetail from '../renderers/BoltAreaDetail.js'
 import GroveAreaDetail from '../renderers/GroveAreaDetail.js'
 import AxisAreaDetail from '../renderers/AxisAreaDetail.js'
 import SereneAreaDetail from '../renderers/SereneAreaDetail.js'
+import CrewAreas from '../renderers/CrewAreas.js'
+import CrewAreaDetail from '../renderers/CrewAreaDetail.js'
 
-const INDEX = { bolt: BoltAreas, grove: GroveAreas, axis: AxisAreas, serene: SereneAreas }
-const DETAIL = { bolt: BoltAreaDetail, grove: GroveAreaDetail, axis: AxisAreaDetail, serene: SereneAreaDetail }
+const INDEX = { bolt: BoltAreas, grove: GroveAreas, axis: AxisAreas, serene: SereneAreas, crew: CrewAreas }
+const DETAIL = { bolt: BoltAreaDetail, grove: GroveAreaDetail, axis: AxisAreaDetail, serene: SereneAreaDetail, crew: CrewAreaDetail }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 const segmentOf = (c) => c?.profile?.nouns?.place_url || 'service-areas'

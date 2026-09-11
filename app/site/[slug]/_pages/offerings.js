@@ -14,9 +14,11 @@ import BoltServiceDetail from '../renderers/BoltServiceDetail.js'
 import GroveServiceDetail from '../renderers/GroveServiceDetail.js'
 import AxisServiceDetail from '../renderers/AxisServiceDetail.js'
 import SereneServiceDetail from '../renderers/SereneServiceDetail.js'
+import CrewServices from '../renderers/CrewServices.js'
+import CrewServiceDetail from '../renderers/CrewServiceDetail.js'
 
-const INDEX = { bolt: BoltServices, grove: GroveServices, axis: AxisServices, serene: SereneServices }
-const DETAIL = { bolt: BoltServiceDetail, grove: GroveServiceDetail, axis: AxisServiceDetail, serene: SereneServiceDetail }
+const INDEX = { bolt: BoltServices, grove: GroveServices, axis: AxisServices, serene: SereneServices, crew: CrewServices }
+const DETAIL = { bolt: BoltServiceDetail, grove: GroveServiceDetail, axis: AxisServiceDetail, serene: SereneServiceDetail, crew: CrewServiceDetail }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 const segmentOf = (c) => c?.profile?.nouns?.offering_url || 'services'

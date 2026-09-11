@@ -5,13 +5,14 @@ import BoltCombo from '../../../site/[slug]/renderers/BoltCombo.js'
 import GroveCombo from '../../../site/[slug]/renderers/GroveCombo.js'
 import AxisCombo from '../../../site/[slug]/renderers/AxisCombo.js'
 import SereneCombo from '../../../site/[slug]/renderers/SereneCombo.js'
+import CrewCombo from '../../../site/[slug]/renderers/CrewCombo.js'
 import MockupBanner from '../MockupBanner.js'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Website Concept', robots: { index: false, follow: false, nocache: true } }
 
-const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo }
+const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo, crew: CrewCombo }
 
 export default async function MockupComboPage({ params }) {
   const { token, comboSlug } = await params
@@ -33,11 +34,16 @@ export default async function MockupComboPage({ params }) {
 
   if (!matched) notFound()
 
-  // Only the first service and area pair is generated
-  const firstService = (config.services || [])[0]
-  const firstArea = (config.service_areas || [])[0]
-  if (matched.service.slug !== firstService?.slug || matched.area !== firstArea) {
-    redirect(`/mockup/${token}`)
+  // CREW renders every combination: the pair the concept's copy was written
+  // for (config.generated_for) shows it, every other pair shows its structure
+  // with a note where the copy goes. The other families still show only the
+  // first pair, because their combo pages would repeat that pair's copy.
+  if (config.template_slug !== 'crew') {
+    const firstService = (config.services || [])[0]
+    const firstArea = (config.service_areas || [])[0]
+    if (matched.service.slug !== firstService?.slug || matched.area !== firstArea) {
+      redirect(`/mockup/${token}`)
+    }
   }
 
   const Renderer = RENDERERS[config.template_slug] || RENDERERS.bolt
@@ -46,7 +52,7 @@ export default async function MockupComboPage({ params }) {
     <>
       <MockupBanner businessName={result.meta?.business_name || 'your business'} />
       <div style={{ paddingTop: 44 }}>
-        <Renderer config={config} siteSlug={token} service={matched.service} area={matched.area} />
+        <Renderer config={{ ...config, chrome_offset: 44 }} siteSlug={token} service={matched.service} area={matched.area} />
       </div>
     </>
   )

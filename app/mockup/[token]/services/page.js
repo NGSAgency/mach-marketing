@@ -1,16 +1,17 @@
 import { fetchMockup } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
-import SereneAbout from '../../../site/[slug]/renderers/SereneAbout.js'
-import CrewAbout from '../../../site/[slug]/renderers/CrewAbout.js'
+import CrewServices from '../../../site/[slug]/renderers/CrewServices.js'
+import SereneServices from '../../../site/[slug]/renderers/SereneServices.js'
 import MockupBanner from '../MockupBanner.js'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Website Concept', robots: { index: false, follow: false, nocache: true } }
 
-const RENDERERS = { serene: SereneAbout, crew: CrewAbout }
+// Home-services concepts link to /services; med spa concepts use /treatments.
+const RENDERERS = { crew: CrewServices, serene: SereneServices }
 
-export default async function MockupAboutPage({ params }) {
+export default async function MockupServicesPage({ params }) {
   const { token } = await params
   const result = await fetchMockup(token)
   if (!result || result.error || !result.config) notFound()
