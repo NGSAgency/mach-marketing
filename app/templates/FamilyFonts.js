@@ -1,18 +1,14 @@
-import { boltTokens } from './bolt/tokens.js'
-import { groveTokens } from './grove/tokens.js'
-import { axisTokens } from './axis/tokens.js'
 import { sereneTokens } from './serene/tokens.js'
 import { crewTokens } from './crew/tokens.js'
+import { hearthTokens } from './hearth/tokens.js'
 
 // Each family's typefaces. The template demo pages always loaded these, but
 // client sites, previews and concepts didn't, so every family rendered in its
 // fallback fonts (Serene's Cormorant came out as Times New Roman).
 const HREFS = {
-  bolt: boltTokens.fontsHref,
-  grove: groveTokens.fontsHref,
-  axis: axisTokens.fontsHref,
   serene: sereneTokens.fontsHref,
   crew: crewTokens.fontsHref,
+  hearth: hearthTokens.fontsHref,
 }
 
 /**

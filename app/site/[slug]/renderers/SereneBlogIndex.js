@@ -5,6 +5,7 @@ import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/
 import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import { BlogPostCore } from '../../../../lib/templates/shared/blog/BlogCore.js'
 
 export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -164,4 +165,29 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
       </div>
     </>
   )
+}
+
+/**
+ * One post in Serene's chrome. Posts used to fall through to Bolt's; the
+ * shared BlogPostCore carries the article, its structured data and its SEO.
+ */
+export function SereneBlogPost({ config: c, siteSlug, post, prev, next }) {
+  const T = applyBrand(sereneTokens, brandFrom(c))
+  const base = c.base_path || `/site/${siteSlug}`
+  function Chrome({ children }) {
+    return (
+      <>
+        <SereneResponsive border={T.colors.border} />
+        <TrackingScripts tracking={c.tracking} />
+        <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
+          <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+          {children}
+          <SereneCTA T={T} c={c} />
+          <SereneFooter T={T} c={c} base={base} />
+          <StickyBooking T={T} c={c} />
+        </div>
+      </>
+    )
+  }
+  return <BlogPostCore T={T} config={c} post={post} prev={prev} next={next} base={base} Chrome={Chrome} />
 }

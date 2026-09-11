@@ -90,6 +90,14 @@ export async function middleware(request) {
       res = NextResponse.next({ request: { headers } })
     } else res = NextResponse.next()
     if (url.pathname.startsWith('/site/') && request.cookies.get('mach_preview')) res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+    // A concept's layout tab (?t=hearth): remembered for that concept's other
+    // pages, whose links don't carry the tab. The page checks the value is a
+    // layout the concept offers.
+    const concept = url.pathname.match(/^\/(concept|mockup)\/([^/]+)/)
+    const layout = url.searchParams.get('t')
+    if (concept && layout && /^[a-z]{2,20}$/.test(layout)) {
+      res.cookies.set('mach_layout', layout, { path: `/${concept[1]}/${concept[2]}`, sameSite: 'lax', secure: url.protocol === 'https:', maxAge: 60 * 60 * 24 * 30 })
+    }
     return res
   }
 

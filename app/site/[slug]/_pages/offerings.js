@@ -6,19 +6,7 @@
 import { notFound } from 'next/navigation'
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { buildServiceMetadata, buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
-import BoltServices from '../renderers/BoltServices.js'
-import GroveServices from '../renderers/GroveServices.js'
-import AxisServices from '../renderers/AxisServices.js'
-import SereneServices from '../renderers/SereneServices.js'
-import BoltServiceDetail from '../renderers/BoltServiceDetail.js'
-import GroveServiceDetail from '../renderers/GroveServiceDetail.js'
-import AxisServiceDetail from '../renderers/AxisServiceDetail.js'
-import SereneServiceDetail from '../renderers/SereneServiceDetail.js'
-import CrewServices from '../renderers/CrewServices.js'
-import CrewServiceDetail from '../renderers/CrewServiceDetail.js'
-
-const INDEX = { bolt: BoltServices, grove: GroveServices, axis: AxisServices, serene: SereneServices, crew: CrewServices }
-const DETAIL = { bolt: BoltServiceDetail, grove: GroveServiceDetail, axis: AxisServiceDetail, serene: SereneServiceDetail, crew: CrewServiceDetail }
+import { rendererFor } from '../renderers/registry.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 const segmentOf = (c) => c?.profile?.nouns?.offering_url || 'services'
@@ -50,7 +38,7 @@ export async function offeringIndexPage({ params }, segment) {
   const { slug } = await params
   const result = await load(slug, segment)
   if (!result) notFound()
-  const Renderer = INDEX[result.config.template_slug] || BoltServices
+  const Renderer = rendererFor(result.config.template_slug, 'Services')
   return <Renderer config={result.config} siteSlug={slug} />
 }
 
@@ -69,6 +57,6 @@ export async function offeringDetailPage({ params }, segment) {
   const result = await load(slug, segment, { page: 'service_detail', id: serviceSlug })
   const service = result && find(result.config, serviceSlug)
   if (!service) notFound()
-  const Renderer = DETAIL[result.config.template_slug] || BoltServiceDetail
+  const Renderer = rendererFor(result.config.template_slug, 'ServiceDetail')
   return <Renderer config={result.config} siteSlug={slug} service={service} />
 }

@@ -1,13 +1,7 @@
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
-import BoltAbout from '../renderers/BoltAbout.js'
-import GroveAbout from '../renderers/GroveAbout.js'
-import AxisAbout from '../renderers/AxisAbout.js'
 import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
-import SereneAbout from '../renderers/SereneAbout.js'
-import CrewAbout from '../renderers/CrewAbout.js'
-
-const RENDERERS = { bolt: BoltAbout, grove: GroveAbout, axis: AxisAbout, serene: SereneAbout, crew: CrewAbout }
+import { rendererFor } from '../renderers/registry.js'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -25,6 +19,6 @@ export default async function ClientAboutPage({ params }) {
   const { slug } = await params
   const result = await fetchSiteConfig({ slug })
   if (!result) notFound()
-  const Renderer = RENDERERS[result.config.template_slug] || BoltAbout
+  const Renderer = rendererFor(result.config.template_slug, 'About')
   return <Renderer config={result.config} siteSlug={slug} />
 }

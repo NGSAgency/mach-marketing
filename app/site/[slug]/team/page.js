@@ -1,9 +1,7 @@
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
-import SereneTeam from '../renderers/SereneTeam.js'
-
-const RENDERERS = { serene: SereneTeam }
+import { rendererFor } from '../renderers/registry.js'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -24,7 +22,7 @@ export default async function TeamPage({ params }) {
 
   // Only families whose industry declares a practitioners page have a team
   // renderer. Others should not expose the route at all.
-  const Renderer = RENDERERS[result.config.template_slug]
+  const Renderer = rendererFor(result.config.template_slug, 'Team')
   if (!Renderer) notFound()
 
   return <Renderer config={result.config} siteSlug={slug} />

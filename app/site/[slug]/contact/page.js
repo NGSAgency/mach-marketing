@@ -1,13 +1,7 @@
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
-import BoltContact from '../renderers/BoltContact.js'
-import GroveContact from '../renderers/GroveContact.js'
-import AxisContact from '../renderers/AxisContact.js'
-import SereneContact from '../renderers/SereneContact.js'
-import CrewContact from '../renderers/CrewContact.js'
 import { buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
-
-const RENDERERS = { bolt: BoltContact, grove: GroveContact, axis: AxisContact, serene: SereneContact, crew: CrewContact }
+import { rendererFor } from '../renderers/registry.js'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -25,6 +19,6 @@ export default async function ClientContactPage({ params }) {
   const { slug } = await params
   const result = await fetchSiteConfig({ slug })
   if (!result) notFound()
-  const Renderer = RENDERERS[result.config.template_slug] || BoltContact
+  const Renderer = rendererFor(result.config.template_slug, 'Contact')
   return <Renderer config={result.config} siteSlug={slug} />
 }

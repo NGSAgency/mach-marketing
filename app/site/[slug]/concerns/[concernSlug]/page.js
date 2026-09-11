@@ -1,9 +1,7 @@
 import { fetchSiteConfig } from '../../../../../lib/site/fetch.js'
 import { buildStaticMetadata } from '../../../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
-import SereneConcern from '../../renderers/SereneConcern.js'
-
-const RENDERERS = { serene: SereneConcern }
+import { rendererFor } from '../../renderers/registry.js'
 
 function findConcern(config, slug) {
   return (config.concerns || []).find(c => c.slug === slug) || null
@@ -32,7 +30,7 @@ export default async function ConcernPage({ params }) {
   const concern = findConcern(result.config, concernSlug)
   if (!concern) notFound()
 
-  const Renderer = RENDERERS[result.config.template_slug]
+  const Renderer = rendererFor(result.config.template_slug, 'Concern')
   if (!Renderer) notFound()
 
   return <Renderer config={result.config} siteSlug={slug} concern={concern} />

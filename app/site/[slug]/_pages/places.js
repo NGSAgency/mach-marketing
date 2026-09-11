@@ -4,19 +4,7 @@ import { notFound } from 'next/navigation'
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { buildAreaMetadata, buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
-import BoltAreas from '../renderers/BoltAreas.js'
-import GroveAreas from '../renderers/GroveAreas.js'
-import AxisAreas from '../renderers/AxisAreas.js'
-import SereneAreas from '../renderers/SereneAreas.js'
-import BoltAreaDetail from '../renderers/BoltAreaDetail.js'
-import GroveAreaDetail from '../renderers/GroveAreaDetail.js'
-import AxisAreaDetail from '../renderers/AxisAreaDetail.js'
-import SereneAreaDetail from '../renderers/SereneAreaDetail.js'
-import CrewAreas from '../renderers/CrewAreas.js'
-import CrewAreaDetail from '../renderers/CrewAreaDetail.js'
-
-const INDEX = { bolt: BoltAreas, grove: GroveAreas, axis: AxisAreas, serene: SereneAreas, crew: CrewAreas }
-const DETAIL = { bolt: BoltAreaDetail, grove: GroveAreaDetail, axis: AxisAreaDetail, serene: SereneAreaDetail, crew: CrewAreaDetail }
+import { rendererFor } from '../renderers/registry.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 const segmentOf = (c) => c?.profile?.nouns?.place_url || 'service-areas'
@@ -48,7 +36,7 @@ export async function placeIndexPage({ params }, segment) {
   const { slug } = await params
   const result = await load(slug, segment)
   if (!result) notFound()
-  const Renderer = INDEX[result.config.template_slug] || BoltAreas
+  const Renderer = rendererFor(result.config.template_slug, 'Areas')
   return <Renderer config={result.config} siteSlug={slug} />
 }
 
@@ -66,6 +54,6 @@ export async function placeDetailPage({ params }, segment) {
   const result = await load(slug, segment, { page: 'area_detail', id: areaSlug })
   const area = result && (result.config.service_areas || []).find(a => slugify(a) === areaSlug)
   if (!area) notFound()
-  const Renderer = DETAIL[result.config.template_slug] || BoltAreaDetail
+  const Renderer = rendererFor(result.config.template_slug, 'AreaDetail')
   return <Renderer config={result.config} siteSlug={slug} area={area} />
 }

@@ -1,59 +1,32 @@
-import { fetchMockup } from '../../../../lib/site/fetch.js'
-import { notFound, redirect } from 'next/navigation'
+import { ConceptPage } from '../concept.js'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
-import BoltCombo from '../../../site/[slug]/renderers/BoltCombo.js'
-import GroveCombo from '../../../site/[slug]/renderers/GroveCombo.js'
-import AxisCombo from '../../../site/[slug]/renderers/AxisCombo.js'
-import SereneCombo from '../../../site/[slug]/renderers/SereneCombo.js'
-import CrewCombo from '../../../site/[slug]/renderers/CrewCombo.js'
-import MockupBanner from '../MockupBanner.js'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Website Concept', robots: { index: false, follow: false, nocache: true } }
 
-const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo, crew: CrewCombo }
-
 export default async function MockupComboPage({ params }) {
   const { token, comboSlug } = await params
-  const result = await fetchMockup(token)
-  if (!result || result.error || !result.config) notFound()
-
-  const config = result.config
-
-  // Combo slugs are "<service>-in-<area>"
-  let matched = null
-  for (const svc of config.services || []) {
-    const prefix = `${svc.slug}-in-`
-    if (comboSlug.startsWith(prefix)) {
-      const areaSlug = comboSlug.substring(prefix.length)
-      const area = (config.service_areas || []).find(a => slugify(a) === areaSlug)
-      if (area) { matched = { service: svc, area }; break }
+  // Combo slugs are "<service>-in-<area>". Families that write every pair's
+  // page from config.generated_for (CREW, Hearth) render any pair; Serene
+  // shows only the pair its copy was written for.
+  return <ConceptPage token={token} page="Combo"
+  resolve={(config, family) => {
+    let matched = null
+    for (const svc of config.services || []) {
+      const prefix = `${svc.slug}-in-`
+      if (comboSlug.startsWith(prefix)) {
+        const area = (config.service_areas || []).find(a => slugify(a) === comboSlug.substring(prefix.length))
+        if (area) { matched = { service: svc, area }; break }
+      }
     }
-  }
-
-  if (!matched) notFound()
-
-  // CREW renders every combination: the pair the concept's copy was written
-  // for (config.generated_for) shows it, every other pair shows its structure
-  // with a note where the copy goes. The other families still show only the
-  // first pair, because their combo pages would repeat that pair's copy.
-  if (config.template_slug !== 'crew') {
-    const firstService = (config.services || [])[0]
-    const firstArea = (config.service_areas || [])[0]
-    if (matched.service.slug !== firstService?.slug || matched.area !== firstArea) {
-      redirect(`/mockup/${token}`)
+    if (!matched) return null
+    if (family === 'serene') {
+      const firstService = (config.services || [])[0]
+      const firstArea = (config.service_areas || [])[0]
+      if (matched.service.slug !== firstService?.slug || matched.area !== firstArea) return { redirectHome: true }
     }
-  }
-
-  const Renderer = RENDERERS[config.template_slug] || RENDERERS.bolt
-
-  return (
-    <>
-      <MockupBanner businessName={result.meta?.business_name || 'your business'} />
-      <div style={{ paddingTop: 44 }}>
-        <Renderer config={{ ...config, chrome_offset: 44 }} siteSlug={token} service={matched.service} area={matched.area} />
-      </div>
-    </>
-  )
+    return matched
+  }}
+  />
 }

@@ -1,15 +1,7 @@
 import { fetchSiteConfig, fetchBlogIndex } from '../../../../lib/site/fetch.js'
 import { buildBlogIndexMetadata } from '../../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
-import { BoltBlogIndex } from '../renderers/BoltBlog.js'
-import { GroveBlogIndex } from '../renderers/GroveBlog.js'
-import { AxisBlogIndex } from '../renderers/AxisBlog.js'
-import SereneBlogIndex from '../renderers/SereneBlogIndex.js'
-
-const RENDERERS = {
-  bolt: BoltBlogIndex,
-  grove: GroveBlogIndex,
-  axis: AxisBlogIndex, serene: SereneBlogIndex }
+import { rendererFor } from '../renderers/registry.js'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params
@@ -28,7 +20,7 @@ export default async function BlogIndexPage({ params }) {
   if (!siteResult) notFound()
 
   const config = siteResult.config
-  const Renderer = RENDERERS[config.template_slug || 'bolt'] || RENDERERS.bolt
+  const Renderer = rendererFor(config.template_slug, 'BlogIndex')
 
   return <Renderer config={config} siteSlug={slug} posts={blogResult?.posts || []} />
 }

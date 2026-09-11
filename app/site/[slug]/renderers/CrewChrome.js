@@ -27,58 +27,11 @@ import CrewMobileBar from './CrewMobileBar.js'
 // pages use. The home page renders through the same pieces, so a change here
 // changes every page at once.
 
-export const TRADE_NOUN = {
-  pest_control: 'Pest control',
-  hvac: 'Heating and cooling',
-  plumbing: 'Plumbing',
-  roofing: 'Roofing',
-  electrical: 'Electrical work',
-  landscaping: 'Lawn and landscaping',
-  general_contractor: 'Home improvement',
-  house_cleaning: 'House cleaning',
-  carpet_cleaning: 'Carpet cleaning',
-  painting: 'House painting',
-  handyman: 'Handyman services',
-  garage_doors: 'Garage door repair',
-  window_cleaning: 'Window cleaning',
-  gutters: 'Gutter services',
-  pressure_washing: 'Pressure washing',
-  pool_service: 'Pool service',
-  junk_removal: 'Junk removal',
-  moving: 'Movers',
-  flooring: 'Flooring',
-  fencing: 'Fence installation',
-  concrete: 'Concrete work',
-  tree_service: 'Tree service',
-  appliance_repair: 'Appliance repair',
-  locksmith: 'Locksmith',
-  auto_detailing: 'Auto detailing',
-}
+// The trade nouns and the small text helpers are shared by every family.
+import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig } from './family/data.js'
+export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
-
-export function listAreas(areas) {
-  if (areas.length <= 1) return areas[0] || ''
-  if (areas.length === 2) return `${areas[0]} and ${areas[1]}`
-  return `${areas[0]}, ${areas[1]} and nearby`
-}
-
-/** Paragraphs from copy with blank lines between them. */
-export const paragraphs = (text) => (typeof text === 'string' ? text : '')
-  .split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
-
-/** Text that is a JSON blob (steps, FAQs) rather than prose. */
-export const looksLikeJson = (v) => typeof v === 'string' && /^\s*[\[{]/.test(v)
-
-/**
- * The config with each service's description cleared when it holds a JSON
- * blob (client data can carry page copy there), so structured data never
- * publishes raw JSON as a description.
- */
-export const schemaConfig = (c) => ({
-  ...c,
-  services: (c.services || []).map(s => (looksLikeJson(s.description) ? { ...s, description: '' } : s)),
-})
 
 // ---- Icons -------------------------------------------------------------------
 

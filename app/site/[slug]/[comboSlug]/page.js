@@ -1,14 +1,8 @@
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
-import BoltCombo from '../renderers/BoltCombo.js'
-import GroveCombo from '../renderers/GroveCombo.js'
-import AxisCombo from '../renderers/AxisCombo.js'
-import SereneCombo from '../renderers/SereneCombo.js'
-import CrewCombo from '../renderers/CrewCombo.js'
 import { buildComboMetadata } from '../../../../lib/templates/shared/seo/index.js'
-
-const RENDERERS = { bolt: BoltCombo, grove: GroveCombo, axis: AxisCombo, serene: SereneCombo, crew: CrewCombo }
+import { rendererFor } from '../renderers/registry.js'
 
 function parseComboSlug(comboSlug, config) {
   for (const svc of config.services) {
@@ -50,6 +44,6 @@ export default async function ClientComboPage({ params }) {
   const combo = await loadCombo(slug, comboSlug)
   if (!combo) notFound()
 
-  const Renderer = RENDERERS[combo.config.template_slug] || BoltCombo
+  const Renderer = rendererFor(combo.config.template_slug, 'Combo')
   return <Renderer config={combo.config} siteSlug={slug} service={combo.service} area={combo.area} />
 }
