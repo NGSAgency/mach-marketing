@@ -1,6 +1,7 @@
 import { buildLocalBusinessSchema } from '../../../../lib/templates/shared/seo/index.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
-import { crewContext, crewProof, schemaConfig, CrewPage, ServiceCard, AreaChips, PhoneIcon, Star, listAreas, TRADE_NOUN } from './CrewChrome.js'
+import { crewContext, schemaConfig, CrewPage, ServiceCard, AreaChips, PhoneIcon, Star, listAreas, TRADE_NOUN } from './CrewChrome.js'
+import { heroTrust } from '../../../../lib/templates/shared/claims.js'
 import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 
 // CREW home page. Section order and the reasoning behind each one are in the
@@ -12,6 +13,12 @@ import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 // the prospect hasn't given us shows a labelled ConceptNote; on a real site it
 // hides. Nothing is invented: no ratings, credentials, prices or urgency that
 // aren't in the data.
+
+// The same scrim colour at another opacity: rgba(r, g, b, a) -> rgba(r, g, b, alpha).
+function withAlpha(rgba, alpha) {
+  const m = String(rgba).match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)/)
+  return m ? `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${alpha})` : rgba
+}
 
 function parseJson(raw) {
   if (!raw) return null
@@ -25,24 +32,31 @@ export default function CrewHome({ config: c, siteSlug }) {
   const gen = c.generated || {}
   const imgs = x.imgs
 
-  // ---- Hero headline -------------------------------------------------------
-  // An outcome headline of 8 words or fewer, never the business name. Order:
-  // the generated H1, their own short tagline, then a plain statement of what
-  // they do and where, which is always true.
-  const ownTagline = pos.own_tagline || null
-  const tradeNoun = TRADE_NOUN[c.industry_key] || null
-  const fallbackHeadline = tradeNoun && primaryArea
-    ? `${tradeNoun} in ${primaryArea}`
-    : (services[0]?.name && primaryArea ? `${services[0].name} in ${primaryArea}` : (tradeNoun || name))
-  const headline = pos.headline
-    || (ownTagline && ownTagline.length <= 60 ? ownTagline : null)
-    || fallbackHeadline
-  const support = gen['home|hero_subheadline'] || (pos.tagline && pos.tagline !== headline && !pos.tagline.includes(' — ') ? pos.tagline : null)
+  // ---- Hero ----------------------------------------------------------------
+  // Hero Research Brief (2026-09-11). The H1 says what they do and where, in
+  // plain words ("Pest control in Olathe"): people scanning take in the first
+  // couple of words, and plain beats clever. The business name sits above it.
+  // Without a place or a trade the generated headline stands in, then their
+  // own short tagline, then the name.
+  const place = primaryArea && primaryArea !== 'your area' ? primaryArea : null
+  const trade = TRADE_NOUN[c.industry_key] || services[0]?.category || null
+  const whatWhere = place && (trade || services[0]?.name) ? `${trade || services[0].name} in ${place}` : null
+  const ownTagline = pos.own_tagline && pos.own_tagline.length <= 60 ? pos.own_tagline : null
+  const headline = whatWhere || pos.headline || ownTagline || trade || name
+  const support = gen['home|hero_subheadline']
+    || (pos.headline && pos.headline !== headline ? pos.headline : null)
+    || (pos.tagline && pos.tagline !== headline && !pos.tagline.includes(' — ') ? pos.tagline : null)
 
-  // ---- Proof -----------------------------------------------------------------
-  // Only facts in the data. On a concept, a rating comes from their current
-  // site and says so.
-  const { proof, statedOnTheirSite } = crewProof(x)
+  // Trust row inside the hero, next to the buttons: rating and count first.
+  const trust = heroTrust(c)
+  const statedOnTheirSite = concept && c.reviews?.source === 'their_site'
+
+  // The second button: online booking when they take it, else a quote. "Free"
+  // only when they told us estimates are free.
+  const bookingUrl = /^https?:\/\//i.test(biz.booking_url || '') ? biz.booking_url : null
+  const second = bookingUrl
+    ? { href: bookingUrl, label: 'Book online', external: true }
+    : { href: quoteHref, label: pos.free_estimates ? 'Get a free quote' : 'Get a quote' }
 
   // ---- Services --------------------------------------------------------------
   const categories = [...new Set(services.map(s => s.category).filter(Boolean))]
@@ -67,59 +81,42 @@ export default function CrewHome({ config: c, siteSlug }) {
   return (
     <CrewPage x={x} current="home" schemas={[buildLocalBusinessSchema(schemaConfig(c))]}>
 
-        {/* HERO: what they do, where, why trust them, how to get them out */}
+        {/* HERO: what they do, where, why trust them, how to get them out.
+            Shorter than the screen so the next section shows beneath it
+            (full-screen heroes read as the whole page). */}
         <span id="top" />
         {hero ? (
-          <section style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(520px, 74vh, 760px)', display: 'flex', alignItems: 'flex-end' }}>
+          <section data-hero="" style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(460px, 66svh, 700px)', display: 'flex', alignItems: 'flex-end' }}>
             <HeroMedia image={hero.url ? hero : null} video={video} />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(90deg, ${C.overlayStrong} 0%, ${C.overlayStrong} 30%, ${C.overlayLight} 78%), linear-gradient(0deg, ${C.overlayStrong} 0%, ${C.overlayFaint} 55%)` }} />
+            {/* Scrim: at least 80% over the whole text column, whatever photo
+                or video frame is behind it, so hero text keeps 4.5:1 even on a
+                white wall. The photo shows on the right. On phones the text
+                spans the width, so the whole hero is scrimmed. */}
+            <div className="crew-scrim" style={{ position: 'absolute', inset: 0, '--s-strong': C.overlayStrong, '--s-mid': withAlpha(C.overlayStrong, 0.8), '--s-light': C.overlayLight, '--s-faint': C.overlayFaint }} />
+            <style>{`
+              .crew-scrim { background: linear-gradient(90deg, var(--s-strong) 0%, var(--s-strong) 40%, var(--s-mid) 62%, var(--s-light) 92%), linear-gradient(0deg, var(--s-strong) 0%, var(--s-faint) 55%); }
+              @media (max-width: 1000px) { .crew-scrim { background: linear-gradient(0deg, var(--s-strong) 0%, var(--s-mid) 100%); } }
+            `}</style>
             <div data-on-image="" style={{ '--on-image': C.textOnImage, '--on-image-dim': C.textOnImageDim, color: C.textOnImage, position: 'relative', width: '100%' }}>
-              <div style={{ ...wrap, paddingBlock: 'clamp(56px, 9vw, 104px) clamp(40px, 6vw, 72px)' }}>
-                <HeroCopy {...{ T, C, F, btn, eyebrow, headline, support, primaryArea, phone, phoneDisplay, quoteHref, proof, onImage: true, statedOnTheirSite }} />
+              <div className="crew-heropad" style={{ ...wrap, paddingBlock: 'clamp(48px, 7vw, 88px) clamp(36px, 5vw, 64px)' }}>
+                <HeroCopy {...{ x, name, headline, support, trust, second, place, onImage: true, statedOnTheirSite }} />
               </div>
             </div>
           </section>
         ) : (
-          <section style={{ background: C.inverseBg, color: C.inverseText }}>
-            <div style={{ ...wrap, paddingBlock: 'clamp(56px, 9vw, 104px)', display: 'grid', gridTemplateColumns: concept ? 'minmax(0, 7fr) minmax(0, 5fr)' : '1fr', gap: 40, alignItems: 'center' }} className={concept ? 'crew-split' : ''}>
+          <section data-hero="" style={{ background: C.inverseBg, color: C.inverseText }}>
+            <div className={concept ? 'crew-split crew-heropad' : 'crew-heropad'} style={{ ...wrap, paddingBlock: 'clamp(48px, 7vw, 88px)', display: 'grid', gridTemplateColumns: concept ? 'minmax(0, 7fr) minmax(0, 5fr)' : '1fr', gap: 40, alignItems: 'center' }}>
               <div>
-                <HeroCopy {...{ T, C, F, btn, eyebrow, headline, support, primaryArea, phone, phoneDisplay, quoteHref, proof, onImage: false, statedOnTheirSite }} />
+                <HeroCopy {...{ x, name, headline, support, trust, second, place, onImage: false, statedOnTheirSite }} />
               </div>
               {concept && (
                 <ConceptNote T={T} inverse minHeight={320} title="Your crew photo goes here">
-                  Your team, your trucks, a job in progress: a real photo of the people who show up, not stock photography.
+                  Your team, your trucks, a job in progress. Real photos of the people who show up get more calls than stock photography.
                 </ConceptNote>
               )}
             </div>
           </section>
         )}
-
-        {/* PROOF STRIP: numbers and credentials, not adjectives. The hero already
-            carries the first facts, so the strip appears when there are more
-            than it can hold, rather than repeating them. */}
-        {proof.length >= 3 ? (
-          <section style={{ background: C.surface, borderBottom: `1px solid ${C.borderLight}` }}>
-            <div className="crew-proof" style={{ ...wrap, '--n': proof.length, paddingBlock: 28 }}>
-              {proof.map((p, i) => (
-                <div key={i} style={{ padding: '6px 24px', borderLeft: i === 0 ? 'none' : `1px solid ${C.border}` }}>
-                  <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 40, lineHeight: 1, textTransform: 'uppercase', color: C.text }}>{p.value}</div>
-                  <div style={{ fontSize: 15, color: C.textDim, marginTop: 6 }}>{p.label}</div>
-                </div>
-              ))}
-            </div>
-            {statedOnTheirSite && (
-              <div style={{ ...wrap, paddingBottom: 16, fontSize: 13, color: C.textMuted }}>Rating as shown on your current website. On your new site it updates live from Google.</div>
-            )}
-          </section>
-        ) : concept && proof.length === 0 ? (
-          <section style={{ background: C.surface, borderBottom: `1px solid ${C.borderLight}` }}>
-            <div style={{ ...wrap, paddingBlock: 28 }}>
-              <ConceptNote T={T} title="Your proof, next to the call button">
-                Your Google rating and review count, years in business, licence number and guarantee sit here, next to the call button.
-              </ConceptNote>
-            </div>
-          </section>
-        ) : null}
 
         {/* SERVICES: find the problem in seconds */}
         <section id="services" style={{ paddingBlock: 'clamp(64px, 9vw, 112px)' }}>
@@ -271,30 +268,60 @@ export default function CrewHome({ config: c, siteSlug }) {
   )
 }
 
-function HeroCopy({ T, C, F, btn, eyebrow, headline, support, primaryArea, phone, phoneDisplay, quoteHref, proof, onImage, statedOnTheirSite }) {
+function HeroCopy({ x, name, headline, support, trust, second, place, onImage, statedOnTheirSite }) {
+  const { T, C, F, btn, eyebrow, phone, phoneDisplay, areas, href, concept } = x
   const strong = onImage ? C.textOnImage : C.inverseText
   const dim = onImage ? C.textOnImageDim : C.inverseTextDim
-  const shortProof = proof.map(p => p.short).filter(Boolean).slice(0, 3)
+  const rating = trust.find(t => t.kind === 'rating')
+  const rest = trust.filter(t => t.kind !== 'rating')
+  const nearby = areas.filter(a => a !== place)
+  const shownAreas = [place, ...nearby].filter(Boolean).slice(0, 4)
+  const more = areas.length - shownAreas.length
   return (
-    <div style={{ maxWidth: 760 }}>
-      {primaryArea && <div style={eyebrow(dim)}>{primaryArea}</div>}
+    <div style={{ maxWidth: 780 }}>
+      {name && <div style={eyebrow(dim)}>{name}</div>}
       <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: T.type.hero, lineHeight: 0.92, letterSpacing: '-0.01em', textTransform: 'uppercase', margin: '14px 0 0', color: strong, textWrap: 'balance' }}>
         {headline}
       </h1>
-      {support && <p style={{ fontSize: 'clamp(18px, 1.6vw, 21px)', lineHeight: 1.5, color: dim, margin: '20px 0 0', maxWidth: '44ch' }}>{support}</p>}
-      <div className="crew-herobtns" style={{ marginTop: 32 }}>
+      {support && <p className="crew-herosupport" style={{ fontSize: 'clamp(17px, 1.6vw, 21px)', lineHeight: 1.5, color: dim, margin: '18px 0 0', maxWidth: '46ch' }}>{support}</p>}
+
+      <div className="crew-herobtns" style={{ marginTop: 28 }}>
         {phone && (
           <a href={`tel:${phone}`} style={{ ...btn, background: C.accent, color: C.onAccent }}>
             <PhoneIcon /> Call {phoneDisplay}
           </a>
         )}
-        <a href={quoteHref} style={{ ...btn, color: strong, border: `2px solid ${strong}` }}>Get a quote</a>
+        <a href={second.href} {...(second.external ? { rel: 'noopener' } : {})} style={{ ...btn, color: strong, border: `2px solid ${strong}` }}>{second.label}</a>
       </div>
-      {shortProof.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginTop: 26, fontSize: 15, fontWeight: 600, color: dim }}>
-          {shortProof.map((p, i) => <span key={i}>{p}</span>)}
-          {statedOnTheirSite && <span style={{ fontWeight: 400 }}>(from your current site)</span>}
+
+      {(rating || rest.length > 0) && (
+        <ul className="crew-herotrust" style={{ listStyle: 'none', padding: 0, margin: '24px 0 0', display: 'flex', flexWrap: 'wrap', gap: '8px 22px', fontSize: 16, fontWeight: 600, color: strong }}>
+          {rating && (
+            <li style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: F.display, fontSize: 22, fontWeight: 800, lineHeight: 1 }}>{rating.rating}<Star size={18} /></span>
+              <span style={{ color: dim, fontWeight: 500 }}>{rating.count ? `${rating.count.toLocaleString('en-US')} ${statedOnTheirSite ? 'reviews' : 'Google reviews'}` : 'rating'}{statedOnTheirSite ? ' (from your current site)' : ''}</span>
+            </li>
+          )}
+          {rest.map((t, i) => (
+            <li key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style={{ flex: 'none' }}><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {t.text}
+            </li>
+          ))}
+        </ul>
+      )}
+      {concept && !rating && (
+        <div style={{ marginTop: 22, display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, border: `1.5px dashed ${dim}`, borderRadius: T.radius.md, padding: '10px 14px', fontSize: 15, color: strong }}>
+          <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: dim }}>Concept note</span>
+          Your Google rating and review count go here, next to the call button.
         </div>
+      )}
+
+      {shownAreas.length > 0 && (
+        <p style={{ margin: '18px 0 0', fontSize: 15, color: dim }}>
+          Serving {more > 0 ? shownAreas.join(', ') : shownAreas.length > 1 ? `${shownAreas.slice(0, -1).join(', ')} and ${shownAreas[shownAreas.length - 1]}` : shownAreas[0]}
+          {more > 0 && <> and <a href={href.areas} style={{ color: strong, textDecoration: 'underline', textUnderlineOffset: 3 }}>{more} more</a></>}
+        </p>
       )}
     </div>
   )

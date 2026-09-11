@@ -6,6 +6,10 @@ import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServic
 import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
+import { heroTrust } from '../../../../lib/templates/shared/claims.js'
+
+// What the business is, in the words people search with, for the H1.
+const BUSINESS_NOUN = { medspa: 'Med spa', med_spa: 'Med spa', aesthetics: 'Med spa', wellness: 'Med spa', auto_detailing: 'Auto detailing' }
 
 export default function SereneHome({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -25,36 +29,53 @@ export default function SereneHome({ config: c, siteSlug }) {
   const concerns = c.concerns || []
   const services = c.services || []
 
-  // The hero carries one clear promise, not the business name. The name is
-  // already in the header; repeating it wastes the most valuable space on the
-  // page.
-  // The hero needs a short phrase, not a sentence. The generated subheadline is
-  // written to include services and locations, which is correct for a
-  // subheadline and much too long set at display size, so take its first clause
-  // and keep the full sentence for the supporting line beneath.
-  // Their own tagline beats a generated service description. "KC Skin &
-  // Wellness offers laser hair removal" is a sentence about inventory, not a
-  // reason to choose them.
-  const ownTagline = c.positioning?.tagline
+  // Hero Research Brief (2026-09-11). The H1 says what and where in plain
+  // words ("Med spa in Overland Park"); the practice's own line becomes the
+  // eyebrow and the generated sentence the support. Without a place the
+  // headline falls back to a short promise from their own tagline or copy.
+  const name = c.business?.display_name || ''
+  const place = c.primary_service_area && c.primary_service_area !== 'your area' ? c.primary_service_area : null
+  const noun = BUSINESS_NOUN[c.industry_key] || BUSINESS_NOUN[c.profile?.key] || services[0]?.category || null
+  const ownTagline = c.positioning?.tagline || ''
   const generated = gen['home|hero_subheadline'] || ''
-  const describesServices = /\boffers?\b|\bprovides?\b|\bspecializ/i.test(generated)
-  const rawPromise = (ownTagline && ownTagline.length < 90 && !describesServices)
+  const shortPromise = (ownTagline && ownTagline.length <= 68 ? ownTagline : generated.split(/[.·|]/)[0].trim()).replace(/[,;]\s*$/, '')
+  const headline = noun && place ? `${noun} in ${place}` : (shortPromise || noun || name)
+  const eyebrow = ownTagline && ownTagline.length <= 56 && ownTagline !== headline
     ? ownTagline
-    : (generated || ownTagline || '')
+    : [c.business.address_line, c.business.established_year ? `Est. ${c.business.established_year}` : null].filter(Boolean).join('  ·  ')
+  const support = generated && generated !== headline ? generated : (ownTagline && ownTagline !== headline && ownTagline !== eyebrow ? ownTagline : null)
 
-  // A hero headline is a phrase. Generated subheadlines run to a full sentence
-  // with services and cities in them, which is right for a subheadline and far
-  // too long at display size, so cut at the first natural break and cap length.
-  const firstClause = rawPromise
-    .split(/[.·|]|\s+(?:to|for)\s+(?:clients|customers|patients)\s+/i)[0]
-    .trim()
-    .replace(/[,;]\s*$/, '')
+  // Who treats you. Credentials rank with reviews for this buyer, so the
+  // medical director (or the credentialed lead provider) is named on the
+  // first screen, exactly as the practice supplied it.
+  const providers = c.providers || []
+  const director = providers.find(p => p.is_medical_director)
+    || (typeof c.medical?.medical_director === 'string' && c.medical.medical_director.trim() ? { name: c.medical.medical_director.trim(), is_medical_director: true } : null)
+  const lead = director || providers.find(p => (p.credentials || []).length > 0) || null
+  const leadText = lead ? [
+    lead.is_medical_director ? 'Medical director' : null,
+    [lead.name, ...(lead.credentials || [])].join(', '),
+  ].filter(Boolean).join(': ') + (!lead.is_medical_director && lead.title ? ` · ${lead.title}` : '') : null
 
-  const promise = firstClause.length > 68
-    ? firstClause.split(/,\s*/)[0].trim()
-    : firstClause
+  const trust = heroTrust(c, { max: 3 })
+  const rating = trust.find(t => t.kind === 'rating')
+  const since = trust.find(t => t.kind === 'since')
 
-  const promiseSupport = rawPromise.length > promise.length + 15 ? rawPromise : null
+  // Book online when they take bookings online, with a call beside it: most
+  // med spa bookings still happen by phone.
+  const bookingUrl = /^https?:\/\//i.test(c.business?.booking_url || '') ? c.business.booking_url : null
+  const phone = c.business?.phone_display ? c.business.phone : null
+  const conversion = labels.conversion.replace(/^\w/, ch => ch.toUpperCase())
+  const primary = bookingUrl
+    ? { href: bookingUrl, label: 'Book online', external: true }
+    : phone ? { href: `tel:${phone}`, label: conversion } : { href: `${base}/contact`, label: conversion }
+  const secondaryCta = bookingUrl && phone
+    ? { href: `tel:${phone}`, label: `Call ${c.business.phone_display}` }
+    : { href: `${base}${urlServices(c)}`, label: `View ${labels.offering.toLowerCase()}` }
+
+  // "Not sure where to start?" For a visitor who knows the problem but not the
+  // treatment, straight into the concern pages.
+  const heroConcerns = concerns.slice(0, 5)
 
   return (
     <>
@@ -67,97 +88,105 @@ export default function SereneHome({ config: c, siteSlug }) {
 
         {/* SPLIT HERO
             Asymmetric on purpose: type occupies the left, image bleeds off the
-            right edge. A centered hero creates no tension and no direction for
-            the eye. The image extends past the viewport so the composition
-            reads as a crop of something larger rather than a contained block. */}
-        <section style={{
+            right edge. Content-sized, so the next section shows beneath it. */}
+        <section data-hero="" style={{
           display: 'grid',
           gridTemplateColumns: hero ? 'minmax(0, 1fr) minmax(0, 0.85fr)' : '1fr',
           alignItems: 'stretch',
-          minHeight: 'clamp(380px, 48vh, 520px)',
+          minHeight: 'clamp(380px, 52svh, 580px)',
           borderBottom: `1px solid ${T.colors.borderLight}`,
         }}>
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            padding: 'clamp(40px, 5vw, 72px) clamp(24px, 5vw, 96px)',
+            padding: 'clamp(36px, 5vw, 72px) clamp(24px, 5vw, 96px)',
           }}>
-            <div style={{
-              fontFamily: T.fonts.body,
-              fontSize: T.type.xs,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: T.colors.accent,
-              marginBottom: 32,
-            }}>
-              {[c.business.address_line, c.business.established_year ? `Est. ${c.business.established_year}` : null]
-                .filter(Boolean).join('  ·  ')}
-            </div>
+            {eyebrow && (
+              <div style={{ fontFamily: T.fonts.body, fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.textDim, marginBottom: 24 }}>
+                {eyebrow}
+              </div>
+            )}
 
             <h1 style={{
               fontFamily: T.fonts.display,
-              fontSize: 'clamp(30px, 3.8vw, 52px)',
+              fontSize: 'clamp(34px, 4.4vw, 60px)',
               fontWeight: 300,
-              lineHeight: 0.94,
+              lineHeight: 1,
               letterSpacing: '-0.02em',
               margin: 0,
               color: T.colors.text,
+              textWrap: 'balance',
             }}>
-              {promise}
+              {headline}
             </h1>
 
-            {promiseSupport && (
-              <p style={{
-                fontSize: T.type.base,
-                lineHeight: 1.7,
-                color: T.colors.textDim,
-                margin: '24px 0 0',
-                maxWidth: 480,
-              }}>
-                {promiseSupport}
+            {support && (
+              <p style={{ fontSize: T.type.base, lineHeight: 1.7, color: T.colors.textDim, margin: '20px 0 0', maxWidth: 520 }}>
+                {support}
               </p>
             )}
 
-            <div style={{ display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' }}>
-              {c.business.phone_display && (
-                <a href={`tel:${c.business.phone}`} style={{
-                  background: T.colors.accent,
-                  color: T.colors.onAccent,
-                  padding: '16px 40px',
-                  borderRadius: T.radius.full,
-                  textDecoration: 'none',
-                  fontSize: T.type.sm,
-                  letterSpacing: '0.04em',
-                }}>
-                  {labels.conversion.replace(/\b\w/g, ch => ch.toUpperCase())}
-                </a>
-              )}
-              <a href={`${base}${urlServices(c)}`} style={{
-                border: `1px solid ${T.colors.border}`,
-                color: T.colors.text,
-                padding: '16px 40px',
-                borderRadius: T.radius.full,
-                textDecoration: 'none',
-                fontSize: T.type.sm,
-                letterSpacing: '0.04em',
-              }}>
-                View {labels.offering}
+            {(rating || since || leadText) && (
+              <ul style={{ listStyle: 'none', padding: 0, margin: '24px 0 0', display: 'grid', gap: 8, fontSize: 15, color: T.colors.textDim }}>
+                {(rating || since) && (
+                  <li style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '4px 16px' }}>
+                    {rating && (
+                      <span>
+                        <span style={{ fontFamily: T.fonts.display, fontSize: 22, color: T.colors.text }}>{rating.rating} ★</span>
+                        {' '}{rating.count ? `${rating.count.toLocaleString('en-US')} ${c.reviews?.source === 'their_site' ? 'reviews' : 'Google reviews'}` : ''}
+                        {c.concept && c.reviews?.source === 'their_site' ? ' (from your current site)' : ''}
+                      </span>
+                    )}
+                    {since && <span>{since.text}</span>}
+                  </li>
+                )}
+                {leadText && <li style={{ color: T.colors.text }}>{leadText}</li>}
+              </ul>
+            )}
+            {c.concept && (!rating || !leadText) && (
+              <div style={{ marginTop: 20, border: `1px dashed ${T.colors.border}`, borderRadius: T.radius.md, padding: '10px 14px', fontSize: 14, lineHeight: 1.5, color: T.colors.textDim, maxWidth: 520 }}>
+                <span style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: T.colors.text, marginRight: 8 }}>Concept note</span>
+                {!rating && !leadText
+                  ? 'Your Google rating and your medical director\'s name and credentials go here.'
+                  : !rating ? 'Your Google rating and review count go here.' : 'Your medical director\'s name and credentials go here.'}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+              <a href={primary.href} {...(primary.external ? { rel: 'noopener' } : {})} style={{ ...{ padding: '15px 32px', borderRadius: T.radius.full, textDecoration: 'none', fontSize: T.type.sm, letterSpacing: '0.04em', whiteSpace: 'nowrap' }, background: T.colors.accent, color: T.colors.onAccent }}>
+                {primary.label}
+              </a>
+              <a href={secondaryCta.href} style={{ ...{ padding: '15px 32px', borderRadius: T.radius.full, textDecoration: 'none', fontSize: T.type.sm, letterSpacing: '0.04em', whiteSpace: 'nowrap' }, border: `1px solid ${T.colors.border}`, color: T.colors.text }}>
+                {secondaryCta.label}
               </a>
             </div>
+
+            {heroConcerns.length > 0 && (
+              <div style={{ marginTop: 28 }}>
+                <div style={{ fontSize: 13, color: T.colors.textMuted, marginBottom: 10 }}>Not sure where to start?</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {heroConcerns.map(k => (
+                    <a key={k.slug} href={`${base}/concerns/${k.slug}`} style={{ border: `1px solid ${T.colors.borderLight}`, borderRadius: T.radius.full, padding: '8px 14px', fontSize: 14, color: T.colors.text, textDecoration: 'none' }}>
+                      {k.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {hero && (
             /* Source images are 1920px, so a full-bleed hero on a wide display
                stretches them past native size and reads as blurry. Capping the
                column keeps the image close to its actual resolution. */
-            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(240px, 32vh, 520px)', maxWidth: 700, justifySelf: 'end', width: '100%' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(240px, 32svh, 520px)', maxWidth: 700, justifySelf: 'end', width: '100%' }}>
               <HeroMedia image={hero.url ? hero : null} video={video} alt={c.business.display_name} />
             </div>
           )}
         </section>
 
-        {has('trust_bar') && <TrustBar T={T} c={c} />}
+        {has('trust_bar') && <TrustBar T={T} c={c} skip={[rating && 'rating', since && 'years', director && 'director'].filter(Boolean)} />}
 
         {/* BENTO TREATMENT GRID
             The first treatment spans two columns and is twice the height. That
