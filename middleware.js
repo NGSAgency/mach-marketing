@@ -28,6 +28,28 @@ function withoutTrailingSlash(request) {
   return NextResponse.redirect(u, 308)
 }
 
+// Must match Command Center's api/_lib/staff-viewer.js.
+async function staffKey() {
+  const secret = process.env.INTERNAL_API_SECRET
+  if (!secret) return null
+  const enc = new TextEncoder()
+  const key = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
+  const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, enc.encode('mach-staff-browser-v1')))
+  return [...sig].map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32)
+}
+
+async function markStaff(request) {
+  const u = new URL(request.url)
+  const given = u.searchParams.get('mach_staff')
+  u.searchParams.delete('mach_staff')
+  const res = NextResponse.redirect(u, 302)
+  const key = await staffKey()
+  if (key && given === key) {
+    res.cookies.set('mach_staff', key, { httpOnly: true, secure: u.protocol === 'https:', sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24 * 400 })
+  }
+  return res
+}
+
 const lookups = new Map()
 const LOOKUP_TTL = 60 * 1000
 async function lookupDomain(hostname) {
@@ -55,6 +77,10 @@ export async function middleware(request) {
   // even if the page were shared (search engines never carry the cookie, and
   // without it an unpublished site doesn't load at all).
   if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname.endsWith('.vercel.app') || !hostname.includes('.')) {
+    // A concept or preview opened from Command Center: remember this browser
+    // as MACH staff, so our own views aren't counted or emailed about, and
+    // take the key out of the address bar.
+    if (url.searchParams.has('mach_staff')) return markStaff(request)
     if (trailing) return withoutTrailingSlash(request)
     // Only the middleware sets x-mach-site-origin (custom domains, below).
     let res
