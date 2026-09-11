@@ -9,7 +9,7 @@ export default function GroveAbout({ config: c, siteSlug }) {
   const brand = brandFrom(c)
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]
   const since = sinceLabel(c)
   const facts = aboutFacts(c)

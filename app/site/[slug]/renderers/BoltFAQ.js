@@ -9,7 +9,7 @@ export default function BoltFAQ({ config: c, siteSlug }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const faqs = faqsFrom(c)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'FAQ', url: '/faq' }]
 

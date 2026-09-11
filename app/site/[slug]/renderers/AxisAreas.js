@@ -10,7 +10,7 @@ export default function AxisAreas({ config: c, siteSlug }) {
   const brand = brandFrom(c)
   const T = applyBrand(axisTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }]
   const summary = joinParts([countLabel((c.service_areas || []).length, 'area', 'areas'), emergencyLabel(c)])
   const servicesCount = countLabel((c.services || []).length, 'service', 'services')

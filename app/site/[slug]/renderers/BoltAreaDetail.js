@@ -11,7 +11,7 @@ export default function BoltAreaDetail({ config: c, siteSlug, area }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const categories = [...new Set(c.services.map(s => s.category))]
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Service Areas', url: '/service-areas' }, { name: area, url: `/service-areas/${slugify(area)}` }]
   const emergency = emergencyLabel(c)

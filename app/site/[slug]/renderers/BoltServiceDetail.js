@@ -11,7 +11,7 @@ export default function BoltServiceDetail({ config: c, siteSlug, service }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const relatedServices = c.services.filter(s => s.category === service.category && s.slug !== service.slug).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: service.name, url: `/services/${service.slug}` }]
   const whyItems = whyUsItems(c, service)

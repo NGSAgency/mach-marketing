@@ -9,7 +9,7 @@ export default function BoltAbout({ config: c, siteSlug }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }]
   const year = c.business?.established_year
   const years = countLabel(c.business?.years_in_business, 'year in business', 'years in business')

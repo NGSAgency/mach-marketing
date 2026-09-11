@@ -9,7 +9,7 @@ export default function GroveContact({ config: c, siteSlug }) {
   const brand = brandFrom(c)
   const T = applyBrand(groveTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Contact', url: '/contact' }]
 
   return (

@@ -13,16 +13,56 @@ export const config = {
   ],
 }
 
+// How an address is compared with the redirect map (same rule as Command
+// Center's redirectKey): lower-case, no trailing slash.
+function redirectKey(path) {
+  const [p, q] = String(path || '/').split('?')
+  const clean = p.toLowerCase().replace(/\/+$/, '') || '/'
+  return q ? `${clean}?${q.toLowerCase()}` : clean
+}
+
+// NextURL keeps a trailing slash when re-serialised, so use a plain URL.
+function withoutTrailingSlash(request) {
+  const u = new URL(request.url)
+  u.pathname = u.pathname.replace(/\/+$/, '') || '/'
+  return NextResponse.redirect(u, 308)
+}
+
+const lookups = new Map()
+const LOOKUP_TTL = 60 * 1000
+async function lookupDomain(hostname) {
+  const hit = lookups.get(hostname)
+  if (hit && Date.now() - hit.at < LOOKUP_TTL) return hit.data
+  let data = null
+  try {
+    const res = await fetch(`${CONFIG_API}?domain=${encodeURIComponent(hostname)}`, { signal: AbortSignal.timeout(2500) })
+    if (res.ok) data = await res.json()
+  } catch (e) {
+    // Couldn't reach Command Center: use what we had, however old.
+    if (hit) return hit.data
+  }
+  lookups.set(hostname, { data, at: Date.now() })
+  return data
+}
+
 export async function middleware(request) {
   const hostname = (request.headers.get('host') || '').toLowerCase()
   const url = request.nextUrl.clone()
+  const trailing = url.pathname.length > 1 && url.pathname.endsWith('/')
 
   // Root domain: pass through (marketing site). A visitor holding a private
   // preview cookie is looking at an unpublished site: keep it out of search
   // even if the page were shared (search engines never carry the cookie, and
   // without it an unpublished site doesn't load at all).
   if (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}` || hostname.endsWith('.vercel.app') || !hostname.includes('.')) {
-    const res = NextResponse.next()
+    if (trailing) return withoutTrailingSlash(request)
+    // Only the middleware sets x-mach-site-origin (custom domains, below).
+    let res
+    if (request.headers.has('x-mach-site-origin')) {
+      const headers = new Headers(request.headers)
+      headers.delete('x-mach-site-origin')
+      res = NextResponse.next({ request: { headers } })
+    } else res = NextResponse.next()
     if (url.pathname.startsWith('/site/') && request.cookies.get('mach_preview')) res.headers.set('X-Robots-Tag', 'noindex, nofollow')
     return res
   }
@@ -34,6 +74,7 @@ export async function middleware(request) {
     // Skip our own subdomains
     if (RESERVED_SUBDOMAINS.has(subdomain)) return NextResponse.next()
 
+    if (trailing) return withoutTrailingSlash(request)
     // Rewrite to /site/{subdomain}
     if (!url.pathname.startsWith('/site/')) {
       url.pathname = `/site/${subdomain}${url.pathname === '/' ? '' : url.pathname}`
@@ -42,24 +83,42 @@ export async function middleware(request) {
     return NextResponse.next()
   }
 
-  // Custom domain: look up client by hostname
-  try {
-    const lookupRes = await fetch(`${CONFIG_API}?domain=${encodeURIComponent(hostname)}`, {
-      signal: AbortSignal.timeout(2500),
-    })
-    if (lookupRes.ok) {
-      const data = await lookupRes.json()
-      if (data.slug) {
-        // Site links carry the /site/<slug> prefix (the same pages serve
-        // subdomains and previews), so don't add it a second time.
-        const prefix = `/site/${data.slug}`
-        if (url.pathname === prefix || url.pathname.startsWith(`${prefix}/`)) return NextResponse.rewrite(url)
-        url.pathname = `${prefix}${url.pathname === '/' ? '' : url.pathname}`
-        return NextResponse.rewrite(url)
+  // Custom domain: look up the client by hostname (cached briefly per server).
+  const data = await lookupDomain(hostname)
+  if (data?.slug) {
+    const prefix = `/site/${data.slug}`
+    const canonicalHost = data.canonical_host || hostname
+    const path = url.pathname
+
+    // Old website addresses: one permanent redirect to the new page, on the
+    // canonical host (www and apex both land there). Anything under the
+    // /site/<slug> prefix is ours, never an old address.
+    if (!path.startsWith(prefix)) {
+      const redirects = data.redirects || {}
+      const withQuery = url.search && /[?&](p|page_id|id|cat|tag|post)=/i.test(url.search) ? redirectKey(path + url.search) : null
+      const target = (withQuery && redirects[withQuery]) || redirects[redirectKey(path)]
+      if (target && redirectKey(target) !== redirectKey(path + (withQuery ? url.search : ''))) {
+        const dest = new URL(target, `https://${canonicalHost}`)
+        // Keep campaign tags and the like, but not the old page's own id.
+        if (!withQuery && url.search && !dest.search) dest.search = url.search
+        return NextResponse.redirect(dest, 301)
       }
+      if (hostname !== canonicalHost || trailing) {
+        return NextResponse.redirect(new URL((path.replace(/\/+$/, '') || '/') + url.search, `https://${canonicalHost}`), 301)
+      }
+    } else if (hostname === canonicalHost || hostname === `www.${canonicalHost}`) {
+      // Pages here link to their clean addresses; an old /site/<slug>/... link
+      // on the live domain goes to the clean one.
+      const clean = path.slice(prefix.length) || '/'
+      return NextResponse.redirect(new URL(clean + url.search, `https://${canonicalHost}`), 301)
     }
-  } catch (e) {
-    // Silent fail - just pass through, will 404
+
+    // Serve the page. The header tells the site to link to clean addresses on
+    // this domain (lib/site/fetch.js sets the config's base path from it).
+    url.pathname = `${prefix}${path === '/' ? '' : path}`
+    const headers = new Headers(request.headers)
+    headers.set('x-mach-site-origin', `https://${canonicalHost}`)
+    return NextResponse.rewrite(url, { request: { headers } })
   }
 
   return NextResponse.next()

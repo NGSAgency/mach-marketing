@@ -11,7 +11,7 @@ export default function BoltServices({ config: c, siteSlug }) {
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
   const categories = [...new Set((c.services || []).map(s => s.category))]
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }]
   const summary = joinParts([countLabel((c.services || []).length, 'service', 'services'), c.primary_service_area ? `Serving ${c.primary_service_area}` : null])
 

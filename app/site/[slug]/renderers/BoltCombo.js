@@ -11,7 +11,7 @@ export default function BoltCombo({ config: c, siteSlug, service, area }) {
   const brand = brandFrom(c)
   const T = applyBrand(boltTokens, brand)
   const logo = c.brand?.logo_url
-  const base = `/site/${siteSlug}`
+  const base = c.base_path || `/site/${siteSlug}`
   const otherAreas = c.service_areas.filter(a => a !== area).slice(0, 6)
   const otherServices = c.services.filter(s => s.slug !== service.slug && s.category === service.category).slice(0, 3)
   const crumbs = [{ name: 'Home', url: '/' }, { name: service.name, url: `/services/${service.slug}` }, { name: `${service.name} in ${area}`, url: `/${service.slug}-in-${slugify(area)}` }]

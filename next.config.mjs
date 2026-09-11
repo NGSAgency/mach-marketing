@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The middleware removes trailing slashes itself, so an old address with
+  // one (/botox/, common on WordPress sites) gets a single redirect straight
+  // to its new page instead of two hops.
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return {
       // beforeFiles runs before the filesystem is checked.
