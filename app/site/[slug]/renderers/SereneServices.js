@@ -223,7 +223,7 @@ function SereneCTA({ T, c, headline }) {
         </h2>
         {c.business.phone_display && (
           <a
-            href={`tel:${c.business.phone}`}
+            href={c.business.booking_url || `tel:${c.business.phone}`}
             style={{
               display: 'inline-block',
               background: T.colors.secondary,
@@ -238,6 +238,13 @@ function SereneCTA({ T, c, headline }) {
           >
             {titleCase(labels.conversion)}
           </a>
+        )}
+        {/* With online booking as the button, the phone stays one tap away:
+            most med spa bookings still happen by phone. */}
+        {c.business.booking_url && c.business.phone_display && (
+          <div style={{ marginTop: 18, fontSize: 15, color: T.colors.textDim }}>
+            or call <a href={`tel:${c.business.phone}`} style={{ color: T.colors.text }}>{c.business.phone_display}</a>
+          </div>
         )}
       </div>
     </section>

@@ -109,7 +109,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
                 </>
               )}
               {c.business.phone_display && (
-                <a href={`tel:${c.business.phone}`} style={{
+                <a href={c.business.booking_url || `tel:${c.business.phone}`} style={{
                   display: 'inline-block',
                   marginTop: 28,
                   background: T.colors.accent,

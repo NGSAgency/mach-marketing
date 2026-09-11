@@ -94,7 +94,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
               </p>
             )}
             {c.business.phone_display && (
-              <a href={`tel:${c.business.phone}`} style={{
+              <a href={c.business.booking_url || `tel:${c.business.phone}`} style={{
                 display: 'inline-block',
                 marginTop: 40,
                 alignSelf: 'flex-start',
