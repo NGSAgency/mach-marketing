@@ -5,6 +5,7 @@ import { buildLocalBusinessSchema, JsonLd, urlService, urlServices } from '../..
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 
 export default function SereneHome({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -14,7 +15,9 @@ export default function SereneHome({ config: c, siteSlug }) {
   const labels = navLabels(c)
   const gen = c.generated || {}
   const imgs = c.images || {}
-  const hero = imgs.home_hero
+  // The business's own video, when they have one, plays in the hero frame.
+  const video = imgs.home_video?.url ? imgs.home_video : null
+  const hero = imgs.home_hero || (video ? { url: video.poster || null, alt: '' } : null)
   const secondary = imgs.home_secondary
 
   const components = c.profile?.components || []
@@ -149,11 +152,7 @@ export default function SereneHome({ config: c, siteSlug }) {
                stretches them past native size and reads as blurry. Capping the
                column keeps the image close to its actual resolution. */
             <div style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(240px, 32vh, 520px)', maxWidth: 700, justifySelf: 'end', width: '100%' }}>
-              <img
-                src={hero.url}
-                alt={hero.alt || c.business.display_name}
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              />
+              <HeroMedia image={hero.url ? hero : null} video={video} alt={c.business.display_name} />
             </div>
           )}
         </section>

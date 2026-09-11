@@ -1,6 +1,7 @@
 import { buildLocalBusinessSchema } from '../../../../lib/templates/shared/seo/index.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import { crewContext, crewProof, schemaConfig, CrewPage, ServiceCard, AreaChips, PhoneIcon, Star, listAreas, TRADE_NOUN } from './CrewChrome.js'
+import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 
 // CREW home page. Section order and the reasoning behind each one are in the
 // trades family brief; CREW tokens carry the design principles. The utility
@@ -58,7 +59,9 @@ export default function CrewHome({ config: c, siteSlug }) {
   const featuredReviews = (reviews.featured || []).filter(r => r?.text).slice(0, 3)
   const hasPlans = Array.isArray(c.plans) && c.plans.length > 0
 
-  const hero = imgs.home_hero
+  // The business's own video, when they have one, plays behind the headline.
+  const video = imgs.home_video?.url ? imgs.home_video : null
+  const hero = imgs.home_hero || (video ? { url: video.poster || null, alt: '' } : null)
   const secondary = imgs.home_secondary
 
   return (
@@ -68,7 +71,7 @@ export default function CrewHome({ config: c, siteSlug }) {
         <span id="top" />
         {hero ? (
           <section style={{ position: 'relative', overflow: 'hidden', minHeight: 'clamp(520px, 74vh, 760px)', display: 'flex', alignItems: 'flex-end' }}>
-            <img src={hero.url} alt={hero.alt || ''} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <HeroMedia image={hero.url ? hero : null} video={video} />
             <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(90deg, ${C.overlayStrong} 0%, ${C.overlayStrong} 30%, ${C.overlayLight} 78%), linear-gradient(0deg, ${C.overlayStrong} 0%, ${C.overlayFaint} 55%)` }} />
             <div data-on-image="" style={{ '--on-image': C.textOnImage, '--on-image-dim': C.textOnImageDim, color: C.textOnImage, position: 'relative', width: '100%' }}>
               <div style={{ ...wrap, paddingBlock: 'clamp(56px, 9vw, 104px) clamp(40px, 6vw, 72px)' }}>
