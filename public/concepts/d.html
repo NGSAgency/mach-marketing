@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Direction D — Side Rail</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box}
+body{margin:0}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+  :root{--ink:#0e1114;--panel:#151a1f;--paper:#f2f3f1;--accent:#f0a132;--line:#262d34;--dim:#a7b0b8;--rail:300px}
+  body{font-family:'Manrope',system-ui,sans-serif;background:var(--ink);color:var(--paper);font-size:18px;line-height:1.62}
+  /* the rail sits on the right; its panel runs the height of the page, not
+     just the first screen. The content column comes first in the markup, so
+     a screen reader and a crawler meet the page before the menu. */
+  .shell{display:grid;grid-template-columns:minmax(0,1fr) var(--rail);background:linear-gradient(270deg,var(--panel) 0 var(--rail),transparent var(--rail))}
+  /* the rail: everything you need to act, always on screen */
+  .rail{position:sticky;top:0;height:100vh;border-left:1px solid var(--line);padding:32px 28px;display:flex;flex-direction:column;gap:28px}
+  .rail .logo{font-weight:800;font-size:23px;letter-spacing:-.03em;line-height:1.15}
+  .rail .since{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:6px;display:block}
+  .rail nav{display:grid;gap:2px;margin-top:6px}
+  .rail nav a{padding:9px 12px;border-radius:8px;font-weight:600;color:var(--dim)}
+  .rail nav a.on,.rail nav a:hover{background:#1e252c;color:var(--paper)}
+  .rail .act{margin-top:auto;display:grid;gap:10px}
+  .tel{font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .hours{font-size:14px;color:var(--dim)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:10px;font-weight:700;font-size:16px}
+  .btn-p{background:var(--accent);color:#181206}
+  .btn-o{border:1.5px solid #39424b;color:var(--paper)}
+  .main{min-width:0}
+  .wrap{padding-inline:clamp(28px,4vw,64px)}
+  /* the page opens on a photograph the width of the content column */
+  .open{position:relative}
+  .open img{width:100%;height:clamp(380px,52vh,560px);object-fit:cover}
+  .open .over{position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,17,20,.94),rgba(14,17,20,.35) 60%);display:flex;align-items:flex-end}
+  .open .in{padding:0 clamp(28px,4vw,64px) clamp(28px,4vw,48px);width:100%}
+  h1{font-size:clamp(38px,4.4vw,62px);line-height:1.03;letter-spacing:-.035em;margin:0 0 14px;font-weight:800;max-width:16ch}
+  .lede{font-size:19.5px;color:var(--dim);max-width:52ch;margin:0}
+  .trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .pill{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:8px 16px;font-size:15px;font-weight:600}
+  .pill b{color:var(--accent)}
+  section{padding-block:clamp(48px,6vw,84px)}
+  h2{font-size:clamp(26px,2.8vw,38px);letter-spacing:-.03em;line-height:1.1;margin:0 0 26px;font-weight:800}
+  .eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+  .svc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .svc a{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;transition:border-color .14s ease,transform .14s ease}
+  .svc a:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .svc img{width:78px;height:62px;object-fit:cover;border-radius:9px}
+  .svc h3{margin:0;font-size:19px;font-weight:700;letter-spacing:-.02em}
+  .svc p{margin:3px 0 0;color:var(--dim);font-size:15.5px}
+  .svc .price{font-weight:700;white-space:nowrap;color:var(--accent)}
+  .two{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,3vw,56px);align-items:center}
+  .quote{font-size:clamp(21px,2.2vw,30px);line-height:1.32;letter-spacing:-.02em;margin:0}
+  .score{font-size:clamp(56px,6vw,86px);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--accent)}
+  .steps{display:grid;gap:14px}
+  .steps div{display:grid;grid-template-columns:auto 1fr;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .steps b{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#181206;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:10px 18px;font-weight:600;font-size:15.5px}
+  .qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .qa div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .qa h3{margin:0 0 6px;font-size:18.5px}
+  .qa p{margin:0;color:var(--dim);font-size:16px}
+  .closing{background:var(--accent);color:#181206;border-radius:18px;padding:clamp(28px,3.4vw,44px);display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
+  .closing h2{margin:0;color:#181206}
+  .closing .tel{font-size:clamp(28px,3.4vw,44px)}
+  footer{border-top:1px solid var(--line);padding-block:36px 48px;color:var(--dim);font-size:15.5px}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px}
+  .foot h4{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#7d868f;margin:0 0 10px}
+  .foot ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+  @media (max-width: 1000px){
+    .shell{grid-template-columns:1fr}
+    .rail{order:-1;position:sticky;top:0;height:auto;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;border-left:0;border-bottom:1px solid var(--line);padding:16px 24px;gap:14px;z-index:9;background:var(--panel)}
+    .rail nav{display:none}
+    .rail .act{margin:0;grid-auto-flow:column;align-items:center}
+    .rail .hours{display:none}
+    .svc,.qa{grid-template-columns:1fr}
+    .two{grid-template-columns:1fr;gap:28px}
+  }
+
+  @media (max-width: 1000px){
+    .wrap{padding-inline:24px}
+    .hero{grid-template-columns:1fr}
+    .field{padding:48px 24px}
+    .shot img{height:340px}
+    .stats,.facts{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(2n),.facts div:nth-child(2n){border-right:0}
+    .cols,.qwrap,.deck,.split,.qgrid{grid-template-columns:1fr;gap:32px}
+    .side{position:static}
+    .grid3,.three,.faq,.steps{grid-template-columns:1fr}
+    .index,.dir{columns:2}
+    .panel{position:static;max-width:none;padding:24px 0 0}
+    .strip{grid-template-columns:1fr}
+    .strip img{border-right:0;border-bottom:2px solid var(--ink)}
+    .list a{grid-template-columns:1fr;gap:6px}
+    .poster .sub{grid-template-columns:1fr}
+    .callout{text-align:left}
+    .acts{justify-content:flex-start}
+    .foot{grid-template-columns:1fr;gap:28px}
+    nav{display:none}
+  }
+  @media (max-width: 720px){
+    .mast{grid-template-columns:1fr;justify-items:start;gap:12px;text-align:left}
+    .mast .l{display:none}
+    .mast .r{justify-content:flex-start;flex-wrap:wrap}
+    .title{text-align:left}
+    .stamp{position:static;transform:none;margin:0 0 20px}
+    .poster h1{font-size:clamp(38px,11vw,72px)}
+    .qa{grid-template-columns:1fr}
+    .closing,.close,.closeband .in{flex-direction:column;align-items:flex-start;text-align:left}
+    .callout,.close div{text-align:left}
+  }
+  @media (max-width: 560px){
+    .index,.dir{columns:1}
+    .facts,.stats{grid-template-columns:1fr}
+    .stat,.facts div{border-right:0;border-bottom:1px solid var(--line)}
+  }
+</style></head><body>
+  <div class="shell">
+    <main class="main">
+      <div class="open">
+        <img src="photo1.jpg" alt="">
+        <div class="over"><div class="in">
+          <h1>Heating and cooling in Olathe</h1>
+          <p class="lede">HVAC and plumbing for homeowners in Olathe, Lenexa, Overland Park, Shawnee and Kansas City.</p>
+          <div class="trust">
+            <span class="pill"><b>★ 4.8</b> · 212 Google reviews</span>
+            <span class="pill">Licensed KS #HVAC-4417</span>
+            <span class="pill">Same-day repair calls</span>
+          </div>
+        </div></div>
+      </div>
+
+      <section class="wrap">
+        <div class="eyebrow">Services</div>
+        <h2>What we take care of</h2>
+        <div class="svc"><a><img src="photo1.jpg" alt=""><span><h3>Air conditioning repair</h3><p>Same-day diagnosis and repair when the house stops cooling.</p></span><span class="price">From $89</span></a><a><img src="photo2.jpg" alt=""><span><h3>Air conditioning installation</h3><p>Right-sized systems, installed and tested in a day.</p></span><span class="price">→</span></a><a><img src="photo3.jpg" alt=""><span><h3>Furnace repair</h3><p>Heat back on, with the cause explained before any work starts.</p></span><span class="price">From $89</span></a><a><span style="width:78px"></span><span><h3>Furnace installation</h3><p>Replacements matched to the house, not the catalogue.</p></span><span class="price">→</span></a><a><span style="width:78px"></span><span><h3>Water heater service</h3><p>Repairs and replacements for tank and tankless.</p></span><span class="price">→</span></a><a><span style="width:78px"></span><span><h3>Drain cleaning</h3><p>Clearing the line and finding out why it blocked.</p></span><span class="price">From $129</span></a></div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <div class="two">
+          <figure style="margin:0">
+            <div class="eyebrow">Reviews</div>
+            <p class="quote">“Our AC quit on the hottest day of the year. They had someone here by two, and the technician showed me the burnt contactor before replacing it. Fair price, no upsell.”</p>
+            <figcaption style="margin-top:16px;color:var(--dim)">Megan R., Olathe</figcaption>
+          </figure>
+          <div>
+            <span class="score">4.8</span>
+            <div style="color:var(--dim);margin-top:8px">212 Google reviews<br><span style="color:var(--paper);font-weight:700">Serving Olathe since 1980</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <div class="eyebrow">How it works</div>
+        <h2>How a visit goes</h2>
+        <div class="steps"><div><b>1</b><span><strong style="display:block;font-size:18.5px">You call</strong><span style="color:var(--dim);font-size:16px">We ask what the system is doing and book a window that suits you.</span></span></div><div><b>2</b><span><strong style="display:block;font-size:18.5px">We diagnose</strong><span style="color:var(--dim);font-size:16px">A technician finds the cause and shows you what they found.</span></span></div><div><b>3</b><span><strong style="display:block;font-size:18.5px">You decide</strong><span style="color:var(--dim);font-size:16px">You get the price before any work starts, and nothing happens until you say so.</span></span></div></div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <div class="eyebrow">Service areas</div>
+        <h2>Where we work</h2>
+        <div class="chips"><span class="chip">Olathe</span><span class="chip">Lenexa</span><span class="chip">Overland Park</span><span class="chip">Shawnee</span><span class="chip">Kansas City</span><span class="chip">Gardner</span><span class="chip">De Soto</span><span class="chip">Spring Hill</span></div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <div class="eyebrow">Questions</div>
+        <h2>Good to know</h2>
+        <div class="qa"><div><h3>How soon can you get here?</h3><p>Most repair calls are seen the same day or the next morning, and we tell you the window when you call.</p></div><div><h3>What does a service call cost?</h3><p>The diagnostic is $89, and it comes off the repair if you go ahead.</p></div></div>
+      </section>
+
+      <section class="wrap" style="padding-top:0">
+        <div class="closing">
+          <div><h2>Book a visit</h2><p style="margin:8px 0 0">Mon–Fri 7am–6pm · Sat 8am–2pm</p></div>
+          <div style="text-align:right"><span class="tel" style="font-weight:800;letter-spacing:-.03em">(913) 441-2222</span><div style="display:flex;gap:10px;margin-top:12px;justify-content:flex-end"><a class="btn" style="background:#181206;color:var(--accent)">Call now</a><a class="btn" style="border:1.5px solid rgba(24,18,6,.5);color:#181206">Request a quote</a></div></div>
+        </div>
+      </section>
+
+      <footer class="wrap"><div class="foot">
+        <div><div class="logo" style="font-size:21px;font-weight:800;color:var(--paper)">Davenport Services</div><p style="margin:10px 0 0">(913) 441-2222 · Mon–Fri 7am–6pm · Sat 8am–2pm<br>Since 1980 · KS #HVAC-4417</p></div>
+        <div><h4>Services</h4><ul><li>Air conditioning repair</li><li>Air conditioning installation</li><li>Furnace repair</li><li>Furnace installation</li><li>Water heater service</li></ul></div>
+        <div><h4>Areas</h4><ul><li>Olathe</li><li>Lenexa</li><li>Overland Park</li><li>Shawnee</li><li>Kansas City</li></ul></div>
+      </div></footer>
+    </main>
+    <aside class="rail">
+      <div>
+        <div class="logo">Davenport Services</div>
+        <span class="since">Since 1980 · Olathe</span>
+      </div>
+      <nav>
+        <a class="on">Home</a><a>Services</a><a>Service areas</a><a>About</a><a>Reviews</a><a>Questions</a><a>Contact</a>
+      </nav>
+      <div class="act">
+        <span class="tel">(913) 441-2222</span>
+        <span class="hours">Mon–Fri 7am–6pm · Sat 8am–2pm</span>
+        <a class="btn btn-p">Book a visit</a>
+        <a class="btn btn-o">Request a quote</a>
+      </div>
+    </aside>
+
+  </div><a href="/concepts" style="position:fixed;left:16px;bottom:16px;z-index:9999;background:#111418;color:#fff;font:600 14px/1 ui-sans-serif,system-ui,sans-serif;padding:13px 19px;border-radius:999px;text-decoration:none;box-shadow:0 12px 30px -14px rgba(0,0,0,.85)">&larr; All four concepts</a></body></html>

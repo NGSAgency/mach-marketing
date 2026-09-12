@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Direction B — Centre</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600&display=swap');@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+  :root{--ink:#1a1715;--deep:#2a2522;--paper:#f2f0ec;--white:#fff;--brick:#a3302c;--line:#d8d3cb;--dim:#585049}
+  body{font-family:'Mulish',system-ui,sans-serif;color:var(--ink);background:var(--paper);font-size:18px;line-height:1.62}
+  h1,h2,h3,.serif{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;letter-spacing:-.005em}
+  .wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(20px,4vw,44px)}
+  .mid{max-width:860px;margin:0 auto;text-align:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;border-radius:999px;font-weight:700;font-size:16.5px}
+  .btn-b{background:var(--brick);color:#fff}
+  .btn-w{background:#fff;color:var(--ink)}
+  .btn-o{border:1.5px solid currentColor}
+
+  /* the nav is a floating pill that rides over the photograph */
+  .nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:40;width:min(1160px,calc(100% - 32px));background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid rgba(26,23,21,.08);border-radius:999px;box-shadow:0 18px 40px -34px rgba(20,16,14,.8);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 12px 10px 26px}
+  .nav .logo{font-family:'Bodoni Moda',serif;font-size:21px;letter-spacing:-.01em}
+  .nav menu{display:flex;gap:24px;margin:0;padding:0;list-style:none;font-weight:600;font-size:15.5px;color:var(--dim)}
+  .nav .right{display:flex;align-items:center;gap:14px}
+  .nav .tel{font-weight:700;font-size:16.5px}
+  .nav .btn{padding:12px 22px;font-size:15.5px}
+
+  /* a true hero: the photograph fills the screen, the words sit on the centre line */
+  .hero{position:relative;min-height:92vh;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden;padding:120px 0 64px}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,12,.62),rgba(18,14,12,.42) 45%,rgba(18,14,12,.86))}
+  .hero .in{position:relative;width:min(920px,100%);padding-inline:clamp(20px,4vw,44px)}
+  .eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.82;margin-bottom:20px}
+  h1{font-size:clamp(44px,6.4vw,96px);line-height:1.0;margin:0 0 20px}
+  .hero p{font-size:clamp(18px,1.5vw,21px);opacity:.92;margin:0 auto 30px;max-width:46ch}
+  .hero .acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .creds{margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.22);font-size:15px;opacity:.9;display:flex;gap:8px 22px;justify-content:center;flex-wrap:wrap}
+  .creds b{font-weight:700}
+
+  section{padding-block:clamp(56px,6.5vw,96px)}
+  h2{font-size:clamp(30px,3.6vw,54px);line-height:1.04;margin:0 0 12px}
+  .say{color:var(--dim);font-size:17.5px;margin:0 auto 38px;max-width:52ch}
+
+  /* one service at a time: the strip switches the panel below it */
+  .tabs input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+  .strip{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:30px}
+  .strip label{border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:11px 20px;font-weight:600;font-size:16px;cursor:pointer;transition:background .12s ease,color .12s ease,border-color .12s ease}
+  .strip label:hover{border-color:var(--brick);color:var(--brick)}
+  .panel{display:none;background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:left}
+  .panel .in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:stretch}
+  .panel img{width:100%;height:100%;min-height:360px;object-fit:cover}
+  .panel .txt{padding:clamp(28px,3.4vw,56px);display:flex;flex-direction:column;gap:14px;justify-content:center}
+  .panel h3{margin:0;font-size:clamp(26px,2.6vw,38px);line-height:1.06}
+  .panel p{margin:0;color:var(--dim);font-size:17.5px;max-width:48ch}
+  .panel .price{font-weight:700;color:var(--brick);font-size:17px}
+  .panel .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  #b-s0:checked ~ .strip label[for="b-s0"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s0:checked ~ .panels .panel:nth-child(1){display:block}
+  #b-s1:checked ~ .strip label[for="b-s1"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s1:checked ~ .panels .panel:nth-child(2){display:block}
+  #b-s2:checked ~ .strip label[for="b-s2"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s2:checked ~ .panels .panel:nth-child(3){display:block}
+  #b-s3:checked ~ .strip label[for="b-s3"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s3:checked ~ .panels .panel:nth-child(4){display:block}
+  #b-s4:checked ~ .strip label[for="b-s4"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s4:checked ~ .panels .panel:nth-child(5){display:block}
+  #b-s5:checked ~ .strip label[for="b-s5"]{background:var(--brick);border-color:var(--brick);color:#fff}
+  #b-s5:checked ~ .panels .panel:nth-child(6){display:block}
+
+  /* the figures, across the width, on the centre line */
+  .figures{background:var(--deep);color:#f0ebe6}
+  .figures .in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));text-align:center;padding-block:clamp(38px,4vw,60px)}
+  .figures div{padding-inline:18px;border-left:1px solid rgba(240,235,230,.16)}
+  .figures div:first-child{border-left:0}
+  .figures b{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(34px,4vw,58px);display:block;line-height:1}
+  .figures span{display:block;margin-top:10px;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;color:#b3a79d}
+  /* the review, alone, large, with nothing beside it */
+  .pull{text-align:center}
+  .pull p{font-family:'Bodoni Moda',serif;font-size:clamp(23px,2.9vw,42px);line-height:1.24;margin:0 auto;max-width:30ch}
+  .pull figcaption{margin-top:24px;color:var(--dim);font-size:16px;letter-spacing:.06em;text-transform:uppercase}
+
+  /* a real timeline: the line runs through the markers */
+  .timeline{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,44px);text-align:center}
+  .timeline::before{content:"";position:absolute;top:19px;left:16%;right:16%;height:1.5px;background:var(--line)}
+  .tl .dot{position:relative;z-index:1;width:38px;height:38px;border-radius:50%;background:var(--brick);color:#fff;display:grid;place-items:center;margin:0 auto 20px;font-weight:700;font-size:15px;box-shadow:0 0 0 8px var(--paper)}
+  .tl h3{margin:0 0 6px;font-size:24px}
+  .tl p{margin:0;color:var(--dim);font-size:16.5px}
+
+  /* coverage is still one sentence, but every town in it is its own page */
+  .cover{text-align:center;background:var(--brick);color:#fbf3f0;padding-block:clamp(52px,6vw,88px)}
+  .cover .eyebrow{color:#fbf3f0;opacity:.72;margin-bottom:22px}
+  /* one tile per area, each its own page; the grid fits itself to the width so
+     eight towns make two rows and thirty make five */
+  .cover h2{color:#fff;margin-bottom:10px}
+  .cover .say{color:rgba(251,243,240,.82);margin-bottom:34px}
+  .cover .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .cover .tile{background:#fff;border-radius:10px;padding:22px 18px 20px;text-align:center;transition:transform .12s ease,box-shadow .12s ease}
+  .cover .tile:hover{transform:translateY(-2px);box-shadow:0 18px 34px -26px rgba(20,10,8,.9)}
+  .cover .tile b{display:block;font-family:'Bodoni Moda',serif;font-weight:400;font-size:25px;line-height:1.1;color:var(--ink)}
+  .cover .tile span{display:block;margin-top:8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--brick)}
+  .cover .meta{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margin-top:26px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,243,240,.8)}
+  .cover .btn{margin-top:28px}
+
+  /* questions open and close */
+  .acc{max-width:800px;margin:0 auto;text-align:left}
+  .acc details{border-top:1px solid var(--line)}
+  .acc details:last-child{border-bottom:1px solid var(--line)}
+  .acc summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;font-size:20px;font-weight:600}
+  .acc summary::-webkit-details-marker{display:none}
+  .acc .plus{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:17px;line-height:1;color:var(--brick);transition:transform .16s ease}
+  .acc details[open] .plus{transform:rotate(45deg)}
+  .acc p{margin:0 0 22px;color:var(--dim);max-width:62ch}
+
+  .end{position:relative;color:#fff;text-align:center;overflow:hidden;padding-block:clamp(64px,7vw,110px)}
+  .end img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .end .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,12,.76),rgba(18,14,12,.88))}
+  .end .in{position:relative}
+  .end h2{margin-bottom:18px}
+  .end .hours{display:block;margin-top:18px;opacity:.86;font-size:16px}
+  footer{background:var(--deep);color:#cdc4bc;text-align:center;padding-block:40px 44px}
+  footer .logo{font-family:'Bodoni Moda',serif;font-size:24px;color:#f0ebe6;display:block;margin-bottom:16px}
+  footer menu{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;margin:0 0 20px;padding:0;list-style:none;font-size:15.5px;font-weight:600}
+  footer .line{font-size:15px}
+  @media (max-width: 1000px){
+    .nav menu{display:none}
+    .panel .in{grid-template-columns:1fr}
+    .panel img{min-height:220px}
+    .figures .in{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 0}
+    .figures div:nth-child(3){border-left:0}
+    .timeline{grid-template-columns:1fr;gap:30px}
+    .timeline::before{display:none}
+  }
+  @media (max-width: 560px){
+    .nav{padding-left:18px}
+    .nav .tel{display:none}
+    .figures .in{grid-template-columns:1fr}
+    .figures div{border-left:0}
+  }
+
+  @media (max-width: 1000px){
+    .wrap{padding-inline:24px}
+    .hero{grid-template-columns:1fr}
+    .field{padding:48px 24px}
+    .shot img{height:340px}
+    .stats,.facts{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(2n),.facts div:nth-child(2n){border-right:0}
+    .cols,.qwrap,.deck,.split,.qgrid{grid-template-columns:1fr;gap:32px}
+    .side{position:static}
+    .grid3,.three,.faq,.steps{grid-template-columns:1fr}
+    .index,.dir{columns:2}
+    .panel{position:static;max-width:none;padding:24px 0 0}
+    .strip{grid-template-columns:1fr}
+    .strip img{border-right:0;border-bottom:2px solid var(--ink)}
+    .list a{grid-template-columns:1fr;gap:6px}
+    .poster .sub{grid-template-columns:1fr}
+    .callout{text-align:left}
+    .acts{justify-content:flex-start}
+    .foot{grid-template-columns:1fr;gap:28px}
+    nav{display:none}
+  }
+  @media (max-width: 720px){
+    .mast{grid-template-columns:1fr;justify-items:start;gap:12px;text-align:left}
+    .mast .l{display:none}
+    .mast .r{justify-content:flex-start;flex-wrap:wrap}
+    .title{text-align:left}
+    .stamp{position:static;transform:none;margin:0 0 20px}
+    .poster h1{font-size:clamp(38px,11vw,72px)}
+    .qa{grid-template-columns:1fr}
+    .closing,.close,.closeband .in{flex-direction:column;align-items:flex-start;text-align:left}
+    .callout,.close div{text-align:left}
+  }
+  @media (max-width: 560px){
+    .index,.dir{columns:1}
+    .facts,.stats{grid-template-columns:1fr}
+    .stat,.facts div{border-right:0;border-bottom:1px solid var(--line)}
+  }
+</style></head><body>
+  <nav class="nav">
+    <span class="logo">Davenport Services</span>
+    <menu><li>Services</li><li>Areas</li><li>About</li><li>Questions</li></menu>
+    <span class="right"><span class="tel">(913) 441-2222</span><a class="btn btn-b">Book a visit</a></span>
+  </nav>
+
+  <div class="hero">
+    <img src="photo1.jpg" alt=""><div class="scrim"></div>
+    <div class="in">
+      <span class="eyebrow">Olathe, Kansas · Since 1980</span>
+      <h1>Heating and cooling in Olathe</h1>
+      <p>HVAC and plumbing for homeowners in Olathe, Lenexa, Overland Park, Shawnee and Kansas City.</p>
+      <div class="acts"><a class="btn btn-w">Call (913) 441-2222</a><a class="btn btn-o">Book a visit</a></div>
+      <div class="creds">
+        <span><b>★ 4.8</b> · 212 Google reviews</span>
+        <span>Licensed KS #HVAC-4417</span>
+        <span>Mon–Fri 7am–6pm · Sat 8am–2pm</span>
+      </div>
+    </div>
+  </div>
+
+  <section><div class="wrap">
+    <div class="mid"><h2>What we take care of</h2><p class="say">Choose the one you need and we'll show you what it covers.</p></div>
+    <div class="tabs">
+      <input type="radio" name="b-svc" id="b-s0" checked>
+      <input type="radio" name="b-svc" id="b-s1">
+      <input type="radio" name="b-svc" id="b-s2">
+      <input type="radio" name="b-svc" id="b-s3">
+      <input type="radio" name="b-svc" id="b-s4">
+      <input type="radio" name="b-svc" id="b-s5">
+      <div class="strip"><label for="b-s0">Air conditioning repair</label><label for="b-s1">Air conditioning installation</label><label for="b-s2">Furnace repair</label><label for="b-s3">Furnace installation</label><label for="b-s4">Water heater service</label><label for="b-s5">Drain cleaning</label></div>
+      <div class="panels">
+        <div class="panel"><div class="in"><img src="photo1.jpg" alt=""><div class="txt">
+          <h3>Air conditioning repair</h3>
+          <p>Same-day diagnosis and repair when the house stops cooling.</p>
+          <span class="price">From $89</span>
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+        <div class="panel"><div class="in"><img src="photo2.jpg" alt=""><div class="txt">
+          <h3>Air conditioning installation</h3>
+          <p>Right-sized systems, installed and tested in a day.</p>
+          
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+        <div class="panel"><div class="in"><img src="photo3.jpg" alt=""><div class="txt">
+          <h3>Furnace repair</h3>
+          <p>Heat back on, with the cause explained before any work starts.</p>
+          <span class="price">From $89</span>
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+        <div class="panel"><div class="in"><img src="photo1.jpg" alt=""><div class="txt">
+          <h3>Furnace installation</h3>
+          <p>Replacements matched to the house, not the catalogue.</p>
+          
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+        <div class="panel"><div class="in"><img src="photo2.jpg" alt=""><div class="txt">
+          <h3>Water heater service</h3>
+          <p>Repairs and replacements for tank and tankless.</p>
+          
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+        <div class="panel"><div class="in"><img src="photo3.jpg" alt=""><div class="txt">
+          <h3>Drain cleaning</h3>
+          <p>Clearing the line and finding out why it blocked.</p>
+          <span class="price">From $129</span>
+          <span style="color:var(--dim);font-size:16px">Available across all 8 communities we cover.</span>
+          <span class="acts"><a class="btn btn-b">Book this</a><a class="btn btn-o">See the page</a></span>
+        </div></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="figures"><div class="wrap in">
+    <div><b>1980</b><span>Serving Olathe since</span></div>
+    <div><b>4.8</b><span>Google rating</span></div>
+    <div><b>212</b><span>Reviews</span></div>
+    <div><b>8</b><span>Communities</span></div>
+  </div></div>
+
+  <section><div class="wrap pull">
+    <figure style="margin:0">
+      <p>“Our AC quit on the hottest day of the year. They had someone here by two, and the technician showed me the burnt contactor before replacing it. Fair price, no upsell.”</p>
+      <figcaption>Megan R., Olathe</figcaption>
+    </figure>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="mid"><h2>How a visit goes</h2></div>
+    <div class="timeline"><div class="tl"><span class="dot">1</span><h3>You call</h3><p>We ask what the system is doing and book a window that suits you.</p></div><div class="tl"><span class="dot">2</span><h3>We diagnose</h3><p>A technician finds the cause and shows you what they found.</p></div><div class="tl"><span class="dot">3</span><h3>You decide</h3><p>You get the price before any work starts, and nothing happens until you say so.</p></div></div>
+  </div></section>
+
+  <section class="cover"><div class="wrap">
+    <div class="mid">
+      <span class="eyebrow">Service areas</span>
+      <h2>Where we work</h2>
+      <p class="say">8 communities around Olathe. Every one has its own page.</p>
+    </div>
+    <div class="tiles"><a class="tile"><b>Olathe</b><span>See the page →</span></a><a class="tile"><b>Lenexa</b><span>See the page →</span></a><a class="tile"><b>Overland Park</b><span>See the page →</span></a><a class="tile"><b>Shawnee</b><span>See the page →</span></a><a class="tile"><b>Kansas City</b><span>See the page →</span></a><a class="tile"><b>Gardner</b><span>See the page →</span></a><a class="tile"><b>De Soto</b><span>See the page →</span></a><a class="tile"><b>Spring Hill</b><span>See the page →</span></a></div>
+    <a class="btn btn-o">See every area we work in</a>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="mid"><h2>Questions</h2></div>
+    <div class="acc"><details open><summary>How soon can you get here?<span class="plus">+</span></summary><p>Most repair calls are seen the same day or the next morning, and we tell you the window when you call.</p></details><details><summary>What does a service call cost?<span class="plus">+</span></summary><p>The diagnostic is $89, and it comes off the repair if you go ahead.</p></details><details><summary>Where do you work?<span class="plus">+</span></summary><p>Olathe, Lenexa, Overland Park, Shawnee, Kansas City, Gardner, De Soto and Spring Hill.</p></details><details><summary>When are you open?<span class="plus">+</span></summary><p>Mon–Fri 7am–6pm · Sat 8am–2pm. Licensed KS #HVAC-4417.</p></details></div>
+  </div></section>
+
+  <div class="end">
+    <img src="photo3.jpg" alt=""><div class="scrim"></div>
+    <div class="wrap in">
+      <h2>Book a visit</h2>
+      <div class="acts" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-b">Call (913) 441-2222</a>
+        <a class="btn btn-o">Request a quote</a>
+      </div>
+      <span class="hours">Mon–Fri 7am–6pm · Sat 8am–2pm · Licensed KS #HVAC-4417</span>
+    </div>
+  </div>
+
+  <footer><div class="wrap">
+    <span class="logo">Davenport Services</span>
+    <menu><li>Services</li><li>Areas</li><li>About</li><li>Reviews</li><li>Questions</li><li>Contact</li></menu>
+    <span class="line">(913) 441-2222 · Mon–Fri 7am–6pm · Sat 8am–2pm · Since 1980 · KS #HVAC-4417</span>
+  </div></footer><a href="/concepts" style="position:fixed;left:16px;bottom:16px;z-index:9999;background:#111418;color:#fff;font:600 14px/1 ui-sans-serif,system-ui,sans-serif;padding:13px 19px;border-radius:999px;text-decoration:none;box-shadow:0 12px 30px -14px rgba(0,0,0,.85)">&larr; All four concepts</a></body></html>
