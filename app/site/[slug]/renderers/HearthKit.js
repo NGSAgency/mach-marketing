@@ -29,7 +29,7 @@ export function hearthContext(c, siteSlug) {
   const liveryRule = mix(livery, '#ffffff', 0.22)
   return {
     ...d, T, C, F, livery, liveryText, liveryDim, liveryRule,
-    wrap: { maxWidth: 1200, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)', boxSizing: 'border-box', width: '100%' },
+    wrap: { maxWidth: 1320, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)', boxSizing: 'border-box', width: '100%' },
     sectionPad: 'clamp(56px, 8vw, 104px)',
     eyebrow: (color) => ({ fontSize: 13, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color }),
     h1: { fontFamily: F.display, fontWeight: 700, fontSize: T.type.hero, lineHeight: 1.02, letterSpacing: '-0.01em', margin: 0, textWrap: 'balance' },
@@ -53,6 +53,9 @@ function HearthStyles({ x }) {
       <style>{`
         .hearth a:focus-visible, .hearth summary:focus-visible, .hearth button:focus-visible { outline: 3px solid ${C.text}; outline-offset: 3px; }
         .hearth img { max-width: 100%; }
+        /* Photography that runs past the page edges must never make the page
+           scroll sideways. clip, not hidden, so sticky still works. */
+        .hearth { overflow-x: clip; }
         .h-letter { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 28px; }
         .h-navbar { position: sticky; top: ${top}px; z-index: 50; }
         .h-mobilecall, .h-menu { display: none; }
@@ -61,12 +64,21 @@ function HearthStyles({ x }) {
         .h-menu > summary::-webkit-details-marker { display: none; }
         .h-menu[open] .h-menu-open { display: none; }
         .h-menu:not([open]) .h-menu-close { display: none; }
-        .h-hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+        .h-hero { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+        /* The hero photograph runs off the right edge of the screen: the page
+           is a letterhead, and the picture is pasted across its edge. */
+        .h-heroart { margin-right: calc((min(100vw, 1320px) - 100vw) / 2 - clamp(20px, 4vw, 40px)); }
+        /* A band that spans the screen, for the featured review. */
+        .h-bleed { width: 100vw; margin-inline: calc(50% - 50vw); }
+        /* The story photograph holds still while the story scrolls past it. */
+        .h-sticky { position: sticky; top: 96px; }
         .h-hero-solo { grid-template-columns: minmax(0, 1fr); }
         .h-btns { display: flex; flex-wrap: wrap; gap: 12px; }
         .h-ledger { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
         .h-ledger > div + div { border-left: 1px solid ${C.border}; }
-        .h-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 5vw, 64px); }
+        .h-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0; }
+        .h-index > li:nth-child(odd) { padding-right: clamp(24px, 3vw, 44px); border-right: 1px solid ${C.border}; }
+        .h-index > li:nth-child(even) { padding-left: clamp(24px, 3vw, 44px); }
         .h-row { transition: background 120ms ease; }
         .h-row:hover { background: ${C.surface}; }
         .h-row:hover .h-row-arrow { transform: translateX(3px); }
@@ -90,6 +102,8 @@ function HearthStyles({ x }) {
         .crew-mobilebar { display: none !important; }
         @media (max-width: 1000px) {
           .h-hero, .h-story, .h-reviews, .h-detail, .h-contact { grid-template-columns: minmax(0, 1fr); }
+          .h-heroart { margin-right: 0; }
+          .h-sticky { position: static; }
           .h-ticket { position: static; }
           .h-navlinks { display: none !important; }
           .h-menu { display: block; }
@@ -101,6 +115,8 @@ function HearthStyles({ x }) {
           .h-letterwrap { position: sticky; top: ${top}px; z-index: 50; }
           .h-navbar { display: none; }
           .h-index { grid-template-columns: minmax(0, 1fr); }
+          .h-index > li:nth-child(odd) { padding-right: 0; border-right: none; }
+          .h-index > li:nth-child(even) { padding-left: 0; }
           .h-reasons { grid-template-columns: minmax(0, 1fr); }
           .h-foot { grid-template-columns: minmax(0, 1fr); gap: 28px; }
           .h-close { grid-template-columns: minmax(0, 1fr); }

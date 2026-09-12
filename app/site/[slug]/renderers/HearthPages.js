@@ -70,13 +70,14 @@ export function HearthHome({ config: c, siteSlug }) {
           </div>
 
           {media ? (
-            <div style={{ position: 'relative', paddingBottom: year ? 36 : 0 }}>
+            <div className="h-heroart" style={{ position: 'relative' }}>
               {m.video ? (
-                <figure style={{ margin: 0, background: C.surface, padding: 'clamp(8px, 1.2vw, 12px)', border: `1px solid ${C.border}`, boxShadow: '0 18px 40px -24px rgba(0,0,0,0.35)' }}>
-                  <div style={{ position: 'relative', aspectRatio: '4 / 5', overflow: 'hidden' }}><HeroMedia image={m.hero} video={m.video} /></div>
-                </figure>
-              ) : <Framed x={x} image={m.hero} priority />}
-              <Seal x={x} style={{ position: 'absolute', right: -14, bottom: 0 }} />
+                <div style={{ position: 'relative', aspectRatio: '5 / 4', minHeight: 340, maxHeight: 620, overflow: 'hidden' }}><HeroMedia image={m.hero} video={m.video} /></div>
+              ) : (
+                <img src={m.hero.url} alt={m.hero.alt || ''} fetchPriority="high" loading="eager" decoding="async"
+                  style={{ width: '100%', aspectRatio: '5 / 4', minHeight: 340, maxHeight: 620, objectFit: 'cover', display: 'block' }} />
+              )}
+              <Seal x={x} style={{ position: 'absolute', left: -34, bottom: 28 }} />
             </div>
           ) : concept ? (
             <Note x={x} minHeight={380} title="Your team photo goes here">
@@ -130,7 +131,7 @@ export function HearthHome({ config: c, siteSlug }) {
       {(m.intro || m.secondary || concept) && (
         <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div className="h-story" style={wrap}>
-            {m.secondary ? <Framed x={x} image={m.secondary} ratio="5 / 4" /> : concept ? (
+            {m.secondary ? <div className="h-sticky"><Framed x={x} image={m.secondary} ratio="5 / 4" /></div> : concept ? (
               <Note x={x} minHeight={300} title="A photo of your team at work">Real people from your company, not a stock handshake.</Note>
             ) : <div />}
             <div>
@@ -165,20 +166,28 @@ export function HearthHome({ config: c, siteSlug }) {
         </section>
       )}
 
-      {/* REVIEWS: one featured, the rest beside it. */}
+      {/* REVIEWS: the first one set large across a band in their own colour,
+          the others underneath it. */}
       {m.reviews.length > 0 ? (
-        <section style={{ background: m.whyUs.length ? C.bgAlt : C.bg, paddingBlock: sectionPad }}>
-          <div style={wrap}>
-            <SectionHead x={x} eyebrow="Reviews" title="What customers say" />
-            <div className="h-reviews">
-              <Review x={x} r={m.reviews[0]} big />
-              {m.reviews.length > 1 && (
-                <div style={{ display: 'grid', gap: 0, borderTop: `2px solid ${C.text}` }}>
-                  {m.reviews.slice(1).map((r, i) => <Review key={i} x={x} r={r} />)}
-                </div>
-              )}
+        <section style={{ paddingTop: sectionPad }}>
+          <div className="h-bleed" style={{ background: x.livery, color: x.liveryText, paddingBlock: 'clamp(48px, 6vw, 88px)' }}>
+            <div style={{ ...wrap, maxWidth: 1100 }}>
+              <div style={{ ...eyebrow(x.liveryDim), marginBottom: 22 }}>Reviews</div>
+              <figure style={{ margin: 0 }}>
+                <blockquote style={{ margin: 0, fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(26px, 3.4vw, 46px)', lineHeight: 1.22, letterSpacing: '-0.01em' }}>
+                  “{m.reviews[0].text}”
+                </blockquote>
+                <figcaption style={{ marginTop: 22, fontSize: 16, color: x.liveryDim, fontWeight: 600 }}>{m.reviews[0].author}{m.reviews[0].date ? ` · ${m.reviews[0].date}` : ''}</figcaption>
+              </figure>
             </div>
           </div>
+          {m.reviews.length > 1 && (
+            <div style={{ ...wrap, paddingTop: 'clamp(32px, 4vw, 56px)' }}>
+              <div className="h-reasons">
+                {m.reviews.slice(1).map((r, i) => <Review key={i} x={x} r={r} />)}
+              </div>
+            </div>
+          )}
         </section>
       ) : concept ? (
         <section style={{ paddingBlock: sectionPad }}>

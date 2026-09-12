@@ -72,8 +72,8 @@ export const hearthTokens = {
     base: '18px',
     lg: '22px',
     xl: '32px',
-    display: 'clamp(32px, 4.2vw, 50px)',
-    hero: 'clamp(38px, 5.6vw, 70px)',
+    display: 'clamp(32px, 4.4vw, 56px)',
+    hero: 'clamp(40px, 6.2vw, 84px)',
   },
 
   spacing: { xs: '8px', sm: '16px', md: '32px', lg: '64px', xl: '96px', xxl: '128px' },

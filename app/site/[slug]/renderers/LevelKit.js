@@ -21,10 +21,10 @@ export function levelContext(c, siteSlug) {
   const F = T.fonts
   return {
     ...d, T, C, F,
-    wrap: { maxWidth: 1160, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)', boxSizing: 'border-box', width: '100%' },
+    wrap: { maxWidth: 1320, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)', boxSizing: 'border-box', width: '100%' },
     sectionPad: 'clamp(56px, 8vw, 104px)',
     eyebrow: (color) => ({ fontSize: 13, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color }),
-    h1: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.hero, lineHeight: 1.02, letterSpacing: '-0.035em', margin: 0, textWrap: 'balance' },
+    h1: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.hero, maxWidth: '15ch', lineHeight: 1.02, letterSpacing: '-0.035em', margin: 0, textWrap: 'balance' },
     h2: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.display, lineHeight: 1.06, letterSpacing: '-0.03em', margin: 0, textWrap: 'balance' },
     h3: { fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(21px, 2.1vw, 26px)', lineHeight: 1.2, letterSpacing: '-0.02em', margin: 0, textWrap: 'balance' },
     btn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, borderRadius: T.radius.full, padding: '15px 26px', fontSize: 17, fontWeight: 700, textDecoration: 'none', whiteSpace: 'nowrap', lineHeight: 1.2, boxSizing: 'border-box' },
@@ -46,6 +46,9 @@ function LevelStyles({ x }) {
       <style>{`
         .level a:focus-visible, .level summary:focus-visible { outline: 3px solid ${C.accent}; outline-offset: 3px; }
         .level img { max-width: 100%; }
+        /* Photography that runs past the page edges must never make the page
+           scroll sideways. clip, not hidden, so sticky still works. */
+        .level { overflow-x: clip; }
         .lv-head { position: sticky; top: ${top}px; z-index: 50; }
         .lv-nav { display: flex; }
         .lv-menu { display: none; }
@@ -54,8 +57,12 @@ function LevelStyles({ x }) {
         .lv-menu[open] .lv-menu-open { display: none; }
         .lv-menu:not([open]) .lv-menu-close { display: none; }
         .lv-btns { display: flex; flex-wrap: wrap; gap: 12px; }
-        .lv-center { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .lv-picker { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        /* The top row uses the width: headline left, the line that supports it
+           and both buttons right, rather than a narrow centred stack. */
+        .lv-top { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: end; }
+        .lv-picker { display: flex; flex-wrap: wrap; gap: 10px; }
+        /* Photography runs to both edges of the screen. */
+        .lv-bleed { width: 100vw; margin-inline: calc(50% - 50vw); }
         .lv-rail { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 20px; position: relative; }
         .lv-bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
         .lv-bento > :first-child { grid-column: span 2; grid-row: span 2; }
@@ -79,6 +86,7 @@ function LevelStyles({ x }) {
           .lv-onpage { display: none; }
           .lv-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .lv-reviews { grid-template-columns: minmax(0, 1fr); }
+          .lv-top { grid-template-columns: minmax(0, 1fr); align-items: start; }
         }
         @media (max-width: 720px) {
           .lv-bento, .lv-faq { grid-template-columns: minmax(0, 1fr); }
@@ -301,8 +309,8 @@ export function Picker({ x, services, label = 'What do you need?' }) {
   const { T, C, href, eyebrow } = x
   if (services.length === 0) return null
   return (
-    <div style={{ ...x.card, padding: 'clamp(18px, 2.4vw, 26px)', boxShadow: '0 12px 34px -22px rgba(0,0,0,0.4)', maxWidth: 860, width: '100%' }}>
-      <div style={{ ...eyebrow(C.textDim), marginBottom: 14, textAlign: 'center' }}>{label}</div>
+    <div style={{ ...x.card, padding: 'clamp(20px, 2.6vw, 30px)', boxShadow: '0 12px 34px -22px rgba(0,0,0,0.4)', width: '100%' }}>
+      <div style={{ ...eyebrow(C.textDim), marginBottom: 16 }}>{label}</div>
       <ul className="lv-picker" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         {services.map(s => (
           <li key={s.slug}>

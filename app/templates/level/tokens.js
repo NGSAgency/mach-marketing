@@ -75,8 +75,8 @@ export const levelTokens = {
     base: '18px',
     lg: '21px',
     xl: '30px',
-    display: 'clamp(30px, 3.8vw, 46px)',
-    hero: 'clamp(38px, 5.4vw, 68px)',
+    display: 'clamp(30px, 4vw, 52px)',
+    hero: 'clamp(40px, 6.2vw, 84px)',
   },
 
   spacing: { xs: '8px', sm: '16px', md: '32px', lg: '64px', xl: '96px', xxl: '128px' },

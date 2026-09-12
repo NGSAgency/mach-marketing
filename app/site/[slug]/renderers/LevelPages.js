@@ -37,56 +37,64 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
   return (
     <LevelPage x={x} current="home" schemas={m.schemas}>
 
-      {/* HERO: the heading centred, one tap to the service they came for, and
-          their photo as a band under it. */}
-      <section data-hero="" style={{ paddingBlock: 'clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px)' }}>
-        <div className="lv-center" style={wrap}>
-          {name && <div style={eyebrow(C.textDim)}>{name}</div>}
-          <h1 style={{ ...x.h1, marginTop: 14, maxWidth: '17ch' }}>{m.headline}</h1>
-          {m.support && <p style={{ fontSize: 'clamp(18px, 1.7vw, 21px)', lineHeight: 1.55, color: C.textDim, margin: '18px 0 0', maxWidth: '54ch' }}>{m.support}</p>}
-          <div className="lv-btns" style={{ marginTop: 28, justifyContent: 'center' }}>
-            {phone && <a href={`tel:${phone}`} style={btnPrimary(x)}><PhoneIcon /> Call {phoneDisplay}</a>}
-            <a href={second.href} {...(second.external ? { rel: 'noopener' } : {})} style={btnQuiet(x)}>{second.label}</a>
-          </div>
-          {(rating || chips.length > 0) && (
-            <ul style={{ listStyle: 'none', margin: '20px 0 0', padding: 0, display: 'flex', flexWrap: 'wrap', gap: '8px 20px', justifyContent: 'center', fontSize: 16, color: C.textDim }}>
-              {rating && (
-                <li style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: C.text, fontWeight: 700 }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>{rating.value}<Star size={17} /></span>
-                  <span style={{ fontWeight: 500, color: C.textDim }}>{rating.label}{x.statedOnTheirSite ? ' (from your current site)' : ''}</span>
-                </li>
-              )}
-              {chips.map((p, i) => <li key={i} style={{ fontWeight: 600 }}>{p.kind === 'since' ? `${p.label} ${p.value}` : `${p.value} ${p.label}`}</li>)}
-            </ul>
-          )}
-          {services.length > 0 && (
-            <div style={{ marginTop: 'clamp(28px, 4vw, 40px)', display: 'flex', justifyContent: 'center', width: '100%' }}>
-              <Picker x={x} services={services.slice(0, 6)} />
+      {/* HERO: the headline and the way to act share the top row; one tap to
+          the service they came for; their photo edge to edge underneath. */}
+      <section data-hero="" style={{ paddingBlock: 'clamp(36px, 5vw, 68px) clamp(28px, 4vw, 44px)' }}>
+        <div style={wrap}>
+          <div className="lv-top">
+            <div>
+              {name && <div style={eyebrow(C.textDim)}>{name}</div>}
+              <h1 style={{ ...x.h1, marginTop: 14 }}>{m.headline}</h1>
             </div>
-          )}
-          {services.length > 6 && (
-            <p style={{ margin: '14px 0 0' }}><a href={href.services} style={textLink(x)}>All {services.length} {x.offeringLabel.toLowerCase()}</a></p>
+            <div>
+              {m.support && <p style={{ fontSize: 'clamp(18px, 1.5vw, 20px)', lineHeight: 1.55, color: C.textDim, margin: 0, maxWidth: '42ch' }}>{m.support}</p>}
+              <div className="lv-btns" style={{ marginTop: 24 }}>
+                {phone && <a href={`tel:${phone}`} style={btnPrimary(x)}><PhoneIcon /> Call {phoneDisplay}</a>}
+                <a href={second.href} {...(second.external ? { rel: 'noopener' } : {})} style={btnQuiet(x)}>{second.label}</a>
+              </div>
+              {(rating || chips.length > 0) && (
+                <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'flex', flexWrap: 'wrap', gap: '8px 18px', fontSize: 16, color: C.textDim }}>
+                  {rating && (
+                    <li style={{ display: 'inline-flex', alignItems: 'center', gap: 7, color: C.text, fontWeight: 700 }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>{rating.value}<Star size={17} /></span>
+                      <span style={{ fontWeight: 500, color: C.textDim }}>{rating.label}{x.statedOnTheirSite ? ' (from your current site)' : ''}</span>
+                    </li>
+                  )}
+                  {chips.map((p, i) => <li key={i} style={{ fontWeight: 600 }}>{p.kind === 'since' ? `${p.label} ${p.value}` : `${p.value} ${p.label}`}</li>)}
+                </ul>
+              )}
+            </div>
+          </div>
+          {services.length > 0 && (
+            <div style={{ marginTop: 'clamp(28px, 4vw, 44px)' }}>
+              <Picker x={x} services={services.slice(0, 8)} />
+              {services.length > 8 && <p style={{ margin: '14px 0 0' }}><a href={href.services} style={textLink(x)}>All {services.length} {x.offeringLabel.toLowerCase()}</a></p>}
+            </div>
           )}
         </div>
       </section>
 
-      <section>
-        <div style={wrap}>
-          {media ? (
-            m.video ? (
-              <div style={{ position: 'relative', borderRadius: T.radius.lg, overflow: 'hidden' }}>
-                <div style={{ position: 'relative', aspectRatio: '21 / 9' }}><HeroMedia image={m.hero} video={m.video} /></div>
-                <RatingCard x={x} />
-              </div>
+      {/* Their photo, edge to edge. */}
+      <section style={{ paddingBottom: 'clamp(8px, 1vw, 16px)' }}>
+        {media ? (
+          <div className="lv-bleed" style={{ position: 'relative' }}>
+            {m.video ? (
+              <div style={{ position: 'relative', aspectRatio: '21 / 9', minHeight: 300, overflow: 'hidden' }}><HeroMedia image={m.hero} video={m.video} /></div>
             ) : (
-              <Band x={x} image={m.hero} priority><RatingCard x={x} /></Band>
-            )
-          ) : concept ? (
-            <Note x={x} minHeight={220} title="Your photo goes here, full width">
+              <img src={m.hero.url} alt={m.hero.alt || ''} fetchPriority="high" loading="eager" decoding="async"
+                style={{ width: '100%', aspectRatio: '21 / 9', minHeight: 300, objectFit: 'cover', display: 'block' }} />
+            )}
+            <div style={{ position: 'absolute', inset: 0 }}>
+              <div style={{ ...wrap, position: 'relative', height: '100%' }}><RatingCard x={x} style={{ left: 'clamp(20px, 4vw, 40px)' }} /></div>
+            </div>
+          </div>
+        ) : concept ? (
+          <div style={wrap}>
+            <Note x={x} minHeight={220} title="Your photo goes here, edge to edge">
               Your crew, your van, a job finished. One wide photo under the heading, with your rating on a card over the corner.
             </Note>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </section>
 
       {/* HOW IT WORKS: their own steps, attributed to the service they describe. */}
@@ -146,33 +154,38 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
         </section>
       ) : null}
 
-      {/* REVIEWS: the rating beside what people said. */}
+      {/* REVIEWS: the rating set large across a coloured band, with what
+          people actually said on cards across it. */}
       {m.reviews.length > 0 ? (
-        <section style={{ paddingBlock: sectionPad }}>
+        <section style={{ paddingTop: sectionPad }}>
           <div style={wrap}>
             <SectionHead x={x} eyebrow="Reviews" title="What customers say" />
-            <div className="lv-reviews">
-              {rating ? (
-                <div style={{ background: C.accentGlow, borderRadius: T.radius.lg, padding: 'clamp(24px, 3vw, 34px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 8 }}>
-                  <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(44px, 5vw, 64px)', lineHeight: 1, letterSpacing: '-0.04em', display: 'flex', alignItems: 'center', gap: 8 }}>{rating.value}<Star size={34} /></div>
-                  <div style={{ color: C.textDim, fontSize: 17 }}>{rating.label}</div>
+          </div>
+          <div className="lv-bleed" style={{ background: C.accentGlow, paddingBlock: 'clamp(36px, 4.5vw, 60px)' }}>
+            <div style={wrap}>
+              <div className="lv-reviews">
+                {rating ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 6 }}>
+                    <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(64px, 8vw, 112px)', lineHeight: 0.9, letterSpacing: '-0.05em', display: 'flex', alignItems: 'center', gap: 10 }}>{rating.value}<Star size={44} /></div>
+                    <div style={{ color: C.textDim, fontSize: 17 }}>{rating.label}</div>
+                  </div>
+                ) : <div />}
+                <div className="lv-revcards">
+                  {m.reviews.map((r, i) => {
+                    const stars = Number(r.rating)
+                    return (
+                      <figure key={i} style={{ ...x.card, margin: 0, padding: 'clamp(20px, 2.2vw, 26px)', boxShadow: '0 16px 40px -30px rgba(0,0,0,0.5)' }}>
+                        {Number.isFinite(stars) && stars > 0 && (
+                          <div role="img" aria-label={`${stars} out of 5 stars`} style={{ display: 'flex', gap: 2, color: C.text, marginBottom: 10 }}>
+                            {Array.from({ length: Math.min(5, Math.round(stars)) }).map((_, k) => <Star key={k} size={15} />)}
+                          </div>
+                        )}
+                        <blockquote style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6 }}>{r.text}</blockquote>
+                        <figcaption style={{ marginTop: 12, fontSize: 15, color: C.textDim }}>{r.author}{r.date ? ` · ${r.date}` : ''}</figcaption>
+                      </figure>
+                    )
+                  })}
                 </div>
-              ) : <div />}
-              <div className="lv-revcards">
-                {m.reviews.map((r, i) => {
-                  const stars = Number(r.rating)
-                  return (
-                    <figure key={i} style={{ ...x.card, margin: 0, padding: 'clamp(20px, 2.2vw, 26px)' }}>
-                      {Number.isFinite(stars) && stars > 0 && (
-                        <div role="img" aria-label={`${stars} out of 5 stars`} style={{ display: 'flex', gap: 2, color: C.accent, marginBottom: 10 }}>
-                          {Array.from({ length: Math.min(5, Math.round(stars)) }).map((_, k) => <Star key={k} size={15} />)}
-                        </div>
-                      )}
-                      <blockquote style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6 }}>{r.text}</blockquote>
-                      <figcaption style={{ marginTop: 12, fontSize: 15, color: C.textDim }}>{r.author}{r.date ? ` · ${r.date}` : ''}</figcaption>
-                    </figure>
-                  )
-                })}
               </div>
             </div>
           </div>
