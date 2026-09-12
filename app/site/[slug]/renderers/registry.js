@@ -28,12 +28,17 @@ import SereneConcern from './SereneConcern.js'
 import SereneTeam from './SereneTeam.js'
 import SereneBlogIndex, { SereneBlogPost } from './SereneBlogIndex.js'
 import {
+  LevelHome, LevelServices, LevelServiceDetail, LevelAreas, LevelAreaDetail, LevelCombo,
+  LevelAbout, LevelContact, LevelFAQ, LevelBlogIndex, LevelBlogPost,
+} from './LevelPages.js'
+import {
   HearthHome, HearthServices, HearthServiceDetail, HearthAreas, HearthAreaDetail, HearthCombo,
   HearthAbout, HearthContact, HearthFAQ, HearthBlogIndex, HearthBlogPost,
 } from './HearthPages.js'
 import { crewTokens } from '../../../templates/crew/tokens.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { hearthTokens } from '../../../templates/hearth/tokens.js'
+import { levelTokens } from '../../../templates/level/tokens.js'
 
 export const FAMILIES = {
   crew: {
@@ -51,6 +56,11 @@ export const FAMILIES = {
     label: 'Heritage', tokens: hearthTokens,
     Home: HearthHome, Services: HearthServices, ServiceDetail: HearthServiceDetail, Areas: HearthAreas, AreaDetail: HearthAreaDetail,
     Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
+  },
+  level: {
+    label: 'Modern', tokens: levelTokens,
+    Home: LevelHome, Services: LevelServices, ServiceDetail: LevelServiceDetail, Areas: LevelAreas, AreaDetail: LevelAreaDetail,
+    Combo: LevelCombo, About: LevelAbout, Contact: LevelContact, FAQ: LevelFAQ, BlogIndex: LevelBlogIndex, BlogPost: LevelBlogPost,
   },
 }
 
