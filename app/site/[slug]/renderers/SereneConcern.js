@@ -1,7 +1,6 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
-import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, buildFAQSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
@@ -60,7 +59,6 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
     <>
       <SereneResponsive border={T.colors.border} />
       {schemas.map((s, i) => <JsonLd key={i} data={s} />)}
-      <TrackingScripts tracking={c.tracking} />
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />

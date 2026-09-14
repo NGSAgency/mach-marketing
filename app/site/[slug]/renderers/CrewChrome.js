@@ -1,6 +1,5 @@
 import { crewTokens } from '../../../templates/crew/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
-import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import {
   JsonLd,
   urlServices,
@@ -386,7 +385,6 @@ export function CrewPage({ x, current, schemas = [], children }) {
       <CrewStyles x={x} />
       {/* No structured data on concepts: a noindexed pitch shouldn't assert ratings or an address to search engines. */}
       {!concept && schemas.filter(Boolean).map((s, i) => <JsonLd key={i} data={s} />)}
-      <TrackingScripts tracking={c.tracking} />
 
       <div className="crew" style={{ background: C.bg, color: C.text, fontFamily: F.body, fontSize: T.type.base, lineHeight: 1.6, minHeight: '100vh' }}>
         <UtilityBar x={x} />

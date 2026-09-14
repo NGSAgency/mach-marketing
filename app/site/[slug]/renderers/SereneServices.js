@@ -1,7 +1,6 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
-import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
@@ -397,7 +396,6 @@ export default function SereneServices({ config: c, siteSlug }) {
   return (
     <>
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
-      <TrackingScripts tracking={c.tracking} />
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={logo} base={base} />
 

@@ -1,6 +1,5 @@
 import { levelTokens } from '../../../templates/level/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
-import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import { siteData, navItems, proofItems, paragraphs } from './family/data.js'
@@ -220,7 +219,6 @@ export function LevelPage({ x, current, schemas = [], children }) {
     <>
       <LevelStyles x={x} />
       {!concept && schemas.filter(Boolean).map((s, i) => <JsonLd key={i} data={s} />)}
-      <TrackingScripts tracking={c.tracking} />
       <div className="level" style={{ background: C.bg, color: C.text, fontFamily: F.body, fontSize: T.type.base, lineHeight: 1.6, minHeight: '100vh' }}>
         <Header x={x} current={current} />
         <main>{children}</main>

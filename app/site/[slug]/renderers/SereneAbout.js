@@ -1,6 +1,5 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
-import { TrackingScripts } from '../../../../lib/site/tracking.js'
 import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { TrustBar, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
@@ -19,7 +18,6 @@ export default function SereneAbout({ config: c, siteSlug }) {
     <>
       <SereneResponsive border={T.colors.border} />
       <JsonLd data={buildBreadcrumbSchema(c, crumbs)} />
-      <TrackingScripts tracking={c.tracking} />
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
