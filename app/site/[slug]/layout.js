@@ -3,6 +3,7 @@ import FamilyFonts from '../../templates/FamilyFonts.js'
 import PreviewBar from './PreviewBar.js'
 import { familyKey } from './renderers/registry.js'
 import { TrackingScripts } from '../../../lib/site/tracking.js'
+import LeadEvents from '../../../lib/site/events.js'
 
 // Loads the site's typefaces for every page under it, and the client's
 // analytics tags. The config request is shared with the page through
@@ -25,6 +26,7 @@ export default async function SiteLayout({ children, params }) {
     <>
       <FamilyFonts families={[family]} />
       {!preview && <TrackingScripts tracking={result?.config?.tracking} />}
+      {!preview && <LeadEvents />}
       {preview && (
         <PreviewBar
           slug={slug}
