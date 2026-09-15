@@ -372,7 +372,7 @@ function SereneFooter({ T, c, base: baseProp }) {
           fontSize: T.type.xs,
           color: T.colors.textMuted,
         }}>
-          <span>© {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}</span>
+          <span>© {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}{' · '}<a href={`${base}/privacy`} style={{ color: 'inherit' }}>Privacy</a></span>
           {c.profile?.compliance_level === 'medical' && (
             <span style={{ maxWidth: 520, textAlign: 'right', lineHeight: 1.6 }}>
               Individual results vary. A consultation determines whether a treatment is appropriate for you.

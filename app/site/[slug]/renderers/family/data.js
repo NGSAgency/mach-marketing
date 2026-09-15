@@ -8,7 +8,7 @@
 // in the data, and a concept shows a labelled note where a real site would
 // hide a section.
 import {
-  urlServices, urlService, urlServiceAreas, urlArea, urlCombo, urlAbout, urlFAQ, urlContact,
+  urlServices, urlService, urlServiceAreas, urlArea, urlCombo, urlAbout, urlFAQ, urlPrivacy, urlContact,
   breadcrumbsForService, breadcrumbsForArea, breadcrumbsForCombo,
   buildBreadcrumbSchema, buildFAQSchema, buildServiceSchema, buildLocalBusinessSchema,
 } from '../../../../../lib/templates/shared/seo/index.js'
@@ -115,6 +115,7 @@ export function siteData(c, siteSlug) {
     about: `${base}${urlAbout()}`,
     faq: `${base}${urlFAQ()}`,
     contact: `${base}${urlContact()}`,
+    privacy: `${base}${urlPrivacy()}`,
   }
 
   // The trade in a few words, for page headings ("Pest control in Olathe").

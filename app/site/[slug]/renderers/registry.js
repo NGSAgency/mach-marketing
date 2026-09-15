@@ -44,23 +44,23 @@ export const FAMILIES = {
   crew: {
     label: 'Local', tokens: crewTokens,
     Home: CrewHome, Services: CrewServices, ServiceDetail: CrewServiceDetail, Areas: CrewAreas, AreaDetail: CrewAreaDetail,
-    Combo: CrewCombo, About: CrewAbout, Contact: CrewContact, FAQ: CrewFAQ, BlogIndex: CrewBlogIndex, BlogPost: CrewBlogPost,
+    Privacy: CrewPrivacy, Combo: CrewCombo, About: CrewAbout, Contact: CrewContact, FAQ: CrewFAQ, BlogIndex: CrewBlogIndex, BlogPost: CrewBlogPost,
   },
   serene: {
     label: 'Editorial', tokens: sereneTokens,
     Home: SereneHome, Services: SereneServices, ServiceDetail: SereneServiceDetail, Areas: SereneAreas, AreaDetail: SereneAreaDetail,
-    Combo: SereneCombo, About: SereneAbout, Contact: SereneContact, FAQ: SereneFAQ, BlogIndex: SereneBlogIndex, BlogPost: SereneBlogPost,
+    Privacy: SerenePrivacy, Combo: SereneCombo, About: SereneAbout, Contact: SereneContact, FAQ: SereneFAQ, BlogIndex: SereneBlogIndex, BlogPost: SereneBlogPost,
     Concern: SereneConcern, Team: SereneTeam,
   },
   hearth: {
     label: 'Heritage', tokens: hearthTokens,
     Home: HearthHome, Services: HearthServices, ServiceDetail: HearthServiceDetail, Areas: HearthAreas, AreaDetail: HearthAreaDetail,
-    Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
+    Privacy: HearthPrivacy, Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
   },
   level: {
     label: 'Modern', tokens: levelTokens,
     Home: LevelHome, Services: LevelServices, ServiceDetail: LevelServiceDetail, Areas: LevelAreas, AreaDetail: LevelAreaDetail,
-    Combo: LevelCombo, About: LevelAbout, Contact: LevelContact, FAQ: LevelFAQ, BlogIndex: LevelBlogIndex, BlogPost: LevelBlogPost,
+    Privacy: LevelPrivacy, Combo: LevelCombo, About: LevelAbout, Contact: LevelContact, FAQ: LevelFAQ, BlogIndex: LevelBlogIndex, BlogPost: LevelBlogPost,
   },
 }
 

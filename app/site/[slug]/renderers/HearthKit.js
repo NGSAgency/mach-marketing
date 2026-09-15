@@ -292,6 +292,8 @@ function Footer({ x }) {
       </div>
       <div style={{ ...wrap, paddingBlock: '18px 96px', borderTop: `1px solid ${liveryRule}`, fontSize: 14, color: liveryDim }}>
         © {new Date().getFullYear()} {biz.legal_name || name}
+        {' · '}
+        <a href={href.privacy} style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy</a>
       </div>
     </footer>
   )

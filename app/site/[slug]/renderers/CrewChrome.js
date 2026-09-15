@@ -368,6 +368,8 @@ function Footer({ x }) {
       </div>
       <div style={{ ...wrap, paddingBlock: '18px 90px', borderTop: `1px solid ${C.inverseBorder}`, fontSize: 13 }}>
         © {new Date().getFullYear()} {biz.legal_name || name}
+        {' · '}
+        <a href={href.privacy} style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy</a>
       </div>
     </footer>
   )
