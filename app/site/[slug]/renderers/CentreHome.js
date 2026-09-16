@@ -16,10 +16,11 @@ export default function CentreHome({ config: c, siteSlug }) {
   const steps = stepsFrom(c.generated?.['home|process']) || []
 
   const heroImg = m.hero
-  // The same vetted facts every family shows, plus the coverage count, which
-  // is ours to count rather than a claim.
+  // Short facts only. proofItems also carries the licence and any warranty,
+  // whose labels are sentences — true, and already in the hero's trust line,
+  // but far too long for a slot sized for a number.
   const figures = [
-    ...proofItems(x).map(p => ({ v: p.value, k: p.label })),
+    ...proofItems(x).filter(p => p.kind === 'rating' || p.kind === 'since').map(p => ({ v: p.value, k: p.label })),
     areas.length > 1 && { v: String(areas.length), k: 'Communities' },
   ].filter(Boolean).slice(0, 4)
 
@@ -31,6 +32,7 @@ export default function CentreHome({ config: c, siteSlug }) {
           the page still opens with a statement rather than an empty frame. */}
       <section
         className="ctr-under-nav"
+        data-hero=""
         style={{
           position: 'relative', overflow: 'hidden', display: 'grid', placeItems: 'center', textAlign: 'center',
           minHeight: heroImg ? 'min(92vh, 860px)' : 'auto',
@@ -42,7 +44,7 @@ export default function CentreHome({ config: c, siteSlug }) {
         {heroImg && (
           <>
             <img src={heroImg.url} alt={heroImg.alt || ''} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(18,14,12,0.62), rgba(18,14,12,0.42) 45%, rgba(18,14,12,0.86))' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(16,12,10,0.78), rgba(16,12,10,0.62) 45%, rgba(16,12,10,0.92))' }} />
           </>
         )}
         <div style={{ ...wrap, position: 'relative', maxWidth: 920 }}>
@@ -245,7 +247,7 @@ export default function CentreHome({ config: c, siteSlug }) {
           </>
         )}
         <div style={{ ...wrap, position: 'relative' }}>
-          <h2 style={{ ...x.h2, color: 'inherit' }}>{quoteLabel}</h2>
+          <h2 style={{ ...x.h2, color: 'inherit' }}>Get in touch</h2>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 20 }}>
             {phone && <a href={`tel:${phone}`} style={m.secondary?.url ? btnOnPhoto(x) : btnPrimary(x)}>Call {phoneDisplay}</a>}
             <a href={quoteHref} style={btnOutline(x, m.secondary?.url ? '#fff' : C.text)}>{quoteLabel}</a>
