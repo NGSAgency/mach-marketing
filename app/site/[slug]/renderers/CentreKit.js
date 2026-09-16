@@ -64,6 +64,15 @@ function CentreStyles({ x }) {
         .ctr-figures { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); text-align: center; }
         .ctr-figures > div { padding-inline: 18px; border-left: 1px solid ${C.inverseBorder}; }
         .ctr-figures > div:first-child { border-left: 0; }
+        /* One step per row: a number, then the words. */
+        .ctr-step { display: flex; gap: clamp(18px, 2vw, 28px); align-items: flex-start; padding: 22px 0; border-top: 1px solid ${C.border}; }
+        .ctr-step:last-child { border-bottom: 1px solid ${C.border}; }
+        /* A labelled column beside its content, for the specification blocks. */
+        .ctr-aside { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+        .ctr-cost { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: clamp(24px, 3vw, 44px); align-items: start; }
+        @media (max-width: 860px) {
+          .ctr-aside, .ctr-cost { grid-template-columns: 1fr; gap: 20px; }
+        }
         .ctr-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
         @media (max-width: 1000px) {
           .ctr-nav-menu { display: none; }

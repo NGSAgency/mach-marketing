@@ -1,6 +1,6 @@
 import { centreContext, CentrePage, btnPrimary, btnOutline } from './CentreKit.js'
 import CrewMobileBar from './CrewMobileBar.js'
-import { servicesIndexModel, serviceModel, paragraphs, oneLine } from './family/data.js'
+import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine } from './family/data.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 
 // CENTRE's inner pages. The shapes come from the home page — a centred header,
@@ -39,16 +39,26 @@ function Header({ x, crumbs, eyebrow, title, lede }) {
 
 /** The facts, across a dark band. Short items only — anything longer belongs
  *  in the body, not in a row of figures. */
-function FactBand({ x, items }) {
-  const short = (items || []).filter(t => typeof t === 'string' && t.length <= 44).slice(0, 4)
-  if (short.length === 0) return null
-  const { C, wrap } = x
+function FactBand({ x }) {
+  const { C, F, wrap } = x
+  // Value and label, not a sentence: a trust bar has to be readable at a
+  // glance, which the old one — 15.5px of dim grey — was not.
+  const items = [
+    ...proofItems(x).filter(p => p.kind === 'rating' || p.kind === 'since').map(p => ({ v: p.value, k: p.label })),
+    x.credential && { v: x.credential, k: x.license ? `Lic. ${x.license}` : 'On file' },
+    x.emergency && { v: x.emergency, k: 'Availability' },
+    x.biz.hours_display && { v: x.biz.hours_display, k: 'Hours' },
+  ].filter(Boolean).slice(0, 4)
+  if (items.length === 0) return null
   return (
     <div style={{ background: C.inverseBgAlt, color: C.inverseText }}>
       <div style={wrap}>
-        <div className="ctr-figures" style={{ ['--n']: short.length, paddingBlock: 'clamp(26px, 3vw, 40px)' }}>
-          {short.map((t, i) => (
-            <div key={i} style={{ fontSize: 15.5, lineHeight: 1.5, color: C.inverseTextDim }}>{t}</div>
+        <div className="ctr-figures" style={{ ['--n']: items.length, paddingBlock: 'clamp(26px, 3vw, 38px)' }}>
+          {items.map((i, n) => (
+            <div key={n}>
+              <b style={{ display: 'block', fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(19px, 1.9vw, 24px)', lineHeight: 1.25, color: C.inverseText }}>{i.v}</b>
+              <span style={{ display: 'block', marginTop: 7, fontSize: 13.5, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, color: C.inverseTextDim }}>{i.k}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -68,38 +78,62 @@ function ActionRow({ x, align = 'center' }) {
   )
 }
 
-/** What the work costs, in the client's own numbers. Nothing here is ours. */
+/** What the work costs, in the client's own numbers and words.
+ *
+ * The first version put a paragraph of price ranges inside a tile sized for a
+ * figure, and printed pricing_approach raw — the page carried the words
+ * "transparent_flat_rate". Values now sit in rows that can hold a sentence,
+ * and anything that still looks like a database value is not shown at all.
+ */
+const APPROACH = {
+  transparent_flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
+  flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
+  hourly: 'We charge by the hour, plus parts.',
+  time_and_materials: 'We charge for the time on the job plus the parts fitted.',
+  quote_per_job: 'Every job is quoted on its own before any work starts.',
+}
+const looksLikeAValue = (t) => typeof t === 'string' && /^[a-z0-9]+(_[a-z0-9]+)+$/.test(t.trim())
+
 function Cost({ x, service }) {
   const { C, F, T, wrap, mid, sectionPad } = x
   const p = x.c.pricing || {}
-  const items = [
+  const rows = [
     p.diagnostic_fee && { k: 'Diagnostic', v: p.diagnostic_fee },
     p.service_call_fee && { k: 'Service call', v: p.service_call_fee },
     p.price_range_general && { k: 'Typical range', v: p.price_range_general },
     p.free_estimates && { k: 'Estimates', v: 'Free' },
+    p.financing && { k: 'Financing', v: p.financing_partners?.length ? `Available through ${p.financing_partners.join(', ')}` : 'Available' },
   ].filter(Boolean)
-  const notes = [p.approach, !p.free_estimates && p.estimate_policy, p.financing && (p.financing_partners?.length
-    ? `Financing available through ${p.financing_partners.join(', ')}.`
-    : 'Financing available.')].filter(Boolean)
-  if (items.length === 0 && notes.length === 0) return null
+
+  const approach = APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
+  const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
+  const notes = [approach, policy].filter(Boolean)
+  if (rows.length === 0 && notes.length === 0) return null
+
   return (
     <section style={{ paddingBlock: sectionPad }}>
-      <div style={wrap}>
-        <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 28 }}>What it costs</h2></div>
-        {items.length > 0 && (
-          <div className="ctr-tiles" style={{ marginBottom: notes.length ? 26 : 0 }}>
-            {items.map(i => (
-              <div key={i.k} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.md, padding: '24px 22px', textAlign: 'center' }}>
-                <b style={{ display: 'block', fontFamily: F.display, fontWeight: 600, fontSize: 27, color: C.text, lineHeight: 1.1 }}>{i.v}</b>
-                <span style={{ display: 'block', marginTop: 8, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.textMuted }}>{i.k}</span>
+      <div style={{ ...wrap, maxWidth: 1060 }}>
+        <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 30 }}>What it costs</h2></div>
+        <div className="ctr-cost">
+          <div>
+            {rows.map((r, i) => (
+              <div key={r.k} style={{
+                display: 'grid', gridTemplateColumns: 'minmax(120px, 34%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
+                padding: '16px 0', borderTop: i === 0 ? `2px solid ${C.text}` : `1px solid ${C.border}`,
+              }}>
+                <span style={{ fontSize: 13.5, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.textMuted }}>{r.k}</span>
+                <span style={{ fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(18px, 1.8vw, 22px)', lineHeight: 1.45, color: C.text }}>{r.v}</span>
               </div>
             ))}
+            {rows.length > 0 && <div style={{ borderTop: `1px solid ${C.border}` }} />}
           </div>
-        )}
-        {notes.map((n, i) => (
-          <p key={i} style={{ maxWidth: '62ch', margin: '0 auto 12px', textAlign: 'center', color: C.text, fontSize: 17.5, lineHeight: 1.7 }}>{n}</p>
-        ))}
-        <div style={{ marginTop: 26 }}><ActionRow x={x} /></div>
+          <aside style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.md, padding: 'clamp(22px, 2.4vw, 32px)', alignSelf: 'start' }}>
+            {notes.map((n, i) => (
+              <p key={i} style={{ margin: i ? '14px 0 0' : 0, color: C.text, fontSize: 17, lineHeight: 1.68 }}>{n}</p>
+            ))}
+            <div style={{ marginTop: notes.length ? 20 : 0 }}><ActionRow x={x} align="flex-start" /></div>
+          </aside>
+        </div>
       </div>
     </section>
   )
@@ -229,7 +263,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
   const x = centreContext(c, siteSlug)
   const { C, F, T, wrap, mid, sectionPad, href, quoteHref, quoteLabel, services, concept } = x
   const m = serviceModel(x, service)
-  const body = { maxWidth: 720, margin: '0 auto', fontSize: 18.5, lineHeight: 1.78, color: C.text }
+  const body = { maxWidth: 860, margin: '0 auto', fontSize: 18.5, lineHeight: 1.78, color: C.text }
   const reviews = ((c.reviews || {}).featured || []).filter(r => r?.text).slice(0, 3)
 
   return (
@@ -253,7 +287,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
         </div>
       )}
 
-      <FactBand x={x} items={m.facts} />
+      <FactBand x={x} />
 
       {/* THE OPENING — one paragraph set large, the rest at reading size.
           Never more prose than that before something changes shape. */}
@@ -264,7 +298,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
               const paras = paragraphs(m.intro)
               return (
                 <>
-                  <p style={{ fontFamily: F.display, fontWeight: 500, fontSize: 'clamp(21px, 2.2vw, 29px)', lineHeight: 1.36, color: C.text, maxWidth: '34ch', margin: '0 auto', textAlign: 'center' }}>
+                  <p style={{ fontFamily: F.display, fontWeight: 500, fontSize: 'clamp(21px, 2.2vw, 30px)', lineHeight: 1.42, color: C.text, maxWidth: '52ch', margin: '0 auto', textAlign: 'center' }}>
                     {paras[0]}
                   </p>
                   {paras.length > 1 && (
@@ -285,26 +319,20 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
         <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div style={wrap}>
             <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 34 }}>What happens on the visit</h2></div>
-            {m.steps?.length === 3 ? (
-              <div className="ctr-timeline">
+            {m.steps?.length > 0 ? (
+              /* Across the width, one step per row. Three columns turned every
+                 step into a skinny tower of words. */
+              <div style={{ maxWidth: 940, margin: '0 auto', display: 'grid' }}>
                 {m.steps.map((s, i) => (
-                  <div key={i}>
+                  <div key={i} className="ctr-step">
                     <span style={{
-                      position: 'relative', zIndex: 1, width: 38, height: 38, borderRadius: '50%', background: C.accent, color: C.onAccent,
-                      display: 'grid', placeItems: 'center', margin: '0 auto 18px', fontWeight: 700, fontSize: 15, boxShadow: `0 0 0 8px ${C.bgAlt}`,
+                      flex: 'none', width: 52, height: 52, borderRadius: '50%', background: C.accent, color: C.onAccent,
+                      display: 'grid', placeItems: 'center', fontFamily: F.display, fontWeight: 600, fontSize: 21,
                     }}>{i + 1}</span>
-                    {s.title && <h3 style={{ ...x.h3, fontSize: 23, marginBottom: 6 }}>{s.title}</h3>}
-                    {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 17, lineHeight: 1.65 }}>{s.description}</p>}
-                  </div>
-                ))}
-              </div>
-            ) : m.steps?.length > 0 ? (
-              <div className="ctr-tiles">
-                {m.steps.map((s, i) => (
-                  <div key={i} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.md, padding: '24px 22px' }}>
-                    <span style={{ fontFamily: F.display, fontWeight: 600, fontSize: 20, color: C.accent }}>{String(i + 1).padStart(2, '0')}</span>
-                    {s.title && <h3 style={{ ...x.h3, fontSize: 21, margin: '8px 0 6px' }}>{s.title}</h3>}
-                    {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 16.5, lineHeight: 1.6 }}>{s.description}</p>}
+                    <div>
+                      {s.title && <h3 style={{ ...x.h3, fontSize: 'clamp(20px, 2vw, 25px)', marginBottom: 6 }}>{s.title}</h3>}
+                      {s.description && <p style={{ margin: 0, color: C.text, fontSize: 17.5, lineHeight: 1.7 }}>{s.description}</p>}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -359,12 +387,17 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
       {/* WHAT WE USE — in a panel, so it reads as a specification rather than
           as three more paragraphs of the same article. */}
       {m.methods && (
-        <section style={{ paddingBottom: sectionPad, paddingTop: reviews.length ? 0 : sectionPad }}>
-          <div style={wrap}>
-            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.lg, padding: 'clamp(28px, 3.4vw, 52px)', maxWidth: 900, margin: '0 auto' }}>
-              <h2 style={{ ...x.h3, fontSize: 'clamp(22px, 2.2vw, 28px)', marginBottom: 16, textAlign: 'center' }}>What we use</h2>
-              <div style={{ ...body, maxWidth: '66ch' }}>
-                {paragraphs(m.methods).map((t, i) => <p key={i} style={{ margin: '0 0 16px' }}>{t}</p>)}
+        <section style={{ paddingBlock: sectionPad }}>
+          <div style={{ ...wrap, maxWidth: 1060 }}>
+            <div className="ctr-aside" style={{ borderTop: `2px solid ${C.text}`, paddingTop: 26 }}>
+              <div>
+                <h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>Equipment and methods</h2>
+                <p style={{ margin: '10px 0 0', color: C.textMuted, fontSize: 15.5, lineHeight: 1.6 }}>
+                  What we fit and work on for {service.name.toLowerCase()}.
+                </p>
+              </div>
+              <div style={{ fontSize: 18.5, lineHeight: 1.78, color: C.text }}>
+                {paragraphs(m.methods).map((t, i) => <p key={i} style={{ margin: i ? '0 0 16px' : '0 0 16px' }}>{t}</p>)}
               </div>
             </div>
           </div>
@@ -375,7 +408,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
       {m.faqs.length > 0 && (
         <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div style={wrap}>
-            <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 26 }}>Questions</h2></div>
+            <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 26 }}>FAQs</h2></div>
             <div style={{ maxWidth: 800, margin: '0 auto' }}>
               {m.faqs.map((q, i) => (
                 <details key={i} open={i === 0} style={{ borderTop: `1px solid ${C.border}`, borderBottom: i === m.faqs.length - 1 ? `1px solid ${C.border}` : undefined }}>
