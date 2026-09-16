@@ -75,6 +75,12 @@ function CentreStyles({ x }) {
         }
         @media (max-width: 560px) {
           .ctr-tel { display: none; }
+          /* The pill stays one row on a phone: a long trading name wrapped it
+             onto two lines and pushed it over the top of the hero. */
+          .ctr-logo { font-size: 18px; max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+          .ctr-nav > nav { padding: 8px 8px 8px 18px; }
+          .ctr-nav-cta { padding: 11px 16px; font-size: 14.5px; }
+          .ctr-under-nav { margin-top: -80px; padding-top: 104px; }
           .ctr-figures { grid-template-columns: 1fr; }
           .ctr-figures > div { border-left: 0; }
         }
@@ -102,7 +108,7 @@ function Nav({ x }) {
         <a href={href.home} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: C.text }}>
           {logo
             ? <img src={logo} alt={name} style={{ height: 30, width: 'auto', objectFit: 'contain' }} />
-            : <span style={{ fontFamily: F.display, fontSize: 21, letterSpacing: '-0.01em' }}>{name}</span>}
+            : <span className="ctr-logo" style={{ fontFamily: F.display, fontSize: 21, letterSpacing: '-0.01em', whiteSpace: 'nowrap' }}>{name}</span>}
         </a>
         <span className="ctr-nav-menu" style={{ gap: 26, fontWeight: 600, fontSize: 15.5, color: C.textDim }}>
           {items.map(i => (
@@ -111,7 +117,7 @@ function Nav({ x }) {
         </span>
         <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           {phone && <a className="ctr-tel" href={`tel:${phone}`} style={{ fontWeight: 700, color: C.text, textDecoration: 'none' }}>{phoneDisplay}</a>}
-          <a href={quoteHref} style={{ ...btnPrimary(x), padding: '12px 22px', fontSize: 15.5 }}>{quoteLabel}</a>
+          <a className="ctr-nav-cta" href={quoteHref} style={{ ...btnPrimary(x), padding: '12px 22px', fontSize: 15.5 }}>{quoteLabel}</a>
         </span>
       </nav>
     </div>
