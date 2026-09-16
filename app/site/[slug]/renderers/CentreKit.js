@@ -73,6 +73,13 @@ function CentreStyles({ x }) {
           .ctr-timeline { grid-template-columns: 1fr; gap: 30px; }
           .ctr-timeline::before { display: none; }
         }
+        /* The call bar is CREW's component, reused. Its show/hide rules live in
+           CREW's stylesheet, so Centre has to state them itself. */
+        .crew-mobilebar { display: none !important; }
+        @media (max-width: 900px) {
+          .crew-mobilebar { display: grid !important; }
+          .ctr { padding-bottom: 76px; }
+        }
         @media (max-width: 560px) {
           .ctr-tel { display: none; }
           /* The pill stays one row on a phone: a long trading name wrapped it
