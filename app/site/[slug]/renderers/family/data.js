@@ -406,6 +406,36 @@ export function faqModel(d) {
   return { crumbs, title: `${tradeNoun} FAQ`, schemas: [buildBreadcrumbSchema(c, crumbs), faqs.length > 0 ? buildFAQSchema(faqs) : null] }
 }
 
+/**
+ * What the work costs, from the client's own fields. Rows are label/value
+ * pairs; notes are sentences. Anything that still looks like a database value
+ * (transparent_flat_rate) is turned into English or dropped — it reached a
+ * live page once, and must not again.
+ */
+const PRICING_APPROACH = {
+  transparent_flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
+  flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
+  hourly: 'We charge by the hour, plus parts.',
+  time_and_materials: 'We charge for the time on the job plus the parts fitted.',
+  quote_per_job: 'Every job is quoted on its own before any work starts.',
+}
+const looksLikeAValue = (t) => typeof t === 'string' && /^[a-z0-9]+(_[a-z0-9]+)+$/.test(t.trim())
+
+export function pricingModel(c) {
+  const p = c.pricing || {}
+  const rows = [
+    p.diagnostic_fee && { k: 'Diagnostic', v: p.diagnostic_fee },
+    p.service_call_fee && { k: 'Service call', v: p.service_call_fee },
+    p.price_range_general && { k: 'Typical range', v: p.price_range_general },
+    p.free_estimates && { k: 'Estimates', v: 'Free' },
+    p.financing && { k: 'Financing', v: p.financing_partners?.length ? `Available through ${p.financing_partners.join(', ')}` : 'Available' },
+  ].filter(Boolean)
+  const approach = PRICING_APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
+  const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
+  const notes = [approach, policy].filter(Boolean)
+  return { rows, notes, has: rows.length > 0 || notes.length > 0 }
+}
+
 /** The contact form's colours from a family's roles. */
 export const formColors = (C, field) => ({
   text: C.text, textDim: C.textDim, textMuted: C.textMuted, border: C.border,

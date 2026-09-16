@@ -1,7 +1,12 @@
 /* MACH Template Responsive Foundation */
 
-/* Prevent horizontal overflow anywhere */
-html, body { overflow-x: hidden; max-width: 100%; }
+/* Prevent horizontal overflow anywhere.
+   `clip`, not `hidden`: overflow-x: hidden on body makes body a scroll
+   container that never scrolls, and every position: sticky element inside it
+   (the header on every family, Hearth's ticket, Booking's request card) then
+   resolves against that container and never sticks. `clip` blocks the same
+   sideways scroll without creating a scroll container. */
+html, body { overflow-x: clip; max-width: 100%; }
 img, video, iframe { max-width: 100%; height: auto; box-sizing: border-box; }
 
 /* Nav visibility via media queries */

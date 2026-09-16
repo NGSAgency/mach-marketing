@@ -9,6 +9,7 @@ import { crewContext, CrewPage, PageHero } from './CrewChrome.js'
 import { hearthContext, HearthPage } from './HearthKit.js'
 import { levelContext, LevelPage } from './LevelKit.js'
 import { centreContext, CentrePage } from './CentreKit.js'
+import { bookingContext, BookingPage } from './BookingKit.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
@@ -142,5 +143,21 @@ export function CentrePrivacy({ config: c, siteSlug }) {
         </div>
       </section>
     </CentrePage>
+  )
+}
+
+export function BookingPrivacy({ config: c, siteSlug }) {
+  const x = bookingContext(c, siteSlug)
+  const m = privacyModel(c)
+  return (
+    <BookingPage x={x} schemas={[buildBreadcrumbSchema(c, crumbs)]}>
+      <section style={{ paddingBlock: x.sectionPad }}>
+        <div style={x.wrap}>
+          <h1 style={{ ...x.h1, fontSize: 'clamp(32px, 4vw, 52px)', marginBottom: 10 }}>{m.title}</h1>
+          <p style={{ margin: '0 0 40px', fontSize: 18, color: x.C.textDim }}>{m.intro}</p>
+          <Notice m={m} colors={x.C} fonts={x.F} />
+        </div>
+      </section>
+    </BookingPage>
   )
 }

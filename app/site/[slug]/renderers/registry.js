@@ -15,7 +15,13 @@ import CrewAbout from './CrewAbout.js'
 import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
-import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy } from './PrivacyPages.js'
+import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy } from './PrivacyPages.js'
+import BookingHome from './BookingHome.js'
+import { BookingServices, BookingServiceDetail } from './BookingPages.js'
+import {
+  BookingAreas, BookingAreaDetail, BookingCombo, BookingAbout, BookingContact, BookingFAQ,
+  BookingBlogIndex, BookingBlogPost,
+} from './BookingMore.js'
 import CentreHome from './CentreHome.js'
 import { CentreServices, CentreServiceDetail } from './CentrePages.js'
 import {
@@ -47,6 +53,7 @@ import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { hearthTokens } from '../../../templates/hearth/tokens.js'
 import { levelTokens } from '../../../templates/level/tokens.js'
 import { centreTokens } from '../../../templates/centre/tokens.js'
+import { bookingTokens } from '../../../templates/booking/tokens.js'
 
 export const FAMILIES = {
   crew: {
@@ -74,6 +81,15 @@ export const FAMILIES = {
     Areas: CentreAreas, AreaDetail: CentreAreaDetail, Combo: CentreCombo,
     About: CentreAbout, Contact: CentreContact, FAQ: CentreFAQ,
     BlogIndex: CentreBlogIndex, BlogPost: CentreBlogPost, Privacy: CentrePrivacy,
+  },
+  // BOOKING: the hero is half argument, half a real request-a-visit form, and
+  // that form follows the visitor down every inner page in a sticky column.
+  booking: {
+    label: 'Direct', tokens: bookingTokens,
+    Home: BookingHome, Services: BookingServices, ServiceDetail: BookingServiceDetail,
+    Areas: BookingAreas, AreaDetail: BookingAreaDetail, Combo: BookingCombo,
+    About: BookingAbout, Contact: BookingContact, FAQ: BookingFAQ,
+    BlogIndex: BookingBlogIndex, BlogPost: BookingBlogPost, Privacy: BookingPrivacy,
   },
   level: {
     label: 'Modern', tokens: levelTokens,
