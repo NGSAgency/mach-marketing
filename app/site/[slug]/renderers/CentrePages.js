@@ -10,7 +10,7 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 
 /** A centred page header, on the ground colour. Inner pages don't take the
  *  full-height photographic treatment: that belongs to the home page. */
-function Header({ x, crumbs, eyebrow, title, lede }) {
+export function Header({ x, crumbs, eyebrow, title, lede }) {
   const { C, F, wrap, mid } = x
   return (
     <section style={{ paddingTop: 'clamp(40px, 5vw, 72px)', paddingBottom: 'clamp(28px, 3.5vw, 48px)' }}>
@@ -39,7 +39,7 @@ function Header({ x, crumbs, eyebrow, title, lede }) {
 
 /** The facts, across a dark band. Short items only — anything longer belongs
  *  in the body, not in a row of figures. */
-function FactBand({ x }) {
+export function FactBand({ x }) {
   const { C, F, wrap } = x
   // Value and label, not a sentence: a trust bar has to be readable at a
   // glance, which the old one — 15.5px of dim grey — was not.
@@ -68,7 +68,7 @@ function FactBand({ x }) {
 
 /** Call or quote, inline. The research is consistent that one action repeated
  *  after each explanation beats a single button at the bottom of the page. */
-function ActionRow({ x, align = 'center' }) {
+export function ActionRow({ x, align = 'center' }) {
   const { C, phone, phoneDisplay, quoteHref, quoteLabel } = x
   return (
     <div style={{ display: 'flex', gap: 12, justifyContent: align, flexWrap: 'wrap' }}>
@@ -94,7 +94,7 @@ const APPROACH = {
 }
 const looksLikeAValue = (t) => typeof t === 'string' && /^[a-z0-9]+(_[a-z0-9]+)+$/.test(t.trim())
 
-function Cost({ x, service }) {
+export function Cost({ x, service }) {
   const { C, F, T, wrap, mid, sectionPad } = x
   const p = x.c.pricing || {}
   const rows = [
@@ -141,7 +141,7 @@ function Cost({ x, service }) {
 
 /** The towns, linked to the page for this service in each one. The combo pages
  *  exist and nothing was linking to them from here. */
-function Towns({ x, service }) {
+export function Towns({ x, service }) {
   const { C, F, T, wrap, mid, sectionPad, areas, href } = x
   if (areas.length === 0) return null
   return (
@@ -167,7 +167,7 @@ function Towns({ x, service }) {
 }
 
 /** The same closing as the home page, without the photograph. */
-function Closing({ x }) {
+export function Closing({ x }) {
   const { C, wrap, phone, phoneDisplay, quoteHref, quoteLabel, biz } = x
   return (
     <section style={{ background: C.bgAlt, textAlign: 'center', paddingBlock: 'clamp(52px, 6vw, 88px)' }}>
@@ -190,6 +190,20 @@ function Closing({ x }) {
  * the home page switches between, stacked. A client with two services gets two
  * panels and it still looks deliberate.
  */
+/** CREW's pinned call bar, given Centre's colours. Its show/hide rules are in
+ *  CentreKit's stylesheet. */
+export function MobileBar({ x }) {
+  return (
+    <CrewMobileBar
+      phone={x.phone}
+      phoneDisplay={x.phoneDisplay}
+      quoteHref={x.quoteHref}
+      colors={x.C}
+      fontFamily={x.F.body}
+    />
+  )
+}
+
 export function CentreServices({ config: c, siteSlug }) {
   const x = centreContext(c, siteSlug)
   const { C, F, T, wrap, sectionPad, services, href, quoteHref, quoteLabel, concept, offeringLabel } = x
@@ -241,13 +255,7 @@ export function CentreServices({ config: c, siteSlug }) {
 
       <Closing x={x} />
 
-      <CrewMobileBar
-        phone={x.phone}
-        phoneDisplay={x.phoneDisplay}
-        quoteHref={quoteHref}
-        colors={C}
-        fontFamily={F.body}
-      />
+      <MobileBar x={x} />
     </CentrePage>
   )
 }
@@ -454,13 +462,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
 
       <Closing x={x} />
 
-      <CrewMobileBar
-        phone={x.phone}
-        phoneDisplay={x.phoneDisplay}
-        quoteHref={quoteHref}
-        colors={C}
-        fontFamily={F.body}
-      />
+      <MobileBar x={x} />
     </CentrePage>
   )
 }

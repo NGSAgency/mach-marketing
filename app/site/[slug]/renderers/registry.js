@@ -15,9 +15,13 @@ import CrewAbout from './CrewAbout.js'
 import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
-import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy } from './PrivacyPages.js'
+import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy } from './PrivacyPages.js'
 import CentreHome from './CentreHome.js'
 import { CentreServices, CentreServiceDetail } from './CentrePages.js'
+import {
+  CentreAreas, CentreAreaDetail, CentreCombo, CentreAbout, CentreContact, CentreFAQ,
+  CentreBlogIndex, CentreBlogPost,
+} from './CentreMore.js'
 import SereneHome from './SereneHome.js'
 import SereneServices from './SereneServices.js'
 import SereneServiceDetail from './SereneServiceDetail.js'
@@ -67,6 +71,9 @@ export const FAMILIES = {
   centre: {
     label: 'Statement', tokens: centreTokens,
     Home: CentreHome, Services: CentreServices, ServiceDetail: CentreServiceDetail,
+    Areas: CentreAreas, AreaDetail: CentreAreaDetail, Combo: CentreCombo,
+    About: CentreAbout, Contact: CentreContact, FAQ: CentreFAQ,
+    BlogIndex: CentreBlogIndex, BlogPost: CentreBlogPost, Privacy: CentrePrivacy,
   },
   level: {
     label: 'Modern', tokens: levelTokens,

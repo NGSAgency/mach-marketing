@@ -8,6 +8,7 @@ import { buildBreadcrumbSchema } from '../../../../lib/templates/shared/seo/inde
 import { crewContext, CrewPage, PageHero } from './CrewChrome.js'
 import { hearthContext, HearthPage } from './HearthKit.js'
 import { levelContext, LevelPage } from './LevelKit.js'
+import { centreContext, CentrePage } from './CentreKit.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
@@ -121,5 +122,25 @@ export function SerenePrivacy({ config: c, siteSlug }) {
         <SereneFooter T={T} c={c} base={base} />
       </div>
     </>
+  )
+}
+
+export function CentrePrivacy({ config: c, siteSlug }) {
+  const x = centreContext(c, siteSlug)
+  const m = privacyModel(c)
+  return (
+    <CentrePage x={x} schemas={[buildBreadcrumbSchema(c, crumbs)]}>
+      <section style={{ paddingBlock: x.sectionPad }}>
+        <div style={x.wrap}>
+          <div style={x.mid}>
+            <h1 style={{ ...x.h1, fontSize: 'clamp(34px, 4vw, 54px)', marginBottom: 10 }}>{m.title}</h1>
+            <p style={{ margin: '0 auto 40px', fontSize: 18, color: x.C.textDim }}>{m.intro}</p>
+          </div>
+          <div style={{ maxWidth: 780, margin: '0 auto' }}>
+            <Notice m={m} colors={x.C} fonts={x.F} maxWidth="none" />
+          </div>
+        </div>
+      </section>
+    </CentrePage>
   )
 }
