@@ -62,18 +62,21 @@ export const centreTokens = {
   ground: { base: '#f2f0ec', alt: '#e9e6e0', raised: '#ffffff', tint: 0.02 },
 
   fonts: {
-    // A high-contrast serif for anything that carries the voice, a plain
-    // humanist sans for reading. The contrast between them is the family.
+    // A high-contrast serif for anything that carries the voice, and a text
+    // face chosen for reading rather than for looks: Inter has a tall x-height
+    // and open shapes, so a paragraph at 18px holds up where Mulish went
+    // spindly. The contrast between the two is the family; the reading has to
+    // come first.
     display: "'Bodoni Moda', Georgia, 'Times New Roman', serif",
-    body: "'Mulish', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    body: "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
     mono: 'ui-monospace, monospace',
   },
-  fontsHref: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Mulish:wght@400;500;600;700&display=swap',
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Inter:wght@400;500;600;700&display=swap',
 
   type: {
     xs: '13px',
     sm: '15px',
-    base: '18px',
+    base: '18.5px',
     lg: '21px',
     xl: '30px',
     display: 'clamp(30px, 3.8vw, 54px)',

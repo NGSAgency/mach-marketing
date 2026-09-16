@@ -80,7 +80,7 @@ export default function CentreHome({ config: c, siteSlug }) {
           <div style={wrap}>
             <div style={mid}>
               <h2 style={x.h2}>What we take care of</h2>
-              <p style={{ color: C.textMuted, margin: '12px auto 34px', maxWidth: '52ch' }}>
+              <p style={{ color: C.textDim, margin: '12px auto 34px', maxWidth: '52ch', fontSize: 17.5 }}>
                 Choose the one you need and we'll show you what it covers.
               </p>
             </div>
@@ -111,7 +111,7 @@ export default function CentreHome({ config: c, siteSlug }) {
                         <div style={{ padding: 'clamp(28px, 3.4vw, 56px)', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'center', textAlign: 'left' }}>
                           <h3 style={{ ...x.h3, fontSize: 'clamp(26px, 2.6vw, 38px)' }}>{s.name}</h3>
                           {oneLine(s.short) || oneLine(s.description)
-                            ? <p style={{ margin: 0, color: C.textDim, fontSize: 17.5, maxWidth: '48ch' }}>{oneLine(s.short) || oneLine(s.description)}</p>
+                            ? <p style={{ margin: 0, color: C.text, fontSize: 18.5, lineHeight: 1.7, maxWidth: '48ch' }}>{oneLine(s.short) || oneLine(s.description)}</p>
                             : null}
                           <span style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 8 }}>
                             <a href={quoteHref} style={{ ...btnPrimary(x), padding: '13px 24px', fontSize: 16 }}>{quoteLabel}</a>
@@ -220,7 +220,7 @@ export default function CentreHome({ config: c, siteSlug }) {
                     {q.question}
                     <span aria-hidden="true" style={{ flex: 'none', width: 26, height: 26, borderRadius: '50%', border: `1.5px solid ${C.border}`, display: 'grid', placeItems: 'center', fontSize: 17, lineHeight: 1, color: C.accent }}>+</span>
                   </summary>
-                  <p style={{ margin: '0 0 22px', color: C.textDim, maxWidth: '62ch' }}>{q.answer}</p>
+                  <p style={{ margin: '0 0 22px', color: C.text, fontSize: 18, lineHeight: 1.72, maxWidth: '62ch' }}>{q.answer}</p>
                 </details>
               ))}
             </div>

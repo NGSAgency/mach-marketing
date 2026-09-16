@@ -29,7 +29,7 @@ function Header({ x, crumbs, eyebrow, title, lede }) {
         <div style={mid}>
           {eyebrow && <span style={{ ...x.eyebrow(C.textMuted), display: 'block', marginBottom: 16 }}>{eyebrow}</span>}
           <h1 style={x.h1}>{title}</h1>
-          {lede && <p style={{ fontSize: 'clamp(18px, 1.5vw, 21px)', color: C.textDim, margin: '20px auto 0', maxWidth: '52ch' }}>{lede}</p>}
+          {lede && <p style={{ fontSize: 'clamp(18px, 1.5vw, 21px)', color: C.textDim, margin: '20px auto 0', maxWidth: '52ch', lineHeight: 1.65 }}>{lede}</p>}
         </div>
       </div>
     </section>
@@ -110,7 +110,7 @@ export function CentreServices({ config: c, siteSlug }) {
                       <span style={{ ...x.eyebrow(C.textMuted) }}>{s.category}</span>
                     )}
                     <h2 style={{ ...x.h3, fontSize: 'clamp(24px, 2.4vw, 34px)' }}>{s.name}</h2>
-                    {line && <p style={{ margin: 0, color: C.textDim, fontSize: 17.5, maxWidth: '52ch' }}>{line}</p>}
+                    {line && <p style={{ margin: 0, color: C.text, fontSize: 18.5, lineHeight: 1.7, maxWidth: '52ch' }}>{line}</p>}
                     <span style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 6 }}>
                       <a href={href.service(s.slug)} style={{ ...btnPrimary(x), padding: '13px 24px', fontSize: 16 }}>See {s.name}</a>
                       <a href={quoteHref} style={{ ...btnOutline(x, C.text), padding: '13px 24px', fontSize: 16 }}>{quoteLabel}</a>
@@ -144,7 +144,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
   const x = centreContext(c, siteSlug)
   const { C, F, T, wrap, mid, sectionPad, href, quoteHref, quoteLabel, services, concept } = x
   const m = serviceModel(x, service)
-  const body = { maxWidth: 720, margin: '0 auto', fontSize: 18, lineHeight: 1.75, color: C.textDim }
+  const body = { maxWidth: 720, margin: '0 auto', fontSize: 18.5, lineHeight: 1.78, color: C.text }
 
   return (
     <CentrePage x={x} schemas={m.schemas}>
@@ -167,8 +167,8 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
           <div style={wrap}>
             {m.intro && (
               <div style={body}>
-                {paragraphs(m.intro).split(/\n{2,}/).filter(Boolean).map((p, i) => (
-                  <p key={i} style={{ margin: i === 0 ? '0 0 18px' : '0 0 18px' }}>{p.trim()}</p>
+                {paragraphs(m.intro).map((p, i) => (
+                  <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>
                 ))}
               </div>
             )}
@@ -185,7 +185,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
                           display: 'grid', placeItems: 'center', margin: '0 auto 18px', fontWeight: 700, fontSize: 15, boxShadow: `0 0 0 8px ${C.bg}`,
                         }}>{i + 1}</span>
                         {s.title && <h3 style={{ ...x.h3, fontSize: 23, marginBottom: 6 }}>{s.title}</h3>}
-                        {s.description && <p style={{ margin: 0, color: C.textMuted, fontSize: 16.5 }}>{s.description}</p>}
+                        {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 17, lineHeight: 1.65 }}>{s.description}</p>}
                       </div>
                     ))}
                   </div>
@@ -207,14 +207,14 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
 
             {m.stepsText && (
               <div style={{ ...body, marginTop: 'clamp(32px, 4vw, 56px)' }}>
-                {paragraphs(m.stepsText).split(/\n{2,}/).filter(Boolean).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p.trim()}</p>)}
+                {paragraphs(m.stepsText).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>)}
               </div>
             )}
 
             {m.methods && (
               <div style={{ ...body, marginTop: 'clamp(32px, 4vw, 56px)' }}>
                 <h2 style={{ ...x.h3, color: C.text, marginBottom: 14, textAlign: 'center' }}>What we use</h2>
-                {paragraphs(m.methods).split(/\n{2,}/).filter(Boolean).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p.trim()}</p>)}
+                {paragraphs(m.methods).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>)}
               </div>
             )}
 
@@ -228,7 +228,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
                         {q.question}
                         <span aria-hidden="true" style={{ flex: 'none', width: 26, height: 26, borderRadius: '50%', border: `1.5px solid ${C.border}`, display: 'grid', placeItems: 'center', fontSize: 17, lineHeight: 1, color: C.accent }}>+</span>
                       </summary>
-                      <p style={{ margin: '0 0 20px', color: C.textDim, maxWidth: '62ch' }}>{q.answer}</p>
+                      <p style={{ margin: '0 0 20px', color: C.text, fontSize: 18, lineHeight: 1.72, maxWidth: '62ch' }}>{q.answer}</p>
                     </details>
                   ))}
                 </div>
