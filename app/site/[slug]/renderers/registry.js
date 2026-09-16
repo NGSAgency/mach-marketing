@@ -16,6 +16,7 @@ import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
 import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy } from './PrivacyPages.js'
+import CentreHome from './CentreHome.js'
 import SereneHome from './SereneHome.js'
 import SereneServices from './SereneServices.js'
 import SereneServiceDetail from './SereneServiceDetail.js'
@@ -40,6 +41,7 @@ import { crewTokens } from '../../../templates/crew/tokens.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { hearthTokens } from '../../../templates/hearth/tokens.js'
 import { levelTokens } from '../../../templates/level/tokens.js'
+import { centreTokens } from '../../../templates/centre/tokens.js'
 
 export const FAMILIES = {
   crew: {
@@ -57,6 +59,13 @@ export const FAMILIES = {
     label: 'Heritage', tokens: hearthTokens,
     Home: HearthHome, Services: HearthServices, ServiceDetail: HearthServiceDetail, Areas: HearthAreas, AreaDetail: HearthAreaDetail,
     Privacy: HearthPrivacy, Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
+  },
+  // CENTRE is being built a page at a time. Everything it doesn't have yet
+  // falls through to CREW in rendererFor, which is what that fallback is for:
+  // a half-built family can't leave a route with nothing to render.
+  centre: {
+    label: 'Statement', tokens: centreTokens,
+    Home: CentreHome,
   },
   level: {
     label: 'Modern', tokens: levelTokens,
