@@ -19,9 +19,9 @@ export function centreContext(c, siteSlug) {
     mid: { maxWidth: 860, marginInline: 'auto', textAlign: 'center' },
     sectionPad: 'clamp(56px, 6.5vw, 96px)',
     eyebrow: (color) => ({ fontSize: 12, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color }),
-    h1: { fontFamily: F.display, fontWeight: 400, fontSize: T.type.hero, lineHeight: 1.0, margin: 0, textWrap: 'balance' },
-    h2: { fontFamily: F.display, fontWeight: 400, fontSize: T.type.display, lineHeight: 1.04, margin: 0, textWrap: 'balance' },
-    h3: { fontFamily: F.display, fontWeight: 500, fontSize: 'clamp(21px, 2.1vw, 27px)', lineHeight: 1.18, margin: 0, textWrap: 'balance' },
+    h1: { fontFamily: F.display, fontWeight: 600, fontSize: T.type.hero, lineHeight: 1.0, margin: 0, textWrap: 'balance' },
+    h2: { fontFamily: F.display, fontWeight: 600, fontSize: T.type.display, lineHeight: 1.04, margin: 0, textWrap: 'balance' },
+    h3: { fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(21px, 2.1vw, 27px)', lineHeight: 1.18, margin: 0, textWrap: 'balance' },
     btn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, borderRadius: T.radius.full, padding: '15px 28px', fontSize: 16.5, fontWeight: 700, textDecoration: 'none', whiteSpace: 'nowrap', lineHeight: 1.2, boxSizing: 'border-box' },
   }
 }

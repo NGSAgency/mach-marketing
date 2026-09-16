@@ -62,16 +62,19 @@ export const centreTokens = {
   ground: { base: '#f2f0ec', alt: '#e9e6e0', raised: '#ffffff', tint: 0.02 },
 
   fonts: {
-    // A high-contrast serif for anything that carries the voice, and a text
+    // A serif with weight in it, not hairlines: Bodoni's thin strokes broke up
+    // at heading sizes and were hard to read. Fraunces keeps the composed,
+    // not-like-every-other-trade-site character while actually holding
+    // together. Paired with a text
     // face chosen for reading rather than for looks: Inter has a tall x-height
     // and open shapes, so a paragraph at 18px holds up where Mulish went
     // spindly. The contrast between the two is the family; the reading has to
     // come first.
-    display: "'Bodoni Moda', Georgia, 'Times New Roman', serif",
+    display: "'Fraunces', Georgia, 'Times New Roman', serif",
     body: "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
     mono: 'ui-monospace, monospace',
   },
-  fontsHref: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Inter:wght@400;500;600;700&display=swap',
+  fontsHref: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap',
 
   type: {
     xs: '13px',

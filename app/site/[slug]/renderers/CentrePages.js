@@ -145,6 +145,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
   const { C, F, T, wrap, mid, sectionPad, href, quoteHref, quoteLabel, services, concept } = x
   const m = serviceModel(x, service)
   const body = { maxWidth: 720, margin: '0 auto', fontSize: 18.5, lineHeight: 1.78, color: C.text }
+  const review = ((c.reviews || {}).featured || []).find(r => r?.text) || null
 
   return (
     <CentrePage x={x} schemas={m.schemas}>
@@ -162,84 +163,124 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
 
       <FactBand x={x} items={m.facts} />
 
-      {m.hasBody && (
-        <section style={{ paddingBlock: sectionPad }}>
+      {/* THE OPENING — one paragraph set large, the rest at reading size.
+          Never more prose than that before something changes shape. */}
+      {m.intro && (
+        <section style={{ paddingBlock: 'clamp(40px, 5vw, 68px)' }}>
           <div style={wrap}>
-            {m.intro && (
-              <div style={body}>
-                {paragraphs(m.intro).map((p, i) => (
-                  <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>
+            {(() => {
+              const paras = paragraphs(m.intro)
+              return (
+                <>
+                  <p style={{ fontFamily: F.display, fontWeight: 500, fontSize: 'clamp(21px, 2.2vw, 29px)', lineHeight: 1.36, color: C.text, maxWidth: '34ch', margin: '0 auto', textAlign: 'center' }}>
+                    {paras[0]}
+                  </p>
+                  {paras.length > 1 && (
+                    <div style={{ ...body, marginTop: 30 }}>
+                      {paras.slice(1).map((t, i) => <p key={i} style={{ margin: '0 0 18px' }}>{t}</p>)}
+                    </div>
+                  )}
+                </>
+              )
+            })()}
+          </div>
+        </section>
+      )}
+
+      {/* WHAT HAPPENS — on its own ground, so the page changes colour before
+          it changes subject. */}
+      {(m.steps?.length > 0 || m.stepsText) && (
+        <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
+          <div style={wrap}>
+            <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 34 }}>What happens on the visit</h2></div>
+            {m.steps?.length === 3 ? (
+              <div className="ctr-timeline">
+                {m.steps.map((s, i) => (
+                  <div key={i}>
+                    <span style={{
+                      position: 'relative', zIndex: 1, width: 38, height: 38, borderRadius: '50%', background: C.accent, color: C.onAccent,
+                      display: 'grid', placeItems: 'center', margin: '0 auto 18px', fontWeight: 700, fontSize: 15, boxShadow: `0 0 0 8px ${C.bgAlt}`,
+                    }}>{i + 1}</span>
+                    {s.title && <h3 style={{ ...x.h3, fontSize: 23, marginBottom: 6 }}>{s.title}</h3>}
+                    {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 17, lineHeight: 1.65 }}>{s.description}</p>}
+                  </div>
                 ))}
               </div>
-            )}
-
-            {m.steps?.length > 0 && (
-              <div style={{ marginTop: m.intro ? 'clamp(40px, 5vw, 64px)' : 0 }}>
-                <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 32 }}>What happens on the visit</h2></div>
-                {m.steps.length === 3 ? (
-                  <div className="ctr-timeline">
-                    {m.steps.map((s, i) => (
-                      <div key={i}>
-                        <span style={{
-                          position: 'relative', zIndex: 1, width: 38, height: 38, borderRadius: '50%', background: C.accent, color: C.onAccent,
-                          display: 'grid', placeItems: 'center', margin: '0 auto 18px', fontWeight: 700, fontSize: 15, boxShadow: `0 0 0 8px ${C.bg}`,
-                        }}>{i + 1}</span>
-                        {s.title && <h3 style={{ ...x.h3, fontSize: 23, marginBottom: 6 }}>{s.title}</h3>}
-                        {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 17, lineHeight: 1.65 }}>{s.description}</p>}
-                      </div>
-                    ))}
+            ) : m.steps?.length > 0 ? (
+              <div className="ctr-tiles">
+                {m.steps.map((s, i) => (
+                  <div key={i} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.md, padding: '24px 22px' }}>
+                    <span style={{ fontFamily: F.display, fontWeight: 600, fontSize: 20, color: C.accent }}>{String(i + 1).padStart(2, '0')}</span>
+                    {s.title && <h3 style={{ ...x.h3, fontSize: 21, margin: '8px 0 6px' }}>{s.title}</h3>}
+                    {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 16.5, lineHeight: 1.6 }}>{s.description}</p>}
                   </div>
-                ) : (
-                  <ol style={{ ...body, listStyle: 'none', padding: 0, counterReset: 'step', display: 'grid', gap: 18 }}>
-                    {m.steps.map((s, i) => (
-                      <li key={i} style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 16, alignItems: 'baseline' }}>
-                        <span style={{ fontFamily: F.display, fontSize: 21, color: C.accent }}>{i + 1}</span>
-                        <span>
-                          {s.title && <strong style={{ display: 'block', color: C.text }}>{s.title}</strong>}
-                          {s.description}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                )}
+                ))}
+              </div>
+            ) : (
+              <div style={body}>
+                {paragraphs(m.stepsText).map((t, i) => <p key={i} style={{ margin: '0 0 18px' }}>{t}</p>)}
               </div>
             )}
+          </div>
+        </section>
+      )}
 
-            {m.stepsText && (
-              <div style={{ ...body, marginTop: 'clamp(32px, 4vw, 56px)' }}>
-                {paragraphs(m.stepsText).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>)}
-              </div>
+      {/* THE REVIEW — the same pull quote the home page uses, here to break the
+          page rather than to persuade twice. */}
+      {review?.text && (
+        <section style={{ paddingBlock: sectionPad }}>
+          <figure style={{ ...wrap, margin: 0, textAlign: 'center' }}>
+            <p style={{ fontFamily: F.display, fontWeight: 500, fontSize: 'clamp(22px, 2.6vw, 36px)', lineHeight: 1.28, margin: '0 auto', maxWidth: '28ch' }}>
+              “{review.text}”
+            </p>
+            {(review.author || review.name) && (
+              <figcaption style={{ marginTop: 20, color: C.textMuted, fontSize: 14.5, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                {review.author || review.name}
+              </figcaption>
             )}
+          </figure>
+        </section>
+      )}
 
-            {m.methods && (
-              <div style={{ ...body, marginTop: 'clamp(32px, 4vw, 56px)' }}>
-                <h2 style={{ ...x.h3, color: C.text, marginBottom: 14, textAlign: 'center' }}>What we use</h2>
-                {paragraphs(m.methods).map((p, i) => <p key={i} style={{ margin: '0 0 18px' }}>{p}</p>)}
+      {/* WHAT WE USE — in a panel, so it reads as a specification rather than
+          as three more paragraphs of the same article. */}
+      {m.methods && (
+        <section style={{ paddingBottom: sectionPad, paddingTop: review?.text ? 0 : sectionPad }}>
+          <div style={wrap}>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.lg, padding: 'clamp(28px, 3.4vw, 52px)', maxWidth: 900, margin: '0 auto' }}>
+              <h2 style={{ ...x.h3, fontSize: 'clamp(22px, 2.2vw, 28px)', marginBottom: 16, textAlign: 'center' }}>What we use</h2>
+              <div style={{ ...body, maxWidth: '66ch' }}>
+                {paragraphs(m.methods).map((t, i) => <p key={i} style={{ margin: '0 0 16px' }}>{t}</p>)}
               </div>
-            )}
+            </div>
+          </div>
+        </section>
+      )}
 
-            {m.faqs.length > 0 && (
-              <div style={{ marginTop: 'clamp(44px, 5vw, 72px)' }}>
-                <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 26 }}>Questions</h2></div>
-                <div style={{ maxWidth: 800, margin: '0 auto' }}>
-                  {m.faqs.map((q, i) => (
-                    <details key={i} open={i === 0} style={{ borderTop: `1px solid ${C.border}`, borderBottom: i === m.faqs.length - 1 ? `1px solid ${C.border}` : undefined }}>
-                      <summary style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, padding: '18px 0', fontSize: 19, fontWeight: 600 }}>
-                        {q.question}
-                        <span aria-hidden="true" style={{ flex: 'none', width: 26, height: 26, borderRadius: '50%', border: `1.5px solid ${C.border}`, display: 'grid', placeItems: 'center', fontSize: 17, lineHeight: 1, color: C.accent }}>+</span>
-                      </summary>
-                      <p style={{ margin: '0 0 20px', color: C.text, fontSize: 18, lineHeight: 1.72, maxWidth: '62ch' }}>{q.answer}</p>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
+      {/* QUESTIONS */}
+      {m.faqs.length > 0 && (
+        <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
+          <div style={wrap}>
+            <div style={mid}><h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 26 }}>Questions</h2></div>
+            <div style={{ maxWidth: 800, margin: '0 auto' }}>
+              {m.faqs.map((q, i) => (
+                <details key={i} open={i === 0} style={{ borderTop: `1px solid ${C.border}`, borderBottom: i === m.faqs.length - 1 ? `1px solid ${C.border}` : undefined }}>
+                  <summary style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, padding: '18px 0', fontSize: 19, fontWeight: 600 }}>
+                    {q.question}
+                    <span aria-hidden="true" style={{ flex: 'none', width: 26, height: 26, borderRadius: '50%', border: `1.5px solid ${C.border}`, display: 'grid', placeItems: 'center', fontSize: 17, lineHeight: 1, color: C.accent }}>+</span>
+                  </summary>
+                  <p style={{ margin: '0 0 20px', color: C.text, fontSize: 18, lineHeight: 1.72, maxWidth: '62ch' }}>{q.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-            {m.noCopy && concept && (
-              <div style={{ marginTop: 32 }}>
-                <ConceptNote T={T} minHeight={220} title={m.note.title}>{m.note.body}</ConceptNote>
-              </div>
-            )}
+      {m.noCopy && concept && (
+        <section style={{ paddingBlock: sectionPad }}>
+          <div style={wrap}>
+            <ConceptNote T={T} minHeight={220} title={m.note.title}>{m.note.body}</ConceptNote>
           </div>
         </section>
       )}
@@ -251,7 +292,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
             <div className="ctr-tiles">
               {m.related.map(s => (
                 <a key={s.slug} href={href.service(s.slug)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.md, padding: '22px 20px', textAlign: 'center', textDecoration: 'none' }}>
-                  <b style={{ display: 'block', fontFamily: F.display, fontWeight: 400, fontSize: 23, lineHeight: 1.15, color: C.text }}>{s.name}</b>
+                  <b style={{ display: 'block', fontFamily: F.display, fontWeight: 600, fontSize: 23, lineHeight: 1.15, color: C.text }}>{s.name}</b>
                   <span style={{ display: 'block', marginTop: 8, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.accent }}>See the page →</span>
                 </a>
               ))}

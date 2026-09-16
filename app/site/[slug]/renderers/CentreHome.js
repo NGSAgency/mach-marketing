@@ -135,7 +135,7 @@ export default function CentreHome({ config: c, siteSlug }) {
             <div className="ctr-figures" style={{ ['--n']: figures.length, paddingBlock: 'clamp(38px, 4vw, 60px)' }}>
               {figures.map((f, i) => (
                 <div key={i}>
-                  <b style={{ fontFamily: F.display, fontWeight: 400, fontSize: 'clamp(34px, 4vw, 58px)', display: 'block', lineHeight: 1 }}>{f.v}</b>
+                  <b style={{ fontFamily: F.display, fontWeight: 600, fontSize: 'clamp(34px, 4vw, 58px)', display: 'block', lineHeight: 1 }}>{f.v}</b>
                   <span style={{ display: 'block', marginTop: 10, fontSize: 13.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.inverseTextDim }}>{f.k}</span>
                 </div>
               ))}
@@ -148,7 +148,7 @@ export default function CentreHome({ config: c, siteSlug }) {
       {m.reviews.length > 0 && (
         <section style={{ paddingBlock: sectionPad }}>
           <figure style={{ ...wrap, margin: 0, textAlign: 'center' }}>
-            <p style={{ fontFamily: F.display, fontSize: 'clamp(23px, 2.9vw, 42px)', lineHeight: 1.24, margin: '0 auto', maxWidth: '30ch', fontWeight: 400 }}>
+            <p style={{ fontFamily: F.display, fontSize: 'clamp(23px, 2.9vw, 42px)', lineHeight: 1.24, margin: '0 auto', maxWidth: '30ch', fontWeight: 500 }}>
               “{m.reviews[0].text}”
             </p>
             {(m.reviews[0].author || m.reviews[0].name) && (
@@ -199,7 +199,7 @@ export default function CentreHome({ config: c, siteSlug }) {
             <div className="ctr-tiles">
               {areas.map(a => (
                 <a key={a} href={href.area(a)} style={{ background: C.surface, borderRadius: T.radius.md, padding: '22px 18px 20px', textAlign: 'center', textDecoration: 'none' }}>
-                  <b style={{ display: 'block', fontFamily: F.display, fontWeight: 400, fontSize: 25, lineHeight: 1.1, color: C.text }}>{a}</b>
+                  <b style={{ display: 'block', fontFamily: F.display, fontWeight: 600, fontSize: 25, lineHeight: 1.1, color: C.text }}>{a}</b>
                   <span style={{ display: 'block', marginTop: 8, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.accent }}>See the page →</span>
                 </a>
               ))}
