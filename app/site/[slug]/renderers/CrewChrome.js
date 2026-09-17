@@ -18,6 +18,7 @@ import {
   whyUsItems,
   aboutBody,
 } from '../../../../lib/templates/shared/claims.js'
+import { resolveSections } from '../../../../lib/templates/shared/sections.js'
 import CrewMobileBar from './CrewMobileBar.js'
 
 // The pieces every CREW page shares: tokens and links (crewContext), the
@@ -126,6 +127,10 @@ export function crewContext(c, siteSlug) {
 
   return {
     c, T, C, F, concept, base, biz, pos, services, areas, primaryArea, phone, phoneDisplay, name,
+    // Which optional sections this site shows: the family's arrangement, the
+    // client's own choices, and whether the data exists. CREW is also the
+    // fallback family, so a retired template resolves against CREW's defaults.
+    sections: resolveSections(c, 'crew'),
     logo: c.brand?.logo_url, imgs: c.images || {}, href, quoteHref: href.contact, tradeNoun, faqs, hasAbout,
     offeringLabel: titleCase(nouns.offering?.plural || 'services'),
     placeLabel: titleCase(nouns.place?.plural || 'service areas'),
