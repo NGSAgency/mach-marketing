@@ -62,7 +62,7 @@ export default function BookingHome({ config: c, siteSlug }) {
 
       {/* THE PROOF — immediately under the fold, where the doubt is, not in the
           usual strip above the footer. The rating and one review, nothing else. */}
-      {(rating || review) && (
+      {x.sections.reviews && (rating || review) && (
         <section style={{ background: C.inverseBg, color: C.inverseText, paddingBlock: 'clamp(32px, 3.6vw, 48px)' }}>
           <div style={wrap}>
             <div className="bk-proof">
@@ -175,7 +175,7 @@ export default function BookingHome({ config: c, siteSlug }) {
 
       {/* THE QUESTIONS — open one at a time, straight above the footer, so the
           last thing before the details is an answer rather than another ask. */}
-      {m.faqs.length > 0 && (
+      {x.sections.faq && m.faqs.length > 0 && (
         <section style={{ paddingBlock: sectionPad }}>
           <div style={{ ...wrap, maxWidth: 900 }}>
             <h2 style={{ ...x.h2, fontSize: 'clamp(26px, 2.8vw, 38px)', marginBottom: 22 }}>Questions</h2>

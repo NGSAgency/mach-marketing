@@ -73,7 +73,7 @@ export default function StageHome({ config: c, siteSlug }) {
     ),
   })
 
-  if (steps.length > 0) add({
+  if (x.sections.steps && steps.length > 0) add({
     id: 'how', label: 'How it works',
     cap: { title: 'How a visit goes', line: `The steps ${name} follows, start to finish.` },
     board: boardOf(x, [...priceRows(x), facts.estimates(x)].slice(0, 4)),
@@ -108,7 +108,7 @@ export default function StageHome({ config: c, siteSlug }) {
     ),
   })
 
-  if (m.reviews.length > 0) add({
+  if (x.sections.reviews && m.reviews.length > 0) add({
     id: 'reviews', label: 'What people say',
     cap: { title: 'What customers say', line: 'A rating is shown exactly as it stands — we never round one up.' },
     board: boardOf(x, [facts.warranty(x), facts.rating(x), facts.since(x)]),
@@ -138,7 +138,7 @@ export default function StageHome({ config: c, siteSlug }) {
     ),
   })
 
-  if (m.faqs.length > 0) add({
+  if (x.sections.faq && m.faqs.length > 0) add({
     id: 'questions', label: 'Before you call',
     cap: { title: 'Before you call', line: 'The questions people ask most, answered in this business’s own words.' },
     board: boardOf(x, [facts.phone(x), facts.hours(x), facts.email(x), facts.basedAt(x)]),

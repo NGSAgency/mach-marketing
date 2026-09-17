@@ -113,18 +113,7 @@ export function HearthHome({ config: c, siteSlug }) {
         </section>
       )}
 
-      {/* PLANS AND PRICES: on a concept without them, what goes here. */}
-      {concept && m.plans.length === 0 && (
-        <section style={{ paddingBottom: sectionPad }}>
-          <div style={wrap}>
-            <Note x={x} title={c.industry_key === 'pest_control' ? 'Your plans and what each covers' : 'Your starting prices'}>
-              {c.industry_key === 'pest_control'
-                ? 'Your plan tiers, what each one covers, and a starting price, so people can choose before they call.'
-                : 'Starting prices for your main services, and any fees you don’t charge, so people know what to expect before they call.'}
-            </Note>
-          </div>
-        </section>
-      )}
+
 
       {/* THE COMPANY: who they are, near the top, because that is Hearth's
           reason to exist. */}
@@ -168,7 +157,7 @@ export function HearthHome({ config: c, siteSlug }) {
 
       {/* REVIEWS: the first one set large across a band in their own colour,
           the others underneath it. */}
-      {m.reviews.length > 0 ? (
+      {x.sections.reviews && m.reviews.length > 0 ? (
         <section style={{ paddingTop: sectionPad }}>
           <div className="h-bleed" style={{ background: x.livery, color: x.liveryText, paddingBlock: 'clamp(48px, 6vw, 88px)' }}>
             <div style={{ ...wrap, maxWidth: 1100 }}>
@@ -211,7 +200,7 @@ export function HearthHome({ config: c, siteSlug }) {
       )}
 
       {/* FAQ: full width. */}
-      {m.faqs.length > 0 && (
+      {x.sections.faq && m.faqs.length > 0 && (
         <section id="faq" style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div style={{ ...wrap, maxWidth: 960 }}>
             <SectionHead x={x} eyebrow="Questions" title="Before you call" aside={x.faqs.length > m.faqs.length ? <a href={href.faq} style={textLink(x)}>All questions</a> : null} />

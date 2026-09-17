@@ -71,7 +71,6 @@ export default function CrewHome({ config: c, siteSlug }) {
     .slice(0, 6)
   const reviews = c.reviews || {}
   const featuredReviews = (reviews.featured || []).filter(r => r?.text).slice(0, 3)
-  const hasPlans = Array.isArray(c.plans) && c.plans.length > 0
 
   // The business's own video, when they have one, plays behind the headline.
   const video = imgs.home_video?.url ? imgs.home_video : null
@@ -145,23 +144,6 @@ export default function CrewHome({ config: c, siteSlug }) {
           </div>
         </section>
 
-        {/* PLANS AND PRICES: what will this cost, before they call */}
-        {concept && !hasPlans && (
-          <section style={{ background: C.bgAlt, paddingBlock: 'clamp(56px, 8vw, 96px)' }}>
-            <div className="crew-split" style={wrap}>
-              <div>
-                <div style={eyebrow(C.textMuted)}>Plans and pricing</div>
-                <h2 style={{ ...h2, marginTop: 12 }}>{c.industry_key === 'pest_control' ? 'Year-round protection plans' : 'Straightforward pricing'}</h2>
-              </div>
-              <ConceptNote T={T} title={c.industry_key === 'pest_control' ? 'Your plans and what each covers' : 'Your starting prices'}>
-                {c.industry_key === 'pest_control'
-                  ? 'Your plan tiers, what each one covers, and a starting price go here, so people can choose before they call.'
-                  : 'Starting prices for your main services, and any fees you don’t charge, so people can see what to expect before they call.'}
-              </ConceptNote>
-            </div>
-          </section>
-        )}
-
         {/* WHY US: three or four reasons, each tied to a fact */}
         {whyUs.length > 0 && (
           <section id="why" style={{ paddingBlock: 'clamp(64px, 9vw, 112px)' }}>
@@ -191,7 +173,7 @@ export default function CrewHome({ config: c, siteSlug }) {
         )}
 
         {/* REVIEWS: recent, dated, real */}
-        {featuredReviews.length > 0 ? (
+        {x.sections.reviews && featuredReviews.length > 0 ? (
           <section style={{ background: C.bgAlt, paddingBlock: 'clamp(64px, 9vw, 112px)' }}>
             <div style={wrap}>
               <div style={eyebrow(C.textMuted)}>Reviews</div>
@@ -245,7 +227,7 @@ export default function CrewHome({ config: c, siteSlug }) {
         )}
 
         {/* FAQ: the questions that stop a call */}
-        {faqs.length > 0 && (
+        {x.sections.faq && faqs.length > 0 && (
           <section id="faq" style={{ background: C.bgAlt, paddingBlock: 'clamp(64px, 9vw, 112px)' }}>
             <div className="crew-split" style={wrap}>
               <div>

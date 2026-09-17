@@ -17,6 +17,7 @@ import {
   serviceEmergencyBadge, credentialLabel,
 } from '../../../../../lib/templates/shared/claims.js'
 import { pageCopy, faqList, asText } from '../../../../../lib/templates/shared/pageCopy.js'
+import { resolveSections } from '../../../../../lib/templates/shared/sections.js'
 
 export const TRADE_NOUN = {
   pest_control: 'Pest control',
@@ -92,7 +93,12 @@ export const areaImageKey = (area) => `area_${String(area).toLowerCase().replace
  * Facts and links for one page of any family. Every link goes to a real page,
  * on a client site and on a concept (whose routes live under c.base_path).
  */
-export function siteData(c, siteSlug) {
+/**
+ * @param family  the design family actually rendering. Sections are resolved
+ *   against it, so a concept previewed in another family's layout gets that
+ *   family's arrangement rather than its own.
+ */
+export function siteData(c, siteSlug, family) {
   const concept = c.concept === true
   const base = c.base_path || `/site/${siteSlug}`
   const biz = c.business || {}
@@ -142,6 +148,9 @@ export function siteData(c, siteSlug) {
     year: biz.established_year || null,
     credential: credentialLabel(c),
     license: c.credentials?.license_number || null,
+    // Which sections this site shows: the family's arrangement, the client's
+    // choices, and whether the content exists — resolved once, here.
+    sections: resolveSections(c, family || c.template_slug),
     statedOnTheirSite: concept && c.reviews?.source === 'their_site',
   }
 }
@@ -237,7 +246,7 @@ export function homeModel(d) {
     place, trade, headline, support, trust: trustLine(d), categories,
     grouped: services.length > 6 && categories.length > 1,
     whyUs, faqs, reviews, video, hero: hero?.url ? hero : null, secondary: imgs.home_secondary || null,
-    intro, plans: Array.isArray(c.plans) ? c.plans : [],
+    intro,
     schemas: [buildLocalBusinessSchema(schemaConfig(c))],
   }
 }

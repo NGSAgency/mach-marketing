@@ -4,6 +4,7 @@ import { BlogIndexCore, BlogPostCore } from '../../../../lib/templates/shared/bl
 import {
   homeModel, serviceModel, areaModel, comboModel, aboutModel, contactModel,
   servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, stepsFrom,
+  pricingModel,
 } from './family/data.js'
 import {
   levelContext, LevelPage, Breadcrumbs, SectionHead, Prose, StepRail, Tiles, Chips, areaChips,
@@ -129,34 +130,39 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
         </section>
       )}
 
-      {/* PRICES: their plans, or on a concept what goes here. */}
-      {m.plans.length > 0 ? (
-        <section id="prices" style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
-          <div style={wrap}>
-            <SectionHead x={x} eyebrow="Pricing" title="Plans" />
-            <div className="lv-plans">
-              {m.plans.map((p, i) => (
-                <div key={i} style={{ ...x.card, padding: 'clamp(22px, 2.6vw, 30px)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <h3 style={{ ...x.h3, fontSize: 22 }}>{p.name}</h3>
-                  {p.price && <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 30, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums' }}>{p.price}</div>}
-                  {p.description && <p style={{ margin: 0, color: C.textDim, fontSize: 16.5 }}>{p.description}</p>}
-                </div>
-              ))}
+      {/* WHAT IT COSTS — Level's own section. The others link to pricing from
+          a service page; this family publishes it on the front. Real fields
+          from the questionnaire, never a plan tier we do not have. */}
+      {x.sections.pricing && (() => {
+        const p = pricingModel(c)
+        if (!p.has) return null
+        return (
+          <section id="prices" style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
+            <div style={wrap}>
+              <SectionHead x={x} eyebrow="Pricing" title="What it costs" />
+              <div style={{ maxWidth: 820, marginTop: 8 }}>
+                {p.rows.map((r, i) => (
+                  <div key={r.k} style={{
+                    display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
+                    padding: '16px 0', borderTop: i === 0 ? `2px solid ${C.text}` : `1px solid ${C.border}`,
+                  }}>
+                    <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textMuted }}>{r.k}</span>
+                    <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(18px, 1.8vw, 22px)', color: C.text }}>{r.v}</span>
+                  </div>
+                ))}
+                <div style={{ borderTop: `1px solid ${C.border}` }} />
+                {p.notes.map((n, i) => (
+                  <p key={i} style={{ margin: '18px 0 0', color: C.textDim, fontSize: 17, lineHeight: 1.7 }}>{n}</p>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ) : concept ? (
-        <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
-          <div style={wrap}>
-            <SectionHead x={x} eyebrow="Pricing" title="What it costs" />
-            <Note x={x} title="Your starting prices">Starting prices for your main services, or your plan tiers, so people can see what to expect before they call.</Note>
-          </div>
-        </section>
-      ) : null}
+          </section>
+        )
+      })()}
 
       {/* REVIEWS: the rating set large across a coloured band, with what
           people actually said on cards across it. */}
-      {m.reviews.length > 0 ? (
+      {x.sections.reviews && m.reviews.length > 0 ? (
         <section style={{ paddingTop: sectionPad }}>
           <div style={wrap}>
             <SectionHead x={x} eyebrow="Reviews" title="What customers say" />
@@ -210,7 +216,7 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
       )}
 
       {/* FAQ: answers in the open. */}
-      {m.faqs.length > 0 && (
+      {x.sections.faq && m.faqs.length > 0 && (
         <section id="faq" style={{ paddingBlock: sectionPad }}>
           <div style={wrap}>
             <SectionHead x={x} eyebrow="Questions" title="Good to know" aside={x.faqs.length > m.faqs.length ? <a href={href.faq} style={textLink(x)}>All questions</a> : null} />

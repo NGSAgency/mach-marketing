@@ -145,7 +145,7 @@ export default function CentreHome({ config: c, siteSlug }) {
       )}
 
       {/* THE REVIEW — alone, large, with no score beside it. */}
-      {m.reviews.length > 0 && (
+      {x.sections.reviews && m.reviews.length > 0 && (
         <section style={{ paddingBlock: sectionPad }}>
           <figure style={{ ...wrap, margin: 0, textAlign: 'center' }}>
             <p style={{ fontFamily: F.display, fontSize: 'clamp(23px, 2.9vw, 42px)', lineHeight: 1.24, margin: '0 auto', maxWidth: '30ch', fontWeight: 500 }}>
@@ -161,7 +161,7 @@ export default function CentreHome({ config: c, siteSlug }) {
       )}
 
       {/* HOW IT WORKS — a timeline, with the line drawn through the markers. */}
-      {steps.length === 3 && (
+      {x.sections.steps && steps.length === 3 && (
         <section style={{ paddingBlock: sectionPad, paddingTop: 0 }}>
           <div style={wrap}>
             <div style={mid}><h2 style={{ ...x.h2, marginBottom: 34 }}>How a visit goes</h2></div>
@@ -209,7 +209,7 @@ export default function CentreHome({ config: c, siteSlug }) {
       )}
 
       {/* QUESTIONS — they open and close. */}
-      {m.faqs.length > 0 && (
+      {x.sections.faq && m.faqs.length > 0 && (
         <section style={{ paddingBlock: sectionPad }}>
           <div style={wrap}>
             <div style={mid}><h2 style={{ ...x.h2, marginBottom: 30 }}>Questions</h2></div>
