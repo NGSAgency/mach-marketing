@@ -4,7 +4,7 @@ import { BlogIndexCore, BlogPostCore } from '../../../../lib/templates/shared/bl
 import {
   homeModel, serviceModel, areaModel, comboModel, aboutModel, contactModel,
   servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, stepsFrom,
-  pricingModel,
+  pricingModel, lowerName
 } from './family/data.js'
 import {
   levelContext, LevelPage, Breadcrumbs, SectionHead, Prose, StepRail, Tiles, Chips, areaChips,
@@ -102,7 +102,7 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
       {steps ? (
         <section id="how" style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div style={wrap}>
-            <SectionHead x={x} eyebrow="How it works" title={stepService ? `How a ${stepService.name.toLowerCase()} visit goes` : 'How it works'} />
+            <SectionHead x={x} eyebrow="How it works" title={stepService ? `How a ${lowerName(stepService.name)} visit goes` : 'How it works'} />
             <StepRail x={x} steps={steps} />
           </div>
         </section>
@@ -352,7 +352,7 @@ export function LevelServiceDetail({ config: c, siteSlug, service }) {
   const sections = [
     m.noCopy && { id: 'about', eyebrow: 'Overview', title: `About ${service.name}`, body: <Note x={x} minHeight={220} title={m.note.title}>{m.note.body}</Note>, label: 'Overview' },
     m.intro && { id: 'about', eyebrow: 'Overview', title: `About ${service.name}`, body: <Prose x={x} text={m.intro} />, label: 'Overview' },
-    m.signs && { id: 'signs', eyebrow: 'Know the signs', title: `Signs you need ${service.name.toLowerCase()}`, body: <SignCards x={x} signs={m.signs} />, label: 'Signs you need this' },
+    m.signs && { id: 'signs', eyebrow: 'Know the signs', title: `Signs you need ${lowerName(service.name)}`, body: <SignCards x={x} signs={m.signs} />, label: 'Signs you need this' },
     (m.steps || m.stepsText) && { id: 'how', eyebrow: 'How it works', title: 'What to expect', body: m.steps ? <StepRail x={x} steps={m.steps} /> : <Prose x={x} text={m.stepsText} />, label: 'What to expect' },
     m.methods && { id: 'methods', eyebrow: 'Methods', title: 'Products and methods', body: <Prose x={x} text={m.methods} />, label: 'Products and methods' },
     m.faqs.length > 0 && { id: 'faq', eyebrow: 'Questions', title: `${service.name} questions`, body: <FaqCards x={x} faqs={m.faqs} />, label: 'Questions' },

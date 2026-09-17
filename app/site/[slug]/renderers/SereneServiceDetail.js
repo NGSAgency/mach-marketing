@@ -76,7 +76,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
           fontFamily: T.fonts.display, fontSize: 'clamp(20px, 2.3vw, 28px)', fontWeight: 300,
           lineHeight: 1.2, letterSpacing: '-0.01em', color: T.colors.text, margin: 0, paddingTop: 2,
         }}>
-          Signs it is time
+          Signs to look for
         </h2>
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: 640 }}>
           {signs.map((sg, i) => (

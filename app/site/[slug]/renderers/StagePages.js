@@ -4,7 +4,7 @@ import {
   shotsFor, plateFor, facts, boardOf, priceRows, figuresFor, Figures, CoverageRows,
   Prose, ServiceGroups, Questions, Blocks, LinkRow, SiteFooter,
 } from './StageShared.js'
-import { servicesIndexModel, serviceModel, pricingModel, oneLine } from './family/data.js'
+import { servicesIndexModel, serviceModel, pricingModel, oneLine, lowerName} from './family/data.js'
 
 // STAGE's services index and service pages. Inner pages swap the chapter rail
 // for a contents list in the panel — an inner page is read rather than
@@ -164,11 +164,11 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
 
   if (m.intro) chapters.push({
     id: 'job', label: 'The job',
-    cap: { title: `What ${service.name.toLowerCase()} involves`, line: 'Written for this business, not lifted from a brochure.' },
+    cap: { title: `What ${lowerName(service.name)} involves`, line: 'Written for this business, not lifted from a brochure.' },
     board: boardOf(x, [facts.warranty(x), facts.estimates(x), facts.emergency(x)]),
     content: (
       <>
-        <h2 style={x.h2}>What {service.name.toLowerCase()} involves</h2>
+        <h2 style={x.h2}>What {lowerName(service.name)} involves</h2>
         <div style={{ marginTop: 24 }}><Prose x={x} text={m.intro} /></div>
       </>
     ),
@@ -179,11 +179,11 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
   // thing you noticed and what it usually means.
   if (m.signs) chapters.push({
     id: 'signs', label: 'Know the signs',
-    cap: { title: 'What people notice first', line: `The symptoms that send people looking for ${service.name.toLowerCase()}.` },
+    cap: { title: 'What people notice first', line: `The symptoms that send people looking for ${lowerName(service.name)}.` },
     board: boardOf(x, [facts.emergency(x), facts.estimates(x), facts.hours(x)]),
     content: (
       <>
-        <h2 style={x.h2}>Signs you need {service.name.toLowerCase()}</h2>
+        <h2 style={x.h2}>Signs you need {lowerName(service.name)}</h2>
         <ul style={{ listStyle: 'none', margin: '28px 0 0', padding: 0 }}>
           {m.signs.map((sg, i) => (
             <li key={i} style={{ borderTop: `1px solid ${C.border}`, paddingBlock: 20, fontSize: 17.5, lineHeight: 1.74, color: C.textDim }}>
@@ -243,7 +243,7 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
     board: boardOf(x, [facts.warranty(x), facts.estimates(x), facts.phone(x)]),
     content: (
       <>
-        <h2 style={x.h2}>What {service.name.toLowerCase()} costs</h2>
+        <h2 style={x.h2}>What {lowerName(service.name)} costs</h2>
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 24, border: `1px solid ${C.border}`, background: C.surface }}>
           <caption style={{ captionSide: 'top', textAlign: 'left', paddingBottom: 10, ...x.label(C.textMuted), fontSize: 12.5 }}>
             {service.name} — what you pay
@@ -276,7 +276,7 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
     board: boardOf(x, [facts.phone(x), facts.hours(x), facts.basedAt(x)]),
     content: (
       <>
-        <h2 style={x.h2}>Questions about {service.name.toLowerCase()}</h2>
+        <h2 style={x.h2}>Questions about {lowerName(service.name)}</h2>
         <div style={{ marginTop: 24 }}><Questions x={x} items={m.faqs} /></div>
       </>
     ),

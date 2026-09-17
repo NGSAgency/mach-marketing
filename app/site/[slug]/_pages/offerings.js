@@ -52,11 +52,17 @@ export async function offeringDetailMetadata({ params }, segment) {
   return buildServiceMetadata(result.config, service)
 }
 
-export async function offeringDetailPage({ params }, segment) {
+export async function offeringDetailPage({ params, searchParams }, segment) {
   const { slug, serviceSlug } = await params
   const result = await load(slug, segment, { page: 'service_detail', id: serviceSlug })
   const service = result && find(result.config, serviceSlug)
   if (!service) notFound()
-  const Renderer = rendererFor(result.config.template_slug, 'ServiceDetail')
+  // Development only: ?family=stage draws this page in another family's
+  // layout, so a change can be checked across all of them without rewriting
+  // the client's record six times. Ignored anywhere but a dev server.
+  const preview = process.env.NODE_ENV === 'development'
+    ? (await searchParams)?.family || null
+    : null
+  const Renderer = rendererFor(preview || result.config.template_slug, 'ServiceDetail')
   return <Renderer config={result.config} siteSlug={slug} service={service} />
 }

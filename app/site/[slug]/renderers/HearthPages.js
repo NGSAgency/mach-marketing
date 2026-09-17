@@ -3,7 +3,7 @@ import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 import { BlogIndexCore, BlogPostCore } from '../../../../lib/templates/shared/blog/BlogCore.js'
 import {
   homeModel, serviceModel, areaModel, comboModel, aboutModel, contactModel,
-  servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, listAreas,
+  servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, listAreas, lowerName
 } from './family/data.js'
 import {
   hearthContext, HearthPage, PageHero, SectionHead, Prose, Steps, FaqList, Ticket, FactStrip, Ledger,
@@ -319,7 +319,7 @@ export function HearthServiceDetail({ config: c, siteSlug, service }) {
         ) : (
           <>
             {m.intro && <div><SectionHead x={x} eyebrow="Overview" title={`About ${service.name}`} small /><Prose x={x} text={m.intro} /></div>}
-            {m.signs && <div><SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${service.name.toLowerCase()}`} small /><SignLedger x={x} signs={m.signs} /></div>}
+            {m.signs && <div><SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${lowerName(service.name)}`} small /><SignLedger x={x} signs={m.signs} /></div>}
             {(m.steps || m.stepsText) && <div><SectionHead x={x} eyebrow="How it works" title="What to expect" small />{m.steps ? <Steps x={x} steps={m.steps} /> : <Prose x={x} text={m.stepsText} />}</div>}
             {m.methods && <div><SectionHead x={x} eyebrow="Methods" title="Products and methods" small /><Prose x={x} text={m.methods} /></div>}
             {m.faqs.length > 0 && <div><SectionHead x={x} eyebrow="Questions" title={`${service.name} questions`} small /><FaqList x={x} faqs={m.faqs} open={m.faqs.length <= 3} /></div>}

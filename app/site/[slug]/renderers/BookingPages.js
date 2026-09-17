@@ -1,7 +1,7 @@
 import { bookingContext, BookingPage, RequestCard } from './BookingKit.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import {
-  servicesIndexModel, serviceModel, pageFacts, paragraphs, oneLine, pricingModel, proofItems,
+  servicesIndexModel, serviceModel, pageFacts, paragraphs, oneLine, pricingModel, proofItems, lowerName
 } from './family/data.js'
 
 // BOOKING's inner pages. Every one of them is the same shape: the content on
@@ -372,7 +372,7 @@ export function BookingServiceDetail({ config: c, siteSlug, service }) {
       {m.signs && (
         <section style={{ paddingBottom: sectionPad }}>
           <div style={wrap}>
-            <h2 style={{ ...x.h2, fontSize: 'clamp(24px, 2.4vw, 33px)', marginBottom: 6 }}>Signs you need {service.name.toLowerCase()}</h2>
+            <h2 style={{ ...x.h2, fontSize: 'clamp(24px, 2.4vw, 33px)', marginBottom: 6 }}>Signs you need {lowerName(service.name)}</h2>
             <p style={{ margin: '0 0 22px', fontSize: 17, color: C.textDim }}>If any of these sound familiar, send the form and we will take it from there.</p>
             <ul className="bk-signs">
               {m.signs.map((sg, i) => (

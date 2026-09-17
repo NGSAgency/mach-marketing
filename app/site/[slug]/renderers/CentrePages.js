@@ -1,6 +1,6 @@
 import { centreContext, CentrePage, btnPrimary, btnOutline } from './CentreKit.js'
 import CrewMobileBar from './CrewMobileBar.js'
-import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine } from './family/data.js'
+import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine, lowerName} from './family/data.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 
 // CENTRE's inner pages. The shapes come from the home page — a centred header,
@@ -325,15 +325,17 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
           keeps a section to a single object, and these are read together. */}
       {m.signs && (
         <section style={{ paddingBlock: 'clamp(30px, 4vw, 56px)' }}>
-          <div style={{ ...wrap, maxWidth: 1060 }}>
+          {/* The panel is sized to the line length, not to the page: a
+              1060px box holding 62 characters of text is mostly empty. */}
+          <div style={{ ...wrap, maxWidth: 880 }}>
             <div style={{ ...mid, textAlign: 'center' }}>
-              <h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 30 }}>Signs you need {service.name.toLowerCase()}</h2>
+              <h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 30 }}>Signs you need {lowerName(service.name)}</h2>
             </div>
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.lg, padding: 'clamp(6px, 1vw, 12px) clamp(20px, 3vw, 40px)' }}>
               {m.signs.map((sg, i) => (
                 <div key={i} className="ctr-sign" style={{ paddingBlock: 'clamp(20px, 2.2vw, 28px)', borderTop: i === 0 ? 'none' : `1px solid ${C.border}` }}>
                   <h3 style={{ ...x.h3, fontSize: 'clamp(20px, 2.1vw, 26px)', marginBottom: 8 }}>{sg.sign}</h3>
-                  {sg.detail && <p style={{ margin: 0, color: C.text, fontSize: 17.5, lineHeight: 1.72, maxWidth: '62ch' }}>{sg.detail}</p>}
+                  {sg.detail && <p style={{ margin: 0, color: C.text, fontSize: 17.5, lineHeight: 1.72 }}>{sg.detail}</p>}
                 </div>
               ))}
             </div>
@@ -421,7 +423,7 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
               <div>
                 <h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>Equipment and methods</h2>
                 <p style={{ margin: '10px 0 0', color: C.textMuted, fontSize: 15.5, lineHeight: 1.6 }}>
-                  What we fit and work on for {service.name.toLowerCase()}.
+                  What we fit and work on for {lowerName(service.name)}.
                 </p>
               </div>
               <div style={{ fontSize: 18.5, lineHeight: 1.78, color: C.text }}>

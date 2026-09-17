@@ -18,6 +18,8 @@ import {
 } from '../../../../../lib/templates/shared/claims.js'
 import { pageCopy, faqList, asText } from '../../../../../lib/templates/shared/pageCopy.js'
 import { resolveSections } from '../../../../../lib/templates/shared/sections.js'
+export { lowerName } from '../../../../../lib/templates/shared/claims.js'
+import { lowerName } from '../../../../../lib/templates/shared/claims.js'
 
 export const TRADE_NOUN = {
   pest_control: 'Pest control',
@@ -298,7 +300,7 @@ export function serviceModel(d, service) {
     hasBody: !!(intro || steps || stepsText || methods || signs || faqs.length || noCopy),
     note: {
       title: `Your ${service.name} page`,
-      body: `What ${service.name.toLowerCase()} involves, ${d.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business${generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.`,
+      body: `What ${lowerName(service.name)} involves, ${d.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business${generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.`,
     },
     schemas: [
       buildBreadcrumbSchema(c, crumbs),

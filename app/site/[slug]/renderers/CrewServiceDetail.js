@@ -11,7 +11,7 @@ import {
   crewContext, crewFacts, CrewPage, FactStrip, PageHero, SectionHead, Prose, Steps, FaqList, QuoteCard,
   ServiceCard, LinkTile, looksLikeJson,
 } from './CrewChrome.js'
-import { signsFrom } from './family/data.js'
+import { signsFrom, lowerName} from './family/data.js'
 
 /** "What to expect" as steps when it is a list, else null. */
 export function stepsFrom(v) {
@@ -94,7 +94,7 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                 <>
                   <SectionHead x={x} eyebrow="Overview" title={`About ${service.name}`} small />
                   <ConceptNote T={T} minHeight={260} title={`Your ${service.name} page`}>
-                    What {service.name.toLowerCase()} involves, {x.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business{generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.
+                    What {lowerName(service.name)} involves, {x.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business{generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.
                   </ConceptNote>
                 </>
               ) : (
@@ -107,7 +107,7 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                   )}
                   {signs && (
                     <div style={intro ? block : {}}>
-                      <SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${service.name.toLowerCase()}`} small />
+                      <SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${lowerName(service.name)}`} small />
                       <ul style={{ listStyle: 'none', margin: '22px 0 0', padding: 0, borderTop: `2px solid ${C.text}` }}>
                         {signs.map((sg, i) => (
                           <li key={i} style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: '0 18px', paddingBlock: 18, borderBottom: `1px solid ${C.border}` }}>
