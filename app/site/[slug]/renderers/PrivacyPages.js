@@ -11,6 +11,7 @@ import { levelContext, LevelPage } from './LevelKit.js'
 import { centreContext, CentrePage } from './CentreKit.js'
 import { bookingContext, BookingPage } from './BookingKit.js'
 import { stageContext, StagePage } from './StageKit.js'
+import { railContext, RailPage, Masthead, Section } from './RailKit.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
@@ -180,5 +181,18 @@ export function StagePrivacy({ config: c, siteSlug }) {
         <Notice m={m} colors={x.C} fonts={x.F} />
       </section>
     </StagePage>
+  )
+}
+
+export function RailPrivacy({ config: c, siteSlug }) {
+  const x = railContext(c, siteSlug)
+  const m = privacyModel(c)
+  return (
+    <RailPage x={x} schemas={[buildBreadcrumbSchema(c, crumbs)]}>
+      <Masthead x={x} crumbs={crumbs} where="Legal" title={m.title} lede={m.intro} />
+      <Section x={x}>
+        <Notice m={m} colors={x.C} fonts={x.F} />
+      </Section>
+    </RailPage>
   )
 }

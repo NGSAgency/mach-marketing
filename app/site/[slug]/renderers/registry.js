@@ -15,7 +15,7 @@ import CrewAbout from './CrewAbout.js'
 import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
-import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy, StagePrivacy } from './PrivacyPages.js'
+import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy, StagePrivacy, RailPrivacy } from './PrivacyPages.js'
 import BookingHome from './BookingHome.js'
 import { BookingServices, BookingServiceDetail } from './BookingPages.js'
 import {
@@ -28,6 +28,12 @@ import {
   StageAreas, StageAreaDetail, StageCombo, StageAbout, StageContact, StageFAQ,
   StageBlogIndex, StageBlogPost,
 } from './StageMore.js'
+import RailHome from './RailHome.js'
+import { RailServices, RailServiceDetail } from './RailPages.js'
+import {
+  RailAreas, RailAreaDetail, RailCombo, RailAbout, RailContact, RailFAQ,
+  RailBlogIndex, RailBlogPost,
+} from './RailMore.js'
 import CentreHome from './CentreHome.js'
 import { CentreServices, CentreServiceDetail } from './CentrePages.js'
 import {
@@ -61,6 +67,7 @@ import { levelTokens } from '../../../templates/level/tokens.js'
 import { centreTokens } from '../../../templates/centre/tokens.js'
 import { bookingTokens } from '../../../templates/booking/tokens.js'
 import { stageTokens } from '../../../templates/stage/tokens.js'
+import { railTokens } from '../../../templates/rail/tokens.js'
 
 export const FAMILIES = {
   crew: {
@@ -107,6 +114,16 @@ export const FAMILIES = {
     Areas: StageAreas, AreaDetail: StageAreaDetail, Combo: StageCombo,
     About: StageAbout, Contact: StageContact, FAQ: StageFAQ,
     BlogIndex: StageBlogIndex, BlogPost: StageBlogPost, Privacy: StagePrivacy,
+  },
+  // RAIL: no top bar. The logo, the menu, the phone and both buttons live in
+  // a rail pinned down the right edge, and the page scrolls beside it on a
+  // dark ground. Its own section is the crew.
+  rail: {
+    label: 'Rail', tokens: railTokens,
+    Home: RailHome, Services: RailServices, ServiceDetail: RailServiceDetail,
+    Areas: RailAreas, AreaDetail: RailAreaDetail, Combo: RailCombo,
+    About: RailAbout, Contact: RailContact, FAQ: RailFAQ,
+    BlogIndex: RailBlogIndex, BlogPost: RailBlogPost, Privacy: RailPrivacy,
   },
   level: {
     label: 'Modern', tokens: levelTokens,
