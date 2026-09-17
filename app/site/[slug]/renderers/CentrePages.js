@@ -321,6 +321,26 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
         </section>
       )}
 
+      {/* THE SIGNS — one composed panel rather than a row of cards: Centre
+          keeps a section to a single object, and these are read together. */}
+      {m.signs && (
+        <section style={{ paddingBlock: 'clamp(30px, 4vw, 56px)' }}>
+          <div style={{ ...wrap, maxWidth: 1060 }}>
+            <div style={{ ...mid, textAlign: 'center' }}>
+              <h2 style={{ ...x.h2, fontSize: 'clamp(26px, 3vw, 40px)', marginBottom: 30 }}>Signs you need {service.name.toLowerCase()}</h2>
+            </div>
+            <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.lg, padding: 'clamp(6px, 1vw, 12px) clamp(20px, 3vw, 40px)' }}>
+              {m.signs.map((sg, i) => (
+                <div key={i} className="ctr-sign" style={{ paddingBlock: 'clamp(20px, 2.2vw, 28px)', borderTop: i === 0 ? 'none' : `1px solid ${C.border}` }}>
+                  <h3 style={{ ...x.h3, fontSize: 'clamp(20px, 2.1vw, 26px)', marginBottom: 8 }}>{sg.sign}</h3>
+                  {sg.detail && <p style={{ margin: 0, color: C.text, fontSize: 17.5, lineHeight: 1.72, maxWidth: '62ch' }}>{sg.detail}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* WHAT HAPPENS — on its own ground, so the page changes colour before
           it changes subject. */}
       {(m.steps?.length > 0 || m.stepsText) && (

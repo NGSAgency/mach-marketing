@@ -11,6 +11,7 @@ import {
   crewContext, crewFacts, CrewPage, FactStrip, PageHero, SectionHead, Prose, Steps, FaqList, QuoteCard,
   ServiceCard, LinkTile, looksLikeJson,
 } from './CrewChrome.js'
+import { signsFrom } from './family/data.js'
 
 /** "What to expect" as steps when it is a list, else null. */
 export function stepsFrom(v) {
@@ -33,7 +34,7 @@ export const oneLine = (s) => (typeof s === 'string' && s.trim() && !looksLikeJs
  */
 export default function CrewServiceDetail({ config: c, siteSlug, service }) {
   const x = crewContext(c, siteSlug)
-  const { C, T, wrap, concept, services, areas, href, imgs, name, sectionPad } = x
+  const { C, F, T, wrap, concept, services, areas, href, imgs, name, sectionPad } = x
 
   const genFor = c.generated_for || {}
   const generatedSlug = genFor.service || services[0]?.slug
@@ -49,6 +50,9 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
   const steps = stepsFrom(rawSteps)
   const stepsText = steps ? null : asText(rawSteps)
   const methods = asText(copy('materials_and_methods'))
+  // The symptoms people search for, in their words, before they know the name
+  // of the job. Hidden when the client has turned the section off.
+  const signs = x.sections.signs ? signsFrom(copy('signs')) : null
   const faqs = faqList(copy('faq'))
   const subhead = copy('hero_subheadline') || (oneLine(service.short) !== intro ? oneLine(service.short) : null)
 
@@ -64,7 +68,7 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
     ...services.filter(s => s.slug !== service.slug && !(s.category && s.category === service.category)),
   ].slice(0, 3)
   const generatedService = services.find(s => s.slug === generatedSlug)
-  const hasBody = !!(intro || steps || stepsText || methods || faqs.length || noCopy)
+  const hasBody = !!(intro || signs || steps || stepsText || methods || faqs.length || noCopy)
   const facts = crewFacts(x, service)
   const badge = serviceEmergencyBadge(c, service, { long: true })
 
@@ -90,7 +94,7 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                 <>
                   <SectionHead x={x} eyebrow="Overview" title={`About ${service.name}`} small />
                   <ConceptNote T={T} minHeight={260} title={`Your ${service.name} page`}>
-                    What {service.name.toLowerCase()} involves, what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business{generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.
+                    What {service.name.toLowerCase()} involves, {x.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business{generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.
                   </ConceptNote>
                 </>
               ) : (
@@ -101,20 +105,36 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                       <Prose x={x} text={intro} />
                     </div>
                   )}
-                  {(steps || stepsText) && (
+                  {signs && (
                     <div style={intro ? block : {}}>
+                      <SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${service.name.toLowerCase()}`} small />
+                      <ul style={{ listStyle: 'none', margin: '22px 0 0', padding: 0, borderTop: `2px solid ${C.text}` }}>
+                        {signs.map((sg, i) => (
+                          <li key={i} style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: '0 18px', paddingBlock: 18, borderBottom: `1px solid ${C.border}` }}>
+                            <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 15, letterSpacing: '0.08em', color: C.accentDim, paddingTop: 4 }}>{String(i + 1).padStart(2, '0')}</span>
+                            <div>
+                              <h3 style={{ margin: 0, fontFamily: F.display, fontWeight: 800, textTransform: 'uppercase', fontSize: 'clamp(19px, 2vw, 23px)', lineHeight: 1.12 }}>{sg.sign}</h3>
+                              {sg.detail && <p style={{ margin: '7px 0 0', color: C.textDim, fontSize: 16.5, lineHeight: 1.65 }}>{sg.detail}</p>}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {(steps || stepsText) && (
+                    <div style={intro || signs ? block : {}}>
                       <SectionHead x={x} eyebrow="How it works" title="What to expect" small />
                       {steps ? <Steps x={x} steps={steps} /> : <Prose x={x} text={stepsText} />}
                     </div>
                   )}
                   {methods && (
-                    <div style={intro || steps || stepsText ? block : {}}>
+                    <div style={intro || signs || steps || stepsText ? block : {}}>
                       <SectionHead x={x} eyebrow="Methods" title="Products and methods" small />
                       <Prose x={x} text={methods} />
                     </div>
                   )}
                   {faqs.length > 0 && (
-                    <div style={intro || steps || stepsText || methods ? block : {}}>
+                    <div style={intro || signs || steps || stepsText || methods ? block : {}}>
                       <SectionHead x={x} eyebrow="Questions" title={`${service.name} questions`} small />
                       <FaqList x={x} faqs={faqs} open={faqs.length <= 3} />
                     </div>

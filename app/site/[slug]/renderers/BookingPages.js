@@ -367,6 +367,29 @@ export function BookingServiceDetail({ config: c, siteSlug, service }) {
         </section>
       )}
 
+      {/* THE SIGNS — the reason someone is on this page. Booking's job is to
+          get them to the form, so the section ends by pointing at it. */}
+      {m.signs && (
+        <section style={{ paddingBottom: sectionPad }}>
+          <div style={wrap}>
+            <h2 style={{ ...x.h2, fontSize: 'clamp(24px, 2.4vw, 33px)', marginBottom: 6 }}>Signs you need {service.name.toLowerCase()}</h2>
+            <p style={{ margin: '0 0 22px', fontSize: 17, color: C.textDim }}>If any of these sound familiar, send the form and we will take it from there.</p>
+            <ul className="bk-signs">
+              {m.signs.map((sg, i) => (
+                <li key={i} style={{ borderTop: `2px solid ${C.accentDim}`, paddingTop: 14 }}>
+                  <h3 style={{ ...x.h3, fontSize: 18.5, marginBottom: 6 }}>{sg.sign}</h3>
+                  {sg.detail && <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.7, color: C.textDim }}>{sg.detail}</p>}
+                </li>
+              ))}
+            </ul>
+            <style>{`
+              .bk-signs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 32px; }
+              @media (max-width: 760px) { .bk-signs { grid-template-columns: minmax(0, 1fr); } }
+            `}</style>
+          </div>
+        </section>
+      )}
+
       {/* THE VISIT — full width, two columns, on its own ground. The same
           steps down a single column read as four more paragraphs. */}
       {(m.steps?.length > 0 || m.stepsText) && (

@@ -83,6 +83,21 @@ export function stepsFrom(v) {
   return steps.length ? steps : null
 }
 
+/**
+ * "Signs you need this" items, or null. The symptom in the customer's words
+ * with a sentence on what it usually means: [{ sign, detail }].
+ */
+export function signsFrom(v) {
+  const list = Array.isArray(v) ? v : (looksLikeJson(v) ? parseJson(v) : null)
+  if (!Array.isArray(list)) return null
+  const signs = list.map(s => (typeof s === 'string'
+    ? { sign: s, detail: null }
+    : { sign: s?.sign || s?.title || s?.name || null, detail: s?.detail || s?.description || s?.text || null }))
+    .filter(s => s.sign)
+    .slice(0, 6)
+  return signs.length ? signs : null
+}
+
 /** A single-paragraph line fit for a page header, or null. */
 export const oneLine = (s) => (typeof s === 'string' && s.trim() && !looksLikeJson(s) && !/\n/.test(s.trim()) && s.length <= 220 ? s.trim() : null)
 
@@ -265,6 +280,7 @@ export function serviceModel(d, service) {
   const steps = stepsFrom(rawSteps)
   const stepsText = steps ? null : asText(rawSteps)
   const methods = asText(copy('materials_and_methods'))
+  const signs = d.sections.signs ? signsFrom(copy('signs')) : null
   const faqs = faqList(copy('faq'))
   const subhead = copy('hero_subheadline') || (oneLine(service.short) !== intro ? oneLine(service.short) : null)
   const crumbs = breadcrumbsForService(service, c)
@@ -274,15 +290,15 @@ export function serviceModel(d, service) {
   ].slice(0, 3)
   const generatedService = services.find(s => s.slug === generatedSlug)
   return {
-    crumbs, noCopy, intro, steps, stepsText, methods, faqs, subhead, related,
+    crumbs, noCopy, intro, steps, stepsText, methods, signs, faqs, subhead, related,
     image: imgs[`service_${service.slug}`] || null,
     eyebrow: service.category && service.category !== service.name ? service.category : d.offeringLabel,
     badge: serviceEmergencyBadge(c, service, { long: true }),
     facts: pageFacts(d, service),
-    hasBody: !!(intro || steps || stepsText || methods || faqs.length || noCopy),
+    hasBody: !!(intro || steps || stepsText || methods || signs || faqs.length || noCopy),
     note: {
       title: `Your ${service.name} page`,
-      body: `What ${service.name.toLowerCase()} involves, what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business${generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.`,
+      body: `What ${service.name.toLowerCase()} involves, ${d.sections.signs ? 'the signs that send people looking for it, ' : ''}what happens on a visit, the products and methods you use, and the questions customers ask about it. Written for your business${generatedService ? `, like the ${generatedService.name} page,` : ''} and checked by you before it goes live.`,
     },
     schemas: [
       buildBreadcrumbSchema(c, crumbs),

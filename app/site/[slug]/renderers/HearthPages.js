@@ -283,6 +283,26 @@ export function HearthServices({ config: c, siteSlug }) {
   )
 }
 
+/**
+ * Hearth's "signs you need this": a ledger. The symptom in the display face on
+ * the left, what it usually means on the right, one ruled row each — the same
+ * two-column reading Hearth uses for its areas and its facts.
+ */
+function SignLedger({ x, signs }) {
+  const { C, F } = x
+  return (
+    <ul style={{ listStyle: 'none', margin: '26px 0 0', padding: 0, borderTop: `2px solid ${C.text}` }}>
+      {signs.map((sg, i) => (
+        <li key={i} className="h-signrow" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 3fr)', gap: '8px 32px', paddingBlock: 22, borderBottom: `1px solid ${C.border}` }}>
+          <h3 style={{ margin: 0, fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(20px, 2.1vw, 25px)', lineHeight: 1.16, color: C.text }}>{sg.sign}</h3>
+          {sg.detail && <p style={{ margin: 0, fontSize: 17, lineHeight: 1.72, color: C.textDim }}>{sg.detail}</p>}
+        </li>
+      ))}
+      <style>{`@media (max-width: 720px) { .h-signrow { grid-template-columns: minmax(0, 1fr) !important; } }`}</style>
+    </ul>
+  )
+}
+
 export function HearthServiceDetail({ config: c, siteSlug, service }) {
   const x = hearthContext(c, siteSlug)
   const m = serviceModel(x, service)
@@ -299,6 +319,7 @@ export function HearthServiceDetail({ config: c, siteSlug, service }) {
         ) : (
           <>
             {m.intro && <div><SectionHead x={x} eyebrow="Overview" title={`About ${service.name}`} small /><Prose x={x} text={m.intro} /></div>}
+            {m.signs && <div><SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${service.name.toLowerCase()}`} small /><SignLedger x={x} signs={m.signs} /></div>}
             {(m.steps || m.stepsText) && <div><SectionHead x={x} eyebrow="How it works" title="What to expect" small />{m.steps ? <Steps x={x} steps={m.steps} /> : <Prose x={x} text={m.stepsText} />}</div>}
             {m.methods && <div><SectionHead x={x} eyebrow="Methods" title="Products and methods" small /><Prose x={x} text={m.methods} /></div>}
             {m.faqs.length > 0 && <div><SectionHead x={x} eyebrow="Questions" title={`${service.name} questions`} small /><FaqList x={x} faqs={m.faqs} open={m.faqs.length <= 3} /></div>}

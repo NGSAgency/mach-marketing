@@ -174,6 +174,28 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
     ),
   })
 
+  // The signs chapter runs the symptom into its explanation on one line, the
+  // way the rest of STAGE runs its argument: no cards, no numbers, just the
+  // thing you noticed and what it usually means.
+  if (m.signs) chapters.push({
+    id: 'signs', label: 'Know the signs',
+    cap: { title: 'What people notice first', line: `The symptoms that send people looking for ${service.name.toLowerCase()}.` },
+    board: boardOf(x, [facts.emergency(x), facts.estimates(x), facts.hours(x)]),
+    content: (
+      <>
+        <h2 style={x.h2}>Signs you need {service.name.toLowerCase()}</h2>
+        <ul style={{ listStyle: 'none', margin: '28px 0 0', padding: 0 }}>
+          {m.signs.map((sg, i) => (
+            <li key={i} style={{ borderTop: `1px solid ${C.border}`, paddingBlock: 20, fontSize: 17.5, lineHeight: 1.74, color: C.textDim }}>
+              <h3 style={{ display: 'inline', margin: 0, fontFamily: F.display, fontWeight: 800, letterSpacing: '-0.025em', fontSize: 'clamp(18.5px, 1.9vw, 23px)', color: C.text }}>{sg.sign}</h3>
+              {sg.detail ? <> — {sg.detail}</> : null}
+            </li>
+          ))}
+        </ul>
+      </>
+    ),
+  })
+
   if (m.steps?.length > 0 || m.stepsText) chapters.push({
     id: 'visit', label: 'On the visit',
     cap: { title: 'How a visit goes', line: `The steps ${name} follows once you have called.` },

@@ -12,6 +12,8 @@ import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServic
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
+import { resolveSections } from '../../../../lib/templates/shared/sections.js'
+import { signsFrom } from './family/data.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -25,6 +27,9 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
   const areas = c.service_areas || []
 
   const faqs = faqList(copy('faq'))
+  // The symptoms or concerns that bring someone to this treatment. Hidden when
+  // the client has turned the section off in the questionnaire.
+  const signs = resolveSections(c, 'serene').signs ? signsFrom(copy('signs')) : null
 
   const schemas = [
     buildBreadcrumbSchema(c, breadcrumbsForService(service, c)),
@@ -54,6 +59,33 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
         <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
           {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
         </div>
+      </div>
+    </section>
+  ) : null
+
+  // The same two-column shape as a Section, but the right column is a list:
+  // the concern set in the display face, what it usually means underneath.
+  const SignsSection = ({ index = 0 }) => signs ? (
+    <section style={{
+      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
+      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
+      borderTop: `1px solid ${T.colors.borderLight}`,
+    }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+        <h2 style={{
+          fontFamily: T.fonts.display, fontSize: 'clamp(20px, 2.3vw, 28px)', fontWeight: 300,
+          lineHeight: 1.2, letterSpacing: '-0.01em', color: T.colors.text, margin: 0, paddingTop: 2,
+        }}>
+          Signs it is time
+        </h2>
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: 640 }}>
+          {signs.map((sg, i) => (
+            <li key={i} style={{ padding: '22px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
+              <h3 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(19px, 2vw, 23px)', fontWeight: 300, lineHeight: 1.25, letterSpacing: '-0.01em', margin: 0, color: T.colors.text }}>{sg.sign}</h3>
+              {sg.detail && <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim, margin: '10px 0 0' }}>{sg.detail}</p>}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   ) : null
@@ -139,10 +171,11 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
 
         <div style={{ paddingTop: conceptOnly ? 'clamp(32px, 4vw, 56px)' : 'clamp(48px, 7vw, 88px)' }}>
           <Section label="Overview" body={asText(copy('intro'))} index={0} />
-          <Section label="What to expect" body={asText(copy('what_to_expect'))} index={1} />
-          <Section label="Our approach" body={asText(copy('materials_and_methods'))} index={2} />
-          <Section label="Who it suits" body={asText(copy('candidacy'))} index={3} />
-          <Section label="Aftercare" body={asText(copy('aftercare'))} index={4} />
+          <SignsSection index={1} />
+          <Section label="What to expect" body={asText(copy('what_to_expect'))} index={signs ? 2 : 1} />
+          <Section label="Our approach" body={asText(copy('materials_and_methods'))} index={signs ? 3 : 2} />
+          <Section label="Who it suits" body={asText(copy('candidacy'))} index={signs ? 4 : 3} />
+          <Section label="Aftercare" body={asText(copy('aftercare'))} index={signs ? 5 : 4} />
         </div>
 
         {faqs.length > 0 && (
