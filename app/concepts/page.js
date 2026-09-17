@@ -48,6 +48,18 @@ const concepts = [
       { href: '/concepts/f-combo.html', label: 'Service in a town' },
     ],
   },
+  {
+    slug: 'g',
+    name: 'Rail',
+    job: 'Keeps the way to act on screen',
+    description:
+      'D rebuilt. The rail down the right edge still carries the logo, the menu, the phone number and both buttons the whole way down, and on an inner page it also says what is on the page. The content runs in three bands rather than seven equal sections: the work, then the people on a lighter ground, then everything that answers a question. Its own section is the crew — who turns up, with their names — high on the home page rather than buried on an About page.',
+    more: [
+      { href: '/concepts/g-service.html', label: 'Service page' },
+      { href: '/concepts/g-area.html', label: 'Service area page' },
+      { href: '/concepts/g-combo.html', label: 'Service in a town' },
+    ],
+  },
 ]
 
 const wrap = { maxWidth: 960, margin: '0 auto', padding: '0 20px' }
@@ -63,7 +75,7 @@ export default function ConceptsIndex() {
           Client site design concepts
         </h1>
         <p style={{ fontSize: 18, lineHeight: 1.6, color: '#4c535a', maxWidth: '62ch', margin: '0 0 10px' }}>
-          Four structures for the same business. They are not four colour schemes — the section order, what leads the
+          Six structures for the same business. They are not four colour schemes — the section order, what leads the
           page, and the shape each piece of content takes are different in every one. Each is built to do a different
           job, so a client gets the one that suits how their customers actually buy.
         </p>
