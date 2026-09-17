@@ -12,9 +12,12 @@
 // hardcoded colours; rendering showed the real cause (see CONTENT_ROADMAP.md,
 // "Palette failure: diagnosed").
 //
-// Not a project dependency, so Vercel builds don't install a browser. To run:
-//   mkdir -p /tmp/audit && cd /tmp/audit && npm i playwright pngjs
-//   node /path/to/scripts/contrast-audit.mjs http://localhost:3000 /site/slug /site/slug/about
+// Not a project dependency, so Vercel builds don't install a browser. Node
+// resolves an ESM import from the script's own folder rather than the working
+// directory, so the script has to sit beside the install. To run:
+//   mkdir -p /tmp/audit && cd /tmp/audit && npm i playwright pngjs && npx playwright install chromium
+//   cp /path/to/scripts/contrast-audit.mjs /tmp/audit/
+//   cd /tmp/audit && node contrast-audit.mjs http://localhost:3000 /site/slug /site/slug/about
 // Options (env): AUDIT_OUT=report.json  AUDIT_FAIL=1.5  AUDIT_WARN=3  AUDIT_WIDTH=1280  CHROMIUM=/path/to/chrome
 //
 // Hero rule: text inside [data-hero] must reach WCAG AA against the pixels

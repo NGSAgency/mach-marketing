@@ -41,6 +41,15 @@ function RailStyles({ x }) {
       <link rel="stylesheet" href={railTokens.fontsHref} precedence="default" />
       <style>{`
         .rl a:focus-visible, .rl summary:focus-visible, .rl button:focus-visible { outline: 3px solid ${C.accent}; outline-offset: 3px; }
+
+        /* Hidden until it is focused, and hidden the way a screen reader still
+           finds it. Parked off-screen at a real size it is still a box of text
+           painted on whatever happens to be behind it. */
+        .rl-skip { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
+                   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+        .rl-skip:focus { position: fixed; top: 0; left: 0; width: auto; height: auto; clip: auto;
+                         clip-path: none; padding: 12px 20px; z-index: 99; font-weight: 700;
+                         background: ${C.accent}; color: ${C.onAccent}; }
         .rl img { max-width: 100%; display: block; }
         .rl { overflow-x: clip; }
 
@@ -168,10 +177,7 @@ export function RailPage({ x, schemas = [], current, toc, children }) {
       <RailStyles x={x} />
       {!concept && schemas.filter(Boolean).map((s, i) => <JsonLd key={i} data={s} />)}
       <div className="rl" style={{ background: C.bg, color: C.text, fontFamily: F.body, fontSize: x.T.type.base, lineHeight: 1.62, minHeight: '100vh' }}>
-        <a href="#rl-main"
-          style={{ position: 'absolute', left: -9999, top: 0, zIndex: 99, background: C.accent, color: C.onAccent, padding: '12px 20px', fontWeight: 700 }}>
-          Skip to the page
-        </a>
+        <a className="rl-skip" href="#rl-main">Skip to the page</a>
         <div className="rl-shell">
           <main className="rl-main" id="rl-main">
             {children}
@@ -195,7 +201,7 @@ export function Opening({ x, image, crumbs, eyebrow, title, lede, badge }) {
     <div data-hero="" style={{ position: 'relative' }}>
       <img src={image.url} alt={image.alt || ''} style={{ width: '100%', height: 'clamp(360px, 50vh, 540px)', objectFit: 'cover' }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'flex-end',
-                    background: `linear-gradient(0deg, ${C.overlayStrong} 0%, ${C.overlayFaint} 62%)` }}>
+                    background: `linear-gradient(90deg, ${C.overlayStrong} 0%, ${C.overlayStrong} 55%, ${C.overlayLight} 92%), linear-gradient(0deg, ${C.overlayStrong} 0%, ${C.overlayFaint} 60%)` }}>
         <div data-on-image="" style={{ '--on-image': C.textOnImage, '--on-image-dim': C.textOnImageDim, color: C.textOnImage, width: '100%', padding: `0 ${x.gutter} clamp(26px, 3.4vw, 44px)` }}>
           {crumbs?.length > 1 && <Crumbs x={x} crumbs={crumbs} onImage />}
           {badge && (
@@ -266,7 +272,7 @@ export function Crumbs({ x, crumbs, onImage = false, onPlate = false }) {
     <nav aria-label="Breadcrumb" style={{ fontSize: 14, color, marginBottom: 14 }}>
       {crumbs.map((b, i) => (
         <span key={b.url}>
-          {i > 0 && <span style={{ opacity: 0.5, paddingInline: 5 }}>/</span>}
+          {i > 0 && <span aria-hidden="true" style={{ paddingInline: 5 }}>/</span>}
           {i < crumbs.length - 1
             ? <a href={`${base}${b.url === '/' ? '' : b.url}`} style={{ color, textDecoration: 'none' }}>{b.name}</a>
             : <span>{b.name}</span>}
