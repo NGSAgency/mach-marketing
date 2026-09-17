@@ -30,7 +30,7 @@ export function railContext(c, siteSlug) {
 
 export const btnAccent = (x) => ({ ...x.btn, background: x.C.accent, color: x.C.onAccent, borderColor: x.C.accent })
 export const btnOutline = (x) => ({ ...x.btn, background: 'transparent', color: x.C.text, borderColor: x.C.border })
-export const btnOnPlate = (x) => ({ ...x.btn, background: x.C.inverseText, color: x.C.inverseBg, borderColor: x.C.inverseText })
+export const btnOnPlate = (x) => ({ ...x.btn, background: x.C.onAccent, color: x.C.accent, borderColor: x.C.onAccent })
 export const textLink = (x) => ({ color: x.C.accent, textDecoration: 'underline', textUnderlineOffset: 4 })
 
 function RailStyles({ x }) {
@@ -230,7 +230,10 @@ export function Masthead({ x, crumbs, where, title, place, lede, badge }) {
         <div style={{ ...x.label(C.accent), marginBottom: 18 }}>{[where, badge].filter(Boolean).join(' · ')}</div>
       )}
       <h1 style={{ ...x.h1, fontSize: place ? 'clamp(40px, 6.2vw, 88px)' : x.T.type.hero, lineHeight: 0.98, letterSpacing: '-0.042em', maxWidth: '15ch' }}>
-        {title}
+        {/* The space matters: the line break is visual, and without it the
+            heading reads "Heating and cooling inOverland Park" to a crawler
+            and to a screen reader. */}
+        {title}{place ? ' ' : ''}
         {place && <span style={{ display: 'block', color: C.accent }}>{place}</span>}
       </h1>
       {lede && <p style={{ margin: '20px 0 0', fontSize: 19, color: C.textDim, maxWidth: '54ch' }}>{lede}</p>}
@@ -245,29 +248,34 @@ export function Masthead({ x, crumbs, where, title, place, lede, badge }) {
  */
 export function Plate({ x, crumbs, parents, where, title, lede }) {
   const { C } = x
+  // accent/onAccent, not the inverse roles: a concept or any site with a
+  // derived palette redefines "inverse" as the opposite lightness band, and
+  // this plate came out near-white. Everything on it takes the one text
+  // colour that is guaranteed to read on the brand colour — hierarchy is
+  // size and weight, because a colour at half opacity is half the contrast.
   return (
-    <div data-hero="" style={{ background: C.inverseBg, color: C.inverseText, padding: `clamp(34px, 4.4vw, 62px) ${x.gutter}` }}>
+    <div data-hero="" style={{ background: C.accent, color: C.onAccent, padding: `clamp(34px, 4.4vw, 62px) ${x.gutter}` }}>
       {crumbs?.length > 1 && <Crumbs x={x} crumbs={crumbs} onPlate />}
       {parents?.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
           {parents.map(p => (
             <a key={p.href} href={p.href}
-              style={{ border: `1px solid ${C.inverseBorder}`, borderRadius: x.T.radius.full, padding: '6px 14px', fontSize: 14, fontWeight: 700, color: C.inverseText, textDecoration: 'none' }}>
+              style={{ border: `1px solid ${C.onAccent}`, borderRadius: x.T.radius.full, padding: '6px 14px', fontSize: 14, fontWeight: 700, color: C.onAccent, textDecoration: 'none' }}>
               ← {p.label}
             </a>
           ))}
         </div>
       )}
-      {where && <div style={{ ...x.label(C.inverseTextDim), marginBottom: 14 }}>{where}</div>}
-      <h1 style={{ ...x.h1, maxWidth: '18ch', marginBottom: 12, color: C.inverseText }}>{title}</h1>
-      {lede && <p style={{ margin: 0, fontSize: 19, maxWidth: '52ch', color: C.inverseTextDim }}>{lede}</p>}
+      {where && <div style={{ ...x.label(C.onAccent), marginBottom: 14 }}>{where}</div>}
+      <h1 style={{ ...x.h1, maxWidth: '18ch', marginBottom: 12, color: C.onAccent }}>{title}</h1>
+      {lede && <p style={{ margin: 0, fontSize: 19, maxWidth: '52ch', color: C.onAccent }}>{lede}</p>}
     </div>
   )
 }
 
 export function Crumbs({ x, crumbs, onImage = false, onPlate = false }) {
   const { C, base } = x
-  const color = onPlate ? C.inverseTextDim : onImage ? C.textOnImageDim : C.textDim
+  const color = onPlate ? C.onAccent : onImage ? C.textOnImageDim : C.textDim
   return (
     <nav aria-label="Breadcrumb" style={{ fontSize: 14, color, marginBottom: 14 }}>
       {crumbs.map((b, i) => (
@@ -661,18 +669,27 @@ export function Inset({ x, image, caption }) {
   )
 }
 
-/** The closing band: the plate again, with the phone number in it. */
-export function Closing({ x, context }) {
+/**
+ * The closing band: the plate again, with the phone number in it. `context` is
+ * the job, `place` the town, and the sentence is built from whichever of them
+ * the page has rather than from one string the caller has to get right.
+ */
+export function Closing({ x, context, place }) {
   const { C, F, phone, phoneDisplay, biz, second } = x
   return (
     <section style={{ ...x.wrap, paddingBottom: x.sectionPad }}>
-      <div style={{ background: C.inverseBg, color: C.inverseText, borderRadius: x.T.radius.lg, padding: 'clamp(26px, 3.2vw, 42px)', display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ background: C.accent, color: C.onAccent, borderRadius: x.T.radius.lg, padding: 'clamp(26px, 3.2vw, 42px)', display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <h2 style={{ ...x.h2, color: C.inverseText, maxWidth: '18ch' }}>{context ? `Get ${context} booked` : 'Get it booked'}</h2>
+          <h2 style={{ ...x.h2, color: C.onAccent, maxWidth: '18ch' }}>
+            {context && place ? `Get ${context} booked in ${place}`
+              : context ? `Get ${context} booked`
+              : place ? `Book a visit in ${place}`
+              : 'Get it booked'}
+          </h2>
           {biz.hours_display && <p style={{ margin: '8px 0 0', fontWeight: 600 }}>{biz.hours_display}</p>}
         </div>
         {phone
-          ? <a href={`tel:${phone}`} style={{ fontFamily: F.display, fontSize: 'clamp(27px, 3.2vw, 42px)', fontWeight: 800, letterSpacing: '-0.035em', color: C.inverseText, textDecoration: 'none' }}>{phoneDisplay}</a>
+          ? <a href={`tel:${phone}`} style={{ fontFamily: F.display, fontSize: 'clamp(27px, 3.2vw, 42px)', fontWeight: 800, letterSpacing: '-0.035em', color: C.onAccent, textDecoration: 'none' }}>{phoneDisplay}</a>
           : <a href={second.href} style={btnOnPlate(x)}>{second.label}</a>}
       </div>
     </section>

@@ -130,7 +130,7 @@ export function RailAreaDetail({ config: c, siteSlug, area }) {
         </Section>
       )}
 
-      <Closing x={x} context={`in ${area}`} />
+      <Closing x={x} place={area} />
     </RailPage>
   )
 }
@@ -212,7 +212,7 @@ export function RailCombo({ config: c, siteSlug, service, area }) {
         </Section>
       )}
 
-      <Closing x={x} context={`in ${area}`} />
+      <Closing x={x} context={lowerName(service.name)} place={area} />
     </RailPage>
   )
 }
@@ -237,7 +237,12 @@ export function RailAbout({ config: c, siteSlug }) {
     <RailPage x={x} schemas={m.schemas} current="about" toc={toc}>
       <Opening x={x} image={m.image} crumbs={m.crumbs} eyebrow="About" title={`About ${name}`} lede={x.since || null} />
 
-      {m.facts.length > 0 && <Figures x={x} items={m.facts} />}
+      {/* A figure is a number and a short label. The licence fact carries the
+          whole licence string, which wraps to six lines and unbalances the
+          row; it is already set out in full in the footer. */}
+      {m.facts.filter(f => f.label.length <= 34).length > 0 && (
+        <Figures x={x} items={m.facts.filter(f => f.label.length <= 34)} />
+      )}
 
       {(story.length > 0 || concept) && (
         <Section x={x} id="rl-story">
