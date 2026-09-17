@@ -210,6 +210,10 @@ h1 { font-size: clamp(36px, 4.3vw, 60px); line-height: 1.02; max-width: 17ch; ma
 .signs p { margin-top: 6px; color: var(--dim); font-size: 16.5px; line-height: 1.65; max-width: 62ch }
 
 /* ---- coverage, questions, closing ------------------------------------ */
+/* One wrapping row, never two stacked groups: a second container starts a new
+   line whether or not the one above is full. Labels stay short for the same
+   reason — "Furnace installation in Overland Park" on a page already headed
+   Overland Park leaves half a line empty and orphans the next pill. */
 .chips { display: flex; flex-wrap: wrap; gap: 9px }
 .chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 9px 17px; font-weight: 600; font-size: 15px }
 .chip:hover { border-color: var(--accent) }
@@ -333,8 +337,12 @@ footer { border-top: 1px solid var(--line); padding-block: 34px 44px; color: var
    line of faces instead of three tall figures, and the local facts as
    figures across the top. */
 .figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line) }
-.figs div { padding: 22px 0 24px; border-right: 1px solid var(--line); padding-right: 20px }
-.figs div:last-child { border-right: 0 }
+/* Each cell is padded on both sides, so a value never sits against the rule
+   that divides it from the one before. The first cell keeps its left edge on
+   the page gutter. */
+.figs div { padding: 22px clamp(18px, 2vw, 30px) 24px; border-right: 1px solid var(--line) }
+.figs div:first-child { padding-left: 0 }
+.figs div:last-child { border-right: 0; padding-right: 0 }
 .figs b { display: block; font-size: clamp(28px, 3.2vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent) }
 .figs span { display: block; margin-top: 9px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute) }
 
@@ -357,12 +365,22 @@ footer { border-top: 1px solid var(--line); padding-block: 34px 44px; color: var
 .faces span { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent) }
 .faces p { margin-top: 5px; color: var(--dim); font-size: 14.5px; line-height: 1.5 }
 
+/* A photograph set in the page rather than bled against the section above
+   it. Used where a full-bleed band would collide with the accent plate. */
+.inset { padding-inline: clamp(26px, 4vw, 60px) }
+.inset figure { margin: 0; position: relative; border-radius: 14px; overflow: hidden }
+.inset img { width: 100%; height: clamp(230px, 24vw, 340px); object-fit: cover }
+.inset figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 24px 16px;
+  background: linear-gradient(0deg, rgba(13,17,20,0.88), transparent);
+  font-size: 14.5px; color: var(--paper);
+}
+
 /* ---- the combo page --------------------------------------------------
    The shortest page on the site and the one most likely to be somebody's
    first, so it opens loud: the plate carries the heading and the facts
    together, in the accent colour, across the full width. */
-.plate.big { padding-block: clamp(40px, 5vw, 76px) }
-.plate.big h1 { font-size: clamp(38px, 5vw, 70px); max-width: 18ch }
+.plate.big h1 { font-size: clamp(36px, 4.4vw, 62px); max-width: 18ch }
 .plate .strip {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px; margin-top: 30px; padding-top: 24px;
@@ -375,7 +393,8 @@ footer { border-top: 1px solid var(--line); padding-block: 34px 44px; color: var
   .two { grid-template-columns: minmax(0, 1fr) }
   .card { position: static }
   .signs.cols, .track, .figs, .plate .strip { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-  .figs div:nth-child(2n) { border-right: 0 }
+  .figs div:nth-child(2n) { border-right: 0; padding-right: 0 }
+  .figs div:nth-child(2n+1) { padding-left: 0 }
   .dir a { grid-template-columns: 24px minmax(0, 1fr) auto }
   .dir p { grid-column: 2 / -1 }
 }
