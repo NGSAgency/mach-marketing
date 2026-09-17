@@ -29,79 +29,84 @@
       <p class="lede">Nineteen minutes from the shop. Most Overland Park repair calls are seen the same day.</p>
     </div>
 
+    <!-- The facts about this town, across the page. The home page never
+         does this: it is the one thing an area page knows that no other
+         page does. -->
+    <div class="wrap">
+      <div class="figs">
+        <div><b>19</b><span>Minutes from the shop</span></div>
+        <div><b>Same day</b><span>Most repair calls</span></div>
+        <div><b>$89</b><span>Diagnostic, off the repair</span></div>
+        <div><b>1980</b><span>Working here since</span></div>
+      </div>
+    </div>
+
+    <!-- The local copy in two columns. The home page sets its prose at a
+         reading measure down the left; this page fills the width, which is
+         what stops the two looking like the same page twice. -->
     <section class="wrap" id="s1">
       <div class="head">
         <div class="eyebrow">Locally</div>
         <h2>What we see in Overland Park</h2>
       </div>
-      <p style="color:var(--dim);max-width:62ch;font-size:17.5px">
-        A lot of the housing stock north of 95th went up between 1965 and 1985, and a good share of it is still on the ductwork it was built with. The systems have been replaced two or three times; the returns have not. That shows up as a house that cools unevenly — the back bedrooms never quite get there — and it is worth checking before anyone talks about a bigger unit.
-      </p>
-      <p style="color:var(--dim);max-width:62ch;font-size:17.5px;margin-top:16px">
-        Newer builds south of 151st have the opposite problem. Tight envelopes and two-storey volumes make a single-stage system short-cycle, which wears the compressor out early. A two-stage or variable-speed replacement usually pays for itself there in a way it would not in an older ranch.
-      </p>
+      <div style="columns:2;column-gap:clamp(28px,3.4vw,56px);color:var(--dim);font-size:17.5px;line-height:1.68">
+        <p>A lot of the housing stock north of 95th went up between 1965 and 1985, and a good share of it is still on the ductwork it was built with. The systems have been replaced two or three times; the returns have not.</p>
+        <p style="margin-top:16px">That shows up as a house that cools unevenly — the back bedrooms never quite get there — and it is worth checking before anyone talks about a bigger unit. We measure static pressure first, which now and then turns a replacement quote into a much cheaper piece of duct work.</p>
+        <p style="margin-top:16px">Newer builds south of 151st have the opposite problem. Tight envelopes and two-storey volumes make a single-stage system short-cycle, which wears the compressor out early. A two-stage or variable-speed replacement pays for itself there in a way it would not in an older ranch.</p>
+      </div>
     </section>
 
-    <!-- On an area page the services ARE the content: each one is a real
-         page for this town, and this is the only page that links to them. -->
+    <!-- A directory, not the home page's cards. Every row is a real page
+         for this town, and this is the only page that links to them. -->
     <section class="wrap" id="s2" style="padding-top:0">
       <div class="head">
         <div class="eyebrow">Services</div>
         <h2>What we do in Overland Park</h2>
       </div>
-      <div class="svc">
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo1.jpg" alt="" /><span><h3>AC repair in Overland Park</h3><p>Same-day diagnosis, price agreed before the work.</p></span><span class="go">→</span></a>
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo2.jpg" alt="" /><span><h3>AC installation in Overland Park</h3><p>Sized for the house and the ductwork it has.</p></span><span class="go">→</span></a>
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo3.jpg" alt="" /><span><h3>Furnace repair in Overland Park</h3><p>Heat back on, with the cause explained first.</p></span><span class="go">→</span></a>
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo2.jpg" alt="" /><span><h3>Furnace installation in Overland Park</h3><p>Replacements matched to the house.</p></span><span class="go">→</span></a>
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo3.jpg" alt="" /><span><h3>Water heater service in Overland Park</h3><p>Tank and tankless, repair or replace.</p></span><span class="go">→</span></a>
-        <a href="/concepts/g-combo.html"><img src="/concepts/photo1.jpg" alt="" /><span><h3>Maintenance plans in Overland Park</h3><p>Spring and autumn, on a set date.</p></span><span class="go">→</span></a>
+      <div class="dir">
+        <a href="/concepts/g-combo.html"><i>01</i><h3>AC repair</h3><p>Same-day diagnosis, price agreed before the work.</p><span class="go">→</span></a>
+        <a href="/concepts/g-combo.html"><i>02</i><h3>AC installation</h3><p>Sized for the house and the ductwork it actually has.</p><span class="go">→</span></a>
+        <a href="/concepts/g-combo.html"><i>03</i><h3>Furnace repair</h3><p>Heat back on, with the cause explained first.</p><span class="go">→</span></a>
+        <a href="/concepts/g-combo.html"><i>04</i><h3>Furnace installation</h3><p>Replacements matched to the house, not the catalogue.</p><span class="go">→</span></a>
+        <a href="/concepts/g-combo.html"><i>05</i><h3>Water heater service</h3><p>Tank and tankless, repair or replace.</p><span class="go">→</span></a>
+        <a href="/concepts/g-combo.html"><i>06</i><h3>Maintenance plans</h3><p>Spring and autumn, on a set date.</p><span class="go">→</span></a>
       </div>
     </section>
 
+    <!-- The crew as a line of faces rather than three tall figures: the
+         home page already made that introduction, this page only says who
+         of them comes here. -->
     <div class="band" id="s3">
       <section class="wrap">
         <div class="head">
           <div class="eyebrow">The crew</div>
           <h2>Who covers Overland Park</h2>
         </div>
-        <div class="crew">
+        <div class="faces">
           <figure>
-            <img src="https://images.unsplash.com/photo-1676210134188-4c05dd172f89?w=900&q=80&auto=format&fit=crop" alt="Technician working on pipework under a sink" />
+            <img src="https://images.unsplash.com/photo-1676210134188-4c05dd172f89?w=400&q=80&auto=format&fit=crop" alt="Marisol Vega" />
             <figcaption>
               <h3>Marisol Vega</h3>
-              <span class="role">Lead technician · 12 years</span>
-              <p>Runs most of the Overland Park installations and knows the 1970s ductwork north of 95th well.</p>
-              <ul><li>NATE certified</li><li>KS Journeyman</li></ul>
+              <span>Lead technician</span>
+              <p>Knows the 1970s ductwork north of 95th.</p>
             </figcaption>
           </figure>
           <figure>
-            <img src="https://images.unsplash.com/photo-1620653713380-7a34b773fef8?w=900&q=80&auto=format&fit=crop" alt="Hands fitting a valve on a water heater" />
+            <img src="https://images.unsplash.com/photo-1620653713380-7a34b773fef8?w=400&q=80&auto=format&fit=crop" alt="Curtis Boyd" />
             <figcaption>
               <h3>Curtis Boyd</h3>
-              <span class="role">Service technician · 6 years</span>
-              <p>Has the maintenance route east of Metcalf, so most plan houses here are ones he has been in before.</p>
-              <ul><li>EPA 608 Type II</li></ul>
+              <span>Service technician</span>
+              <p>Has the maintenance route east of Metcalf.</p>
             </figcaption>
           </figure>
           <figure>
-            <img src="https://images.unsplash.com/photo-1660330589827-da8ab7dd3c02?w=900&q=80&auto=format&fit=crop" alt="Technician working at a home electrical panel" />
+            <img src="https://images.unsplash.com/photo-1660330589827-da8ab7dd3c02?w=400&q=80&auto=format&fit=crop" alt="Ray Davenport" />
             <figcaption>
               <h3>Ray Davenport</h3>
-              <span class="role">Owner · 31 years</span>
-              <p>Takes the difficult diagnostics himself, wherever they are.</p>
-              <ul><li>EPA 608 Universal</li><li>NATE certified</li></ul>
+              <span>Owner</span>
+              <p>Takes the difficult diagnostics himself.</p>
             </figcaption>
           </figure>
-        </div>
-      </section>
-
-      <section class="wrap" style="padding-top:0">
-        <div class="rows">
-          <div><span class="k">Distance</span><span>19 minutes from the shop on Ridgeview</span></div>
-          <div><span class="k">Response</span><span>Most repair calls seen the same day</span></div>
-          <div><span class="k">Diagnostic</span><span>$89, taken off the repair if you go ahead</span></div>
-          <div><span class="k">Hours</span><span>Mon–Fri 7am–6pm · Sat 8am–2pm</span></div>
         </div>
       </section>
     </div>

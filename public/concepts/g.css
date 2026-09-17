@@ -109,7 +109,7 @@ section { padding-block: clamp(46px, 5.5vw, 78px) }
   text-transform: uppercase; color: var(--accent); margin-bottom: 11px;
 }
 h2 { font-size: clamp(26px, 2.9vw, 38px) }
-.head { margin-bottom: 26px; max-width: 30ch }
+.head { margin-bottom: 26px; max-width: 44ch }
 .head p { color: var(--dim); font-size: 17.5px; margin-top: 12px; max-width: 54ch }
 
 /* ---- the opening ----------------------------------------------------- */
@@ -268,4 +268,119 @@ footer { border-top: 1px solid var(--line); padding-block: 34px 44px; color: var
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important }
+}
+
+/* ======================================================================
+   INNER PAGES
+   The rail takes 300px and leaves about 1100. Set a reading measure in
+   that and two thirds of the page is empty, which is what made the first
+   pass read as a long ribbon of words. Everything below exists to use
+   the width: prose runs beside something, lists run in two columns, and
+   the steps run across rather than down.
+   ====================================================================== */
+
+/* Prose on the left, a card of facts on the right. The card is sticky, so
+   the phone number and the price stay beside the reading. */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(26px, 3vw, 52px); align-items: start }
+.prose p { color: var(--dim); font-size: 17.5px; line-height: 1.68; max-width: 60ch }
+.prose p + p { margin-top: 16px }
+.lead { font-size: clamp(20px, 1.9vw, 25px) !important; line-height: 1.42 !important; color: var(--paper) !important; letter-spacing: -0.02em; max-width: 42ch !important }
+
+.card {
+  position: sticky; top: 26px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  padding: 22px 22px 24px;
+}
+.card h3 { font-size: 11.5px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mute); margin-bottom: 14px }
+.card dl { margin: 0; display: grid; gap: 0 }
+.card dt { font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute) }
+.card dd { margin: 3px 0 0; font-size: 16px; color: var(--paper); line-height: 1.5 }
+.card dd + dt { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line) }
+.card .go { display: block; margin-top: 20px }
+
+/* Two columns of signs. Each one is two or three lines, so a single
+   column left half the page empty and made five of them look like fifty. */
+.signs.cols {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(24px, 3vw, 44px);
+  border-top: 0;
+}
+.signs.cols li { border-top: 1px solid var(--line); border-bottom: 0 }
+.signs.cols p { max-width: none }
+
+/* The visit, across the page. Four steps down a column are four more
+   paragraphs; across, they read as a sequence. */
+.track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px) }
+.track > div { border-top: 3px solid var(--accent); padding-top: 15px }
+.track b { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 8px }
+.track h3 { font-size: 17px; letter-spacing: -0.02em }
+.track p { margin-top: 6px; color: var(--dim); font-size: 15px; line-height: 1.58 }
+
+/* A photograph the width of the column, with a caption that says where
+   and when. Breaks a long page once, and earns its place by being a real
+   job rather than decoration. */
+.shot { position: relative }
+.shot img { width: 100%; height: clamp(240px, 26vw, 380px); object-fit: cover }
+.shot figcaption {
+  position: absolute; left: 0; bottom: 0; right: 0;
+  padding: 26px clamp(26px, 4vw, 60px) 20px;
+  background: linear-gradient(0deg, rgba(13,17,20,0.9), transparent);
+  font-size: 14.5px; color: var(--paper);
+}
+
+/* ---- the area page ---------------------------------------------------
+   Its own shapes, not the home page's. A directory instead of cards, a
+   line of faces instead of three tall figures, and the local facts as
+   figures across the top. */
+.figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line) }
+.figs div { padding: 22px 0 24px; border-right: 1px solid var(--line); padding-right: 20px }
+.figs div:last-child { border-right: 0 }
+.figs b { display: block; font-size: clamp(28px, 3.2vw, 44px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent) }
+.figs span { display: block; margin-top: 9px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute) }
+
+.dir { border-top: 1px solid var(--line) }
+.dir a {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) minmax(0, 1.3fr) auto;
+  gap: 10px 24px; align-items: baseline;
+  padding-block: 17px; border-bottom: 1px solid var(--line);
+}
+.dir a:hover { background: rgba(240,161,50,0.06) }
+.dir i { font-style: normal; font-size: 12.5px; font-weight: 800; color: var(--accent) }
+.dir h3 { font-size: clamp(19px, 2vw, 23px); letter-spacing: -0.025em }
+.dir p { color: var(--dim); font-size: 15.5px; line-height: 1.55 }
+.dir .go { color: var(--accent); font-weight: 800; font-size: 19px }
+
+.faces { display: flex; flex-wrap: wrap; gap: 26px }
+.faces figure { margin: 0; display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 14px; align-items: center; max-width: 330px }
+.faces img { width: 62px; height: 62px; border-radius: 50%; object-fit: cover }
+.faces h3 { font-size: 17.5px }
+.faces span { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent) }
+.faces p { margin-top: 5px; color: var(--dim); font-size: 14.5px; line-height: 1.5 }
+
+/* ---- the combo page --------------------------------------------------
+   The shortest page on the site and the one most likely to be somebody's
+   first, so it opens loud: the plate carries the heading and the facts
+   together, in the accent colour, across the full width. */
+.plate.big { padding-block: clamp(40px, 5vw, 76px) }
+.plate.big h1 { font-size: clamp(38px, 5vw, 70px); max-width: 18ch }
+.plate .strip {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px; margin-top: 30px; padding-top: 24px;
+  border-top: 1px solid rgba(26,19,5,0.25);
+}
+.plate .strip b { display: block; font-size: 11.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7 }
+.plate .strip span { display: block; margin-top: 6px; font-size: 17px; font-weight: 700; line-height: 1.35 }
+
+@media (max-width: 1040px) {
+  .two { grid-template-columns: minmax(0, 1fr) }
+  .card { position: static }
+  .signs.cols, .track, .figs, .plate .strip { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .figs div:nth-child(2n) { border-right: 0 }
+  .dir a { grid-template-columns: 24px minmax(0, 1fr) auto }
+  .dir p { grid-column: 2 / -1 }
+}
+@media (max-width: 620px) {
+  .signs.cols, .track, .figs, .plate .strip { grid-template-columns: minmax(0, 1fr) }
+  .figs div { border-right: 0; border-bottom: 1px solid var(--line) }
+  .figs div:last-child { border-bottom: 0 }
 }
