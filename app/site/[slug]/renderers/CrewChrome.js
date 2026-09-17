@@ -137,8 +137,8 @@ export function crewContext(c, siteSlug) {
     emergency: emergencyLabel(c),
     wrap: { maxWidth: 1240, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)' },
     eyebrow: (color) => ({ fontSize: 13, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color }),
-    h2: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.display, lineHeight: 0.98, letterSpacing: '-0.005em', textTransform: 'uppercase', margin: 0, textWrap: 'balance' },
-    h3: { fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(30px, 3.4vw, 42px)', lineHeight: 1, textTransform: 'uppercase', margin: 0, textWrap: 'balance' },
+    h2: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.display, lineHeight: 1.02, letterSpacing: '-0.005em', margin: 0, textWrap: 'balance' },
+    h3: { fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(30px, 3.4vw, 42px)', lineHeight: 1.06, margin: 0, textWrap: 'balance' },
     btn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, borderRadius: T.radius.md, padding: '16px 26px', fontSize: 17, fontWeight: 700, textDecoration: 'none', whiteSpace: 'nowrap' },
     sectionPad: 'clamp(64px, 9vw, 112px)',
   }
@@ -293,7 +293,7 @@ function Header({ x, current }) {
               <img src={logo} alt={name} style={{ height: 40, width: 'auto', display: 'block' }} />
             </span>
           ) : (
-            <span className="crew-logotext" style={{ fontFamily: F.display, fontWeight: 800, fontSize: 26, letterSpacing: '0.01em', textTransform: 'uppercase', lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
+            <span className="crew-logotext" style={{ fontFamily: F.display, fontWeight: 800, fontSize: 26, letterSpacing: '0.01em', lineHeight: 1.18, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
           )}
         </a>
         <nav className="crew-nav" style={{ gap: 28, fontSize: 16, fontWeight: 600 }} aria-label="Main">
@@ -353,7 +353,7 @@ function Footer({ x }) {
     <footer style={{ background: C.inverseBgAlt, color: C.inverseTextDim, fontSize: 15 }}>
       <div className="crew-foot" style={{ ...wrap, paddingBlock: 56 }}>
         <div>
-          <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 26, textTransform: 'uppercase', color: C.inverseText }}>{name}</div>
+          <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 26, color: C.inverseText }}>{name}</div>
           {biz.address_line && <div style={{ marginTop: 10 }}>{biz.address_line}</div>}
           {phone && <div><a href={`tel:${phone}`} style={{ color: C.inverseText, textDecoration: 'none', fontWeight: 600 }}>{phoneDisplay}</a></div>}
           {c.credentials?.license_number && <div style={{ marginTop: 6 }}>License {c.credentials.license_number}</div>}
@@ -455,7 +455,7 @@ export function PageHero({ x, image, crumbs, eyebrow: eyebrowText, title, suppor
           {badge && <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: T.radius.full, border: `1.5px solid ${strong}`, color: strong }}>{badge}</span>}
         </div>
       )}
-      <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(42px, 6.4vw, 84px)', lineHeight: 0.94, letterSpacing: '-0.01em', textTransform: 'uppercase', margin: '14px 0 0', color: strong, textWrap: 'balance' }}>
+      <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(42px, 6.4vw, 84px)', lineHeight: 1.0, letterSpacing: '-0.01em', margin: '14px 0 0', color: strong, textWrap: 'balance' }}>
         {title}
       </h1>
       {support && <p style={{ fontSize: 'clamp(18px, 1.6vw, 21px)', lineHeight: 1.5, color: dim, margin: '20px 0 0', maxWidth: '46ch' }}>{support}</p>}
@@ -532,7 +532,7 @@ export function Steps({ x, steps }) {
         <li key={i} style={{ display: 'grid', gridTemplateColumns: '48px minmax(0, 1fr)', gap: 20, alignItems: 'start' }}>
           <span aria-hidden="true" style={{ width: 48, height: 48, borderRadius: '50%', background: C.inverseBg, color: C.inverseText, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: F.display, fontWeight: 800, fontSize: 22 }}>{i + 1}</span>
           <div style={{ paddingTop: 6 }}>
-            {s.title && <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, lineHeight: 1.05, textTransform: 'uppercase', margin: '0 0 6px' }}>{s.title}</h3>}
+            {s.title && <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, lineHeight: 1.12, margin: '0 0 6px' }}>{s.title}</h3>}
             {s.description && <p style={{ margin: 0, color: C.textDim, fontSize: 17, lineHeight: 1.65 }}>{s.description}</p>}
           </div>
         </li>
@@ -565,7 +565,7 @@ export function QuoteCard({ x, context, facts = [], links = [] }) {
   return (
     <aside className="crew-aside" style={{ top: (c.chrome_offset || 0) + 100, background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: T.radius.lg, padding: 'clamp(24px, 3vw, 32px)', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>
       {context && <div style={eyebrow(C.textMuted)}>{context}</div>}
-      <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 36, lineHeight: 1, textTransform: 'uppercase', margin: context ? '10px 0 0' : 0 }}>Get a quote</div>
+      <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 36, lineHeight: 1.1, margin: context ? '10px 0 0' : 0 }}>Get a quote</div>
       <div style={{ display: 'grid', gap: 10, marginTop: 22 }}>
         {phone && <a href={`tel:${phone}`} style={{ ...btn, background: C.accent, color: C.onAccent }}><PhoneIcon /> Call {phoneDisplay}</a>}
         <a href={quoteHref} style={{ ...btn, color: C.text, border: `2px solid ${C.text}` }}>Request a quote online</a>
@@ -637,7 +637,7 @@ export function ServiceCard({ x, s, href, title, cta = 'Learn more →', summary
         </div>
       )}
       <div style={{ padding: '22px 24px 24px', display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
-        <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, lineHeight: 1.05, textTransform: 'uppercase', margin: 0 }}>{title || s.name}</h3>
+        <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, lineHeight: 1.12, margin: 0 }}>{title || s.name}</h3>
         {summary && s.short && <p style={{ margin: 0, color: C.textDim, fontSize: 16, lineHeight: 1.55 }}>{s.short}</p>}
         {s.price_from && <div style={{ fontWeight: 700, color: C.accent }}>From {s.price_from}</div>}
         <span style={{ marginTop: 'auto', paddingTop: 8, fontWeight: 700, fontSize: 15, color: C.text }}>{cta}</span>
@@ -658,7 +658,7 @@ export function LinkTile({ x, href, lead, title }) {
         <span style={{ width: 40, height: 40, flex: 'none', borderRadius: '50%', background: C.surfaceAlt, color: C.textDim, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><PinIcon /></span>
         <span style={{ minWidth: 0 }}>
           {lead && <span style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.textMuted, lineHeight: 1.3 }}>{lead} </span>}
-          <span style={{ display: 'block', fontFamily: F.display, fontWeight: 700, fontSize: 24, lineHeight: 1.05, textTransform: 'uppercase' }}>{title}</span>
+          <span style={{ display: 'block', fontFamily: F.display, fontWeight: 700, fontSize: 24, lineHeight: 1.12 }}>{title}</span>
         </span>
       </span>
       <span style={{ color: C.textDim }}><ArrowIcon /></span>
@@ -692,7 +692,7 @@ export function ServiceGrid({ x, services, hrefFor, titleFor, cta, summary = tru
     <>
       {categories.map(cat => (
         <div key={cat} style={{ marginBottom: 44 }}>
-          <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, textTransform: 'uppercase', margin: '0 0 16px', color: C.textDim }}>{cat}</h3>
+          <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, margin: '0 0 16px', color: C.textDim }}>{cat}</h3>
           <div className="crew-services">{services.filter(s => s.category === cat).map(card)}</div>
         </div>
       ))}

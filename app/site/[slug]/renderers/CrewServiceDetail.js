@@ -113,7 +113,7 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                           <li key={i} style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: '0 18px', paddingBlock: 18, borderBottom: `1px solid ${C.border}` }}>
                             <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 15, letterSpacing: '0.08em', color: C.accentDim, paddingTop: 4 }}>{String(i + 1).padStart(2, '0')}</span>
                             <div>
-                              <h3 style={{ margin: 0, fontFamily: F.display, fontWeight: 800, textTransform: 'uppercase', fontSize: 'clamp(19px, 2vw, 23px)', lineHeight: 1.12 }}>{sg.sign}</h3>
+                              <h3 style={{ margin: 0, fontFamily: F.display, fontWeight: 800, fontSize: 'clamp(19px, 2vw, 23px)', lineHeight: 1.2 }}>{sg.sign}</h3>
                               {sg.detail && <p style={{ margin: '7px 0 0', color: C.textDim, fontSize: 16.5, lineHeight: 1.65 }}>{sg.detail}</p>}
                             </div>
                           </li>

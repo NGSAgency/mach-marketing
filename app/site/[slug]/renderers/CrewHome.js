@@ -131,7 +131,7 @@ export default function CrewHome({ config: c, siteSlug }) {
             </div>
             {grouped ? categories.map(cat => (
               <div key={cat} style={{ marginBottom: 44 }}>
-                <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, textTransform: 'uppercase', margin: '0 0 16px', color: C.textDim }}>{cat}</h3>
+                <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 26, margin: '0 0 16px', color: C.textDim }}>{cat}</h3>
                 <div className="crew-services">
                   {shown.filter(s => s.category === cat).map(s => <ServiceCard key={s.slug} x={x} s={s} href={href.service(s.slug)} />)}
                 </div>
@@ -163,7 +163,7 @@ export default function CrewHome({ config: c, siteSlug }) {
                 {whyUs.map((p, i) => (
                   <div key={i}>
                     <div style={{ width: 36, height: 4, background: C.accent, borderRadius: 2, marginBottom: 16 }} />
-                    <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 28, lineHeight: 1.05, textTransform: 'uppercase', margin: '0 0 10px' }}>{p.title}</h3>
+                    <h3 style={{ fontFamily: F.display, fontWeight: 700, fontSize: 28, lineHeight: 1.12, margin: '0 0 10px' }}>{p.title}</h3>
                     <p style={{ margin: 0, color: C.textDim, fontSize: 17 }}>{p.description}</p>
                   </div>
                 ))}
@@ -262,7 +262,7 @@ function HeroCopy({ x, name, headline, support, trust, second, place, onImage, s
   return (
     <div style={{ maxWidth: 780 }}>
       {name && <div style={eyebrow(dim)}>{name}</div>}
-      <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: T.type.hero, lineHeight: 0.92, letterSpacing: '-0.01em', textTransform: 'uppercase', margin: '14px 0 0', color: strong, textWrap: 'balance' }}>
+      <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: T.type.hero, lineHeight: 1.0, letterSpacing: '-0.01em', margin: '14px 0 0', color: strong, textWrap: 'balance' }}>
         {headline}
       </h1>
       {support && <p className="crew-herosupport" style={{ fontSize: 'clamp(17px, 1.6vw, 21px)', lineHeight: 1.5, color: dim, margin: '18px 0 0', maxWidth: '46ch' }}>{support}</p>}

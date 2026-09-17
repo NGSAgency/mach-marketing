@@ -35,7 +35,7 @@ export default function CrewAreas({ config: c, siteSlug }) {
                       <span style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
                         <span style={{ width: 44, height: 44, flex: 'none', borderRadius: '50%', background: C.inverseBg, color: C.inverseText, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><PinIcon size={20} /></span>
                         <span style={{ minWidth: 0 }}>
-                          <span style={{ display: 'block', fontFamily: F.display, fontWeight: 800, fontSize: 32, lineHeight: 1, textTransform: 'uppercase' }}>{a}</span>
+                          <span style={{ display: 'block', fontFamily: F.display, fontWeight: 800, fontSize: 32, lineHeight: 1.1 }}>{a}</span>
                           <span style={{ display: 'block', fontSize: 15, fontWeight: 600, color: C.textDim, marginTop: 6 }}>{tradeNoun} in {a}</span>
                         </span>
                       </span>

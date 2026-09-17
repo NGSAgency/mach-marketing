@@ -43,7 +43,7 @@ export default function CrewAbout({ config: c, siteSlug }) {
           <div className="crew-proof" style={{ ...wrap, '--n': facts.length, paddingBlock: 28 }}>
             {facts.map((f, i) => (
               <div key={i} style={{ padding: '6px 24px', borderLeft: i === 0 ? 'none' : `1px solid ${C.border}` }}>
-                <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 40, lineHeight: 1, textTransform: 'uppercase', color: C.text }}>{f.value}</div>
+                <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 40, lineHeight: 1.1, color: C.text }}>{f.value}</div>
                 <div style={{ fontSize: 15, color: C.textDim, marginTop: 6 }}>{f.label}</div>
               </div>
             ))}
