@@ -10,6 +10,7 @@ import { hearthContext, HearthPage } from './HearthKit.js'
 import { levelContext, LevelPage } from './LevelKit.js'
 import { centreContext, CentrePage } from './CentreKit.js'
 import { bookingContext, BookingPage } from './BookingKit.js'
+import { stageContext, StagePage } from './StageKit.js'
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
@@ -159,5 +160,25 @@ export function BookingPrivacy({ config: c, siteSlug }) {
         </div>
       </section>
     </BookingPage>
+  )
+}
+
+export function StagePrivacy({ config: c, siteSlug }) {
+  const x = stageContext(c, siteSlug)
+  const m = privacyModel(c)
+  return (
+    <StagePage
+      x={x}
+      schemas={[buildBreadcrumbSchema(c, crumbs)]}
+      chapters={[{ id: 'notice', n: '01', label: 'Legal', cap: null, board: null }]}
+      showRail={false}
+      head={{ shots: [], plate: { kicker: 'Legal', title: m.title, line: `Last updated ${m.updated}` } }}
+    >
+      <section className="stg-chap" id="notice" data-stage-chap="notice">
+        <h1 style={{ ...x.h1, fontSize: 'clamp(30px, 3.6vw, 48px)', marginBottom: 10 }}>{m.title}</h1>
+        <p style={{ margin: '0 0 36px', fontSize: 17.5, color: x.C.textDim }}>{m.intro}</p>
+        <Notice m={m} colors={x.C} fonts={x.F} />
+      </section>
+    </StagePage>
   )
 }

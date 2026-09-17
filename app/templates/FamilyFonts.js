@@ -4,6 +4,7 @@ import { hearthTokens } from './hearth/tokens.js'
 import { levelTokens } from './level/tokens.js'
 import { centreTokens } from './centre/tokens.js'
 import { bookingTokens } from './booking/tokens.js'
+import { stageTokens } from './stage/tokens.js'
 
 // Each family's typefaces. The template demo pages always loaded these, but
 // client sites, previews and concepts didn't, so every family rendered in its
@@ -15,6 +16,7 @@ const HREFS = {
   level: levelTokens.fontsHref,
   centre: centreTokens.fontsHref,
   booking: bookingTokens.fontsHref,
+  stage: stageTokens.fontsHref,
 }
 
 /**

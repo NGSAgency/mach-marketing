@@ -15,13 +15,19 @@ import CrewAbout from './CrewAbout.js'
 import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
-import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy } from './PrivacyPages.js'
+import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy, StagePrivacy } from './PrivacyPages.js'
 import BookingHome from './BookingHome.js'
 import { BookingServices, BookingServiceDetail } from './BookingPages.js'
 import {
   BookingAreas, BookingAreaDetail, BookingCombo, BookingAbout, BookingContact, BookingFAQ,
   BookingBlogIndex, BookingBlogPost,
 } from './BookingMore.js'
+import StageHome from './StageHome.js'
+import { StageServices, StageServiceDetail } from './StagePages.js'
+import {
+  StageAreas, StageAreaDetail, StageCombo, StageAbout, StageContact, StageFAQ,
+  StageBlogIndex, StageBlogPost,
+} from './StageMore.js'
 import CentreHome from './CentreHome.js'
 import { CentreServices, CentreServiceDetail } from './CentrePages.js'
 import {
@@ -54,6 +60,7 @@ import { hearthTokens } from '../../../templates/hearth/tokens.js'
 import { levelTokens } from '../../../templates/level/tokens.js'
 import { centreTokens } from '../../../templates/centre/tokens.js'
 import { bookingTokens } from '../../../templates/booking/tokens.js'
+import { stageTokens } from '../../../templates/stage/tokens.js'
 
 export const FAMILIES = {
   crew: {
@@ -90,6 +97,16 @@ export const FAMILIES = {
     Areas: BookingAreas, AreaDetail: BookingAreaDetail, Combo: BookingCombo,
     About: BookingAbout, Contact: BookingContact, FAQ: BookingFAQ,
     BlogIndex: BookingBlogIndex, BlogPost: BookingBlogPost, Privacy: BookingPrivacy,
+  },
+  // STAGE: two permanent halves — the content scrolls on the left while a
+  // fixed panel on the right carries the business and the facts belonging to
+  // whichever chapter is being read.
+  stage: {
+    label: 'Split', tokens: stageTokens,
+    Home: StageHome, Services: StageServices, ServiceDetail: StageServiceDetail,
+    Areas: StageAreas, AreaDetail: StageAreaDetail, Combo: StageCombo,
+    About: StageAbout, Contact: StageContact, FAQ: StageFAQ,
+    BlogIndex: StageBlogIndex, BlogPost: StageBlogPost, Privacy: StagePrivacy,
   },
   level: {
     label: 'Modern', tokens: levelTokens,

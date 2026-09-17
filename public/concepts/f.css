@@ -1,0 +1,353 @@
+:root{
+    --paper:#faf8f4; --alt:#f1ede5; --ink:#14201c; --ink-2:#1b2a25; --dim:#5b6661;
+    --accent:#1d6f5c; --accent-dk:#155346; --line:#ded8cd; --panel:42vw;
+    /* text on the dark panel and bands */
+    --ondark:#eceade; --accent-light:#6aa79a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;overflow-x:clip;max-width:100%}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  .d{font-family:'Schibsted Grotesk','Source Sans 3',sans-serif;font-weight:800;letter-spacing:-0.035em;line-height:1.03;margin:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:15px 24px;border-radius:2px;
+       font-weight:700;font-size:16.5px;text-decoration:none;line-height:1.15;border:1.5px solid transparent}
+  .btn-a{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn-o{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-w{background:#fff;color:var(--ink);border-color:#fff}
+  .btn-wo{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+  /* ---- THE FEED: chapters, one screen each, so the panel beside it is
+         never describing something you are not looking at. ---- */
+  .feed{margin-right:var(--panel);width:calc(100% - var(--panel))}
+  /* Natural height, top aligned — forcing every chapter to fill a screen left
+     a hole under the short ones. The break between chapters is a change of
+     ground and a heavy rule, not a gap: a hairline let them bleed together. */
+  .chap{padding:clamp(76px,11vh,136px) clamp(28px,4vw,72px);border-top:2px solid var(--ink)}
+  .chap:nth-of-type(even){background:var(--alt)}
+  .chap:first-of-type{border-top:0}
+  .mark{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+  .mark .n{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.06em;
+           color:#fff;background:var(--accent);width:38px;height:38px;display:grid;place-items:center}
+  .mark .l{font-size:13.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-dk)}
+  h2.big{font-size:clamp(28px,3.2vw,46px)}
+  .lede{font-size:clamp(17.5px,1.35vw,20px);color:var(--dim);max-width:46ch;margin:16px 0 0}
+
+  /* Grouped by category, each service a card with its own photograph. Six
+     services and twenty are the same shape — the grid simply grows. */
+  .group{margin-top:clamp(26px,3vh,38px)}
+  .group h3{display:flex;align-items:baseline;gap:10px;margin:0 0 16px;padding-bottom:10px;border-bottom:2px solid var(--ink);
+            font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink)}
+  .group h3 em{font-style:normal;color:var(--dim);font-weight:600;letter-spacing:0.08em}
+  .svc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
+  .svc a{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);text-decoration:none;
+         transition:border-color .15s,transform .15s}
+  .svc a:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .svc figure{margin:0;height:clamp(110px,11vw,148px);overflow:hidden;background:var(--ink)}
+  .svc figure img{width:100%;height:100%;object-fit:cover}
+  /* A client with no photograph for a service gets a band of their colour
+     rather than a grey hole. */
+  .svc .noshot{height:8px;background:var(--accent)}
+  .svc .body{padding:clamp(15px,1.5vw,20px);display:flex;flex-direction:column;flex:1}
+  .svc b{font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.025em;font-size:19px;line-height:1.15}
+  .svc p{margin:7px 0 0;color:var(--dim);font-size:15.5px;line-height:1.55}
+  .svc .go{margin-top:auto;padding-top:14px;color:var(--accent-dk);font-weight:700;font-size:14.5px}
+  .allsvc{display:inline-block;margin-top:26px;font-weight:700;font-size:15.5px;color:var(--accent-dk);text-decoration:none}
+
+  .steps{display:grid;gap:16px;margin-top:26px}
+  .step{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px}
+  .step .n{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;
+           font-family:'Schibsted Grotesk',sans-serif;font-weight:700;font-size:14px}
+  .step h4{margin:2px 0 4px;font-family:'Schibsted Grotesk',sans-serif;font-weight:700;font-size:18.5px;letter-spacing:-0.02em}
+  .step p{margin:0;color:var(--dim);font-size:16px}
+
+  .townlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,1.6vw,20px);margin-top:30px}
+  .townlist > div{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
+                  padding:clamp(18px,1.9vw,24px);display:flex;flex-direction:column}
+  .townlist .t{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.03em;font-size:clamp(21px,2vw,27px);
+               text-decoration:none;line-height:1.1}
+  .townlist .meta{margin:8px 0 0;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+  .townlist ul{margin:16px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+               gap:0 clamp(12px,1.4vw,22px)}
+  .townlist li{border-top:1px solid var(--line)}
+  .townlist li a{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:9px 0;
+                 text-decoration:none;font-size:15.5px;color:var(--ink)}
+  .townlist li a i{font-style:normal;color:var(--accent);font-weight:700}
+  .townlist li a:hover{color:var(--accent-dk)}
+  .townlist .wide ul{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .townlist .go{margin-top:auto;padding-top:16px;color:var(--accent-dk);font-weight:700;font-size:14.5px;text-decoration:none}
+  .townlist .wide{grid-column:1 / -1}
+  .quote{font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.025em;font-size:clamp(22px,2.4vw,34px);
+         line-height:1.24;margin:0;max-width:26ch}
+  .by{margin-top:16px;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim)}
+  .revs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,2.6vw,40px);margin-top:36px;
+        padding-top:26px;border-top:1px solid var(--line)}
+  .revs figure{margin:0}
+  .revs blockquote{margin:0;font-size:16.5px;line-height:1.62;color:var(--ink)}
+  .revs figcaption{margin-top:12px;font-size:12.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim)}
+  details.q{border-bottom:1px solid var(--line)}
+  details.q:first-of-type{border-top:1px solid var(--line);margin-top:24px}
+  details.q summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:18px;padding:15px 0;
+                    font-weight:700;font-size:17.5px;font-family:'Schibsted Grotesk',sans-serif;letter-spacing:-0.015em}
+  details.q summary::-webkit-details-marker{display:none}
+  details.q p{margin:0 0 16px;color:var(--dim);font-size:16px;max-width:54ch}
+  /* The footer belongs to the document, so it sits at the end of the left
+     column rather than under the fixed panel. */
+  .sitefoot{border-top:2px solid var(--ink);padding:clamp(34px,4vw,52px) clamp(28px,4vw,72px) clamp(40px,4vw,56px)}
+  .sitefoot .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(22px,3vw,44px)}
+  .sitefoot h5{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim)}
+  .sitefoot ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:16px}
+  .sitefoot a{text-decoration:none}
+  .sitefoot .nm{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.03em;font-size:20px}
+  .sitefoot p{margin:10px 0 0;color:var(--dim);font-size:16px;line-height:1.7}
+  .sitefoot .legal{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:14px}
+
+  /* The opening chapter starts at the top, not the middle of the screen. */
+  /* The opening owns the first screen: nothing else is visible on landing. */
+  .chap.first{min-height:100vh;display:flex;flex-direction:column;padding-top:clamp(40px,5vh,68px)}
+  /* The foot of the opening screen: the coverage line and the figures sit at
+     the bottom of the viewport, so the screen is filled by content rather than
+     by an arrow telling people to scroll. */
+  .openfoot{margin-top:auto;padding-top:clamp(28px,4vh,48px)}
+  /* Two ruled rows, the same rhythm as the figures under them. A paragraph
+     here read as something that had come loose. */
+  .coverage{margin:0 0 clamp(18px,2.6vh,28px);border-top:1px solid var(--line)}
+  .coverage > div{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:clamp(14px,2vw,28px);
+                  padding:11px 0;border-bottom:1px solid var(--line);align-items:baseline}
+  .coverage dt{font-size:12.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim)}
+  .coverage dd{margin:0;font-size:16.5px;line-height:1.55;color:var(--ink)}
+  .coverage dd a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent)}
+  .factstrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.5vw,36px);
+             margin-top:clamp(28px,4vh,44px);padding-top:20px;border-top:1px solid var(--line)}
+  .factstrip b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.03em;
+               font-size:clamp(24px,2.4vw,34px);line-height:1.05}
+  .factstrip span{display:block;margin-top:7px;font-size:13px;font-weight:700;letter-spacing:0.1em;
+                  text-transform:uppercase;color:var(--dim)}
+
+  /* ---- THE PANEL: the same chapter, from the other side ---- */
+  .stage{position:fixed;inset:0 0 0 auto;width:var(--panel);height:100vh;background:var(--ink);color:#fff;z-index:5;
+         display:grid;grid-template-rows:auto minmax(0,1fr) auto auto}
+  .idbar{padding:16px clamp(20px,2.1vw,30px) 18px;border-bottom:1px solid rgba(255,255,255,.14)}
+  .idbar .top{display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .idbar .nm{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.03em;font-size:20px;text-decoration:none}
+  /* The client's logo sits where the name is, on a white plate so artwork of
+     any colour reads against the dark panel. A client with no logo keeps the
+     name set in type. */
+  .idbar .logo{background:#fff;padding:7px 10px;display:inline-flex}
+  .idbar .logo img{height:30px;width:auto}
+  .idbar .rt{font-size:14px;font-weight:600;color:rgba(255,255,255,.9);white-space:nowrap}
+  /* The menu lives here because this bar never scrolls away. */
+  .idbar nav{display:flex;gap:clamp(20px,2.1vw,34px);margin-top:16px;font-size:19px;font-weight:600}
+  .idbar nav a{color:rgba(255,255,255,.82);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
+  .idbar nav a:hover{color:#fff;border-bottom-color:var(--accent)}
+  .shotwrap{position:relative;overflow:hidden;min-height:clamp(150px,20vh,260px)}
+  .shotwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+  .shotwrap img.on{opacity:1}
+  .shotwrap .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,32,28,.15) 0%,rgba(20,32,28,.10) 30%,rgba(20,32,28,.88) 100%)}
+  .shotwrap .cap{position:absolute;left:0;right:0;bottom:0;padding:clamp(18px,2vw,26px)}
+  .shotwrap .cap .chip{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:0.16em;
+                       text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:10px}
+  .shotwrap .cap .chip i{width:20px;height:20px;background:var(--accent);color:#fff;display:grid;place-items:center;
+                         font-style:normal;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;font-size:11px}
+  .shotwrap .cap b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;
+                   font-size:clamp(19px,1.7vw,25px);margin-bottom:5px}
+  .shotwrap .cap span{display:block;color:rgba(255,255,255,.82);font-size:15.5px;max-width:40ch}
+
+  .board{padding:clamp(16px,1.8vw,24px) clamp(20px,2.1vw,30px);border-top:1px solid rgba(255,255,255,.14)}
+  .board dl{margin:0}
+  .board dl > div{display:grid;grid-template-columns:minmax(0,42%) minmax(0,1fr);gap:16px;padding:9px 0;
+                  border-top:1px solid rgba(255,255,255,.1)}
+  .board dl > div:first-child{border-top:0}
+  .board dt{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,.55);padding-top:2px}
+  .board dd{margin:0;font-size:15.5px;font-weight:600;line-height:1.4}
+  .board .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .board .chips a{padding:8px 12px;border:1px solid rgba(255,255,255,.28);text-decoration:none;font-size:15px;font-weight:600}
+  .board .chips a:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+  .act{padding:clamp(14px,1.6vw,20px) clamp(20px,2.1vw,30px) clamp(16px,1.8vw,24px);background:var(--ink-2)}
+  .act .row{display:flex;gap:10px;flex-wrap:wrap}
+  .act .hrs{margin:11px 0 0;font-size:14px;color:rgba(255,255,255,.66)}
+
+  /* The rail: where you are in the six chapters, and a way to jump. */
+  .rail{position:fixed;left:0;top:0;bottom:0;width:38px;display:flex;flex-direction:column;justify-content:center;
+        align-items:center;gap:12px;z-index:6}
+  .rail a{width:7px;height:7px;background:#c9c3b6;border-radius:50%;text-decoration:none;transition:all .2s}
+  .rail a.on{background:var(--accent);height:26px;border-radius:4px}
+
+  @media (max-width:1040px){
+    .rail{display:none}
+    .stage{position:relative;width:100%;height:auto;inset:auto;grid-template-rows:none;order:-1}
+    .shotwrap{height:clamp(280px,46vh,400px)}
+    .feed{margin-right:0;width:100%}
+    .sitefoot{padding-inline:clamp(20px,5vw,32px)}
+    .chap{padding:56px clamp(20px,5vw,32px)}
+    .chap.first{padding-top:40px}
+    .factstrip,.sitefoot .cols,.revs,.townlist,.svc{grid-template-columns:1fr;gap:18px}
+    .coverage > div{grid-template-columns:1fr;gap:2px}
+    .chap.first{min-height:0}
+    .idbar nav{flex-wrap:wrap;gap:14px}
+    body{display:flex;flex-direction:column}
+  }
+
+/* ---- Inner pages -------------------------------------------------------
+   Same skeleton as the home page, three differences: a breadcrumb above the
+   heading, an index of the page's own sections in the panel (an inner page is
+   read rather than browsed, so a contents list earns its place), and the
+   request action sitting under it. */
+.crumb{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;margin-bottom:18px;font-size:14px;color:var(--dim)}
+.crumb a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+.crumb span{opacity:.5}
+.pagehead h1{font-size:clamp(32px,4.2vw,58px);margin:0}
+.pagehead .sub{margin:18px 0 0;font-size:clamp(17.5px,1.5vw,21px);line-height:1.6;color:var(--dim);max-width:46ch}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:7px 12px;
+       font-size:12.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:18px}
+
+/* The panel's contents list */
+.toc{padding:clamp(14px,1.6vw,20px) clamp(20px,2.1vw,30px);border-top:1px solid rgba(255,255,255,.14)}
+.toc .lbl{font-size:11.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+/* Two columns: a six-item list down one column pushed the facts and the call
+   button off the bottom of a 800px screen. */
+.toc ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(12px,1.4vw,22px)}
+.toc a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:baseline;padding:6px 0;
+       text-decoration:none;color:rgba(255,255,255,.72);font-size:15px;border-top:1px solid rgba(255,255,255,.08)}
+.toc li:nth-child(1) a,.toc li:nth-child(2) a{border-top:0}
+.toc a i{font-style:normal;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;font-size:12px;color:rgba(255,255,255,.4)}
+.toc a.on{color:#fff;font-weight:700}
+.toc a.on i{color:var(--accent-light,#6aa79a)}
+.toc a:hover{color:#fff}
+
+/* Prose on an inner page: one measure, two columns when it runs long. */
+.prose{font-size:17.5px;line-height:1.78;color:var(--ink);max-width:64ch}
+.prose p{margin:0 0 18px}
+.prose p:last-child{margin-bottom:0}
+.prose.cols{max-width:none;column-count:2;column-gap:clamp(28px,3.4vw,52px)}
+.prose.cols p{break-inside:avoid}
+
+/* The price table on a service page */
+.price{border-top:2px solid var(--ink);margin-top:8px}
+.price > div{display:grid;grid-template-columns:minmax(0,34%) minmax(0,1fr);gap:20px;padding:14px 0;border-bottom:1px solid var(--line)}
+.price dt{font-size:12.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim)}
+.price dd{margin:0;font-size:17px;font-weight:600}
+.pricenote{margin:18px 0 0;color:var(--dim);font-size:16.5px;max-width:56ch}
+
+/* Where we do it: the towns, as compact links to the service-in-town pages */
+.combo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.4vw,18px);margin-top:24px}
+.combo a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:#fff;border:1px solid var(--line);
+         border-left:4px solid var(--accent);padding:15px 18px;text-decoration:none}
+.combo a:hover{border-color:var(--accent)}
+.combo b{font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;font-size:18px}
+.combo i{font-style:normal;color:var(--accent);font-weight:700}
+
+@media (max-width:1040px){
+  .prose.cols{column-count:1}
+  .combo{grid-template-columns:1fr}
+}
+
+/* ---- Devices that belong to one page type only -------------------------
+   The skeleton is shared; these are not. A service page, an area page and a
+   service-in-a-town page should be recognisable apart at a glance, not just
+   by their words. */
+
+/* Full width of the left column, out from under the chapter's padding. */
+.bleed{margin-inline:calc(-1 * clamp(28px,4vw,72px))}
+
+/* SERVICE PAGE — the visit as a band across the column, four abreast. */
+.visit{background:var(--ink);color:var(--ondark);padding:clamp(28px,3.4vw,44px) clamp(28px,4vw,72px);margin-top:30px}
+.visit h3{margin:0 0 22px;font-size:12.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+/* Two abreast by default; four only where the column is wide enough that a
+   step is not a skinny tower of words. */
+.track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px clamp(20px,2vw,32px)}
+@media (min-width:1500px){ .track{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.track > div{border-top:3px solid var(--accent);padding-top:16px}
+.track b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.1em;
+         color:var(--accent-light,#6aa79a);margin-bottom:8px}
+.track h4{margin:0 0 7px;font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;font-size:17.5px;line-height:1.2}
+.track p{margin:0;font-size:15px;line-height:1.6;color:rgba(255,255,255,.72)}
+
+/* SERVICE PAGE — the price as a real table with a head. */
+.ptable{width:100%;border-collapse:collapse;margin-top:10px;border:1px solid var(--line);background:#fff}
+.ptable caption{caption-side:top;text-align:left;font-size:12.5px;font-weight:700;letter-spacing:0.14em;
+                text-transform:uppercase;color:var(--dim);padding-bottom:10px}
+.ptable th{text-align:left;background:var(--alt);font-size:12.5px;font-weight:700;letter-spacing:0.12em;
+           text-transform:uppercase;color:var(--dim);padding:12px 18px;border-bottom:1px solid var(--line)}
+.ptable td{padding:14px 18px;border-bottom:1px solid var(--line);font-size:17px}
+.ptable td:first-child{font-weight:700;width:34%}
+.ptable tr:last-child td{border-bottom:0}
+
+/* AREA PAGE — the town record, in place of a row of figures. */
+.record{border:1px solid var(--ink);background:#fff;margin-top:clamp(24px,3vh,36px)}
+.record .top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
+             padding:clamp(18px,2vw,26px);border-bottom:1px solid var(--ink);background:var(--ink);color:#fff}
+.record .town{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.035em;font-size:clamp(26px,3vw,40px);line-height:1}
+.record .tag{font-size:12.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-light,#6aa79a)}
+.record dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.record dl > div{padding:14px clamp(18px,2vw,26px);border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.record dl > div:nth-child(2n){border-right:0}
+.record dl > div:nth-last-child(-n+2){border-bottom:0}
+.record dt{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim)}
+.record dd{margin:5px 0 0;font-size:17px;font-weight:600}
+
+/* AREA PAGE — a figure pulled out of the local copy. */
+.withstat{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:clamp(24px,3.4vw,52px);align-items:start;margin-top:24px}
+.pullstat{border-top:3px solid var(--accent);padding-top:16px}
+.pullstat b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.04em;
+            font-size:clamp(34px,4vw,54px);line-height:1}
+.pullstat span{display:block;margin-top:10px;font-size:14.5px;line-height:1.5;color:var(--dim)}
+
+/* COMBO PAGE — the two parents, named under the heading. */
+.parents{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:22px 0 0;font-size:15.5px}
+.parents a{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+           border-bottom:3px solid var(--accent);padding:9px 14px;text-decoration:none;font-weight:600}
+.parents span{color:var(--dim)}
+
+/* COMBO PAGE — what is different here, before the prose that explains it. */
+.diffs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,24px);margin-top:26px}
+.diffs > div{background:#fff;border:1px solid var(--line);padding:clamp(16px,1.8vw,22px)}
+.diffs b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;font-size:12.5px;letter-spacing:0.12em;
+         color:var(--accent-dk);margin-bottom:10px}
+.diffs h4{margin:0 0 6px;font-family:'Schibsted Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;font-size:18px;line-height:1.2}
+.diffs p{margin:0;font-size:15.5px;line-height:1.6;color:var(--dim)}
+
+@media (max-width:1040px){
+  .track,.record dl,.diffs,.withstat{grid-template-columns:1fr}
+  .track > div{margin-right:0;padding-right:0;margin-bottom:18px}
+  .record dl > div{border-right:0}
+  .visit{padding-inline:clamp(20px,5vw,32px)}
+}
+
+/* ---- The panel's head changes with the page type -----------------------
+   Half the screen is the panel, so what sits at the top of it is the fastest
+   way to tell one kind of page from another. A service page shows the work,
+   an area page shows the place, a service-in-a-town page shows both. */
+
+/* AREA PAGE — no photograph at all: a plate of the client's colour with the
+   town set large on it. */
+/* Sized by its content, never squeezed: the panel's flexible space is given to
+   the facts board below instead (see the rule under this block), because a
+   clipped town name reads as broken and a short board does not.
+   flex-start, not flex-end — content taller than a flex-end column overflows
+   upward, and the town name climbed over the menu. */
+.plate{position:relative;background:var(--accent);color:#fff;display:flex;flex-direction:column;
+       padding:clamp(16px,1.8vw,24px) clamp(18px,2vw,28px) clamp(18px,2vw,26px)}
+.plate .kicker{font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.plate .place{font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.04em;
+              font-size:clamp(27px,3.1vw,44px);line-height:1;margin:7px 0 0}
+.plate .since{margin:12px 0 0;padding-top:11px;border-top:1px solid rgba(255,255,255,.3);font-size:14.5px;line-height:1.45;color:rgba(255,255,255,.9)}
+/* The plate states the place and does not change with the chapter — the
+   contents list directly below it already marks where you are. */
+.plate .cap{display:none}
+/* On a page whose panel head is a plate, the flexible row moves to the board,
+   which can lose a little height without looking broken. */
+.stage:has(.plate){grid-template-rows:auto auto auto minmax(0,1fr) auto}
+.stage:has(.plate) .board{overflow:auto}
+
+/* COMBO PAGE — the photograph, stamped with the pair the page is about. */
+/* Sits at the foot of the picture, where the scrim is heaviest, and takes the
+   caption's place rather than fighting it for the same corner. */
+.stamp{position:absolute;bottom:0;left:0;right:0;padding:clamp(18px,2vw,26px);color:#fff}
+.stamp ~ .cap{display:none}
+.stamp b{display:block;font-family:'Schibsted Grotesk',sans-serif;font-weight:800;letter-spacing:-0.03em;
+         font-size:clamp(20px,2vw,27px);line-height:1.05}
+.stamp em{display:block;font-style:normal;margin:6px 0 0;font-size:12.5px;font-weight:700;letter-spacing:0.16em;
+          text-transform:uppercase;color:rgba(255,255,255,.72)}
+.stamp .x{display:inline-block;margin:6px 0;width:22px;height:2px;background:var(--accent-light)}

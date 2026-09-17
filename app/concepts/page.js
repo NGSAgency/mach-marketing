@@ -36,6 +36,18 @@ const concepts = [
     description:
       'No top bar at all: the logo, menu, phone and button live in a rail pinned down the right edge, and the page scrolls beside it on a dark ground. On a phone the rail becomes an ordinary bar at the top.',
   },
+  {
+    slug: 'f',
+    name: 'Stage',
+    job: 'Keeps the business on screen',
+    description:
+      'Two permanent halves. The content scrolls on the left in six numbered chapters; the panel on the right never moves and carries the menu, the rating and the phone number for the whole visit, showing the facts that belong to whichever chapter is being read. Built as a family in September 2026.',
+    more: [
+      { href: '/concepts/f-service.html', label: 'Service page' },
+      { href: '/concepts/f-area.html', label: 'Service area page' },
+      { href: '/concepts/f-combo.html', label: 'Service in a town' },
+    ],
+  },
 ]
 
 const wrap = { maxWidth: 960, margin: '0 auto', padding: '0 20px' }
@@ -81,6 +93,16 @@ export default function ConceptsIndex() {
               </div>
               <p style={{ fontSize: 16, lineHeight: 1.6, color: '#4c535a', margin: '0 0 16px', maxWidth: '78ch' }}>{c.description}</p>
               <span style={{ fontSize: 15, fontWeight: 700, color: '#15181c' }}>Open the page →</span>
+              {c.more && (
+                <span style={{ display: 'block', marginTop: 12, fontSize: 15, color: '#4c535a' }}>
+                  {c.more.map((m, i) => (
+                    <span key={m.href}>
+                      {i > 0 && ' · '}
+                      <a href={m.href} style={{ color: '#b2451f', fontWeight: 600 }}>{m.label}</a>
+                    </span>
+                  ))}
+                </span>
+              )}
             </a>
           ))}
         </div>
