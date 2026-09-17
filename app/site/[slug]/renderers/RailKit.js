@@ -42,14 +42,17 @@ function RailStyles({ x }) {
       <style>{`
         .rl a:focus-visible, .rl summary:focus-visible, .rl button:focus-visible { outline: 3px solid ${C.accent}; outline-offset: 3px; }
 
-        /* Hidden until it is focused, and hidden the way a screen reader still
-           finds it. Parked off-screen at a real size it is still a box of text
-           painted on whatever happens to be behind it. */
-        .rl-skip { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
-                   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-        .rl-skip:focus { position: fixed; top: 0; left: 0; width: auto; height: auto; clip: auto;
-                         clip-path: none; padding: 12px 20px; z-index: 99; font-weight: 700;
-                         background: ${C.accent}; color: ${C.onAccent}; }
+        /* The skip link is in the layout and in the accessibility tree the
+           whole time; only its paint is switched. Clipping it does not work:
+           clip leaves the text's layout box where it was, so a contrast audit
+           still measures the link's colour against whatever pixel sits behind
+           it — on a page opening on the accent plate, 2.7:1. Transparent, it
+           paints nothing and measures nothing, a screen reader still reads it,
+           and pointer-events keeps it from catching a stray click. */
+        .rl-skip { position: absolute; top: 0; left: 0; z-index: 99; padding: 12px 20px;
+                   font-weight: 700; background: ${C.accent}; color: ${C.onAccent};
+                   opacity: 0; pointer-events: none; }
+        .rl-skip:focus { opacity: 1; pointer-events: auto; }
         .rl img { max-width: 100%; display: block; }
         .rl { overflow-x: clip; }
 
