@@ -15,7 +15,7 @@ export function bookingContext(c, siteSlug) {
   const C = T.colors
   const F = T.fonts
   return {
-    ...d, T, C, F,
+    ...d, siteSlug, T, C, F,
     wrap: { maxWidth: 1260, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 48px)', boxSizing: 'border-box', width: '100%' },
     sectionPad: 'clamp(48px, 5.5vw, 78px)',
     eyebrow: (color) => ({ fontSize: 12.5, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color }),
