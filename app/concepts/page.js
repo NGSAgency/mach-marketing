@@ -23,20 +23,6 @@ const concepts = [
       'Everything runs down a centre line. A floating nav rides over a full-height photograph, then one service at a time fills a large panel that switches when you pick another name. Figures across a dark band, the review alone as a pull quote, a real timeline, tiled service areas on brick, and questions that open and close.',
   },
   {
-    slug: 'c',
-    name: 'Spec Sheet',
-    job: 'Lets someone check the facts',
-    description:
-      'Built like a trade catalogue. The facts sit in a bordered “at a glance” table beside the headline, a photograph runs the width of the page, and the services are a real table — what it covers, what it starts at. Coverage stays compact however many towns there are. No cards anywhere.',
-  },
-  {
-    slug: 'd',
-    name: 'Side Rail',
-    job: 'Stands out from everything else local',
-    description:
-      'No top bar at all: the logo, menu, phone and button live in a rail pinned down the right edge, and the page scrolls beside it on a dark ground. On a phone the rail becomes an ordinary bar at the top.',
-  },
-  {
     slug: 'f',
     name: 'Stage',
     job: 'Keeps the business on screen',
@@ -75,7 +61,7 @@ export default function ConceptsIndex() {
           Client site design concepts
         </h1>
         <p style={{ fontSize: 18, lineHeight: 1.6, color: '#4c535a', maxWidth: '62ch', margin: '0 0 10px' }}>
-          Six structures for the same business. They are not four colour schemes — the section order, what leads the
+          Four structures for the same business. They are not four colour schemes — the section order, what leads the
           page, and the shape each piece of content takes are different in every one. Each is built to do a different
           job, so a client gets the one that suits how their customers actually buy.
         </p>
