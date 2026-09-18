@@ -21,6 +21,8 @@ import { resolveSections } from '../../../../../lib/templates/shared/sections.js
 export { lowerName } from '../../../../../lib/templates/shared/claims.js'
 import { lowerName } from '../../../../../lib/templates/shared/claims.js'
 
+const SOCIAL_LABEL = { facebook: 'Facebook', instagram: 'Instagram', google: 'Google', yelp: 'Yelp' }
+
 export const TRADE_NOUN = {
   pest_control: 'Pest control',
   hvac: 'Heating and cooling',
@@ -157,6 +159,11 @@ export function siteData(c, siteSlug, family) {
   return {
     c, concept, base, biz, pos, services, areas, primaryArea, phone, phoneDisplay, name,
     logo: c.brand?.logo_url, imgs: c.images || {}, href, quoteHref: href.contact, quoteLabel, second, bookingUrl,
+    // Their profiles elsewhere, as [{ key, label, href }]. Empty when they
+    // gave us none, so a footer shows nothing rather than dead icons.
+    social: Object.entries(biz.social || {})
+      .filter(([, url]) => url)
+      .map(([key, url]) => ({ key, label: SOCIAL_LABEL[key] || key, href: url })),
     tradeNoun, faqs, hasAbout,
     offeringLabel: titleCase(nouns.offering?.plural || 'services'),
     placeLabel: titleCase(nouns.place?.plural || 'service areas'),
@@ -470,10 +477,12 @@ export function pricingModel(c) {
     p.price_range_general && { k: 'Typical range', v: p.price_range_general },
     p.free_estimates && { k: 'Estimates', v: 'Free' },
     p.financing && { k: 'Financing', v: p.financing_partners?.length ? `Available through ${p.financing_partners.join(', ')}` : 'Available' },
+    // Both answered on the pricing step and delivered to the site at last.
+    p.payment_methods && { k: 'Payment', v: p.payment_methods },
   ].filter(Boolean)
   const approach = PRICING_APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
   const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
-  const notes = [approach, policy].filter(Boolean)
+  const notes = [approach, policy, p.plans].filter(Boolean)
   return { rows, notes, has: rows.length > 0 || notes.length > 0 }
 }
 

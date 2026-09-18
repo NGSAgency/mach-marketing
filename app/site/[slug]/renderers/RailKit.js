@@ -742,6 +742,9 @@ export function SiteFooter({ x }) {
       <div style={{ marginTop: 28, paddingTop: 18, borderTop: `1px solid ${C.borderLight}`, display: 'flex', gap: 18, flexWrap: 'wrap', fontSize: 14, color: C.textMuted }}>
         <span>© {new Date().getFullYear()} {name}</span>
         <a href={href.privacy} style={{ color: C.textMuted, textDecoration: 'none' }}>Privacy</a>
+        {x.social.map(s => (
+          <a key={s.key} href={s.href} target="_blank" rel="noopener noreferrer me" style={{ color: C.textMuted, textDecoration: 'none' }}>{s.label}</a>
+        ))}
       </div>
       <style>{`@media (max-width: 1040px) { .rl-foot { grid-template-columns: minmax(0, 1fr) !important; } }`}</style>
     </footer>
