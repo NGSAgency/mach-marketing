@@ -479,10 +479,11 @@ export function pricingModel(c) {
     p.financing && { k: 'Financing', v: p.financing_partners?.length ? `Available through ${p.financing_partners.join(', ')}` : 'Available' },
     // Both answered on the pricing step and delivered to the site at last.
     p.payment_methods && { k: 'Payment', v: p.payment_methods },
+    p.plans && { k: 'Plans', v: p.plans },
   ].filter(Boolean)
   const approach = PRICING_APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
   const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
-  const notes = [approach, policy, p.plans].filter(Boolean)
+  const notes = [approach, policy].filter(Boolean)
   return { rows, notes, has: rows.length > 0 || notes.length > 0 }
 }
 
