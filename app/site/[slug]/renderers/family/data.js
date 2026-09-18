@@ -322,8 +322,14 @@ export function areaModel(d, area) {
   const intro = asText(copy('intro'))
   const local = asText(copy('local_context'))
   const noCopy = concept && !isGenerated
+  // What the client told us about this town. Their own answers only: the
+  // generator sends nothing for a field they left blank, so a page never
+  // shows a neighbourhood nobody named.
+  const known = (c.area_facts || {})[area] || {}
   return {
     crumbs, noCopy, intro, local, faqs,
+    neighborhoods: known.neighborhoods || [],
+    landmarks: known.landmarks || [],
     subhead: copy('hero_subheadline'),
     title: `${tradeNoun} in ${area}`,
     otherAreas: areas.filter(a => a !== area),
