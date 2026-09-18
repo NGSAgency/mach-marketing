@@ -543,8 +543,20 @@ export function Work({ x, items }) {
  * picture attached to a service is captioned with that service's name.
  */
 export function workItems(x) {
-  const { imgs, services } = x
+  const { imgs, services, c } = x
   const named = new Map(services.map(s => [s.slug, s.name]))
+
+  // Their own photographs, newest first, when the config carries them: a
+  // caption the client wrote beats one we derive from a slot name.
+  const gallery = (c.gallery || []).filter(g => g?.url)
+  if (gallery.length > 0) {
+    return gallery.slice(0, 4).map(g => ({
+      url: g.url,
+      alt: g.alt || '',
+      caption: g.caption || (g.service ? named.get(g.service) || null : null),
+    }))
+  }
+
   const skip = new Set(['home_hero', 'home_video', 'home_secondary', 'about_hero', 'combo_hero'])
   const out = []
   for (const [key, img] of Object.entries(imgs || {})) {

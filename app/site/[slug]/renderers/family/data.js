@@ -227,6 +227,10 @@ export function pageFacts(d, service) {
     items.push(`${Number(reviews.google_rating).toFixed(1)} Google rating${reviews.google_count ? ` · ${reviews.google_count.toLocaleString()} reviews` : ''}`)
   }
   if (d.since) items.push(d.since)
+  // What this particular job costs, when the client told us. It goes in every
+  // family at once because every one of them renders this list beside the
+  // quote buttons, and it is the question the visitor came with.
+  if (service?.cost) items.push(service.cost)
   return [...items, ...whyUsItems(c, service)]
 }
 
@@ -293,6 +297,10 @@ export function serviceModel(d, service) {
   const generatedService = services.find(s => s.slug === generatedSlug)
   return {
     crumbs, noCopy, intro, steps, stepsText, methods, signs, faqs, subhead, related,
+    // What this service costs, in the client's own words, or nothing. Free
+    // text, so it is set as a sentence and never parsed into a number or
+    // stamped on a card as a price badge.
+    cost: service.cost || null,
     image: imgs[`service_${service.slug}`] || null,
     eyebrow: service.category && service.category !== service.name ? service.category : d.offeringLabel,
     badge: serviceEmergencyBadge(c, service, { long: true }),

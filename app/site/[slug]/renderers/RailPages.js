@@ -11,11 +11,14 @@ import {
 // measure down the left of that leaves two thirds of the page empty.
 
 /** The facts that decide whether someone calls, beside the reading. */
-function serviceFacts(x, service) {
+function serviceFacts(x, service, cost) {
   const p = pricingModel(x.c)
   const warranty = (x.pos.warranties || [])[0]
   const wt = typeof warranty === 'string' ? warranty : warranty?.name || warranty?.description
   return [
+    // What this service costs comes before what the business charges in
+    // general: it is the more specific answer and the one they asked for.
+    cost && { k: 'This job', v: cost },
     ...p.rows.slice(0, 3),
     x.emergency && { k: 'Emergencies', v: x.emergency },
     wt && { k: 'Warranty', v: wt },
@@ -57,7 +60,7 @@ export function RailServiceDetail({ config: c, siteSlug, service }) {
   const m = serviceModel(x, service)
   const { C, concept, areas, href, offeringLabel, placeLabel } = x
 
-  const facts = serviceFacts(x, service)
+  const facts = serviceFacts(x, service, m.cost)
   const photos = workItems(x).filter(p => p.url !== m.image?.url)
   const shot = photos[0] || null
   const steps = m.steps
