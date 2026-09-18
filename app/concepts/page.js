@@ -23,27 +23,27 @@ const concepts = [
       'Everything runs down a centre line. A floating nav rides over a full-height photograph, then one service at a time fills a large panel that switches when you pick another name. Figures across a dark band, the review alone as a pull quote, a real timeline, tiled service areas on brick, and questions that open and close.',
   },
   {
-    slug: 'f',
+    slug: 'c',
     name: 'Stage',
     job: 'Keeps the business on screen',
     description:
       'Two permanent halves. The content scrolls on the left in six numbered chapters; the panel on the right never moves and carries the menu, the rating and the phone number for the whole visit, showing the facts that belong to whichever chapter is being read. Built as a family in September 2026.',
     more: [
-      { href: '/concepts/f-service.html', label: 'Service page' },
-      { href: '/concepts/f-area.html', label: 'Service area page' },
-      { href: '/concepts/f-combo.html', label: 'Service in a town' },
+      { href: '/concepts/c-service.html', label: 'Service page' },
+      { href: '/concepts/c-area.html', label: 'Service area page' },
+      { href: '/concepts/c-combo.html', label: 'Service in a town' },
     ],
   },
   {
-    slug: 'g',
+    slug: 'd',
     name: 'Rail',
     job: 'Keeps the way to act on screen',
     description:
-      'D rebuilt. The rail down the right edge still carries the logo, the menu, the phone number and both buttons the whole way down, and on an inner page it also says what is on the page. The content runs in three bands rather than seven equal sections: the work, then the people on a lighter ground, then everything that answers a question. Its own section is the crew — who turns up, with their names — high on the home page rather than buried on an About page.',
+      'No bar across the top. The rail down the right edge still carries the logo, the menu, the phone number and both buttons the whole way down, and on an inner page it also says what is on the page. The content runs in three bands rather than seven equal sections: the work, then the people on a lighter ground, then everything that answers a question. Its own section is the crew — who turns up, with their names — high on the home page rather than buried on an About page.',
     more: [
-      { href: '/concepts/g-service.html', label: 'Service page' },
-      { href: '/concepts/g-area.html', label: 'Service area page' },
-      { href: '/concepts/g-combo.html', label: 'Service in a town' },
+      { href: '/concepts/d-service.html', label: 'Service page' },
+      { href: '/concepts/d-area.html', label: 'Service area page' },
+      { href: '/concepts/d-combo.html', label: 'Service in a town' },
     ],
   },
 ]
