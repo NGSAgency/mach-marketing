@@ -344,10 +344,11 @@ export function Prose({ x, text, lead = false }) {
 }
 
 /** The sticky card of facts beside the prose on an inner page. */
-export function FactCard({ x, title, rows, action }) {
+export function FactCard({ x, title, rows, note, action }) {
   const { C } = x
   const list = (rows || []).filter(r => r && r.v)
-  if (list.length === 0 && !action) return null
+  const notes = (Array.isArray(note) ? note : [note]).filter(Boolean)
+  if (list.length === 0 && notes.length === 0 && !action) return null
   return (
     <aside className="rl-card" style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: x.T.radius.lg, padding: '22px 22px 24px' }}>
       {title && <h3 style={{ ...x.label(C.textMuted), margin: '0 0 14px' }}>{title}</h3>}
@@ -361,6 +362,12 @@ export function FactCard({ x, title, rows, action }) {
           ))}
         </dl>
       )}
+      {/* How they charge, in a sentence. It is the one pricing answer that is
+          not a label and a value, and before the card took it the whole
+          question of flat rate against hourly went unpublished on RAIL. */}
+      {notes.map((n, i) => (
+        <p key={i} style={{ margin: i || list.length ? '14px 0 0' : 0, fontSize: 15, lineHeight: 1.6, color: C.textDim }}>{n}</p>
+      ))}
       {action && <a href={action.href} style={{ ...btnAccent(x), display: 'flex', marginTop: 20 }}>{action.label}</a>}
     </aside>
   )

@@ -1,7 +1,7 @@
 import { bookingContext, BookingPage, RequestCard } from './BookingKit.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import {
-  servicesIndexModel, serviceModel, pageFacts, paragraphs, oneLine, pricingModel, proofItems, lowerName
+  servicesIndexModel, serviceModel, pageFacts, paragraphs, oneLine, pricingModel, serviceCostRows, proofItems, lowerName
 } from './family/data.js'
 
 // BOOKING's inner pages. Every one of them is the same shape: the content on
@@ -19,7 +19,7 @@ export function PageHead({ x, crumbs, eyebrow, title, lede }) {
           <nav aria-label="Breadcrumb" style={{ fontSize: 14, color: C.textMuted, marginBottom: 14 }}>
             {crumbs.map((b, i) => (
               <span key={b.url}>
-                {i > 0 && <span style={{ opacity: 0.5 }}> / </span>}
+                {i > 0 && <span aria-hidden="true"> / </span>}
                 {i < crumbs.length - 1
                   ? <a href={`${base}${b.url === '/' ? '' : b.url}`} style={{ color: 'inherit', textDecoration: 'none' }}>{b.name}</a>
                   : <span>{b.name}</span>}
@@ -167,10 +167,15 @@ export function FAQs({ x, items }) {
   )
 }
 
-/** Prices in the client's own numbers, as label/value rows. */
-export function Cost({ x }) {
+/** Prices in the client's own numbers, as label/value rows.
+ *
+ * On a service page this leads with what that job costs. BOOKING's card
+ * column carries no facts list, so this block is the only place the answer
+ * could appear, and before it took a service it appeared nowhere.
+ */
+export function Cost({ x, service }) {
   const { C, F } = x
-  const p = pricingModel(x.c)
+  const p = service ? serviceCostRows(x.c, service) : pricingModel(x.c)
   if (!p.has) return null
   return (
     <>
@@ -343,7 +348,7 @@ export function BookingServiceDetail({ config: c, siteSlug, service }) {
                   style={{ width: '100%', height: 'clamp(220px, 28vw, 380px)', objectFit: 'cover', borderRadius: T.radius.md, display: 'block', margin: paras.length ? '28px 0 0' : '0 0 28px' }}
                 />
               )}
-              <Cost x={x} />
+              <Cost x={x} service={service} />
               {m.noCopy && concept && (
                 <div style={{ marginTop: 34 }}>
                   <ConceptNote T={T} minHeight={220} title={m.note.title}>{m.note.body}</ConceptNote>

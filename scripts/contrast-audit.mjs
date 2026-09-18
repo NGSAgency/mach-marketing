@@ -159,6 +159,10 @@ for (const path of paths) {
   for (const i of bad) console.log(`   FAIL ${i.median.toFixed(2)}  "${i.text}"  rgb(${i.color.join(',')})  at y=${Math.round(i.y)}`)
   for (const i of heroLow) console.log(`   HERO ${i.p10.toFixed(2)} < ${i.need}  "${i.text}"  rgb(${i.color.join(',')})`)
   for (const i of offRule) console.log(`   RULE text on a photo must use textOnImage roles: "${i.text}"  ${i.onImage.color}  at y=${Math.round(i.y)}`)
+  // The warning band was counted and never named, so a run that reported two
+  // low items left no way to tell a new one from an old one without a second
+  // run and a JSON file.
+  for (const i of low) console.log(`   LOW  ${i.median.toFixed(2)}  "${i.text}"  rgb(${i.color.join(',')})  at y=${Math.round(i.y)}`)
   await page.close()
 }
 

@@ -140,21 +140,7 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
           <section id="prices" style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
             <div style={wrap}>
               <SectionHead x={x} eyebrow="Pricing" title="What it costs" />
-              <div style={{ maxWidth: 820, marginTop: 8 }}>
-                {p.rows.map((r, i) => (
-                  <div key={r.k} style={{
-                    display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
-                    padding: '16px 0', borderTop: i === 0 ? `2px solid ${C.text}` : `1px solid ${C.border}`,
-                  }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textMuted }}>{r.k}</span>
-                    <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(18px, 1.8vw, 22px)', color: C.text }}>{r.v}</span>
-                  </div>
-                ))}
-                <div style={{ borderTop: `1px solid ${C.border}` }} />
-                {p.notes.map((n, i) => (
-                  <p key={i} style={{ margin: '18px 0 0', color: C.textDim, fontSize: 17, lineHeight: 1.7 }}>{n}</p>
-                ))}
-              </div>
+              <PriceRows x={x} p={p} />
             </div>
           </section>
         )
@@ -345,16 +331,45 @@ function SignCards({ x, signs }) {
   )
 }
 
+/** The prices as rows. LEVEL publishes them on the front, which is the
+ *  family's own idea, and on the service page as well: a visitor who lands
+ *  there from a search never sees the front, and was shown no price at all. */
+function PriceRows({ x, p }) {
+  const { C, F } = x
+  if (!p.has) return null
+  return (
+    <div style={{ maxWidth: 820, marginTop: 8 }}>
+      {p.rows.map((r, i) => (
+        <div key={r.k} style={{
+          display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
+          padding: '16px 0', borderTop: i === 0 ? `2px solid ${C.text}` : `1px solid ${C.border}`,
+        }}>
+          <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.textMuted }}>{r.k}</span>
+          <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(18px, 1.8vw, 22px)', color: C.text }}>{r.v}</span>
+        </div>
+      ))}
+      <div style={{ borderTop: `1px solid ${C.border}` }} />
+      {p.notes.map((n, i) => (
+        <p key={i} style={{ margin: '18px 0 0', color: C.textDim, fontSize: 17, lineHeight: 1.7 }}>{n}</p>
+      ))}
+    </div>
+  )
+}
+
 export function LevelServiceDetail({ config: c, siteSlug, service }) {
   const x = levelContext(c, siteSlug)
   const m = serviceModel(x, service)
   const { C, areas, href, name } = x
+  // pricingModel, not serviceCostRows: the quote band under this already
+  // carries what this job costs, and twice on one page reads as a mistake.
+  const cost = pricingModel(c)
   const sections = [
     m.noCopy && { id: 'about', eyebrow: 'Overview', title: `About ${service.name}`, body: <Note x={x} minHeight={220} title={m.note.title}>{m.note.body}</Note>, label: 'Overview' },
     m.intro && { id: 'about', eyebrow: 'Overview', title: `About ${service.name}`, body: <Prose x={x} text={m.intro} />, label: 'Overview' },
     m.signs && { id: 'signs', eyebrow: 'Know the signs', title: `Signs you need ${lowerName(service.name)}`, body: <SignCards x={x} signs={m.signs} />, label: 'Signs you need this' },
     (m.steps || m.stepsText) && { id: 'how', eyebrow: 'How it works', title: 'What to expect', body: m.steps ? <StepRail x={x} steps={m.steps} /> : <Prose x={x} text={m.stepsText} />, label: 'What to expect' },
     m.methods && { id: 'methods', eyebrow: 'Methods', title: 'Products and methods', body: <Prose x={x} text={m.methods} />, label: 'Products and methods' },
+    cost.has && { id: 'cost', eyebrow: 'Cost', title: 'What it costs', body: <PriceRows x={x} p={cost} />, label: 'What it costs' },
     m.faqs.length > 0 && { id: 'faq', eyebrow: 'Questions', title: `${service.name} questions`, body: <FaqCards x={x} faqs={m.faqs} />, label: 'Questions' },
   ]
   return (

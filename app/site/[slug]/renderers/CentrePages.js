@@ -1,6 +1,6 @@
 import { centreContext, CentrePage, btnPrimary, btnOutline } from './CentreKit.js'
 import CrewMobileBar from './CrewMobileBar.js'
-import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine, lowerName} from './family/data.js'
+import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine, lowerName, serviceCostRows } from './family/data.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 
 // CENTRE's inner pages. The shapes come from the home page — a centred header,
@@ -19,7 +19,7 @@ export function Header({ x, crumbs, eyebrow, title, lede }) {
           <nav aria-label="Breadcrumb" style={{ ...mid, fontSize: 14, color: C.textMuted, marginBottom: 18 }}>
             {crumbs.map((b, i) => (
               <span key={b.url}>
-                {i > 0 && <span style={{ opacity: 0.5 }}> / </span>}
+                {i > 0 && <span aria-hidden="true"> / </span>}
                 {i < crumbs.length - 1
                   ? <a href={`${x.base}${b.url === '/' ? '' : b.url}`} style={{ color: 'inherit', textDecoration: 'none' }}>{b.name}</a>
                   : <span>{b.name}</span>}
@@ -84,31 +84,18 @@ export function ActionRow({ x, align = 'center' }) {
  * figure, and printed pricing_approach raw — the page carried the words
  * "transparent_flat_rate". Values now sit in rows that can hold a sentence,
  * and anything that still looks like a database value is not shown at all.
+ *
+ * The rows themselves come from pricingModel, which every family shares. This
+ * page kept its own copy of that list for a while and quietly fell behind it:
+ * payment methods and service plans were answered on the questionnaire and
+ * shown on four families but not this one. One list, so that cannot recur.
  */
-const APPROACH = {
-  transparent_flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
-  flat_rate: 'We quote a flat rate up front, so the price you are told is the price you pay.',
-  hourly: 'We charge by the hour, plus parts.',
-  time_and_materials: 'We charge for the time on the job plus the parts fitted.',
-  quote_per_job: 'Every job is quoted on its own before any work starts.',
-}
-const looksLikeAValue = (t) => typeof t === 'string' && /^[a-z0-9]+(_[a-z0-9]+)+$/.test(t.trim())
-
 export function Cost({ x, service }) {
   const { C, F, T, wrap, mid, sectionPad } = x
-  const p = x.c.pricing || {}
-  const rows = [
-    p.diagnostic_fee && { k: 'Diagnostic', v: p.diagnostic_fee },
-    p.service_call_fee && { k: 'Service call', v: p.service_call_fee },
-    p.price_range_general && { k: 'Typical range', v: p.price_range_general },
-    p.free_estimates && { k: 'Estimates', v: 'Free' },
-    p.financing && { k: 'Financing', v: p.financing_partners?.length ? `Available through ${p.financing_partners.join(', ')}` : 'Available' },
-  ].filter(Boolean)
-
-  const approach = APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
-  const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
-  const notes = [approach, policy].filter(Boolean)
-  if (rows.length === 0 && notes.length === 0) return null
+  // CENTRE has no list of facts beside a quote button, so without the job's
+  // own cost here the field reached six families and not this one.
+  const { rows, notes, has } = serviceCostRows(x.c, service)
+  if (!has) return null
 
   return (
     <section style={{ paddingBlock: sectionPad }}>

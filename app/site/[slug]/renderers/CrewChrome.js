@@ -15,7 +15,6 @@ import {
   emergencyLabel,
   faqsFrom,
   sinceLabel,
-  whyUsItems,
   aboutBody,
 } from '../../../../lib/templates/shared/claims.js'
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
@@ -28,7 +27,7 @@ import CrewMobileBar from './CrewMobileBar.js'
 // changes every page at once.
 
 // The trade nouns and the small text helpers are shared by every family.
-import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig } from './family/data.js'
+import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts } from './family/data.js'
 export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
@@ -183,16 +182,12 @@ export function crewProof(x) {
  * founding year, licence, emergency service, financing and warranty, each
  * only when the data holds it.
  */
+// The same list every family shows beside the quote buttons. CREW had its own
+// copy of it, which fell a field behind: what this particular service costs
+// was added to the shared list and never reached this one. Delegating means
+// there is one list to add to.
 export function crewFacts(x, service) {
-  const { c } = x
-  const reviews = c.reviews || {}
-  const items = []
-  if (reviews.source !== 'their_site' && reviews.google_rating) {
-    items.push(`${Number(reviews.google_rating).toFixed(1)} Google rating${reviews.google_count ? ` · ${reviews.google_count.toLocaleString()} reviews` : ''}`)
-  }
-  const since = sinceLabel(c)
-  if (since) items.push(since)
-  return [...items, ...whyUsItems(c, service)]
+  return pageFacts({ c: x.c, since: sinceLabel(x.c) }, service)
 }
 
 // ---- Styles ------------------------------------------------------------------

@@ -10,7 +10,14 @@ import {
 // across the page: the rail takes 300px and leaves about 1100, and a reading
 // measure down the left of that leaves two thirds of the page empty.
 
-/** The facts that decide whether someone calls, beside the reading. */
+/** The facts that decide whether someone calls, beside the reading.
+ *
+ * This card is the only place RAIL publishes what the work costs, so it takes
+ * the pricing rows whole. It used to take the first three, which quietly
+ * dropped whichever answer sat last in the list — payment methods and service
+ * plans, both asked for on the questionnaire. Warranty and hours give way
+ * instead: they are on the about and contact pages as well.
+ */
 function serviceFacts(x, service, cost) {
   const p = pricingModel(x.c)
   const warranty = (x.pos.warranties || [])[0]
@@ -19,11 +26,11 @@ function serviceFacts(x, service, cost) {
     // What this service costs comes before what the business charges in
     // general: it is the more specific answer and the one they asked for.
     cost && { k: 'This job', v: cost },
-    ...p.rows.slice(0, 3),
+    ...p.rows,
     x.emergency && { k: 'Emergencies', v: x.emergency },
     wt && { k: 'Warranty', v: wt },
     x.biz.hours_display && { k: 'Hours', v: x.biz.hours_display },
-  ].filter(Boolean).slice(0, 5)
+  ].filter(Boolean).slice(0, 7)
 }
 
 export function RailServices({ config: c, siteSlug }) {
@@ -89,7 +96,8 @@ export function RailServiceDetail({ config: c, siteSlug, service }) {
                 ? <ConceptNote T={x.T} minHeight={240} title={m.note.title}>{m.note.body}</ConceptNote>
                 : <Prose x={x} text={m.intro} lead />}
             </div>
-            <FactCard x={x} title="Before you call" rows={facts} action={{ href: x.second.href, label: x.second.label }} />
+            <FactCard x={x} title="Before you call" rows={facts} note={pricingModel(x.c).notes}
+              action={{ href: x.second.href, label: x.second.label }} />
           </div>
         </Section>
       )}

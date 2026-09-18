@@ -3,7 +3,8 @@ import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 import { BlogIndexCore, BlogPostCore } from '../../../../lib/templates/shared/blog/BlogCore.js'
 import {
   homeModel, serviceModel, areaModel, comboModel, aboutModel, contactModel,
-  servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, listAreas, lowerName
+  servicesIndexModel, areasIndexModel, faqModel, proofItems, pageFacts, formColors, listAreas, lowerName,
+  pricingModel,
 } from './family/data.js'
 import {
   hearthContext, HearthPage, PageHero, SectionHead, Prose, Steps, FaqList, Ticket, FactStrip, Ledger,
@@ -246,6 +247,38 @@ function DetailBody({ x, m, context, facts, links, children }) {
   )
 }
 
+/** What the work costs, as a stub off the ticket.
+ *
+ * HEARTH published no pricing at all: a visitor could read the whole service
+ * page and not learn whether an estimate was free. The rows are the shared
+ * pricing model, so this page keeps up with the questionnaire; the dashed
+ * rules are the family's own, to read as part of the ticket beside it.
+ */
+function Prices({ x, cost }) {
+  const { C, F } = x
+  if (!cost.has) return null
+  return (
+    <div>
+      <SectionHead x={x} eyebrow="Cost" title="What it costs" small />
+      <div style={{ marginTop: 22, background: C.surface, border: `2px solid ${C.text}` }}>
+        {cost.rows.map((r, i) => (
+          <div key={r.k} style={{
+            display: 'grid', gridTemplateColumns: 'minmax(110px, 32%) minmax(0, 1fr)', gap: '0 20px',
+            alignItems: 'baseline', padding: '16px clamp(16px, 2vw, 24px)',
+            borderTop: i === 0 ? 'none' : `1px dashed ${C.border}`,
+          }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.textDim }}>{r.k}</span>
+            <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 'clamp(17px, 1.7vw, 21px)', lineHeight: 1.45, color: C.text }}>{r.v}</span>
+          </div>
+        ))}
+      </div>
+      {cost.notes.map((n, i) => (
+        <p key={i} style={{ margin: i ? '12px 0 0' : '18px 0 0', color: C.textDim, fontSize: 16.5, lineHeight: 1.65 }}>{n}</p>
+      ))}
+    </div>
+  )
+}
+
 function Band({ x, alt = false, children }) {
   return (
     <section style={{ background: alt ? x.C.bgAlt : x.C.bg, paddingBlock: x.sectionPad, borderTop: alt ? 'none' : `1px solid ${x.C.border}` }}>
@@ -307,10 +340,14 @@ export function HearthServiceDetail({ config: c, siteSlug, service }) {
   const x = hearthContext(c, siteSlug)
   const m = serviceModel(x, service)
   const { areas, href, name } = x
+  // Prices alone are body enough: a page with no written copy but a real
+  // price list should still open as a page, not fall back to the fact strip.
+  const cost = pricingModel(c)
+  const body = { ...m, hasBody: m.hasBody || cost.has }
   return (
     <HearthPage x={x} current="services" schemas={m.schemas}>
       <PageHero x={x} image={m.image} crumbs={m.crumbs} eyebrow={m.eyebrow} badge={m.badge} title={service.name} support={m.subhead} />
-      <DetailBody x={x} m={m} context={service.name} facts={m.facts}>
+      <DetailBody x={x} m={body} context={service.name} facts={m.facts}>
         {m.noCopy ? (
           <div>
             <SectionHead x={x} eyebrow="Overview" title={`About ${service.name}`} small />
@@ -322,6 +359,7 @@ export function HearthServiceDetail({ config: c, siteSlug, service }) {
             {m.signs && <div><SectionHead x={x} eyebrow="Know the signs" title={`Signs you need ${lowerName(service.name)}`} small /><SignLedger x={x} signs={m.signs} /></div>}
             {(m.steps || m.stepsText) && <div><SectionHead x={x} eyebrow="How it works" title="What to expect" small />{m.steps ? <Steps x={x} steps={m.steps} /> : <Prose x={x} text={m.stepsText} />}</div>}
             {m.methods && <div><SectionHead x={x} eyebrow="Methods" title="Products and methods" small /><Prose x={x} text={m.methods} /></div>}
+            <Prices x={x} cost={cost} />
             {m.faqs.length > 0 && <div><SectionHead x={x} eyebrow="Questions" title={`${service.name} questions`} small /><FaqList x={x} faqs={m.faqs} open={m.faqs.length <= 3} /></div>}
           </>
         )}

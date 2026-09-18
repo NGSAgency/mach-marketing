@@ -487,6 +487,21 @@ export function pricingModel(c) {
   return { rows, notes, has: rows.length > 0 || notes.length > 0 }
 }
 
+/**
+ * The cost rows for one service page: what this particular job costs, then
+ * what the business charges in general.
+ *
+ * The specific answer goes first because it is the one the visitor came with.
+ * Families that already carry the job's own cost in the list beside their
+ * quote buttons use pricingModel directly instead, so it is never shown twice
+ * on one page.
+ */
+export function serviceCostRows(c, service) {
+  const p = pricingModel(c)
+  const rows = [service?.cost && { k: 'This job', v: service.cost }, ...p.rows].filter(Boolean)
+  return { rows, notes: p.notes, has: rows.length > 0 || p.notes.length > 0 }
+}
+
 /** The contact form's colours from a family's roles. */
 export const formColors = (C, field) => ({
   text: C.text, textDim: C.textDim, textMuted: C.textMuted, border: C.border,

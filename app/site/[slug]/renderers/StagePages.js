@@ -1,10 +1,10 @@
 import { stageContext, StagePage, Chapter, btnAccent, btnOutline } from './StageKit.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import {
-  shotsFor, plateFor, facts, boardOf, priceRows, figuresFor, Figures, CoverageRows,
+  shotsFor, plateFor, facts, boardOf, figuresFor, Figures, CoverageRows,
   Prose, ServiceGroups, Questions, Blocks, LinkRow, SiteFooter,
 } from './StageShared.js'
-import { servicesIndexModel, serviceModel, pricingModel, oneLine, lowerName} from './family/data.js'
+import { servicesIndexModel, serviceModel, serviceCostRows, oneLine, lowerName} from './family/data.js'
 
 // STAGE's services index and service pages. Inner pages swap the chapter rail
 // for a contents list in the panel — an inner page is read rather than
@@ -19,7 +19,7 @@ export function PageHead({ x, crumbs, badge, title, lede }) {
         <nav aria-label="Breadcrumb" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'baseline', marginBottom: 18, fontSize: 14, color: C.textMuted }}>
           {crumbs.map((b, i) => (
             <span key={b.url}>
-              {i > 0 && <span style={{ opacity: 0.5 }}>/ </span>}
+              {i > 0 && <span aria-hidden="true">/ </span>}
               {i < crumbs.length - 1
                 ? <a href={`${base}${b.url === '/' ? '' : b.url}`} style={{ color: 'inherit', textDecoration: 'none', borderBottom: `1px solid ${C.border}` }}>{b.name}</a>
                 : <span>{b.name}</span>}
@@ -131,7 +131,8 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
   const x = stageContext(c, siteSlug)
   const { C, F, T, areas, href, concept, biz, name } = x
   const m = serviceModel(x, service)
-  const p = pricingModel(c)
+  // Leads with what this job costs, then what the business charges in general.
+  const p = serviceCostRows(c, service)
   const shots = shotsFor(x, [x.imgs[`service_${service.slug}`]])
   const reviews = ((c.reviews || {}).featured || []).filter(r => r?.text).slice(0, 3)
 
@@ -199,7 +200,9 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
   if (m.steps?.length > 0 || m.stepsText) chapters.push({
     id: 'visit', label: 'On the visit',
     cap: { title: 'How a visit goes', line: `The steps ${name} follows once you have called.` },
-    board: boardOf(x, [...priceRows(x)].slice(0, 3)),
+    // Not the prices: this page now publishes them in full further down, and
+    // the same three rows in a board above the table read as a mistake.
+    board: boardOf(x, [facts.emergency(x), facts.hours(x), facts.credentials(x)]),
     content: (
       <>
         <h2 style={x.h2}>What happens when we arrive</h2>

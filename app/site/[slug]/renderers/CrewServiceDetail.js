@@ -11,7 +11,7 @@ import {
   crewContext, crewFacts, CrewPage, FactStrip, PageHero, SectionHead, Prose, Steps, FaqList, QuoteCard,
   ServiceCard, LinkTile, looksLikeJson,
 } from './CrewChrome.js'
-import { signsFrom, lowerName} from './family/data.js'
+import { signsFrom, lowerName, pricingModel } from './family/data.js'
 
 /** "What to expect" as steps when it is a list, else null. */
 export function stepsFrom(v) {
@@ -68,7 +68,12 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
     ...services.filter(s => s.slug !== service.slug && !(s.category && s.category === service.category)),
   ].slice(0, 3)
   const generatedService = services.find(s => s.slug === generatedSlug)
-  const hasBody = !!(intro || signs || steps || stepsText || methods || faqs.length || noCopy)
+  // What the job costs, from their own pricing answers. CREW published none
+  // of them until now: a visitor could read the whole page and still not know
+  // whether an estimate was free. It reads the shared model, so a field added
+  // to the questionnaire reaches this page with the others.
+  const cost = pricingModel(c)
+  const hasBody = !!(intro || signs || steps || stepsText || methods || faqs.length || noCopy || cost.has)
   const facts = crewFacts(x, service)
   const badge = serviceEmergencyBadge(c, service, { long: true })
 
@@ -133,8 +138,24 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
                       <Prose x={x} text={methods} />
                     </div>
                   )}
-                  {faqs.length > 0 && (
+                  {cost.has && (
                     <div style={intro || signs || steps || stepsText || methods ? block : {}}>
+                      <SectionHead x={x} eyebrow="Cost" title="What it costs" small />
+                      <dl style={{ margin: '22px 0 0', borderTop: `2px solid ${C.text}` }}>
+                        {cost.rows.map(r => (
+                          <div key={r.k} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 30%) minmax(0, 1fr)', gap: '0 18px', alignItems: 'baseline', paddingBlock: 16, borderBottom: `1px solid ${C.border}` }}>
+                            <dt style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14.5, letterSpacing: '0.06em', color: C.accentDim }}>{r.k}</dt>
+                            <dd style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: C.text }}>{r.v}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                      {cost.notes.map((n, i) => (
+                        <p key={i} style={{ margin: i ? '12px 0 0' : '18px 0 0', color: C.textDim, fontSize: 16.5, lineHeight: 1.65 }}>{n}</p>
+                      ))}
+                    </div>
+                  )}
+                  {faqs.length > 0 && (
+                    <div style={intro || signs || steps || stepsText || methods || cost.has ? block : {}}>
                       <SectionHead x={x} eyebrow="Questions" title={`${service.name} questions`} small />
                       <FaqList x={x} faqs={faqs} open={faqs.length <= 3} />
                     </div>
