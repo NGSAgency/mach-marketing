@@ -36,6 +36,21 @@ export default function SereneAbout({ config: c, siteSlug }) {
           if (c.business.address_line) facts.push({ k: 'Location', v: c.business.address_line })
           if ((c.services || []).length) facts.push({ k: labels.offering, v: `${c.services.length} offered` })
           if ((c.service_areas || []).length) facts.push({ k: 'Areas served', v: `${c.service_areas.length}` })
+          // What the practice is licensed and insured to do. A medical
+          // practice is judged on exactly this, and SERENE published none of
+          // it. Certifications are listed in full here rather than capped:
+          // the list beside a booking button is a glance, this is the page
+          // someone reads when they are checking us out.
+          const creds = c.credentials || {}
+          if (creds.license_number) facts.push({ k: 'Licence', v: creds.license_number })
+          if (creds.insurance_info) facts.push({ k: 'Insurance', v: creds.insurance_info })
+          const certs = (c.certifications || [])
+            .map(x => (typeof x === 'string' ? x : x?.name))
+            .filter(x => typeof x === 'string' && x.trim())
+          if (certs.length) facts.push({ k: certs.length === 1 ? 'Certification' : 'Certifications', v: certs.join(' · ') })
+          const warranty = (c.positioning?.warranties || [])[0]
+          const wt = typeof warranty === 'string' ? warranty : warranty?.name || warranty?.description
+          if (wt) facts.push({ k: 'Guarantee', v: wt })
 
           return (
             <>

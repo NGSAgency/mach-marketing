@@ -13,7 +13,7 @@ import { StickyBooking } from '../../../../lib/templates/shared/components/medic
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
-import { signsFrom } from './family/data.js'
+import { signsFrom, serviceCostRows } from './family/data.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -58,6 +58,53 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
         </div>
         <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
           {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
+        </div>
+      </div>
+    </section>
+  ) : null
+
+  // The same two-column shape again, with prices in the right column.
+  //
+  // SERENE was built before the shared content layer and never read any of
+  // it, so a client could tell us what a treatment costs, how they take
+  // payment, whether a consultation is free and what their licence number is,
+  // and the site said none of it. For a practice where the first question is
+  // "how much is this", that was the worst gap of the eight families.
+  const cost = serviceCostRows(c, service)
+  const CostSection = ({ index = 0 }) => cost.has ? (
+    <section style={{
+      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
+      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
+      borderTop: `1px solid ${T.colors.borderLight}`,
+    }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+        <div style={{
+          fontFamily: T.fonts.display,
+          fontSize: 'clamp(20px, 2.3vw, 28px)',
+          fontWeight: 300,
+          lineHeight: 1.2,
+          letterSpacing: '-0.01em',
+          color: T.colors.text,
+          paddingTop: 2,
+        }}>
+          What it costs
+        </div>
+        <div style={{ maxWidth: 640 }}>
+          <dl style={{ margin: 0 }}>
+            {cost.rows.map((r, i) => (
+              <div key={r.k} style={{
+                display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 24,
+                alignItems: 'baseline', paddingBlock: 18,
+                borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}`,
+              }}>
+                <dt style={{ fontSize: T.type.xs, letterSpacing: '0.16em', textTransform: 'uppercase', color: T.colors.accent }}>{r.k}</dt>
+                <dd style={{ margin: 0, fontSize: T.type.base, lineHeight: 1.7, color: T.colors.text, fontWeight: 300 }}>{r.v}</dd>
+              </div>
+            ))}
+          </dl>
+          {cost.notes.map((n, i) => (
+            <p key={i} style={{ margin: i ? '14px 0 0' : '22px 0 0', fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>{n}</p>
+          ))}
         </div>
       </div>
     </section>
@@ -176,6 +223,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
           <Section label="Our approach" body={asText(copy('materials_and_methods'))} index={signs ? 3 : 2} />
           <Section label="Who it suits" body={asText(copy('candidacy'))} index={signs ? 4 : 3} />
           <Section label="Aftercare" body={asText(copy('aftercare'))} index={signs ? 5 : 4} />
+          <CostSection index={signs ? 6 : 5} />
         </div>
 
         {faqs.length > 0 && (
