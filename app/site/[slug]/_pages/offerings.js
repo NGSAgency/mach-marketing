@@ -6,7 +6,7 @@
 import { notFound } from 'next/navigation'
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { buildServiceMetadata, buildStaticMetadata } from '../../../../lib/templates/shared/seo/index.js'
-import { rendererFor } from '../renderers/registry.js'
+import { rendererFor, previewFamily } from '../renderers/registry.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 const segmentOf = (c) => c?.profile?.nouns?.offering_url || 'services'
@@ -34,11 +34,11 @@ export async function offeringIndexMetadata({ params }, segment) {
   })
 }
 
-export async function offeringIndexPage({ params }, segment) {
+export async function offeringIndexPage({ params, searchParams }, segment) {
   const { slug } = await params
   const result = await load(slug, segment)
   if (!result) notFound()
-  const Renderer = rendererFor(result.config.template_slug, 'Services')
+  const Renderer = rendererFor(await previewFamily(searchParams) || result.config.template_slug, 'Services')
   return <Renderer config={result.config} siteSlug={slug} />
 }
 
@@ -57,12 +57,6 @@ export async function offeringDetailPage({ params, searchParams }, segment) {
   const result = await load(slug, segment, { page: 'service_detail', id: serviceSlug })
   const service = result && find(result.config, serviceSlug)
   if (!service) notFound()
-  // Development only: ?family=stage draws this page in another family's
-  // layout, so a change can be checked across all of them without rewriting
-  // the client's record six times. Ignored anywhere but a dev server.
-  const preview = process.env.NODE_ENV === 'development'
-    ? (await searchParams)?.family || null
-    : null
-  const Renderer = rendererFor(preview || result.config.template_slug, 'ServiceDetail')
+  const Renderer = rendererFor(await previewFamily(searchParams) || result.config.template_slug, 'ServiceDetail')
   return <Renderer config={result.config} siteSlug={slug} service={service} />
 }

@@ -165,3 +165,16 @@ export function conceptFamily(config, requested) {
   const options = layoutOptions(config)
   return requested && options.some(o => o.key === requested) ? requested : familyKey(config.template_slug)
 }
+
+/**
+ * Development only: ?family=stage draws a page in another family's layout.
+ *
+ * It existed for the home and service pages, which meant a change could only
+ * be checked across the families on two of the thirteen page types, and the
+ * field audit could only ever see whichever family the client happened to be
+ * on. Every page reads it now. Ignored anywhere but a dev server.
+ */
+export async function previewFamily(searchParams) {
+  if (process.env.NODE_ENV !== 'development') return null
+  try { return (await searchParams)?.family || null } catch { return null }
+}

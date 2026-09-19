@@ -1,7 +1,7 @@
 import { fetchSiteConfig } from '../../../../../lib/site/fetch.js'
 import { buildStaticMetadata } from '../../../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
-import { rendererFor } from '../../renderers/registry.js'
+import { rendererFor, previewFamily } from '../../renderers/registry.js'
 
 function findConcern(config, slug) {
   return (config.concerns || []).find(c => c.slug === slug) || null
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
   })
 }
 
-export default async function ConcernPage({ params }) {
+export default async function ConcernPage({ params, searchParams }) {
   const { slug, concernSlug } = await params
   const result = await fetchSiteConfig({ slug, page: 'concern_detail', id: concernSlug })
   if (!result) notFound()
@@ -30,7 +30,7 @@ export default async function ConcernPage({ params }) {
   const concern = findConcern(result.config, concernSlug)
   if (!concern) notFound()
 
-  const Renderer = rendererFor(result.config.template_slug, 'Concern')
+  const Renderer = rendererFor(await previewFamily(searchParams) || result.config.template_slug, 'Concern')
   if (!Renderer) notFound()
 
   return <Renderer config={result.config} siteSlug={slug} concern={concern} />

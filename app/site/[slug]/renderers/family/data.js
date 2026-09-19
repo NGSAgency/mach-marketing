@@ -482,7 +482,15 @@ export function pricingModel(c) {
     p.plans && { k: 'Plans', v: p.plans },
   ].filter(Boolean)
   const approach = PRICING_APPROACH[String(p.approach || '').trim()] || (looksLikeAValue(p.approach) ? null : p.approach)
-  const policy = !p.free_estimates && !looksLikeAValue(p.estimate_policy) ? p.estimate_policy : null
+  // The policy sentence used to be dropped whenever estimates were free, on
+  // the reasoning that the "Estimates — Free" row already said it. Often it
+  // does not: "Free estimates on installations. Diagnostic fee for repairs
+  // ($89) is waived if you approve the repair" carries a number the customer
+  // needs before they call, and it was being thrown away. So it is dropped
+  // only when it is short enough to be a restatement of that row.
+  const written = String(p.estimate_policy || '').trim()
+  const restatesTheRow = p.free_estimates && written.length <= 40
+  const policy = written && !looksLikeAValue(written) && !restatesTheRow ? written : null
   const notes = [approach, policy].filter(Boolean)
   return { rows, notes, has: rows.length > 0 || notes.length > 0 }
 }

@@ -1,7 +1,7 @@
 import { fetchSiteConfig, fetchBlogPost } from '../../../../../lib/site/fetch.js'
 import { buildBlogPostMetadata } from '../../../../../lib/templates/shared/seo/index.js'
 import { notFound } from 'next/navigation'
-import { rendererFor } from '../../renderers/registry.js'
+import { rendererFor, previewFamily } from '../../renderers/registry.js'
 
 export async function generateMetadata({ params }) {
   const { slug, postSlug } = await params
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
   return buildBlogPostMetadata(siteResult.config, blogResult.post)
 }
 
-export default async function BlogPostPage({ params }) {
+export default async function BlogPostPage({ params, searchParams }) {
   const { slug, postSlug } = await params
   const [siteResult, blogResult] = await Promise.all([
     fetchSiteConfig({ slug }),
@@ -23,7 +23,7 @@ export default async function BlogPostPage({ params }) {
   if (!siteResult || !blogResult) notFound()
 
   const config = siteResult.config
-  const Renderer = rendererFor(config.template_slug, 'BlogPost')
+  const Renderer = rendererFor(await previewFamily(searchParams) || config.template_slug, 'BlogPost')
 
   return (
     <Renderer

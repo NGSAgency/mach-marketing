@@ -2,7 +2,7 @@ import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
 import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
 import { buildComboMetadata } from '../../../../lib/templates/shared/seo/index.js'
-import { rendererFor } from '../renderers/registry.js'
+import { rendererFor, previewFamily } from '../renderers/registry.js'
 
 function parseComboSlug(comboSlug, config) {
   for (const svc of config.services) {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }) {
   return buildComboMetadata(combo.config, combo.service, combo.area)
 }
 
-export default async function ClientComboPage({ params }) {
+export default async function ClientComboPage({ params, searchParams }) {
   const { slug, comboSlug } = await params
   // Reserved paths have their own routes.
   const RESERVED = ['about', 'contact', 'faq', 'services', 'service-areas', 'treatments', 'locations', 'concerns', 'team', 'blog']
@@ -44,6 +44,6 @@ export default async function ClientComboPage({ params }) {
   const combo = await loadCombo(slug, comboSlug)
   if (!combo) notFound()
 
-  const Renderer = rendererFor(combo.config.template_slug, 'Combo')
+  const Renderer = rendererFor(await previewFamily(searchParams) || combo.config.template_slug, 'Combo')
   return <Renderer config={combo.config} siteSlug={slug} service={combo.service} area={combo.area} />
 }
