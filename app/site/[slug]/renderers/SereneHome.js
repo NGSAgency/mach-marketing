@@ -6,6 +6,9 @@ import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyB
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
 import { heroTrust } from '../../../../lib/templates/shared/claims.js'
+import { SereneGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
+import { resolveSections } from '../../../../lib/templates/shared/sections.js'
 
 // What the business is, in the words people search with, for the H1.
 const BUSINESS_NOUN = { medspa: 'Med spa', med_spa: 'Med spa', aesthetics: 'Med spa', wellness: 'Med spa', auto_detailing: 'Auto detailing' }
@@ -368,6 +371,10 @@ export default function SereneHome({ config: c, siteSlug }) {
         })()}
 
         {has('concerns_grid') && <ConcernsGrid T={T} c={c} base={base} concerns={concerns} />}
+        {/* The practice's own photographs. SERENE's other sections follow the
+            industry profile; this one follows the section registry, so the
+            client's choice in the questionnaire is what switches it. */}
+        {resolveSections(c, 'serene').gallery && <SereneGallery T={T} items={galleryItems(c, c.services || [])} />}
         {has('reviews') && <Reviews T={T} c={c} />}
         {has('before_after') && <BeforeAfterGallery T={T} c={c} cases={c.before_after || []} />}
         {has('providers') && <Providers T={T} c={c} providers={c.providers || []} base={base} />}

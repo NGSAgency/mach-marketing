@@ -3,6 +3,8 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 import { crewContext, schemaConfig, CrewPage, ServiceCard, AreaChips, PhoneIcon, Star, listAreas, TRADE_NOUN } from './CrewChrome.js'
 import { heroTrust } from '../../../../lib/templates/shared/claims.js'
 import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
+import { CrewGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 // CREW home page. Section order and the reasoning behind each one are in the
 // trades family brief; CREW tokens carry the design principles. The utility
@@ -171,6 +173,9 @@ export default function CrewHome({ config: c, siteSlug }) {
             </div>
           </section>
         )}
+
+        {/* PHOTOGRAPHS: their own, when they have switched the section on. */}
+        {x.sections.gallery && <CrewGallery x={x} items={galleryItems(c, x.services)} />}
 
         {/* REVIEWS: recent, dated, real */}
         {x.sections.reviews && featuredReviews.length > 0 ? (

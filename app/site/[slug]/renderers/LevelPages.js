@@ -12,6 +12,8 @@ import {
 } from './LevelKit.js'
 import { PhoneIcon, Star } from './CrewChrome.js'
 import { joinList } from '../../../../lib/templates/shared/claims.js'
+import { LevelGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 // Level pages. What each page says comes from family/data.js (the same content
 // every family renders); the layout here is Level's own: a centred hero with
@@ -145,6 +147,9 @@ export function LevelHome({ config: c, siteSlug, process: proc = null }) {
           </section>
         )
       })()}
+
+      {/* PHOTOGRAPHS: their own, as a bento. */}
+      {x.sections.gallery && <LevelGallery x={x} items={galleryItems(c, x.services)} />}
 
       {/* REVIEWS: the rating set large across a coloured band, with what
           people actually said on cards across it. */}

@@ -393,6 +393,53 @@ export function aroundTownFor(c, area, voice = 'trade') {
   }
 }
 
+/**
+ * The client's own photographs, for a gallery: newest first, captioned.
+ *
+ * Their tagged photographs when the config carries them — a caption the
+ * client wrote beats one derived from a slot name, and a photo tagged to a
+ * service is captioned with that service when they wrote nothing. Otherwise
+ * the image slots that hold their own pictures. Never stock: every empty slot
+ * is filled from the library before a renderer sees the config, and a stock
+ * photo under a heading about their work would be a lie.
+ *
+ * RAIL had this to itself as workItems. Every family has a gallery now, so
+ * it lives here and RAIL reads it like the rest.
+ */
+export function galleryItems(c, services = []) {
+  const named = new Map((services || []).map(s => [s.slug, s.name]))
+  const gallery = (c?.gallery || []).filter(g => g?.url)
+  if (gallery.length > 0) {
+    return gallery.map(g => ({
+      url: g.url,
+      alt: g.alt || '',
+      caption: g.caption || (g.service ? named.get(g.service) || null : null),
+    }))
+  }
+  const skip = new Set(['home_hero', 'home_video', 'home_secondary', 'about_hero', 'combo_hero'])
+  const out = []
+  for (const [key, img] of Object.entries(c?.images || {})) {
+    if (!img?.url || img.stock || skip.has(key)) continue
+    const m = /^service_(.+)$/.exec(key)
+    out.push({ url: img.url, alt: img.alt || '', caption: m ? named.get(m[1]) || null : null })
+  }
+  return out
+}
+
+/**
+ * A caption as the job and the place, for layouts that set them apart.
+ * Clients write "Condenser replacement, Olathe"; the town is what follows the
+ * last comma. Without a comma the whole caption is the job — nothing is
+ * guessed.
+ */
+export function captionParts(caption) {
+  const text = String(caption || '').trim()
+  if (!text) return { job: null, place: null }
+  const i = text.lastIndexOf(',')
+  if (i <= 0 || i === text.length - 1) return { job: text, place: null }
+  return { job: text.slice(0, i).trim(), place: text.slice(i + 1).trim() }
+}
+
 /** One area's page. */
 export function areaModel(d, area) {
   const { c, concept, areas, imgs, tradeNoun, name } = d

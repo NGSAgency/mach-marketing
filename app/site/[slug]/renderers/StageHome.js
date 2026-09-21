@@ -5,6 +5,8 @@ import {
   Prose, ServiceGroups, Questions, Steps, Blocks, SiteFooter,
 } from './StageShared.js'
 import { homeModel, stepsFrom } from './family/data.js'
+import { stageGalleryChapter } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 /**
  * STAGE's home page: six numbered chapters down the left, and the panel on the
@@ -107,6 +109,10 @@ export default function StageHome({ config: c, siteSlug }) {
       </>
     ),
   })
+
+  // Their own photographs, as a chapter; add() drops it when there are fewer
+  // than two.
+  if (x.sections.gallery) add(stageGalleryChapter(x, galleryItems(x.c, x.services)))
 
   if (x.sections.reviews && m.reviews.length > 0) add({
     id: 'reviews', label: 'What people say',

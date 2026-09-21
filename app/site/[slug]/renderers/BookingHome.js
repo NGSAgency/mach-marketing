@@ -2,6 +2,8 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 import { bookingContext, BookingPage, RequestCard, btnQuiet } from './BookingKit.js'
 import { Coverage } from './BookingPages.js'
 import { homeModel, proofItems, oneLine, paragraphs } from './family/data.js'
+import { BookingGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 /**
  * BOOKING's home page. The order is the argument: ask for the visit first,
@@ -172,6 +174,10 @@ export default function BookingHome({ config: c, siteSlug }) {
         hrefFor={a => href.area(a)}
         more={areas.length > 1 ? { href: href.areas, label: 'See every area' } : null}
       />
+
+      {/* THE PHOTOGRAPHS — one row, below the proof rather than in its place:
+          the rating and the review stay directly under the fold. */}
+      {x.sections.gallery && <BookingGallery x={x} items={galleryItems(c, x.services)} />}
 
       {/* THE QUESTIONS — open one at a time, straight above the footer, so the
           last thing before the details is an answer rather than another ask. */}

@@ -32,6 +32,16 @@ import fs from 'node:fs'
 import nodePath from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+// The section registry is written for Next, in a package that does not declare
+// itself an ES module, so Node prints a "reparsing as ES module" warning on
+// loading it. It is harmless and reads like an error in a terminal, so it is
+// silenced for this one import rather than for the whole run.
+const quiet = (w) => w?.message?.includes('Reparsing as ES module')
+const listeners = process.listeners('warning')
+process.removeAllListeners('warning')
+process.on('warning', (w) => { if (!quiet(w)) listeners.forEach(l => l(w)) })
+const { resolveSections } = await import('../lib/templates/shared/sections.js')
+
 const [, , ORIGIN = 'http://localhost:3000', SLUG, FAMILY_ARG] = process.argv
 if (!SLUG) {
   console.error('usage: node field-audit.mjs <origin> <site-slug> [family,family]')
@@ -74,6 +84,20 @@ const NOT_FOR_A_PAGE = [
     + 'the copy written about it, not a paragraph to print as they typed it; '
     + 'whether the copy honours it is the fact checker\'s job, not this one'],
 ]
+
+/**
+ * Answers that only reach a page through an optional section.
+ *
+ * When that section is off for a family — by the family's default or the
+ * client's own choice — the answer is not missing, it is switched off, and the
+ * audit says so instead of failing. The section rules come from the registry
+ * itself, so this can never disagree with what the renderers decide. Add a
+ * line here when a new field is shown only by an optional section.
+ */
+const SHOWN_BY_SECTION = [
+  ['gallery[]', 'gallery'],
+]
+const sectionFor = (path) => (SHOWN_BY_SECTION.find(([prefix]) => path.startsWith(prefix)) || [])[1] || null
 
 /** Values the renderers translate into English rather than print. A raw one
  *  on a page is a bug we have shipped before ("transparent_flat_rate"). */
@@ -227,17 +251,33 @@ for (const family of families) {
     continue
   }
 
-  // One haystack of every word the site says, attributes included: alt text
-  // and link titles are answers too.
-  const haystack = words(
-    rendered.map(p => p.html.replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')).join(' ')
-  )
+  // Two haystacks. The words a visitor reads, with every tag removed whole —
+  // a caption set as the job in bold and the town beside it is still one
+  // caption, and reading the raw page put the styling of the second element
+  // between the two and reported it missing. And the attributes that carry
+  // answers of their own: alt text, titles, and the source of each photograph.
+  const bodies = rendered.map(p => p.html.replace(/<(script|style)[\s\S]*?<\/\1>/g, ' '))
+  const haystack = words(bodies.map(h => h.replace(/<[^>]*>/g, ' ')).join(' ')) + ' ' +
+    words(bodies.map(h => [...h.matchAll(/\s(?:alt|title|aria-label|content|src|href)="([^"]*)"/g)].map(m => m[1]).join(' ')).join(' '))
 
   const unpublished = []
   const raw = []
+  const switchedOff = new Map()
+  let galleryNote = null
   const seenPath = new Set()
+  const sections = resolveSections(config, family)
   for (const e of entries) {
     if (excused(e.path)) continue
+    const section = sectionFor(e.path)
+    if (section && sections[section] === false) {
+      switchedOff.set(section, (switchedOff.get(section) || 0) + 1)
+      continue
+    }
+    // A gallery shows its newest photographs, as many as its layout holds.
+    // That is the gallery working; one that is switched on and shows none of
+    // them is broken. So photographs are judged as a set, below, not one by
+    // one here.
+    if (e.path.startsWith('gallery[]')) continue
     if (looksLikeADatabaseValue(e.value)) {
       if (haystack.includes(words(e.value))) raw.push(e)
       continue
@@ -252,11 +292,20 @@ for (const family of families) {
     unpublished.push(e)
   }
 
+  const photos = (config.gallery || []).filter(g => g?.url)
+  if (photos.length >= 2 && sections.gallery !== false) {
+    const shown = photos.filter(g => haystack.includes(needleOf(g.url))).length
+    if (shown === 0) unpublished.push({ path: 'gallery', value: `section is on, and none of ${photos.length} photographs is shown` })
+    else if (shown < photos.length) galleryNote = `gallery: ${shown} of ${photos.length} photographs appear on the site; the gallery shows the newest, up to its layout's limit`
+  }
+
   const trouble = unpublished.length + raw.length + broken.length
   console.log(`${family}: ${pages.length} pages, ${unpublished.length} unpublished${raw.length ? `, ${raw.length} raw` : ''}${broken.length ? `, ${broken.length} not 200` : ''}`)
   for (const b of broken) console.log(`   ${b.status} ${b.path}`)
   for (const e of raw) console.log(`   RAW          ${e.path}  "${e.value}"  — a database value reached a page`)
   for (const e of unpublished) console.log(`   UNPUBLISHED  ${e.path}  "${e.value.slice(0, 70)}${e.value.length > 70 ? '\u2026' : ''}"`)
+  for (const [section, n] of switchedOff) console.log(`   switched off ${section}: ${n} answers not shown, by choice — the client can turn it on`)
+  if (galleryNote) console.log(`   ${galleryNote}`)
   failures += trouble
 }
 

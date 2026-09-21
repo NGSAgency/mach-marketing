@@ -1,7 +1,7 @@
 import { railTokens } from '../../../templates/rail/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
-import { siteData, navItems, proofItems, paragraphs } from './family/data.js'
+import { siteData, navItems, proofItems, paragraphs, galleryItems } from './family/data.js'
 import CrewMobileBar from './CrewMobileBar.js'
 
 // RAIL's chrome: the page on the left, the rail pinned down the right edge.
@@ -550,28 +550,9 @@ export function Work({ x, items }) {
  * picture attached to a service is captioned with that service's name.
  */
 export function workItems(x) {
-  const { imgs, services, c } = x
-  const named = new Map(services.map(s => [s.slug, s.name]))
-
-  // Their own photographs, newest first, when the config carries them: a
-  // caption the client wrote beats one we derive from a slot name.
-  const gallery = (c.gallery || []).filter(g => g?.url)
-  if (gallery.length > 0) {
-    return gallery.slice(0, 4).map(g => ({
-      url: g.url,
-      alt: g.alt || '',
-      caption: g.caption || (g.service ? named.get(g.service) || null : null),
-    }))
-  }
-
-  const skip = new Set(['home_hero', 'home_video', 'home_secondary', 'about_hero', 'combo_hero'])
-  const out = []
-  for (const [key, img] of Object.entries(imgs || {})) {
-    if (!img?.url || img.stock || skip.has(key)) continue
-    const m = /^service_(.+)$/.exec(key)
-    out.push({ url: img.url, alt: img.alt || '', caption: m ? named.get(m[1]) || null : null })
-  }
-  return out.slice(0, 4)
+  // RAIL's grid holds four. Which photographs, and how they are captioned,
+  // is the shared rule every family's gallery follows.
+  return galleryItems(x.c, x.services).slice(0, 4)
 }
 
 /** The rating beside the review it came with. */

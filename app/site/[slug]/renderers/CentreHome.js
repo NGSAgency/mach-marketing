@@ -2,6 +2,8 @@ import { buildBreadcrumbSchema } from '../../../../lib/templates/shared/seo/inde
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import { centreContext, CentrePage, btnPrimary, btnOnPhoto, btnOutline } from './CentreKit.js'
 import { homeModel, proofItems, stepsFrom, oneLine } from './family/data.js'
+import { CentreGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 /**
  * CENTRE's home page: everything on one centre line. Each section disappears
@@ -143,6 +145,9 @@ export default function CentreHome({ config: c, siteSlug }) {
           </div>
         </div>
       )}
+
+      {/* THE PHOTOGRAPHS — one large, the rest beneath. */}
+      {x.sections.gallery && <CentreGallery x={x} items={galleryItems(c, x.services)} />}
 
       {/* THE REVIEW — alone, large, with no score beside it. */}
       {x.sections.reviews && m.reviews.length > 0 && (

@@ -12,6 +12,8 @@ import {
 } from './HearthKit.js'
 import { PhoneIcon, Star } from './CrewChrome.js'
 import { joinList } from '../../../../lib/templates/shared/claims.js'
+import { HearthGallery } from './Galleries.js'
+import { galleryItems } from './family/data.js'
 
 // Hearth pages. What each page says comes from family/data.js (the same
 // content every family renders); the layout here is Hearth's own. On a real
@@ -155,6 +157,9 @@ export function HearthHome({ config: c, siteSlug }) {
           </div>
         </section>
       )}
+
+      {/* PHOTOGRAPHS: their own, framed. */}
+      {x.sections.gallery && <HearthGallery x={x} items={galleryItems(c, x.services)} />}
 
       {/* REVIEWS: the first one set large across a band in their own colour,
           the others underneath it. */}
