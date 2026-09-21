@@ -41,6 +41,7 @@ const listeners = process.listeners('warning')
 process.removeAllListeners('warning')
 process.on('warning', (w) => { if (!quiet(w)) listeners.forEach(l => l(w)) })
 const { resolveSections } = await import('../lib/templates/shared/sections.js')
+const { hasFaqPage } = await import('../lib/templates/shared/claims.js')
 
 const [, , ORIGIN = 'http://localhost:3000', SLUG, FAMILY_ARG] = process.argv
 if (!SLUG) {
@@ -80,6 +81,9 @@ const NOT_FOR_A_PAGE = [
   ['images.', 'image urls and alt text are checked as attributes, not prose'],
   ['reviews.source', 'tells us whether we may republish a review, not a review'],
   ['meta.canonical', 'a link element'],
+  ['generated.pricing|', 'no industry has had a pricing page since 10 September 2026, '
+    + 'when it was taken out of generation; copy written before then remains in some '
+    + 'records and nothing reads it'],
   ['.local_notes', 'what the client told us about a town is source material for '
     + 'the copy written about it, not a paragraph to print as they typed it; '
     + 'whether the copy honours it is the fact checker\'s job, not this one'],
@@ -227,7 +231,27 @@ const config = body.config || body
 
 const families = (FAMILY_ARG ? FAMILY_ARG.split(',') : familiesFromRegistry()).map(f => f.trim()).filter(Boolean)
 const entries = leaves(config, '', []).flatMap(expand)
+/**
+ * Answers that stand in for another and are rightly unused while it exists.
+ * Each is excused only while its replacement is there, so a site that has
+ * neither is still reported.
+ */
+const FALLBACKS = [
+  ['meta.site_description', (c) => !!String(c.generated?.['home|meta_description'] || '').trim(),
+    'the home description when none was generated; the generated one is in use'],
+  ['meta.site_title', (c) => !!String(c.generated?.['home|meta_title'] || '').trim(),
+    'the home title when none was generated; the generated one is in use'],
+]
+
+/** Copy for a page this site does not have. The FAQ page exists only when
+ *  there are questions to put on it (hasFaqPage, which the page and the
+ *  sitemap also ask), so its title and description have nowhere to go. */
+const NO_SUCH_PAGE = [
+  ['generated.faq|', (c) => !hasFaqPage(c)],
+]
 const excused = (path) => NOT_FOR_A_PAGE.find(([prefix]) => path.startsWith(prefix) || path.endsWith(prefix))
+  || FALLBACKS.find(([p, replaced]) => path === p && replaced(config))
+  || NO_SUCH_PAGE.find(([prefix, absent]) => path.startsWith(prefix) && absent(config))
 
 let failures = 0
 console.log(`crawling ${families.length} families: ${families.join(', ')}`)

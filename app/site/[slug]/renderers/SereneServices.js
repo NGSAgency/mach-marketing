@@ -4,6 +4,7 @@ import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { socialLinks } from './family/data.js'
+import { hasFaqPage } from '../../../../lib/templates/shared/claims.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -44,7 +45,7 @@ function SereneHeader({ T, c, logo, base }) {
     ...(showPlaces ? [{ href: `${base}${urlServiceAreas(c)}`, label: labels.place }] : []),
     { href: `${base}/about`, label: 'About' },
     ...(hasBlog ? [{ href: `${base}/blog`, label: 'Blog' }] : []),
-    { href: `${base}/faq`, label: 'FAQ' },
+    ...(hasFaqPage(c) ? [{ href: `${base}/faq`, label: 'FAQ' }] : []),
   ]
 
   return (
@@ -338,7 +339,7 @@ function SereneFooter({ T, c, base: baseProp }) {
           <a href={`${base}/about`} style={linkStyle}>About</a>
           {showTeam && <a href={`${base}/team`} style={linkStyle}>Our Team</a>}
           {hasBlog && <a href={`${base}/blog`} style={linkStyle}>Journal</a>}
-          <a href={`${base}/faq`} style={linkStyle}>Questions</a>
+          {hasFaqPage(c) && <a href={`${base}/faq`} style={linkStyle}>Questions</a>}
           <a href={`${base}/contact`} style={linkStyle}>Contact</a>
         </div>
 
