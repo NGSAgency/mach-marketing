@@ -249,19 +249,38 @@ export function BookingGallery({ x, items }) {
 
 // ---- STAGE: a numbered contact sheet, the captions on the chapter's board ---
 
-/** A chapter for STAGE's home page, or null. The numbers tie each photograph
- *  to its line on the board, so they appear only when every photograph shown
- *  has a caption to be numbered against. */
+/**
+ * A chapter for STAGE's home page, or null.
+ *
+ * The numbers tie each photograph to its caption on the chapter's board. Only
+ * captioned photographs are numbered, counted 1, 2, 3 without gaps, so one
+ * photograph without a caption costs nothing but its own number. (The first
+ * version numbered all or none, and one missing caption threw every other
+ * caption away.)
+ *
+ * STAGE shows a chapter's board in its side panel on a wide screen only;
+ * below 1040px the panel sits at the top and shows the first chapter's board
+ * alone. Every other chapter's board holds facts that are on the page
+ * elsewhere, but this one holds the captions, which are nowhere else. So on a
+ * narrow screen the same numbered list is set under the contact sheet, and
+ * hidden on a wide one where the board carries it.
+ */
 export function stageGalleryChapter(x, items) {
   const plan = stagePlan(items.length)
   if (!plan) return null
   const { C, F } = x
   const list = items.slice(0, plan.count)
-  const numbered = list.every(it => it.caption)
+  let n = 0
+  const nums = list.map(it => (it.caption ? ++n : null))
+  const captioned = list.map((it, i) => ({ it, num: nums[i] })).filter(r => r.num)
+  const badge = {
+    display: 'inline-grid', placeItems: 'center', minWidth: 26, height: 26, padding: '0 6px',
+    background: C.accent, color: C.onAccent, fontFamily: F.display, fontWeight: 800, fontSize: 14,
+  }
   return {
     id: 'work', label: 'The work',
     cap: { title: 'Recent jobs', line: 'Photographs from jobs we have finished.' },
-    board: numbered ? boardOf(x, list.map((it, i) => ({ k: String(i + 1), v: it.caption }))) : null,
+    board: captioned.length ? boardOf(x, captioned.map(r => ({ k: String(r.num), v: r.it.caption }))) : null,
     content: (
       <>
         <h2 style={x.h2}>The work</h2>
@@ -269,17 +288,27 @@ export function stageGalleryChapter(x, items) {
           {list.map((it, i) => (
             <figure key={it.url} style={{ margin: 0, position: 'relative', aspectRatio: '1' }}>
               <Photo it={it} />
-              {numbered && (
-                <span style={{
-                  position: 'absolute', top: 8, left: 8, display: 'inline-grid', placeItems: 'center', minWidth: 26, height: 26, padding: '0 6px',
-                  background: C.accent, color: C.onAccent, fontFamily: F.display, fontWeight: 800, fontSize: 14,
-                }}>{i + 1}</span>
-              )}
+              {nums[i] && <span style={{ ...badge, position: 'absolute', top: 8, left: 8 }}>{nums[i]}</span>}
             </figure>
           ))}
         </div>
+        {captioned.length > 0 && (
+          <ol className="stg-gal-caps" style={{ listStyle: 'none', margin: '18px 0 0', padding: 0 }}>
+            {captioned.map((r, i) => (
+              <li key={r.it.url} style={{
+                display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 12, alignItems: 'baseline',
+                padding: '10px 0', borderTop: i === 0 ? 'none' : `1px solid ${C.border}`,
+              }}>
+                <span style={badge}>{r.num}</span>
+                <span style={{ fontSize: 16.5, color: C.text }}>{r.it.caption}</span>
+              </li>
+            ))}
+          </ol>
+        )}
         <style>{`
           .stg-gal { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 6px; padding: 6px; }
+          .stg-gal-caps { display: none; }
+          @media (max-width: 1040px) { .stg-gal-caps { display: block; } }
           @media (max-width: 600px) { .stg-gal { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         `}</style>
       </>
