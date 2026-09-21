@@ -202,6 +202,20 @@ export function BookingAbout({ config: c, siteSlug }) {
                 </div>
               )}
               {m.approach && (<><Rule x={x}>How we work</Rule><Prose x={x} text={m.approach} /></>)}
+              {m.credentials.length > 0 && (
+                <>
+                  <Rule x={x}>Credentials</Rule>
+                  {m.credentials.map((r, i) => (
+                    <div key={r.k} style={{
+                      display: 'grid', gridTemplateColumns: 'minmax(110px, 30%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
+                      padding: '14px 0', borderTop: i === 0 ? 'none' : `1px solid ${C.border}`,
+                    }}>
+                      <span style={{ fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.textMuted }}>{r.k}</span>
+                      <span style={{ fontSize: 17, lineHeight: 1.6, color: C.text }}>{r.v}</span>
+                    </div>
+                  ))}
+                </>
+              )}
               {concept && !m.story?.length && !m.approach && (
                 <ConceptNote T={T} minHeight={240} title="Your story">Who started the business and why, how you work, and what you want people to know before they call.</ConceptNote>
               )}

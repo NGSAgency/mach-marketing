@@ -502,6 +502,7 @@ export function LevelAbout({ config: c, siteSlug }) {
   const { C, F, T, concept, services, areas, href, name } = x
   const sections = [
     (m.story || concept) && { id: 'story', eyebrow: `About ${name}`, title: 'Our story', label: 'Our story', body: m.story ? <Prose x={x} text={m.story} /> : <Note x={x} minHeight={200} title="Your story, in your words">Who started the company and when, what you do and where, and the people who show up at the door. Written from what you tell us and checked by you before it goes live.</Note> },
+    m.credentials.length > 0 && { id: 'credentials', eyebrow: 'Before you hire us', title: 'Credentials', label: 'Credentials', body: <PriceRows x={x} p={{ rows: m.credentials, notes: [], has: true }} /> },
     (m.approach || concept) && { id: 'approach', eyebrow: 'How we work', title: 'Our approach', label: 'Our approach', body: m.approach ? <Prose x={x} text={m.approach} /> : <Note x={x} minHeight={180} title="How you do the job">How a visit goes from the first call to the follow-up, and what you do if a problem comes back.</Note> },
   ]
   return (

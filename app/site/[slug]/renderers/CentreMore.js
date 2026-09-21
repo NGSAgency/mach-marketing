@@ -239,6 +239,26 @@ export function CentreAbout({ config: c, siteSlug }) {
           </div>
         </section>
       )}
+      {m.credentials.length > 0 && (
+        <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
+          <div style={{ ...wrap, maxWidth: 1060 }}>
+            <div className="ctr-aside" style={{ borderTop: `2px solid ${C.text}`, paddingTop: 26 }}>
+              <div><h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>Credentials</h2></div>
+              <div>
+                {m.credentials.map((r, i) => (
+                  <div key={r.k} style={{
+                    display: 'grid', gridTemplateColumns: 'minmax(120px, 30%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline',
+                    padding: '14px 0', borderTop: i === 0 ? 'none' : `1px solid ${C.border}`,
+                  }}>
+                    <span style={{ fontSize: 13.5, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: C.textMuted }}>{r.k}</span>
+                    <span style={{ fontSize: 17, lineHeight: 1.6, color: C.text }}>{r.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
       {concept && !m.story?.length && !m.approach && (
         <section style={{ paddingBlock: sectionPad }}><div style={wrap}>
           <ConceptNote T={T} minHeight={240} title="Your story">Who started the business and why, how you work, and what you want people to know before they call.</ConceptNote>

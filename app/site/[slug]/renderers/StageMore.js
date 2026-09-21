@@ -346,6 +346,27 @@ export function StageAbout({ config: c, siteSlug }) {
     ),
   })
 
+  if (m.credentials.length > 0) chapters.push({
+    id: 'credentials', label: 'Credentials',
+    cap: { title: 'Credentials', line: 'Before you hire us.' },
+    board: null,
+    content: (
+      <>
+        <h2 style={x.h2}>Credentials</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 24, border: `1px solid ${C.border}`, background: C.surface }}>
+          <tbody>
+            {m.credentials.map((r, i) => (
+              <tr key={r.k}>
+                <th scope="row" style={{ textAlign: 'left', verticalAlign: 'top', width: '30%', padding: '14px 18px', borderBottom: i === m.credentials.length - 1 ? 'none' : `1px solid ${C.border}`, fontWeight: 700, fontSize: 17 }}>{r.k}</th>
+                <td style={{ padding: '14px 18px', borderBottom: i === m.credentials.length - 1 ? 'none' : `1px solid ${C.border}`, fontSize: 17, lineHeight: 1.55 }}>{r.v}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    ),
+  })
+
   const list = numbered(chapters, shots)
   return (
     <StagePage x={x} schemas={m.schemas} chapters={list} showRail={false}

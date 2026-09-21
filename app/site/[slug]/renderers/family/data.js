@@ -518,6 +518,31 @@ export function comboModel(d, service, area) {
 }
 
 /** The about page: their story and approach, and facts from fields. */
+/**
+ * What stands behind the work, as label and value rows for an About page:
+ * the insurance they carry, every certification they hold, and their
+ * guarantee.
+ *
+ * All three were collected and, outside SERENE, published nowhere — the
+ * insurance detail on no page at all, certifications only two at a time
+ * beside a booking button, the guarantee nowhere on CENTRE. The About page
+ * is where someone checks a business out, so the list is whole here. The
+ * licence is not repeated: every family's About figures already carry it.
+ */
+export function credentialRows(c) {
+  const certs = (c?.certifications || [])
+    .map(x => (typeof x === 'string' ? x : x?.name))
+    .filter(x => typeof x === 'string' && x.trim())
+    .map(x => x.trim())
+  const w = (c?.positioning?.warranties || [])[0]
+  const guarantee = typeof w === 'string' ? w : w?.name || w?.description
+  return [
+    c?.credentials?.insurance_info && { k: 'Insurance', v: c.credentials.insurance_info },
+    certs.length > 0 && { k: certs.length === 1 ? 'Certification' : 'Certifications', v: certs.join(' · ') },
+    guarantee && { k: 'Guarantee', v: guarantee },
+  ].filter(Boolean)
+}
+
 export function aboutModel(d) {
   const { c, biz, services, areas, imgs, credential, license } = d
   const gen = c.generated || {}
@@ -531,6 +556,7 @@ export function aboutModel(d) {
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: urlAbout() }]
   return {
     crumbs, facts, story: aboutBody(c), approach: asText(gen['about|our_approach']),
+    credentials: credentialRows(c),
     image: imgs.about_hero || null,
     schemas: [buildBreadcrumbSchema(c, crumbs)],
   }

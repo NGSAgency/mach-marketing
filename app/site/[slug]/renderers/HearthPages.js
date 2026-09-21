@@ -259,12 +259,12 @@ function DetailBody({ x, m, context, facts, links, children }) {
  * pricing model, so this page keeps up with the questionnaire; the dashed
  * rules are the family's own, to read as part of the ticket beside it.
  */
-function Prices({ x, cost }) {
+function Prices({ x, cost, eyebrow = 'Cost', title = 'What it costs', small = true }) {
   const { C, F } = x
   if (!cost.has) return null
   return (
     <div>
-      <SectionHead x={x} eyebrow="Cost" title="What it costs" small />
+      <SectionHead x={x} eyebrow={eyebrow} title={title} small={small} />
       <div style={{ marginTop: 22, background: C.surface, border: `2px solid ${C.text}` }}>
         {cost.rows.map((r, i) => (
           <div key={r.k} style={{
@@ -523,6 +523,13 @@ export function HearthAbout({ config: c, siteSlug }) {
             {m.approach ? <Prose x={x} text={m.approach} /> : (
               <Note x={x} minHeight={200} title="How you do the job">How a visit goes from the first call to the follow-up, and what you do if a problem comes back.</Note>
             )}
+          </div>
+        </Band>
+      )}
+      {m.credentials.length > 0 && (
+        <Band x={x}>
+          <div style={{ maxWidth: 820 }}>
+            <Prices x={x} cost={{ rows: m.credentials, notes: [], has: true }} eyebrow="Before you hire us" title="Credentials" small={false} />
           </div>
         </Band>
       )}

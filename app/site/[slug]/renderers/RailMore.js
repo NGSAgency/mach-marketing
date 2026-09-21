@@ -246,6 +246,7 @@ export function RailAbout({ config: c, siteSlug }) {
   const toc = [
     (story.length > 0 || concept) && { id: 'rl-story', label: 'The company' },
     m.approach && { id: 'rl-approach', label: 'How we work' },
+    m.credentials.length > 0 && { id: 'rl-creds', label: 'Credentials' },
     showCrew && { id: 'rl-crew', label: 'The crew' },
   ].filter(Boolean)
 
@@ -280,6 +281,13 @@ export function RailAbout({ config: c, siteSlug }) {
         <Section x={x} id="rl-approach" tight={story.length > 0 || concept}>
           <Head x={x} eyebrow="How we work" title="Our approach" />
           <Prose x={x} text={m.approach} lead />
+        </Section>
+      )}
+
+      {m.credentials.length > 0 && (
+        <Section x={x} id="rl-creds" tight={!!m.approach}>
+          <Head x={x} eyebrow="Before you hire us" title="Credentials" />
+          <Rows x={x} rows={m.credentials} />
         </Section>
       )}
 

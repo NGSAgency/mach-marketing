@@ -3,6 +3,7 @@ import { aboutBody, credentialLabel } from '../../../../lib/templates/shared/cla
 import { asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
 import { crewContext, CrewPage, PageHero, SectionHead, Prose, AreaChips, ServiceCard } from './CrewChrome.js'
+import { credentialRows } from './family/data.js'
 
 /**
  * The company: their story and how they work in their words, the facts the
@@ -15,6 +16,8 @@ export default function CrewAbout({ config: c, siteSlug }) {
 
   const story = aboutBody(c)
   const approach = asText(gen['about|our_approach'])
+  // Insurance, every certification and the guarantee: the shared list.
+  const credentials = credentialRows(c)
   const crumbs = [{ name: 'Home', url: '/' }, { name: 'About', url: urlAbout() }]
 
   // Facts, each from a field in the data.
@@ -73,6 +76,22 @@ export default function CrewAbout({ config: c, siteSlug }) {
                 How a visit goes from the first call to the follow-up: how you inspect, how you explain what you found, and what you do if a problem comes back.
               </ConceptNote>
             )}
+          </div>
+        </section>
+      )}
+
+      {credentials.length > 0 && (
+        <section style={{ paddingBlock: sectionPad }}>
+          <div className="crew-split" style={wrap}>
+            <SectionHead x={x} eyebrow="Before you hire us" title="Credentials" style={{ marginBottom: 0 }} />
+            <dl style={{ margin: 0, borderTop: `2px solid ${C.text}` }}>
+              {credentials.map(r => (
+                <div key={r.k} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 30%) minmax(0, 1fr)', gap: '0 18px', alignItems: 'baseline', paddingBlock: 16, borderBottom: `1px solid ${C.border}` }}>
+                  <dt style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14.5, letterSpacing: '0.06em', color: C.accentDim }}>{r.k}</dt>
+                  <dd style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: C.text }}>{r.v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
       )}
