@@ -113,6 +113,7 @@ export function BookingAreaDetail({ config: c, siteSlug, area }) {
               )}
               <Prose x={x} text={m.intro} lead />
               {m.local && (<><Rule x={x}>About {area}</Rule><Prose x={x} text={m.local} /></>)}
+              {m.aroundTown.length > 0 && (<><Rule x={x}>Where we work in {area}</Rule><Prose x={x} text={m.aroundTown.join('\n\n')} /></>)}
               {services.length > 0 && (
                 <>
                   <Rule x={x}>What we do in {area}</Rule>

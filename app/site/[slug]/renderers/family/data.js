@@ -14,7 +14,7 @@ import {
 } from '../../../../../lib/templates/shared/seo/index.js'
 import {
   emergencyLabel, faqsFrom, sinceLabel, whyUsItems, aboutBody, heroTrust, parseJson,
-  serviceEmergencyBadge, credentialLabel,
+  serviceEmergencyBadge, credentialLabel, joinList,
 } from '../../../../../lib/templates/shared/claims.js'
 import { pageCopy, faqList, asText } from '../../../../../lib/templates/shared/pageCopy.js'
 import { resolveSections } from '../../../../../lib/templates/shared/sections.js'
@@ -337,6 +337,54 @@ export function serviceModel(d, service) {
   }
 }
 
+/**
+ * The landmarks, as the sentence a local would recognise themselves in.
+ *
+ * The questionnaire asks for "landmarks or roads people use to describe where
+ * they are" — how the client's customers place themselves, not where the
+ * business sits. So the honest sentence is the one that follows from what the
+ * client told us: they serve the town, and this is how people in the town say
+ * where they live. "If you're near Oak Park Mall or off I-435, we cover you."
+ *
+ * The field is meant to start with "near" or "off", as the example shows. A
+ * bare name would read "If you're Oak Park Mall", so it gets "near" in front.
+ */
+const PLACE_WORD = /^(near|by|off|on|around|along|at|in|behind|past|beside|close to|next to|across from|north of|south of|east of|west of)\b/i
+export function whereLine(landmarks) {
+  const list = (landmarks || [])
+    .map(l => String(l || '').trim().replace(/[.,;]+$/, ''))
+    .filter(Boolean)
+    .map(l => (PLACE_WORD.test(l) ? l.charAt(0).toLowerCase() + l.slice(1) : `near ${l}`))
+  if (list.length === 0) return null
+  const joined = list.length === 1 ? list[0] : `${list.slice(0, -1).join(', ')} or ${list[list.length - 1]}`
+  return `If you're ${joined}, we cover you.`
+}
+
+/**
+ * What the client told us about where they work in one town, ready to show.
+ *
+ * Their own answers only: the generator sends nothing for a field they left
+ * blank, so a page never shows a neighbourhood nobody named. One function,
+ * because CREW and SERENE build their area pages without areaModel, and the
+ * alternative was a third and fourth copy of the same few lines.
+ *
+ * sentences is the pair as prose, for families that set it as text rather
+ * than a list. Neighbourhoods are not pages, so none of this is a link, and a
+ * family should never style it as if it were.
+ */
+export function aroundTownFor(c, area) {
+  const known = (c?.area_facts || {})[area] || {}
+  const neighborhoods = (known.neighborhoods || []).filter(Boolean)
+  const landmarks = (known.landmarks || []).filter(Boolean)
+  const line = whereLine(landmarks)
+  return {
+    neighborhoods,
+    landmarks,
+    whereLine: line,
+    sentences: [neighborhoods.length > 0 && `We work in ${joinList(neighborhoods)}.`, line].filter(Boolean),
+  }
+}
+
 /** One area's page. */
 export function areaModel(d, area) {
   const { c, concept, areas, imgs, tradeNoun, name } = d
@@ -352,17 +400,19 @@ export function areaModel(d, area) {
   // What the client told us about this town. Their own answers only: the
   // generator sends nothing for a field they left blank, so a page never
   // shows a neighbourhood nobody named.
-  const known = (c.area_facts || {})[area] || {}
+  const around = aroundTownFor(c, area)
   return {
     crumbs, noCopy, intro, local, faqs,
-    neighborhoods: known.neighborhoods || [],
-    landmarks: known.landmarks || [],
+    neighborhoods: around.neighborhoods,
+    landmarks: around.landmarks,
+    whereLine: around.whereLine,
+    aroundTown: around.sentences,
     subhead: copy('hero_subheadline'),
     title: `${tradeNoun} in ${area}`,
     otherAreas: areas.filter(a => a !== area),
     image: imgs[areaImageKey(area)] || imgs.home_hero || imgs.home_secondary || null,
     facts: pageFacts(d),
-    hasBody: !!(intro || local || faqs.length || noCopy),
+    hasBody: !!(intro || local || faqs.length || noCopy || around.sentences.length),
     note: {
       title: `Your ${area} page`,
       body: `An introduction written for ${area}: the calls you get there, what is different about homes in that part of town, and the questions people there ask. Written for your business${generatedArea ? `, like the ${generatedArea} page,` : ''} and checked by you before it goes live.`,

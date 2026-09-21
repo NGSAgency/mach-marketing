@@ -104,13 +104,21 @@ export function CentreAreaDetail({ config: c, siteSlug, area }) {
       )}
       <FactBand x={x} />
       {m.intro && <section style={{ paddingBlock: sectionPad }}><div style={wrap}><Prose x={x} text={m.intro} /></div></section>}
-      {m.local && (
+      {(m.local || m.aroundTown.length > 0) && (
         <section style={{ background: C.bgAlt, paddingBlock: sectionPad }}>
           <div style={{ ...wrap, maxWidth: 1060 }}>
-            <div className="ctr-aside" style={{ borderTop: `2px solid ${C.text}`, paddingTop: 26 }}>
-              <div><h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>About {area}</h2></div>
-              <Prose x={x} text={m.local} max={720} />
-            </div>
+            {m.local && (
+              <div className="ctr-aside" style={{ borderTop: `2px solid ${C.text}`, paddingTop: 26 }}>
+                <div><h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>About {area}</h2></div>
+                <Prose x={x} text={m.local} max={720} />
+              </div>
+            )}
+            {m.aroundTown.length > 0 && (
+              <div className="ctr-aside" style={{ borderTop: `2px solid ${C.text}`, paddingTop: 26, marginTop: m.local ? 44 : 0 }}>
+                <div><h2 style={{ ...x.h3, fontSize: 'clamp(21px, 2.1vw, 27px)' }}>Where we work</h2></div>
+                <Prose x={x} text={m.aroundTown.join('\n\n')} max={720} />
+              </div>
+            )}
           </div>
         </section>
       )}

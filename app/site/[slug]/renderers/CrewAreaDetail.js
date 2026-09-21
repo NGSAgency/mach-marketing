@@ -9,6 +9,7 @@ import {
   crewContext, crewFacts, CrewPage, FactStrip, PageHero, SectionHead, Prose, FaqList, QuoteCard,
   ServiceGrid, AreaChips,
 } from './CrewChrome.js'
+import { aroundTownFor } from './family/data.js'
 
 /**
  * One area. Links to every service in this area (the combo pages) and to the
@@ -39,7 +40,9 @@ export default function CrewAreaDetail({ config: c, siteSlug, area }) {
   ]
 
   const facts = crewFacts(x)
-  const hasBody = !!(intro || local || faqs.length || noCopy)
+  // Neighbourhoods and landmarks the client named for this town.
+  const around = aroundTownFor(c, area).sentences
+  const hasBody = !!(intro || local || faqs.length || noCopy || around.length)
   const block = { paddingTop: 48, marginTop: 48, borderTop: `1px solid ${C.border}` }
   const image = imgs[`area_${area.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`] || imgs.home_hero || imgs.home_secondary
 
@@ -72,8 +75,14 @@ export default function CrewAreaDetail({ config: c, siteSlug, area }) {
                       <Prose x={x} text={local} />
                     </div>
                   )}
-                  {faqs.length > 0 && (
+                  {around.length > 0 && (
                     <div style={intro || local ? block : {}}>
+                      <SectionHead x={x} eyebrow="Around town" title={`Where we work in ${area}`} small />
+                      <Prose x={x} text={around.join('\n\n')} />
+                    </div>
+                  )}
+                  {faqs.length > 0 && (
+                    <div style={intro || local || around.length ? block : {}}>
                       <SectionHead x={x} eyebrow="Questions" title={`Questions from ${area}`} small />
                       <FaqList x={x} faqs={faqs} open={faqs.length <= 3} />
                     </div>

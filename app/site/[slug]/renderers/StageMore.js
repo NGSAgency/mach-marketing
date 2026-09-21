@@ -121,7 +121,7 @@ export function StageAreaDetail({ config: c, siteSlug, area }) {
     ),
   })
 
-  if (m.intro || m.local) chapters.push({
+  if (m.intro || m.local || m.aroundTown.length > 0) chapters.push({
     id: 'about', label: `About ${area}`,
     cap: null,
     board: boardOf(x, [facts.since(x), facts.rating(x), facts.credentials(x)]),
@@ -133,6 +133,12 @@ export function StageAreaDetail({ config: c, siteSlug, area }) {
           <div style={{ marginTop: m.intro ? 34 : 24 }}>
             {m.intro && <h3 style={{ ...x.h3, marginBottom: 14 }}>What is different about {area}</h3>}
             <Prose x={x} text={m.local} />
+          </div>
+        )}
+        {m.aroundTown.length > 0 && (
+          <div style={{ marginTop: m.intro || m.local ? 34 : 24 }}>
+            <h3 style={{ ...x.h3, marginBottom: 14 }}>Where we work in {area}</h3>
+            <Prose x={x} text={m.aroundTown.join('\n\n')} />
           </div>
         )}
       </>

@@ -70,11 +70,12 @@ export function RailAreaDetail({ config: c, siteSlug, area }) {
   const showCrew = sections.team && people.length > 0
   const local = paragraphs([m.intro, m.local].filter(Boolean).join('\n\n'))
 
+  const aroundTown = m.neighborhoods.length > 0 || !!m.whereLine
   const toc = [
     (local.length > 0 || m.noCopy) && { id: 'rl-local', label: 'What we see here' },
     services.length > 0 && { id: 'rl-here', label: 'What we do here' },
     showCrew && { id: 'rl-crew', label: 'Who covers it' },
-    m.neighborhoods.length > 0 && { id: 'rl-hoods', label: 'Neighbourhoods' },
+    aroundTown && { id: 'rl-hoods', label: 'Where we work' },
     m.faqs.length > 0 && { id: 'rl-questions', label: 'Questions' },
     m.otherAreas.length > 0 && { id: 'rl-other', label: 'Other towns' },
   ].filter(Boolean)
@@ -120,15 +121,19 @@ export function RailAreaDetail({ config: c, siteSlug, area }) {
       {/* The neighbourhoods the client named themselves. People search for
           them, and nothing else on the site can say them — so this section
           exists only when they answered, and never otherwise. */}
-      {m.neighborhoods.length > 0 && (
+      {aroundTown && (
         <Section x={x} id="rl-hoods">
-          <Head x={x} eyebrow="Around town" title={`Neighbourhoods we work in around ${area}`} />
+          <Head x={x} eyebrow="Around town" title={m.neighborhoods.length > 0 ? `Neighbourhoods we work in around ${area}` : `Where we work in ${area}`} />
           <Chips x={x} items={m.neighborhoods.map(n => ({ label: n }))} />
+          {/* The landmarks the client gave, as the sentence someone local
+              recognises themselves in. RAIL showed the neighbourhoods and
+              dropped these. */}
+          {m.whereLine && <div style={{ marginTop: m.neighborhoods.length > 0 ? 20 : 0 }}><Prose x={x} text={m.whereLine} /></div>}
         </Section>
       )}
 
       {m.faqs.length > 0 && (
-        <Section x={x} id="rl-questions" tight={m.neighborhoods.length > 0}>
+        <Section x={x} id="rl-questions" tight={aroundTown}>
           <Head x={x} eyebrow="Questions" title={`${area} questions`} />
           <Questions x={x} faqs={m.faqs} />
         </Section>

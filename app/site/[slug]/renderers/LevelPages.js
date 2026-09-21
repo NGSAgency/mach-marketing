@@ -436,6 +436,7 @@ export function LevelAreaDetail({ config: c, siteSlug, area }) {
     m.noCopy && { id: 'about', eyebrow: 'Overview', title: m.overviewTitle, body: <Note x={x} minHeight={220} title={m.note.title}>{m.note.body}</Note>, label: 'Overview' },
     m.intro && { id: 'about', eyebrow: 'Overview', title: m.overviewTitle, body: <Prose x={x} text={m.intro} />, label: 'Overview' },
     m.local && { id: 'local', eyebrow: 'Local knowledge', title: `Around ${area}`, body: <Prose x={x} text={m.local} />, label: `Around ${area}` },
+    m.aroundTown.length > 0 && { id: 'around', eyebrow: 'Around town', title: `Where we work in ${area}`, body: <Prose x={x} text={m.aroundTown.join('\n\n')} />, label: 'Where we work' },
     m.faqs.length > 0 && { id: 'faq', eyebrow: 'Questions', title: `Questions from ${area}`, body: <FaqCards x={x} faqs={m.faqs} />, label: 'Questions' },
   ]
   return (

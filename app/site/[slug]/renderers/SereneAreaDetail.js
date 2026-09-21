@@ -9,6 +9,7 @@ import {
   urlCombo,
 } from '../../../../lib/templates/shared/seo/index.js'
 import { parseJson } from '../../../../lib/templates/shared/claims.js'
+import { aroundTownFor } from './family/data.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
@@ -47,6 +48,9 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
   const subheadline = typeof copy.hero_subheadline === 'string' ? copy.hero_subheadline.trim() : ''
   const intro = paragraphs(copy.intro)
   const local = paragraphs(copy.local_context)
+  // Neighbourhoods and landmarks the client named, as sentences. Their own
+  // answers, so they show on a real site whether or not copy was written.
+  const around = isConcept ? [] : aroundTownFor(c, area).sentences
   const faqs = faqList(copy.faq)
 
   const schemas = isConcept ? [] : [
@@ -158,6 +162,8 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
             <Section label={`Around ${area}`} paras={local} index={intro.length > 0 ? 1 : 0} />
           </div>
         )}
+
+        <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
 
         {faqs.length > 0 && (
           <section style={{ background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>

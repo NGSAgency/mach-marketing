@@ -433,6 +433,7 @@ export function HearthAreaDetail({ config: c, siteSlug, area }) {
           <>
             {m.intro && <div><SectionHead x={x} eyebrow="Overview" title={m.overviewTitle} small /><Prose x={x} text={m.intro} /></div>}
             {m.local && <div><SectionHead x={x} eyebrow="Local knowledge" title={`Around ${area}`} small /><Prose x={x} text={m.local} /></div>}
+            {m.aroundTown.length > 0 && <div><SectionHead x={x} eyebrow="Around town" title={`Where we work in ${area}`} small /><Prose x={x} text={m.aroundTown.join('\n\n')} /></div>}
             {m.faqs.length > 0 && <div><SectionHead x={x} eyebrow="Questions" title={`Questions from ${area}`} small /><FaqList x={x} faqs={m.faqs} open={m.faqs.length <= 3} /></div>}
           </>
         )}
