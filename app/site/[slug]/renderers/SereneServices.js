@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import { socialLinks } from './family/data.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -372,7 +373,13 @@ function SereneFooter({ T, c, base: baseProp }) {
           fontSize: T.type.xs,
           color: T.colors.textMuted,
         }}>
-          <span>© {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}{' · '}<a href={`${base}/privacy`} style={{ color: 'inherit' }}>Privacy</a></span>
+          <span>
+            © {new Date().getFullYear()} {c.business.legal_name || c.business.display_name}
+            {' · '}<a href={`${base}/privacy`} style={{ color: 'inherit' }}>Privacy</a>
+            {socialLinks(c.business).map(s => (
+              <span key={s.key}>{' · '}<a href={s.href} target="_blank" rel="noopener noreferrer me" style={{ color: 'inherit' }}>{s.label}</a></span>
+            ))}
+          </span>
           {c.profile?.compliance_level === 'medical' && (
             <span style={{ maxWidth: 520, textAlign: 'right', lineHeight: 1.6 }}>
               Individual results vary. A consultation determines whether a treatment is appropriate for you.

@@ -296,6 +296,9 @@ export function SiteFooter({ x }) {
         © {new Date().getFullYear()} {biz.legal_name || name}
         {' · '}
         <a href={href.privacy} style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy</a>
+        {x.social.map(s => (
+          <span key={s.key}>{' · '}<a href={s.href} target="_blank" rel="noopener noreferrer me" style={{ color: 'inherit', textDecoration: 'underline' }}>{s.label}</a></span>
+        ))}
       </div>
     </footer>
   )

@@ -131,19 +131,42 @@ function expand(entry) {
   }
 }
 
+/**
+ * One page, with patience.
+ *
+ * A dev server compiles each route the first time it is asked for, and a cold
+ * one can take longer than fetch is willing to wait. The first sweep across
+ * eight families reported most of a site as unreachable and read as a page of
+ * findings; the server was fine and still serving. A run that gives up has to
+ * say so as a failure to measure, never as a thing to fix.
+ */
+async function get(url, attempts = 3, ms = 90000) {
+  let last
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(ms) })
+    } catch (e) {
+      last = e
+      await new Promise(r => setTimeout(r, 1500 * (i + 1)))
+    }
+  }
+  throw last
+}
+
 async function crawl(origin, slug, family) {
   const q = family ? `?family=${encodeURIComponent(family)}` : ''
   const root = `/site/${slug}`
   const seen = new Set([root])
   const queue = [root]
   const pages = []
+  const unreachable = []
   while (queue.length && pages.length < MAX_PAGES) {
     const path = queue.shift()
     let res
     try {
-      res = await fetch(origin + path + q, { redirect: 'follow' })
+      res = await get(origin + path + q)
     } catch (e) {
-      console.error(`   could not reach ${path}: ${e.message}`)
+      unreachable.push(`${path}: ${e.message}`)
       continue
     }
     const html = await res.text()
@@ -157,10 +180,20 @@ async function crawl(origin, slug, family) {
       queue.push(href)
     }
   }
-  return pages
+  return { pages, unreachable }
 }
 
-const res = await fetch(`${CONFIG_API}?slug=${encodeURIComponent(SLUG)}`)
+// The first request goes to Command Center, not the local server, so a hang
+// here is silent in both terminals. It announces itself and gives up in a
+// minute rather than sitting there.
+console.log(`reading ${SLUG}'s config from ${CONFIG_API}…`)
+let res
+try {
+  res = await get(`${CONFIG_API}?slug=${encodeURIComponent(SLUG)}`, 2, 20000)
+} catch (e) {
+  console.error(`could not reach Command Center for the config: ${e.message}`)
+  process.exit(2)
+}
 if (!res.ok) {
   console.error(`config ${res.status} for ${SLUG}`)
   process.exit(2)
@@ -173,10 +206,21 @@ const entries = leaves(config, '', []).flatMap(expand)
 const excused = (path) => NOT_FOR_A_PAGE.find(([prefix]) => path.startsWith(prefix) || path.endsWith(prefix))
 
 let failures = 0
+console.log(`crawling ${families.length} families: ${families.join(', ')}`)
 for (const family of families) {
-  const pages = await crawl(ORIGIN, SLUG, family)
+  console.log(`${family}: crawling…`)
+  const { pages, unreachable } = await crawl(ORIGIN, SLUG, family)
   const rendered = pages.filter(p => p.status === 200)
   const broken = pages.filter(p => p.status !== 200)
+  // A page we could not reach is a hole in the evidence, not an answer about
+  // the site. Saying so plainly is the difference between a report and a
+  // guess, and this run is only worth anything if that line is trusted.
+  if (unreachable.length) {
+    console.log(`${family}: ${unreachable.length} pages could not be reached — this family was NOT audited`)
+    for (const u of unreachable.slice(0, 5)) console.log(`   unreachable  ${u}`)
+    failures++
+    continue
+  }
   if (rendered.length === 0) {
     console.log(`${family}: nothing rendered; is the server running?`)
     failures++

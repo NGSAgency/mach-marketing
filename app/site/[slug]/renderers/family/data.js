@@ -23,6 +23,22 @@ import { lowerName } from '../../../../../lib/templates/shared/claims.js'
 
 const SOCIAL_LABEL = { facebook: 'Facebook', instagram: 'Instagram', google: 'Google', yelp: 'Yelp' }
 
+/**
+ * Their profiles elsewhere, as [{ key, label, href }]. Empty when they gave us
+ * none, so a footer shows nothing rather than dead icons.
+ *
+ * A function rather than a line inside siteData because CREW builds its own
+ * context and never calls siteData. When every footer started reading
+ * x.social, CREW's was undefined and every CREW page threw — caught by the
+ * field audit before it shipped, and the reason there is now one place this
+ * list comes from.
+ */
+export function socialLinks(biz) {
+  return Object.entries(biz?.social || {})
+    .filter(([, url]) => url)
+    .map(([key, url]) => ({ key, label: SOCIAL_LABEL[key] || key, href: url }))
+}
+
 export const TRADE_NOUN = {
   pest_control: 'Pest control',
   hvac: 'Heating and cooling',
@@ -159,11 +175,7 @@ export function siteData(c, siteSlug, family) {
   return {
     c, concept, base, biz, pos, services, areas, primaryArea, phone, phoneDisplay, name,
     logo: c.brand?.logo_url, imgs: c.images || {}, href, quoteHref: href.contact, quoteLabel, second, bookingUrl,
-    // Their profiles elsewhere, as [{ key, label, href }]. Empty when they
-    // gave us none, so a footer shows nothing rather than dead icons.
-    social: Object.entries(biz.social || {})
-      .filter(([, url]) => url)
-      .map(([key, url]) => ({ key, label: SOCIAL_LABEL[key] || key, href: url })),
+    social: socialLinks(biz),
     tradeNoun, faqs, hasAbout,
     offeringLabel: titleCase(nouns.offering?.plural || 'services'),
     placeLabel: titleCase(nouns.place?.plural || 'service areas'),

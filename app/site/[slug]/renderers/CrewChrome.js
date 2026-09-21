@@ -27,7 +27,7 @@ import CrewMobileBar from './CrewMobileBar.js'
 // changes every page at once.
 
 // The trade nouns and the small text helpers are shared by every family.
-import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts } from './family/data.js'
+import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, socialLinks } from './family/data.js'
 export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
@@ -131,6 +131,7 @@ export function crewContext(c, siteSlug) {
     // fallback family, so a retired template resolves against CREW's defaults.
     sections: resolveSections(c, 'crew'),
     logo: c.brand?.logo_url, imgs: c.images || {}, href, quoteHref: href.contact, tradeNoun, faqs, hasAbout,
+    social: socialLinks(biz),
     offeringLabel: titleCase(nouns.offering?.plural || 'services'),
     placeLabel: titleCase(nouns.place?.plural || 'service areas'),
     emergency: emergencyLabel(c),
@@ -370,6 +371,9 @@ function Footer({ x }) {
         © {new Date().getFullYear()} {biz.legal_name || name}
         {' · '}
         <a href={href.privacy} style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy</a>
+        {x.social.map(s => (
+          <span key={s.key}>{' · '}<a href={s.href} target="_blank" rel="noopener noreferrer me" style={{ color: 'inherit', textDecoration: 'underline' }}>{s.label}</a></span>
+        ))}
       </div>
     </footer>
   )
