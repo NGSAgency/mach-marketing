@@ -350,14 +350,14 @@ export function serviceModel(d, service) {
  * bare name would read "If you're Oak Park Mall", so it gets "near" in front.
  */
 const PLACE_WORD = /^(near|by|off|on|around|along|at|in|behind|past|beside|close to|next to|across from|north of|south of|east of|west of)\b/i
-export function whereLine(landmarks) {
+export function whereLine(landmarks, voice = 'trade') {
   const list = (landmarks || [])
     .map(l => String(l || '').trim().replace(/[.,;]+$/, ''))
     .filter(Boolean)
     .map(l => (PLACE_WORD.test(l) ? l.charAt(0).toLowerCase() + l.slice(1) : `near ${l}`))
   if (list.length === 0) return null
   const joined = list.length === 1 ? list[0] : `${list.slice(0, -1).join(', ')} or ${list[list.length - 1]}`
-  return `If you're ${joined}, we cover you.`
+  return `If you're ${joined}, ${voice === 'clinic' ? "you're in our area" : 'we cover you'}.`
 }
 
 /**
@@ -372,16 +372,24 @@ export function whereLine(landmarks) {
  * than a list. Neighbourhoods are not pages, so none of this is a link, and a
  * family should never style it as if it were.
  */
-export function aroundTownFor(c, area) {
+export function aroundTownFor(c, area, voice = 'trade') {
   const known = (c?.area_facts || {})[area] || {}
   const neighborhoods = (known.neighborhoods || []).filter(Boolean)
   const landmarks = (known.landmarks || []).filter(Boolean)
-  const line = whereLine(landmarks)
+  const line = whereLine(landmarks, voice)
+  // A trade goes out to the work; at a clinic the client comes in. "We work
+  // in Brookridge" and "we cover you" read as a van on the road, which is
+  // wrong for a med spa, so SERENE asks for the clinic's voice. Both say only
+  // what the client told us: the towns they serve, and how people there
+  // place themselves.
+  const hoods = neighborhoods.length === 0 ? null
+    : voice === 'clinic' ? `Clients come to us from ${joinList(neighborhoods)}.`
+    : `We work in ${joinList(neighborhoods)}.`
   return {
     neighborhoods,
     landmarks,
     whereLine: line,
-    sentences: [neighborhoods.length > 0 && `We work in ${joinList(neighborhoods)}.`, line].filter(Boolean),
+    sentences: [hoods, line].filter(Boolean),
   }
 }
 

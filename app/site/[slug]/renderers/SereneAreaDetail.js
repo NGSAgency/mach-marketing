@@ -50,7 +50,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
   const local = paragraphs(copy.local_context)
   // Neighbourhoods and landmarks the client named, as sentences. Their own
   // answers, so they show on a real site whether or not copy was written.
-  const around = isConcept ? [] : aroundTownFor(c, area).sentences
+  const around = isConcept ? [] : aroundTownFor(c, area, 'clinic').sentences
   const faqs = faqList(copy.faq)
 
   const schemas = isConcept ? [] : [
