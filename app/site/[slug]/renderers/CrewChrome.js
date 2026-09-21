@@ -1,23 +1,7 @@
 import { crewTokens } from '../../../templates/crew/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
-import {
-  JsonLd,
-  urlServices,
-  urlService,
-  urlServiceAreas,
-  urlArea,
-  urlCombo,
-  urlAbout,
-  urlFAQ,
-  urlContact,
-} from '../../../../lib/templates/shared/seo/index.js'
-import {
-  emergencyLabel,
-  faqsFrom,
-  sinceLabel,
-  aboutBody,
-} from '../../../../lib/templates/shared/claims.js'
-import { resolveSections } from '../../../../lib/templates/shared/sections.js'
+import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
+import { sinceLabel } from '../../../../lib/templates/shared/claims.js'
 import CrewMobileBar from './CrewMobileBar.js'
 
 // The pieces every CREW page shares: tokens and links (crewContext), the
@@ -27,10 +11,9 @@ import CrewMobileBar from './CrewMobileBar.js'
 // changes every page at once.
 
 // The trade nouns and the small text helpers are shared by every family.
-import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, socialLinks } from './family/data.js'
+import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, siteData } from './family/data.js'
 export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
-const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
 // ---- Icons -------------------------------------------------------------------
 
@@ -89,52 +72,23 @@ function WrenchIcon({ size = 44 }) {
  * on a client site and on a concept (whose routes live under c.base_path).
  */
 export function crewContext(c, siteSlug) {
+  // CREW's context is the shared one plus CREW's own type and spacing.
+  //
+  // It used to be a line-for-line copy of siteData, written before siteData
+  // existed, and it drifted the way copies do. It never had a privacy URL, so
+  // the Privacy link in every CREW footer rendered with no destination: the
+  // word was there and did nothing. It never had social links, so when every
+  // footer began to read them, every CREW page threw. Each field the shared
+  // layer gained had to be remembered for CREW separately, and twice it was
+  // not. Building on siteData means CREW has whatever the others have.
   const T = applyBrand(crewTokens, brandFrom(c))
   const C = T.colors
   const F = T.fonts
-  const concept = c.concept === true
-  const base = c.base_path || `/site/${siteSlug}`
-  const biz = c.business || {}
-  const pos = c.positioning || {}
-  const services = c.services || []
-  const areas = (c.service_areas || []).filter(Boolean)
-  const primaryArea = c.primary_service_area || areas[0] || ''
-  const phone = (biz.phone || '').replace(/[^0-9+]/g, '')
-  const phoneDisplay = biz.phone_display || biz.phone || ''
-  const name = biz.display_name || ''
-  const nouns = c.profile?.nouns || {}
-
-  const href = {
-    home: base,
-    services: `${base}${urlServices(c)}`,
-    service: (slug) => `${base}${urlService(slug, c)}`,
-    areas: `${base}${urlServiceAreas(c)}`,
-    area: (a) => `${base}${urlArea(a, c)}`,
-    combo: (s, a) => `${base}${urlCombo(s, a)}`,
-    about: `${base}${urlAbout()}`,
-    faq: `${base}${urlFAQ()}`,
-    contact: `${base}${urlContact()}`,
-  }
-
-  // The trade in a few words, for page headings ("Pest control in Olathe").
-  // A concept knows its industry; a client site falls back to the first
-  // service's category, the same noun the home page title uses.
-  const tradeNoun = TRADE_NOUN[c.industry_key] || services[0]?.category || titleCase(nouns.offering?.plural || 'services')
-
-  const faqs = faqsFrom(c)
-  const hasAbout = concept || !!(aboutBody(c) || c.generated?.['about|our_approach'] || biz.established_year || c.credentials?.license_number)
-
   return {
-    c, T, C, F, concept, base, biz, pos, services, areas, primaryArea, phone, phoneDisplay, name,
-    // Which optional sections this site shows: the family's arrangement, the
-    // client's own choices, and whether the data exists. CREW is also the
-    // fallback family, so a retired template resolves against CREW's defaults.
-    sections: resolveSections(c, 'crew'),
-    logo: c.brand?.logo_url, imgs: c.images || {}, href, quoteHref: href.contact, tradeNoun, faqs, hasAbout,
-    social: socialLinks(biz),
-    offeringLabel: titleCase(nouns.offering?.plural || 'services'),
-    placeLabel: titleCase(nouns.place?.plural || 'service areas'),
-    emergency: emergencyLabel(c),
+    // Resolved against CREW's section defaults even when the record names a
+    // retired template: CREW is the fallback family for those.
+    ...siteData(c, siteSlug, 'crew'),
+    T, C, F,
     wrap: { maxWidth: 1240, margin: '0 auto', paddingInline: 'clamp(20px, 4vw, 40px)' },
     eyebrow: (color) => ({ fontSize: 13, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color }),
     h2: { fontFamily: F.display, fontWeight: 800, fontSize: T.type.display, lineHeight: 1.02, letterSpacing: '-0.005em', margin: 0, textWrap: 'balance' },
