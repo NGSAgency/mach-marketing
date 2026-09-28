@@ -73,6 +73,39 @@ export default async function ReportPage({ params }) {
           </section>
         )}
 
+        {/* Enquiries through the website. First, because it is the outcome
+            behind every other number on the page. */}
+        {data?.leads && (
+          <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+            <h2 style={{ fontSize: 18, color: '#111827', marginTop: 0 }}>Enquiries From Your Website</h2>
+            <p style={{ color: '#6B7280', fontSize: 13, margin: '0 0 16px 0' }}>
+              Messages sent through your site&rsquo;s contact form this period. Each one was emailed to you when it arrived.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: data.leads.by_page?.length > 1 ? 20 : 0 }}>
+              <Kpi label="Enquiries" value={NUM(data.leads.total)} highlight />
+              <Kpi label="Pages They Came From" value={NUM(data.leads.by_page?.length || 0)} />
+            </div>
+            {data.leads.by_page?.length > 1 && (
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', color: '#6B7280', marginBottom: 10 }}>Where They Came From</div>
+                <table style={{ width: '100%', fontSize: 13, borderCollapse: 'collapse' }}>
+                  <thead><tr style={{ borderBottom: '1px solid #e5e7eb', color: '#9ca3af', textAlign: 'left', fontSize: 11 }}>
+                    <th style={{ padding: '8px 8px 8px 0' }}>Page</th><th style={{ textAlign: 'right', padding: '8px 0 8px 8px' }}>Enquiries</th>
+                  </tr></thead>
+                  <tbody>
+                    {data.leads.by_page.map((p, i) => (
+                      <tr key={i} style={{ borderBottom: '1px solid #f3f4f6', color: '#111827' }}>
+                        <td style={{ padding: '8px 8px 8px 0' }}>{p.page}</td>
+                        <td style={{ textAlign: 'right', padding: '8px 0 8px 8px', fontVariantNumeric: 'tabular-nums' }}>{NUM(p.count)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Search Console */}
         {data?.search_console && (
           <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
