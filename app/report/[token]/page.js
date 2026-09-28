@@ -10,6 +10,7 @@ async function fetchReport(token) {
 }
 
 const NUM = (n) => typeof n === 'number' ? n.toLocaleString() : '—'
+const POS = (n) => n != null && n !== '' ? String(n) : '—'
 const PCT = (n) => n != null && n !== '' ? `${n}%` : '—'
 const DOLLARS = (n) => n != null ? `$${(typeof n === 'string' ? parseFloat(n) : n).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}` : '—'
 
@@ -28,6 +29,8 @@ export default async function ReportPage({ params }) {
 
   const { period_label, ai_summary, data, client } = report
   const ai = data?.ai || {}
+  // The same totals for the period before this one, when there is one.
+  const was = data?.previous?.totals || {}
 
   return (
     <div style={{ fontFamily: 'system-ui, sans-serif', background: '#f9fafb', minHeight: '100vh' }}>
@@ -36,6 +39,9 @@ export default async function ReportPage({ params }) {
         <div style={{ fontSize: 11, letterSpacing: 3, opacity: 0.9, marginBottom: 12 }}>MACH DIGITAL SOLUTIONS</div>
         <h1 style={{ margin: 0, fontSize: 28, fontWeight: 600 }}>{client?.name}</h1>
         <p style={{ margin: '8px 0 0 0', fontSize: 16, opacity: 0.9 }}>{period_label} Performance Report</p>
+        {data?.previous?.label && (
+          <p style={{ margin: '4px 0 0 0', fontSize: 13, opacity: 0.75 }}>Compared with {data.previous.label}</p>
+        )}
       </div>
 
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '32px 20px' }}>
@@ -82,8 +88,8 @@ export default async function ReportPage({ params }) {
               Messages sent through your site&rsquo;s contact form this period. Each one was emailed to you when it arrived.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: data.leads.by_page?.length > 1 ? 20 : 0 }}>
-              <Kpi label="Enquiries" value={NUM(data.leads.total)} highlight />
-              <Kpi label="Pages They Came From" value={NUM(data.leads.by_page?.length || 0)} />
+              <Kpi label="Enquiries" value={data.leads.total} previous={was.leads} highlight />
+              <Kpi label="Pages They Came From" value={data.leads.by_page?.length || 0} />
             </div>
             {data.leads.by_page?.length > 1 && (
               <div>
@@ -111,10 +117,10 @@ export default async function ReportPage({ params }) {
           <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
             <h2 style={{ fontSize: 18, color: '#111827', marginTop: 0 }}>Organic Search Performance</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
-              <Kpi label="Clicks" value={NUM(data.search_console.total_clicks)} />
-              <Kpi label="Impressions" value={NUM(data.search_console.total_impressions)} />
-              <Kpi label="Avg. Position" value={data.search_console.avg_position || '—'} />
-              <Kpi label="Avg. CTR" value={PCT(data.search_console.avg_ctr)} />
+              <Kpi label="Clicks" value={data.search_console.total_clicks} previous={was.sc_clicks} />
+              <Kpi label="Impressions" value={data.search_console.total_impressions} previous={was.sc_impressions} />
+              <Kpi label="Avg. Position" value={data.search_console.avg_position} previous={was.sc_position} lowerIsBetter format={POS} />
+              <Kpi label="Avg. CTR" value={data.search_console.avg_ctr} previous={was.sc_ctr} format={PCT} />
             </div>
             {data.search_console.top_queries?.length > 0 && (
               <div style={{ marginBottom: 20 }}>
@@ -144,10 +150,10 @@ export default async function ReportPage({ params }) {
           <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
             <h2 style={{ fontSize: 18, color: '#111827', marginTop: 0 }}>Website Traffic</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
-              <Kpi label="Total Users" value={NUM(data.ga4.total_users)} />
-              <Kpi label="Total Sessions" value={NUM(data.ga4.total_sessions)} />
-              <Kpi label="Organic Users" value={NUM(data.ga4.organic_users)} highlight />
-              <Kpi label="Conversions" value={NUM(data.ga4.total_conversions)} />
+              <Kpi label="Total Users" value={data.ga4.total_users} previous={was.ga_users} />
+              <Kpi label="Total Sessions" value={data.ga4.total_sessions} previous={was.ga_sessions} />
+              <Kpi label="Organic Users" value={data.ga4.organic_users} previous={was.ga_organic_users} highlight />
+              <Kpi label="Conversions" value={data.ga4.total_conversions} previous={was.ga_conversions} />
             </div>
             {data.ga4.top_sources?.length > 0 && (
               <div style={{ marginBottom: 20 }}>
@@ -177,10 +183,10 @@ export default async function ReportPage({ params }) {
           <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
             <h2 style={{ fontSize: 18, color: '#111827', marginTop: 0 }}>Paid Media (Google Ads)</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
-              <Kpi label="Ad Spend" value={DOLLARS(data.google_ads.total_cost)} />
-              <Kpi label="Clicks" value={NUM(data.google_ads.total_clicks)} />
-              <Kpi label="Conversions" value={NUM(data.google_ads.total_conversions)} />
-              <Kpi label="Cost / Conv." value={data.google_ads.cost_per_conversion ? DOLLARS(data.google_ads.cost_per_conversion) : '—'} />
+              <Kpi label="Ad Spend" value={data.google_ads.total_cost} previous={was.ads_cost} format={DOLLARS} />
+              <Kpi label="Clicks" value={data.google_ads.total_clicks} previous={was.ads_clicks} />
+              <Kpi label="Conversions" value={data.google_ads.total_conversions} previous={was.ads_conversions} />
+              <Kpi label="Cost / Conv." value={data.google_ads.cost_per_conversion} lowerIsBetter format={DOLLARS} />
             </div>
             {data.google_ads.top_campaigns?.length > 0 && (
               <div>
@@ -233,11 +239,35 @@ export default async function ReportPage({ params }) {
   )
 }
 
-function Kpi({ label, value, highlight }) {
+// A number with nothing beside it cannot be read as good news or bad, so each
+// one carries what it was last period. lowerIsBetter is for average search
+// position, where falling from 12 to 7 is the win.
+function Kpi({ label, value, previous, highlight, lowerIsBetter = false, format = NUM }) {
+  const now = toNum(value)
+  const before = toNum(previous)
+  const change = now != null && before != null && before !== 0
+    ? ((now - before) / Math.abs(before)) * 100
+    : null
+  const flat = change != null && Math.abs(change) < 1
+  const better = change == null || flat ? null : (lowerIsBetter ? change < 0 : change > 0)
+
   return (
     <div style={{ background: highlight ? '#DCFCE7' : '#F9FAFB', padding: 12, borderRadius: 8 }}>
       <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase', color: '#6B7280', marginBottom: 4 }}>{label}</div>
-      <div style={{ fontSize: 20, color: highlight ? '#166534' : '#111827', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>{value}</div>
+      <div style={{ fontSize: 20, color: highlight ? '#166534' : '#111827', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>{format(value)}</div>
+      {before != null && (
+        <div style={{ fontSize: 11, marginTop: 4, color: better === null ? '#6B7280' : better ? '#166534' : '#B45309' }}>
+          {change === null || flat
+            ? `Level with ${format(previous)}`
+            : `${better ? '▲' : '▼'} ${Math.abs(Math.round(change))}% from ${format(previous)}`}
+        </div>
+      )}
     </div>
   )
+}
+
+function toNum(v) {
+  if (v == null || v === '' || v === '—') return null
+  const n = typeof v === 'number' ? v : parseFloat(String(v).replace(/[$,%]/g, ''))
+  return isNaN(n) ? null : n
 }
