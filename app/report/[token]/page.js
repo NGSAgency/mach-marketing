@@ -79,6 +79,17 @@ export default async function ReportPage({ params }) {
           </section>
         )}
 
+        {/* Sent anyway with nothing in it: say so plainly rather than hand
+            the client a page of headings with no numbers under them. */}
+        {data?.held && !ai_summary && (
+          <section style={{ background: 'white', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
+            <h2 style={{ fontSize: 18, color: '#111827', marginTop: 0 }}>Nothing to report for {period_label} yet</h2>
+            <p style={{ color: '#4B5563', fontSize: 15, lineHeight: 1.7, margin: 0 }}>
+              No enquiries, search results or traffic figures were recorded for this period. Numbers appear here as they are collected. If you have questions about why, reply to the email this came with.
+            </p>
+          </section>
+        )}
+
         {/* Enquiries through the website. First, because it is the outcome
             behind every other number on the page. */}
         {data?.leads && (
