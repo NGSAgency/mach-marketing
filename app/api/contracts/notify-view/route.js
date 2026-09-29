@@ -9,7 +9,7 @@ export async function POST(request) {
     const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-    const cRes = await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contractId}&select=*,clients(name)`, {
+    const cRes = await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${encodeURIComponent(contractId)}&select=*,clients(name)`, {
       headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` },
     })
     const rows = await cRes.json()

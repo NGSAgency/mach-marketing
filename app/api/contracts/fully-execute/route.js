@@ -4,15 +4,29 @@ export const maxDuration = 60
 import { generateFullyExecutedPdf } from '../../../lib/pdf.js'
 import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+// Only Command Center calls this, right after a countersign, and it sends the
+// shared secret. Without the check, anyone holding a contract id could make us
+// email a client their signed agreement again, and the team a false
+// "fully executed" notice, as often as they liked.
 export async function POST(request) {
+  const secret = process.env.INTERNAL_API_SECRET
+  if (!secret || request.headers.get('x-internal-secret') !== secret) {
+    return Response.json({ error: 'Not allowed.' }, { status: 401 })
+  }
+
   try {
     const { contractId } = await request.json()
-    if (!contractId) return Response.json({ error: 'contractId required' }, { status: 400 })
+    // The id goes into a database query string, so it must be exactly an id.
+    if (!contractId || !UUID.test(String(contractId))) {
+      return Response.json({ error: 'contractId required' }, { status: 400 })
+    }
 
     const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-    const res = await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${contractId}&select=*,clients(name,primary_contact_email)`, {
+    const res = await fetch(`${supabaseUrl}/rest/v1/contracts?id=eq.${encodeURIComponent(contractId)}&select=*,clients(name,primary_contact_email)`, {
       headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` },
     })
     const rows = await res.json()
