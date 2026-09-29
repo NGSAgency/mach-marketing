@@ -231,7 +231,10 @@ export default async function ReportPage({ params }) {
               <ul style={{ padding: 0, margin: 0, listStyle: 'none' }}>
                 {data.content.list.slice(0, 10).map((c, i) => (
                   <li key={i} style={{ padding: '8px 0', color: '#111827', fontSize: 13, borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{c.title}</span>
+                    <span>
+                      {c.url ? <a href={c.url} style={{ color: '#1F3A2E' }}>{c.title}</a> : c.title}
+                      {c.type && <span style={{ color: '#6B7280', fontSize: 11 }}> · {c.type}</span>}
+                    </span>
                     <span style={{ color: '#6B7280', fontSize: 11 }}>{new Date(c.published_at).toLocaleDateString()}</span>
                   </li>
                 ))}
