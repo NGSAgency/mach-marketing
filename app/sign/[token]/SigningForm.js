@@ -44,7 +44,7 @@ export default function SigningForm({ contract }) {
   }
 
   return (
-    <div style={{ background: '#F9FAFB', minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Header */}
       <div style={{ background: '#1F3A2E', color: 'white', padding: '20px 40px', textAlign: 'center' }}>
         <div style={{ letterSpacing: 3, fontSize: 12, fontWeight: 600 }}>MACH DIGITAL SOLUTIONS</div>
@@ -86,7 +86,7 @@ export default function SigningForm({ contract }) {
                 value={signerName}
                 onChange={e => setSignerName(e.target.value)}
                 placeholder="Your full legal name"
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, fontSize: 15, boxSizing: 'border-box', fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
+                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, color: '#111827', background: '#FFFFFF', fontSize: 15, boxSizing: 'border-box', fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
               />
             </div>
             <div>
@@ -96,7 +96,7 @@ export default function SigningForm({ contract }) {
                 value={signerTitle}
                 onChange={e => setSignerTitle(e.target.value)}
                 placeholder="e.g. Owner, CEO, General Manager"
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, color: '#111827', background: '#FFFFFF', fontSize: 14, boxSizing: 'border-box' }}
               />
             </div>
             <div>
@@ -106,7 +106,7 @@ export default function SigningForm({ contract }) {
                 value={signerEmail}
                 onChange={e => setSignerEmail(e.target.value)}
                 placeholder="you@company.com"
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '10px 14px', border: '1px solid #D1D5DB', borderRadius: 6, color: '#111827', background: '#FFFFFF', fontSize: 14, boxSizing: 'border-box' }}
               />
             </div>
           </div>

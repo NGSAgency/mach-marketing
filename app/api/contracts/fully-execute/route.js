@@ -2,6 +2,7 @@ export const runtime = 'nodejs'
 export const maxDuration = 60
 
 import { generateFullyExecutedPdf } from '../../../lib/pdf.js'
+import { contractFeeLines } from '@/lib/contracts/feeLines.js'
 import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -40,7 +41,6 @@ export async function POST(request) {
     const pdfBuffer = await generateFullyExecutedPdf(contract)
     const clientEmail = contract.client_signature_email || contract.clients?.primary_contact_email
     const clientName = contract.client_signature_name || contract.clients?.name || 'Client'
-    const monthly = contract.monthly_fee ? `$${Number(contract.monthly_fee).toLocaleString()}` : '—'
     const services = (contract.services || []).join(', ') || '—'
     const startDate = contract.start_date || 'Per contract terms'
     const countersignedAtFormatted = contract.countersigned_at
@@ -71,7 +71,7 @@ export async function POST(request) {
           details: [
             ['Client', contract.clients?.name || clientName],
             ['Services', services],
-            ['Monthly Fee', monthly],
+            ...contractFeeLines(contract),
             ['Start Date', startDate],
             ['Countersigned', countersignedAtFormatted],
           ],
@@ -94,7 +94,7 @@ export async function POST(request) {
           ['Client', contract.clients?.name || clientName],
           ['Client Contact', clientEmail || 'Not provided'],
           ['Services', services],
-          ['Monthly Fee', monthly],
+          ...contractFeeLines(contract),
           ['Start Date', startDate],
           ['Countersigned By', contract.countersigned_name || '—'],
         ],

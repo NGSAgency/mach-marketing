@@ -37,7 +37,7 @@ export default async function ProposalPage({ params }) {
 
   if (!proposal) {
     return (
-      <div style={{ minHeight: '100vh', background: '#fdfaf6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40, fontFamily: '-apple-system, "Helvetica Neue", Arial, sans-serif' }}>
+      <div style={{ minHeight: '100vh', background: '#fdfaf6', color: '#1a1a1a', colorScheme: 'light', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40, fontFamily: '-apple-system, "Helvetica Neue", Arial, sans-serif' }}>
         <div style={{ textAlign: 'center', maxWidth: 420 }}>
           <img src="/mach-logo-dark.png" alt="MACH Digital Solutions" style={{ height: 56, width: 'auto', margin: '0 auto 32px' }} />
           <h1 style={{ fontSize: 24, fontWeight: 800, color: '#1a1a1a', marginBottom: 12, letterSpacing: '-0.5px' }}>
@@ -56,11 +56,11 @@ export default async function ProposalPage({ params }) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fdfaf6', padding: '40px 20px' }}>
+    <div style={{ minHeight: '100vh', background: '#fdfaf6', color: '#1a1a1a', colorScheme: 'light', padding: '40px 20px' }}>
       <div style={{ maxWidth: 850, margin: '0 auto' }}>
         <div
           style={{
-            background: '#fdfaf6',
+            background: '#fdfaf6', color: '#1a1a1a', colorScheme: 'light',
             padding: 'clamp(28px, 5vw, 60px)',
             borderRadius: 12,
             border: '1px solid rgba(0,0,0,0.08)',

@@ -2,6 +2,7 @@ export const runtime = 'nodejs'
 export const maxDuration = 60
 
 import crypto from 'crypto'
+import { contractFeeLines } from '@/lib/contracts/feeLines.js'
 import { sendMachEmail, MACH_TEAM } from '@/lib/email/template.js'
 
 export async function POST(request) {
@@ -100,7 +101,6 @@ export async function POST(request) {
 }
 
 async function sendSignedNotifications({ contract, signerName, signerTitle, signerEmail, signedAt, ip }) {
-  const monthly = contract.monthly_fee ? `$${Number(contract.monthly_fee).toLocaleString()}` : '—'
   const services = (contract.services || []).join(', ') || '—'
   const signedAtFormatted = new Date(signedAt).toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' })
 
@@ -141,7 +141,7 @@ async function sendSignedNotifications({ contract, signerName, signerTitle, sign
         ['Client Email', signerEmail || 'Not provided'],
         ['Signed At', signedAtFormatted],
         ['Client IP', ip || 'Not captured'],
-        ['Monthly Fee', monthly],
+        ...contractFeeLines(contract),
         ['Services', services],
       ],
     },

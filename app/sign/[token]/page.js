@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { contractFeeLines } from '@/lib/contracts/feeLines.js'
 import SigningForm from './SigningForm'
 
 async function getContract(token) {
@@ -57,38 +58,52 @@ async function markViewed(contract) {
   }
 }
 
+// The site's dark body would otherwise show through: dark text on black, and
+// white text in white boxes. Every state of this page sets its own light
+// background and text color.
+const STATUS_PAGE = { background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }
+const STATUS_BOX = { maxWidth: 600, margin: '0 auto', padding: 40, textAlign: 'center' }
+
 export default async function SigningPage({ params }) {
   const { token } = await params
   const contract = await getContract(token)
 
   if (!contract) return notFound()
 
+  // Already signed comes first: a signed contract whose signing link has since
+  // passed its date should say it's signed, not that the link expired.
+  if (['signed', 'countersigned', 'active'].includes(contract.status)) {
+    return (
+      <div style={STATUS_PAGE}>
+        <div style={STATUS_BOX}>
+          <div style={{ display: 'inline-block', width: 60, height: 60, borderRadius: '50%', background: '#DCFCE7', color: '#166534', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, margin: '0 auto 20px' }}>✓</div>
+          <h1 style={{ color: '#111827' }}>You've already signed this contract</h1>
+          <p style={{ color: '#6B7280' }}>Signed on {new Date(contract.signed_at).toLocaleDateString()}. A copy was emailed to you.</p>
+        </div>
+      </div>
+    )
+  }
+
   // Check status
   if (contract.status === 'expired' || (contract.expires_at && new Date(contract.expires_at) < new Date())) {
     return (
-      <div style={{ maxWidth: 600, margin: '80px auto', padding: 40, textAlign: 'center', fontFamily: 'system-ui, sans-serif' }}>
-        <h1 style={{ color: '#111827' }}>This link has expired</h1>
-        <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions to receive a new contract.</p>
-        <p style={{ color: '#6B7280', marginTop: 20 }}><a href="mailto:chris@machdigitalsolutions.com" style={{ color: '#1F3A2E' }}>chris@machdigitalsolutions.com</a></p>
+      <div style={STATUS_PAGE}>
+        <div style={STATUS_BOX}>
+          <h1 style={{ color: '#111827' }}>This link has expired</h1>
+          <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions to receive a new contract.</p>
+          <p style={{ color: '#6B7280', marginTop: 20 }}><a href="mailto:chris@machdigitalsolutions.com" style={{ color: '#1F3A2E' }}>chris@machdigitalsolutions.com</a></p>
+        </div>
       </div>
     )
   }
 
   if (contract.status === 'cancelled') {
     return (
-      <div style={{ maxWidth: 600, margin: '80px auto', padding: 40, textAlign: 'center', fontFamily: 'system-ui, sans-serif' }}>
-        <h1 style={{ color: '#111827' }}>This contract has been cancelled</h1>
-        <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions if you believe this is a mistake.</p>
-      </div>
-    )
-  }
-
-  if (['signed', 'countersigned', 'active'].includes(contract.status)) {
-    return (
-      <div style={{ maxWidth: 600, margin: '80px auto', padding: 40, textAlign: 'center', fontFamily: 'system-ui, sans-serif' }}>
-        <div style={{ display: 'inline-block', width: 60, height: 60, borderRadius: '50%', background: '#DCFCE7', color: '#166534', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, margin: '0 auto 20px' }}>✓</div>
-        <h1 style={{ color: '#111827' }}>You've already signed this contract</h1>
-        <p style={{ color: '#6B7280' }}>Signed on {new Date(contract.signed_at).toLocaleDateString()}. A copy was emailed to you.</p>
+      <div style={STATUS_PAGE}>
+        <div style={STATUS_BOX}>
+          <h1 style={{ color: '#111827' }}>This contract has been cancelled</h1>
+          <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions if you believe this is a mistake.</p>
+        </div>
       </div>
     )
   }
@@ -116,7 +131,6 @@ async function sendViewNotification(contract) {
       if (rows && rows[0]) clientName = rows[0].name
     }
 
-    const monthly = contract.monthly_fee ? `$${Number(contract.monthly_fee).toLocaleString()}` : '—'
     const services = (contract.services || []).join(', ') || '—'
     const viewedAt = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' })
 
@@ -132,7 +146,7 @@ async function sendViewNotification(contract) {
         details: [
           ['Client', clientName],
           ['Viewed At', viewedAt],
-          ['Monthly Fee', monthly],
+          ...contractFeeLines(contract),
           ['Services', services],
         ],
       },

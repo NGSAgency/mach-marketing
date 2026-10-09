@@ -20,9 +20,11 @@ export default async function ReportPage({ params }) {
 
   if (!report) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif', maxWidth: 600, margin: '80px auto', padding: 40, textAlign: 'center' }}>
-        <h1 style={{ color: '#111827' }}>Report not found</h1>
-        <p style={{ color: '#6b7280' }}>This report may have been removed or the link has expired.</p>
+      <div style={{ background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto', padding: 40, textAlign: 'center' }}>
+          <h1 style={{ color: '#111827' }}>Report not found</h1>
+          <p style={{ color: '#6b7280' }}>This report may have been removed or the link has expired.</p>
+        </div>
       </div>
     )
   }
@@ -33,7 +35,7 @@ export default async function ReportPage({ params }) {
   const was = data?.previous?.totals || {}
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', background: '#f9fafb', minHeight: '100vh' }}>
+    <div style={{ fontFamily: 'system-ui, sans-serif', background: '#f9fafb', color: '#111827', colorScheme: 'light', minHeight: '100vh' }}>
       {/* Header */}
       <div style={{ background: '#1F3A2E', color: 'white', padding: '32px 20px', textAlign: 'center' }}>
         <div style={{ fontSize: 11, letterSpacing: 3, opacity: 0.9, marginBottom: 12 }}>MACH DIGITAL SOLUTIONS</div>

@@ -1,7 +1,7 @@
 export default async function PaymentCancelled({ params }) {
   const { clientId } = await params
   return (
-    <div style={{ background: '#F9FAFB', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ background: '#1F3A2E', color: 'white', padding: '20px 40px', textAlign: 'center' }}>
         <div style={{ letterSpacing: 3, fontSize: 12, fontWeight: 600 }}>MACH DIGITAL SOLUTIONS</div>
       </div>
