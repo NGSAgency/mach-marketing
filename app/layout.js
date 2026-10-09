@@ -1,5 +1,6 @@
 import './globals.css'
 import './mach-responsive.css'
+import MachAnalytics from '@/components/MachAnalytics'
 
 export const metadata = {
   metadataBase: new URL('https://machdigitalsolutions.com'),
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body style={{ background: '#050508', color: '#f5f5f7', margin: 0, padding: 0 }} className="antialiased">
         {children}
+        <MachAnalytics />
       </body>
     </html>
   )
