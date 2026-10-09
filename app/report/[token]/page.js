@@ -20,10 +20,10 @@ export default async function ReportPage({ params }) {
 
   if (!report) {
     return (
-      <div style={{ background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ background: '#FFFFFF', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }}>
         <div style={{ maxWidth: 600, margin: '0 auto', padding: 40, textAlign: 'center' }}>
           <h1 style={{ color: '#111827' }}>Report not found</h1>
-          <p style={{ color: '#6b7280' }}>This report may have been removed or the link has expired.</p>
+          <p style={{ color: '#374151' }}>This report may have been removed or the link has expired.</p>
         </div>
       </div>
     )

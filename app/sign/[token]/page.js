@@ -61,7 +61,7 @@ async function markViewed(contract) {
 // The site's dark body would otherwise show through: dark text on black, and
 // white text in white boxes. Every state of this page sets its own light
 // background and text color.
-const STATUS_PAGE = { background: '#F9FAFB', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }
+const STATUS_PAGE = { background: '#FFFFFF', color: '#111827', colorScheme: 'light', minHeight: '100vh', padding: '80px 16px', boxSizing: 'border-box', fontFamily: 'system-ui, sans-serif' }
 const STATUS_BOX = { maxWidth: 600, margin: '0 auto', padding: 40, textAlign: 'center' }
 
 export default async function SigningPage({ params }) {
@@ -78,7 +78,7 @@ export default async function SigningPage({ params }) {
         <div style={STATUS_BOX}>
           <div style={{ display: 'inline-block', width: 60, height: 60, borderRadius: '50%', background: '#DCFCE7', color: '#166534', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, margin: '0 auto 20px' }}>✓</div>
           <h1 style={{ color: '#111827' }}>You've already signed this contract</h1>
-          <p style={{ color: '#6B7280' }}>Signed on {new Date(contract.signed_at).toLocaleDateString()}. A copy was emailed to you.</p>
+          <p style={{ color: '#374151' }}>Signed on {new Date(contract.signed_at).toLocaleDateString()}. A copy was emailed to you.</p>
         </div>
       </div>
     )
@@ -90,8 +90,8 @@ export default async function SigningPage({ params }) {
       <div style={STATUS_PAGE}>
         <div style={STATUS_BOX}>
           <h1 style={{ color: '#111827' }}>This link has expired</h1>
-          <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions to receive a new contract.</p>
-          <p style={{ color: '#6B7280', marginTop: 20 }}><a href="mailto:chris@machdigitalsolutions.com" style={{ color: '#1F3A2E' }}>chris@machdigitalsolutions.com</a></p>
+          <p style={{ color: '#374151' }}>Please contact MACH Digital Solutions to receive a new contract.</p>
+          <p style={{ color: '#374151', marginTop: 20 }}><a href="mailto:chris@machdigitalsolutions.com" style={{ color: '#1F3A2E' }}>chris@machdigitalsolutions.com</a></p>
         </div>
       </div>
     )
@@ -102,7 +102,7 @@ export default async function SigningPage({ params }) {
       <div style={STATUS_PAGE}>
         <div style={STATUS_BOX}>
           <h1 style={{ color: '#111827' }}>This contract has been cancelled</h1>
-          <p style={{ color: '#6B7280' }}>Please contact MACH Digital Solutions if you believe this is a mistake.</p>
+          <p style={{ color: '#374151' }}>Please contact MACH Digital Solutions if you believe this is a mistake.</p>
         </div>
       </div>
     )
