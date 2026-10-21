@@ -7,7 +7,7 @@ export default function Terms() {
       <h1 className="text-4xl font-bold tracking-tight mb-4">Terms of Service</h1>
       <p className="text-sm text-neutral-500 mb-12">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
 
-      <div className="prose prose-neutral max-w-none">
+      <div className="max-w-none leading-relaxed text-neutral-300 [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-white [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_strong]:text-white">
         <h2>Acceptance of Terms</h2>
         <p>By accessing or using MACH Digital Solutions' website or services, you agree to be bound by these Terms of Service.</p>
 
