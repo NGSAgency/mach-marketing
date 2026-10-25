@@ -152,7 +152,7 @@ export function siteData(c, siteSlug, family) {
     service: (slug) => `${base}${urlService(slug, c)}`,
     areas: `${base}${urlServiceAreas(c)}`,
     area: (a) => `${base}${urlArea(a, c)}`,
-    combo: (s, a) => `${base}${urlCombo(s, a)}`,
+    combo: (s, a) => `${base}${urlCombo(s, a, c)}`,
     about: `${base}${urlAbout()}`,
     faq: `${base}${urlFAQ()}`,
     contact: `${base}${urlContact()}`,

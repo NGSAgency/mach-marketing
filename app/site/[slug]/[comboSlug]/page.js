@@ -1,6 +1,6 @@
 import { fetchSiteConfig } from '../../../../lib/site/fetch.js'
 import { notFound } from 'next/navigation'
-import { slugify } from '../../../../lib/templates/shared/seo/urls.js'
+import { slugify, comboAllowed } from '../../../../lib/templates/shared/seo/urls.js'
 import { buildComboMetadata } from '../../../../lib/templates/shared/seo/index.js'
 import { rendererFor, previewFamily } from '../renderers/registry.js'
 
@@ -10,7 +10,8 @@ function parseComboSlug(comboSlug, config) {
     if (comboSlug.startsWith(prefix)) {
       const areaSlug = comboSlug.substring(prefix.length)
       const area = config.service_areas.find(a => slugify(a) === areaSlug)
-      if (area) return { service: svc, area }
+      // Only pairs that have a page: town pages can be switched off per service
+      if (area && comboAllowed(config, svc, area)) return { service: svc, area }
     }
   }
   return null

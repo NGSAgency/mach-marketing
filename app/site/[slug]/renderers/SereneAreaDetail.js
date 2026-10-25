@@ -204,7 +204,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
                   return (
                     <a
                       key={s.slug}
-                      href={`${base}${urlCombo(s, area)}`}
+                      href={`${base}${urlCombo(s, area, c)}`}
                       style={{
                         position: 'relative',
                         display: 'block',

@@ -257,7 +257,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
                 {areas.map(area => (
                   <a
                     key={area}
-                    href={`${base}${urlCombo(service, area)}`}
+                    href={`${base}${urlCombo(service, area, c)}`}
                     style={{
                       position: 'relative',
                       display: 'block',
