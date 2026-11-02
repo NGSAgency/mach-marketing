@@ -11,7 +11,7 @@ import CrewMobileBar from './CrewMobileBar.js'
 // changes every page at once.
 
 // The trade nouns and the small text helpers are shared by every family.
-import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, siteData } from './family/data.js'
+import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, siteData, specialsInMenu } from './family/data.js'
 export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
 
@@ -226,6 +226,7 @@ function navItems(x) {
   return [
     services.length > 0 && { key: 'services', label: 'Services', href: href.services },
     areas.length > 0 && { key: 'areas', label: 'Areas', href: href.areas },
+    specialsInMenu(x.c) && { key: 'specials', label: x.c.specials.nav_label || x.c.specials.title || 'Specials', href: href.specials },
     hasAbout && { key: 'about', label: 'About', href: href.about },
     faqs.length > 0 && { key: 'faq', label: 'FAQ', href: href.faq },
   ].filter(Boolean)

@@ -16,6 +16,7 @@ import CrewContact from './CrewContact.js'
 import CrewFAQ from './CrewFAQ.js'
 import { CrewBlogIndex, CrewBlogPost } from './CrewBlog.js'
 import { CrewPrivacy, HearthPrivacy, LevelPrivacy, SerenePrivacy, CentrePrivacy, BookingPrivacy, StagePrivacy, RailPrivacy } from './PrivacyPages.js'
+import { CrewSpecials, HearthSpecials, LevelSpecials, SereneSpecials, CentreSpecials, BookingSpecials, StageSpecials, RailSpecials } from './SpecialsPages.js'
 import BookingHome from './BookingHome.js'
 import { BookingServices, BookingServiceDetail } from './BookingPages.js'
 import {
@@ -73,18 +74,18 @@ export const FAMILIES = {
   crew: {
     label: 'Local', tokens: crewTokens,
     Home: CrewHome, Services: CrewServices, ServiceDetail: CrewServiceDetail, Areas: CrewAreas, AreaDetail: CrewAreaDetail,
-    Privacy: CrewPrivacy, Combo: CrewCombo, About: CrewAbout, Contact: CrewContact, FAQ: CrewFAQ, BlogIndex: CrewBlogIndex, BlogPost: CrewBlogPost,
+    Privacy: CrewPrivacy, Specials: CrewSpecials, Combo: CrewCombo, About: CrewAbout, Contact: CrewContact, FAQ: CrewFAQ, BlogIndex: CrewBlogIndex, BlogPost: CrewBlogPost,
   },
   serene: {
     label: 'Editorial', tokens: sereneTokens,
     Home: SereneHome, Services: SereneServices, ServiceDetail: SereneServiceDetail, Areas: SereneAreas, AreaDetail: SereneAreaDetail,
-    Privacy: SerenePrivacy, Combo: SereneCombo, About: SereneAbout, Contact: SereneContact, FAQ: SereneFAQ, BlogIndex: SereneBlogIndex, BlogPost: SereneBlogPost,
+    Privacy: SerenePrivacy, Specials: SereneSpecials, Combo: SereneCombo, About: SereneAbout, Contact: SereneContact, FAQ: SereneFAQ, BlogIndex: SereneBlogIndex, BlogPost: SereneBlogPost,
     Concern: SereneConcern, Team: SereneTeam,
   },
   hearth: {
     label: 'Heritage', tokens: hearthTokens,
     Home: HearthHome, Services: HearthServices, ServiceDetail: HearthServiceDetail, Areas: HearthAreas, AreaDetail: HearthAreaDetail,
-    Privacy: HearthPrivacy, Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
+    Privacy: HearthPrivacy, Specials: HearthSpecials, Combo: HearthCombo, About: HearthAbout, Contact: HearthContact, FAQ: HearthFAQ, BlogIndex: HearthBlogIndex, BlogPost: HearthBlogPost,
   },
   // CENTRE is being built a page at a time. Everything it doesn't have yet
   // falls through to CREW in rendererFor, which is what that fallback is for:
@@ -94,7 +95,7 @@ export const FAMILIES = {
     Home: CentreHome, Services: CentreServices, ServiceDetail: CentreServiceDetail,
     Areas: CentreAreas, AreaDetail: CentreAreaDetail, Combo: CentreCombo,
     About: CentreAbout, Contact: CentreContact, FAQ: CentreFAQ,
-    BlogIndex: CentreBlogIndex, BlogPost: CentreBlogPost, Privacy: CentrePrivacy,
+    BlogIndex: CentreBlogIndex, BlogPost: CentreBlogPost, Privacy: CentrePrivacy, Specials: CentreSpecials,
   },
   // BOOKING: the hero is half argument, half a real request-a-visit form, and
   // that form follows the visitor down every inner page in a sticky column.
@@ -103,7 +104,7 @@ export const FAMILIES = {
     Home: BookingHome, Services: BookingServices, ServiceDetail: BookingServiceDetail,
     Areas: BookingAreas, AreaDetail: BookingAreaDetail, Combo: BookingCombo,
     About: BookingAbout, Contact: BookingContact, FAQ: BookingFAQ,
-    BlogIndex: BookingBlogIndex, BlogPost: BookingBlogPost, Privacy: BookingPrivacy,
+    BlogIndex: BookingBlogIndex, BlogPost: BookingBlogPost, Privacy: BookingPrivacy, Specials: BookingSpecials,
   },
   // STAGE: two permanent halves — the content scrolls on the left while a
   // fixed panel on the right carries the business and the facts belonging to
@@ -113,7 +114,7 @@ export const FAMILIES = {
     Home: StageHome, Services: StageServices, ServiceDetail: StageServiceDetail,
     Areas: StageAreas, AreaDetail: StageAreaDetail, Combo: StageCombo,
     About: StageAbout, Contact: StageContact, FAQ: StageFAQ,
-    BlogIndex: StageBlogIndex, BlogPost: StageBlogPost, Privacy: StagePrivacy,
+    BlogIndex: StageBlogIndex, BlogPost: StageBlogPost, Privacy: StagePrivacy, Specials: StageSpecials,
   },
   // RAIL: no top bar. The logo, the menu, the phone and both buttons live in
   // a rail pinned down the right edge, and the page scrolls beside it on a
@@ -123,12 +124,12 @@ export const FAMILIES = {
     Home: RailHome, Services: RailServices, ServiceDetail: RailServiceDetail,
     Areas: RailAreas, AreaDetail: RailAreaDetail, Combo: RailCombo,
     About: RailAbout, Contact: RailContact, FAQ: RailFAQ,
-    BlogIndex: RailBlogIndex, BlogPost: RailBlogPost, Privacy: RailPrivacy,
+    BlogIndex: RailBlogIndex, BlogPost: RailBlogPost, Privacy: RailPrivacy, Specials: RailSpecials,
   },
   level: {
     label: 'Modern', tokens: levelTokens,
     Home: LevelHome, Services: LevelServices, ServiceDetail: LevelServiceDetail, Areas: LevelAreas, AreaDetail: LevelAreaDetail,
-    Privacy: LevelPrivacy, Combo: LevelCombo, About: LevelAbout, Contact: LevelContact, FAQ: LevelFAQ, BlogIndex: LevelBlogIndex, BlogPost: LevelBlogPost,
+    Privacy: LevelPrivacy, Specials: LevelSpecials, Combo: LevelCombo, About: LevelAbout, Contact: LevelContact, FAQ: LevelFAQ, BlogIndex: LevelBlogIndex, BlogPost: LevelBlogPost,
   },
 }
 

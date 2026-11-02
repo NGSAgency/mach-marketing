@@ -157,6 +157,8 @@ export function siteData(c, siteSlug, family) {
     faq: `${base}${urlFAQ()}`,
     contact: `${base}${urlContact()}`,
     privacy: `${base}${urlPrivacy()}`,
+    // The specials page, when it's on (config.specials from Command Center)
+    specials: c.specials?.path ? `${base}${c.specials.path}` : null,
   }
 
   // The trade in a few words, for page headings ("Pest control in Olathe").
@@ -191,12 +193,16 @@ export function siteData(c, siteSlug, family) {
   }
 }
 
+/** The specials page is in the menu only while it has offers running. */
+export const specialsInMenu = (c) => !!(c?.specials?.path && (c.specials.items || []).length)
+
 /** The menu: only pages that exist. */
 export function navItems(d) {
   const { href, services, areas, faqs, hasAbout, offeringLabel } = d
   return [
     services.length > 0 && { key: 'services', label: offeringLabel === 'Services' ? 'Services' : offeringLabel, href: href.services },
     areas.length > 0 && { key: 'areas', label: 'Areas', href: href.areas },
+    specialsInMenu(d.c) && { key: 'specials', label: d.c.specials.nav_label || d.c.specials.title || 'Specials', href: href.specials },
     hasAbout && { key: 'about', label: 'About', href: href.about },
     faqs.length > 0 && { key: 'faq', label: 'FAQ', href: href.faq },
   ].filter(Boolean)

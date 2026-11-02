@@ -3,7 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { MobileMenu } from '../../../../lib/templates/shared/MobileMenu.js'
 import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService, urlArea } from '../../../../lib/templates/shared/seo/index.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
-import { socialLinks } from './family/data.js'
+import { socialLinks, specialsInMenu } from './family/data.js'
 import { hasFaqPage } from '../../../../lib/templates/shared/claims.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
@@ -43,6 +43,7 @@ function SereneHeader({ T, c, logo, base }) {
     { href: `${base}${urlServices(c)}`, label: labels.offering },
     ...(showTeam ? [{ href: `${base}/team`, label: 'Our Team' }] : []),
     ...(showPlaces ? [{ href: `${base}${urlServiceAreas(c)}`, label: labels.place }] : []),
+    ...(specialsInMenu(c) ? [{ href: `${base}${c.specials.path}`, label: c.specials.nav_label || c.specials.title || 'Specials' }] : []),
     { href: `${base}/about`, label: 'About' },
     ...(hasBlog ? [{ href: `${base}/blog`, label: 'Blog' }] : []),
     ...(hasFaqPage(c) ? [{ href: `${base}/faq`, label: 'FAQ' }] : []),
