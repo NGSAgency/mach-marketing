@@ -4,6 +4,7 @@ import {
   railContext, RailPage, Opening, Band, Section, Head, Prose, Chips, ServiceCards, Directory,
   Signs, Steps, Questions, FactCard, Inset, Closing, workItems, textLink,
 } from './RailKit.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 // RAIL's services index and service pages. An inner page runs its prose
 // beside a sticky card of facts, its signs in two columns and its visit
@@ -144,6 +145,8 @@ export function RailServiceDetail({ config: c, siteSlug, service }) {
           <Chips x={x} items={areas.map(a => ({ href: href.combo(service, a), label: `${service.name} in ${a}` }))} />
         </Section>
       )}
+
+      <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} wrap={x.wrap} pad={x.sectionPad} />
 
       {m.related.length > 0 && (
         <Band x={x}>

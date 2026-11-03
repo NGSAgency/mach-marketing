@@ -56,10 +56,14 @@ export default function SereneAbout({ config: c, siteSlug }) {
             <>
               <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) 0' }}>
                 <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-                  <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 28 }}>
-                    About
-                  </div>
-                  <h1 style={{
+                  {/* The page's one heading names the business (and its town when
+                      known): the story's first sentence used to be the H1, a
+                      150-character heading search engines can't use. It keeps
+                      its look as the eyebrow; the sentence keeps its size. */}
+                  <h1 style={{ fontSize: T.type.xs, fontWeight: 400, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, margin: '0 0 28px', fontFamily: T.fonts.body }}>
+                    About {c.business.display_name}{c.primary_service_area && c.primary_service_area !== 'your area' ? ` in ${String(c.primary_service_area).trim()}` : ''}
+                  </h1>
+                  <p style={{
                     fontFamily: T.fonts.display,
                     fontSize: 'clamp(28px, 3.8vw, 52px)',
                     fontWeight: 300,
@@ -68,9 +72,8 @@ export default function SereneAbout({ config: c, siteSlug }) {
                     margin: 0,
                     maxWidth: 880,
                   }}>
-                    {/* Without a story yet the page still needs its one heading. */}
                     {lead || `About ${c.business.display_name}`}
-                  </h1>
+                  </p>
                 </div>
               </section>
 

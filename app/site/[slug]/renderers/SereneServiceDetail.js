@@ -14,6 +14,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
 import { signsFrom, serviceCostRows } from './family/data.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -288,6 +289,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
           </section>
         )}
 
+        <RelatedLinks c={c} base={base} kind="service" slug={service.slug} C={{ text: T.colors.text, textDim: T.colors.textDim, accent: T.colors.accent, border: T.colors.border }} F={{ display: T.fonts.display }} wrap={{ maxWidth: 1400, margin: '0 auto', paddingInline: 'clamp(24px, 5vw, 96px)', boxSizing: 'border-box' }} />
         <SereneCTA T={T} c={c} headline={service.name} />
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />

@@ -1,7 +1,7 @@
 import { sereneTokens } from '../../../templates/serene/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
-import { buildBreadcrumbSchema, buildFAQSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
+import { buildBreadcrumbSchema, buildFAQSchema, buildConcernPageSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
@@ -30,6 +30,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
   ]
 
   const schemas = [
+    buildConcernPageSchema(c, concern),
     buildBreadcrumbSchema(c, crumbs),
     faqs.length > 0 ? buildFAQSchema(faqs) : null,
   ].filter(Boolean)

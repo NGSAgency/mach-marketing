@@ -5,6 +5,7 @@ import {
   Prose, ServiceGroups, Questions, Blocks, LinkRow, SiteFooter,
 } from './StageShared.js'
 import { servicesIndexModel, serviceModel, serviceCostRows, oneLine, lowerName} from './family/data.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 // STAGE's services index and service pages. Inner pages swap the chapter rail
 // for a contents list in the panel — an inner page is read rather than
@@ -321,6 +322,7 @@ export function StageServiceDetail({ config: c, siteSlug, service }) {
             </div>
           </>
         )}
+        <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} />
         {m.related.length > 0 && (
           <div style={{ marginTop: areas.length > 0 ? 40 : 0 }}>
             <h2 style={{ ...x.h2, fontSize: 'clamp(21px, 2.1vw, 28px)' }}>Also ask us about</h2>

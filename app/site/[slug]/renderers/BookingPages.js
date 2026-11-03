@@ -3,6 +3,7 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 import {
   servicesIndexModel, serviceModel, pageFacts, paragraphs, oneLine, pricingModel, serviceCostRows, proofItems, lowerName
 } from './family/data.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 // BOOKING's inner pages. Every one of them is the same shape: the content on
 // the left, the request card pinned beside it on the right. Someone who lands
@@ -484,6 +485,8 @@ export function BookingServiceDetail({ config: c, siteSlug, service }) {
           </div>
         </section>
       )}
+
+      <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} wrap={x.wrap} pad={x.sectionPad} />
 
       {m.related.length > 0 && (
         <section style={{ background: C.bgAlt, borderTop: `1px solid ${C.border}`, paddingBlock: 'clamp(30px, 3.4vw, 46px)' }}>

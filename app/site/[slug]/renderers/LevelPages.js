@@ -14,6 +14,7 @@ import { PhoneIcon, Star } from './CrewChrome.js'
 import { joinList } from '../../../../lib/templates/shared/claims.js'
 import { LevelGallery } from './Galleries.js'
 import { galleryItems } from './family/data.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 // Level pages. What each page says comes from family/data.js (the same content
 // every family renders); the layout here is Level's own: a centred hero with
@@ -388,6 +389,7 @@ export function LevelServiceDetail({ config: c, siteSlug, service }) {
           <Chips x={x} items={areaChips(x, areas, a => href.combo(service, a), `${service.name} in `)} />
         </Wide>
       )}
+      <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} wrap={x.wrap} pad={x.sectionPad} />
       {m.related.length > 0 && (
         <Wide x={x}>
           <SectionHead x={x} eyebrow={`More from ${name}`} title={`Other ${x.offeringLabel.toLowerCase()}`} aside={<a href={href.services} style={textLink(x)}>All {x.offeringLabel.toLowerCase()}</a>} />

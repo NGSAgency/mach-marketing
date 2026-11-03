@@ -2,6 +2,7 @@ import { centreContext, CentrePage, btnPrimary, btnOutline } from './CentreKit.j
 import CrewMobileBar from './CrewMobileBar.js'
 import { servicesIndexModel, serviceModel, proofItems, paragraphs, oneLine, lowerName, serviceCostRows } from './family/data.js'
 import { ConceptNote } from '../../../../lib/templates/shared/components/ConceptNote.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 // CENTRE's inner pages. The shapes come from the home page — a centred header,
 // one thing at a time, facts across a band — so a visitor who lands on a
@@ -452,6 +453,8 @@ export function CentreServiceDetail({ config: c, siteSlug, service }) {
       <Cost x={x} service={service} />
 
       <Towns x={x} service={service} />
+
+      <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} wrap={x.wrap} pad={x.sectionPad} />
 
       {m.related.length > 0 && (
         <section style={{ paddingBottom: sectionPad }}>

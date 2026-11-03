@@ -12,6 +12,7 @@ import {
   ServiceCard, LinkTile, looksLikeJson,
 } from './CrewChrome.js'
 import { signsFrom, lowerName, pricingModel } from './family/data.js'
+import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
 
 /** "What to expect" as steps when it is a list, else null. */
 export function stepsFrom(v) {
@@ -184,6 +185,8 @@ export default function CrewServiceDetail({ config: c, siteSlug, service }) {
           </div>
         </section>
       )}
+
+      <RelatedLinks c={c} base={x.base} kind="service" slug={service.slug} C={x.C} F={x.F} wrap={x.wrap} pad={x.sectionPad} />
 
       {related.length > 0 && (
         <section style={{ paddingBlock: sectionPad }}>

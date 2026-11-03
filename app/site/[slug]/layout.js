@@ -4,6 +4,7 @@ import PreviewBar from './PreviewBar.js'
 import { familyKey } from './renderers/registry.js'
 import { TrackingScripts } from '../../../lib/site/tracking.js'
 import LeadEvents from '../../../lib/site/events.js'
+import { JsonLd, buildBusinessNode } from '../../../lib/templates/shared/seo/index.js'
 
 // Loads the site's typefaces for every page under it, and the client's
 // analytics tags. The config request is shared with the page through
@@ -25,6 +26,9 @@ export default async function SiteLayout({ children, params }) {
   return (
     <>
       <FamilyFonts families={[family]} />
+      {/* Whose site this is, on every page: the same @id as the home page's
+          full business record (lib/templates/shared/seo/schema.js). */}
+      {result?.config && buildBusinessNode(result.config) && <JsonLd data={buildBusinessNode(result.config)} />}
       {!preview && <TrackingScripts tracking={result?.config?.tracking} />}
       {!preview && <LeadEvents />}
       {preview && (
