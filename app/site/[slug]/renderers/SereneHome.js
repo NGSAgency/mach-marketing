@@ -5,7 +5,7 @@ import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServic
 import { TrustBar, ConcernsGrid, BeforeAfterGallery, Providers, Reviews, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import HeroMedia from '../../../../lib/templates/shared/components/HeroMedia.js'
-import { heroTrust } from '../../../../lib/templates/shared/claims.js'
+import { heroTrust, parseJson } from '../../../../lib/templates/shared/claims.js'
 import { SereneGallery } from './Galleries.js'
 import { galleryItems } from './family/data.js'
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
@@ -41,7 +41,10 @@ export default function SereneHome({ config: c, siteSlug }) {
   const ownTagline = c.positioning?.tagline || ''
   const generated = gen['home|hero_subheadline'] || ''
   const shortPromise = (ownTagline && ownTagline.length <= 68 ? ownTagline : generated.split(/[.·|]/)[0].trim()).replace(/[,;]\s*$/, '')
-  const headline = noun && place ? `${noun} in ${place}` : (shortPromise || noun || name)
+  // The approved headline when there is one: it's written for this practice
+  // and reviewed. The assembled "[Noun] in [Town]" is the fallback.
+  const writtenHeadline = String(gen['home|hero_headline'] || '').trim()
+  const headline = writtenHeadline || (noun && place ? `${noun} in ${place}` : (shortPromise || noun || name))
   const eyebrow = ownTagline && ownTagline.length <= 56 && ownTagline !== headline
     ? ownTagline
     : [c.business.address_line, c.business.established_year ? `Est. ${c.business.established_year}` : null].filter(Boolean).join('  ·  ')
@@ -377,6 +380,30 @@ export default function SereneHome({ config: c, siteSlug }) {
         {resolveSections(c, 'serene').gallery && <SereneGallery T={T} items={galleryItems(c, c.services || [])} />}
         {has('reviews') && <Reviews T={T} c={c} />}
         {has('before_after') && <BeforeAfterGallery T={T} c={c} cases={c.before_after || []} />}
+        {/* Why choose them: the approved reasons, in their words. Approved copy
+            used to have nowhere to go on this design. */}
+        {(() => {
+          const raw = gen['home|why_us']
+          const items = (Array.isArray(raw) ? raw : (parseJson(raw) || [])).filter(p => p?.title && p?.description).slice(0, 4)
+          if (!items.length) return null
+          return (
+            <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
+              <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                <h2 style={{ fontFamily: T.fonts.display, fontWeight: 300, fontSize: 'clamp(28px, 3.4vw, 44px)', letterSpacing: '-0.01em', margin: '0 0 clamp(28px, 4vw, 48px)' }}>
+                  Why {c.business.display_name}
+                </h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 'clamp(24px, 3vw, 40px)' }}>
+                  {items.map(it => (
+                    <div key={it.title} style={{ borderTop: `1px solid ${T.colors.border}`, paddingTop: 20 }}>
+                      <h3 style={{ fontFamily: T.fonts.display, fontWeight: 400, fontSize: 22, lineHeight: 1.25, margin: '0 0 10px' }}>{it.title}</h3>
+                      <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: T.colors.textDim }}>{it.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )
+        })()}
         {has('providers') && <Providers T={T} c={c} providers={c.providers || []} base={base} />}
 
         <SereneCTA T={T} c={c} />
