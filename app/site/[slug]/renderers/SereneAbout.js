@@ -162,6 +162,30 @@ export default function SereneAbout({ config: c, siteSlug }) {
         )}
 
         <TrustBar T={T} c={c} />
+        {/* The equipment and product lines they named in the questionnaire,
+            in their order and spelling, with nothing said about any of them.
+            For this buyer the brand on the device is a reason to book. */}
+        {(() => {
+          const raw = c.medical?.devices_used
+          const devices = [...new Set((Array.isArray(raw) ? raw : String(raw || '').split(/[,;\n]+/))
+            .map(d => String(d || '').trim()).filter(Boolean))]
+          if (!devices.length) return null
+          return (
+            <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
+              <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gap: 24 }}>
+                <h2 style={{ fontFamily: T.fonts.display, fontWeight: 300, fontSize: 'clamp(26px, 3vw, 40px)', letterSpacing: '-0.01em', margin: 0 }}>
+                  Technology and products we use
+                </h2>
+                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                  {devices.map(d => (
+                    <li key={d} style={{ border: `1px solid ${T.colors.border}`, borderRadius: 999, padding: '8px 16px', fontSize: 15, color: T.colors.text }}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )
+        })()}
+
         <SereneCTA T={T} c={c} />
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
