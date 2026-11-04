@@ -26,7 +26,6 @@ export function CHeader() {
         <div className="preview-nav-links">
           <a href="/preview/c/services" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Services</a>
           <a href="/preview/c/industries" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Industries</a>
-          <a href="/preview/c/team" style={{ padding: '8px 14px', color: cTokens.fgDim, textDecoration: 'none', fontSize: 13, fontWeight: 500, borderRadius: 6 }}>Team</a>
           <a href="/preview/c/contact" style={{ padding: '8px 16px', color: cTokens.bg, background: cTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started</a>
         </div>
         <a href="/preview/c/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: cTokens.bg, background: cTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap' }}>Start</a>
@@ -54,7 +53,6 @@ export function CFooter() {
           </div>
           <div>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: cTokens.fgMuted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 16, fontWeight: 500 }}>Company</div>
-            <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/preview/c/team" style={{ color: cTokens.fgDim, textDecoration: 'none' }}>Team</a></div>
             <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/preview/c/industries" style={{ color: cTokens.fgDim, textDecoration: 'none' }}>Industries</a></div>
             <div style={{ marginBottom: 8, fontSize: 13 }}><a href="/preview/c/contact" style={{ color: cTokens.fgDim, textDecoration: 'none' }}>Contact</a></div>
           </div>

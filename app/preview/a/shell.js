@@ -45,7 +45,6 @@ export function AHeader() {
         <div className="preview-nav-links">
           <a href="/preview/a/services" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Services</a>
           <a href="/preview/a/industries" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Industries</a>
-          <a href="/preview/a/team" style={{ padding: '8px 14px', color: aTokens.fgDim, textDecoration: 'none', fontSize: 14, fontWeight: 500, borderRadius: 6 }}>Team</a>
           <a href="/preview/a/contact" style={{ padding: '10px 18px', color: aTokens.bg, background: aTokens.fg, textDecoration: 'none', fontSize: 14, fontWeight: 600, borderRadius: 8, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started →</a>
         </div>
         <a href="/preview/a/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: aTokens.bg, background: aTokens.fg, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap' }}>Start →</a>
@@ -72,7 +71,6 @@ export function AFooter() {
           </div>
           <div>
             <div style={{ fontSize: 11, color: aTokens.fgMuted, textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 16, fontWeight: 600 }}>Company</div>
-            <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/a/team" style={{ color: aTokens.fgDim, textDecoration: 'none' }}>Team</a></div>
             <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/a/industries" style={{ color: aTokens.fgDim, textDecoration: 'none' }}>Industries</a></div>
             <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/a/contact" style={{ color: aTokens.fgDim, textDecoration: 'none' }}>Contact</a></div>
           </div>

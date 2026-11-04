@@ -28,7 +28,6 @@ export function BHeader() {
         <div className="preview-nav-links">
           <a href="/preview/b/services" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Services</a>
           <a href="/preview/b/industries" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Industries</a>
-          <a href="/preview/b/team" style={{ padding: '8px 14px', color: bTokens.inkDim, textDecoration: 'none', fontSize: 14, fontWeight: 500 }}>Team</a>
           <a href="/preview/b/contact" style={{ padding: '10px 20px', color: bTokens.bg, background: bTokens.ink, textDecoration: 'none', fontSize: 14, fontWeight: 600, borderRadius: 100, marginLeft: 8, whiteSpace: 'nowrap' }}>Get started →</a>
         </div>
         <a href="/preview/b/contact" className="preview-nav-cta-mobile" style={{ padding: '8px 14px', color: bTokens.bg, background: bTokens.ink, textDecoration: 'none', fontSize: 13, fontWeight: 600, borderRadius: 100, whiteSpace: 'nowrap' }}>Start →</a>
@@ -59,7 +58,6 @@ export function BFooter() {
           </div>
           <div>
             <div style={{ fontSize: 11, opacity: 0.5, textTransform: 'uppercase', letterSpacing: 2, marginBottom: 16, fontWeight: 700 }}>Company</div>
-            <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/b/team" style={{ color: 'inherit', opacity: 0.75, textDecoration: 'none' }}>Team</a></div>
             <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/b/industries" style={{ color: 'inherit', opacity: 0.75, textDecoration: 'none' }}>Industries</a></div>
             <div style={{ marginBottom: 10, fontSize: 14 }}><a href="/preview/b/contact" style={{ color: 'inherit', opacity: 0.75, textDecoration: 'none' }}>Contact</a></div>
           </div>
