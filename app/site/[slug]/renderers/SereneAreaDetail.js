@@ -129,7 +129,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
                 fontSize: T.type.sm,
                 letterSpacing: '0.04em',
               }}>
-                {titleCase(labels.conversion)}
+                {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
               </a>
             )}
           </div>

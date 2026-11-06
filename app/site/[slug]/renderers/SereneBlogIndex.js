@@ -22,7 +22,16 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
     return match ? imgs[`service_${match.slug}`] : null
   }
 
-  const withImages = posts.map(p => ({ ...p, image: imageFor(p) }))
+  // The post's own photo first. A treatment photo stands in when it has none,
+  // but each one only once, so the list isn't the same picture seven times.
+  const usedPhotos = new Set()
+  const withImages = posts.map(p => {
+    const own = p.image?.url && !usedPhotos.has(p.image.url) ? p.image : null
+    const fallback = own ? null : imageFor(p)
+    const image = own || (fallback?.url && !usedPhotos.has(fallback.url) ? fallback : null)
+    if (image) usedPhotos.add(image.url)
+    return { ...p, image }
+  })
   const featured = withImages[0]
   const rest = withImages.slice(1)
 

@@ -163,7 +163,7 @@ function SereneHeader({ T, c, logo, base }) {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {labels.conversion.replace(/\b\w/g, ch => ch.toUpperCase())}
+                {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
               </a>
             )}
 
@@ -228,7 +228,7 @@ function SereneCTA({ T, c, headline }) {
             href={c.business.booking_url || `tel:${c.business.phone}`}
             style={{
               display: 'inline-block',
-              background: T.colors.secondary,
+              background: T.colors.accent,
               color: T.colors.onAccent,
               padding: '16px 40px',
               borderRadius: T.radius.full,
@@ -238,7 +238,7 @@ function SereneCTA({ T, c, headline }) {
               marginTop: 12,
             }}
           >
-            {titleCase(labels.conversion)}
+            {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
           </a>
         )}
         {/* With online booking as the button, the phone stays one tap away:
@@ -475,9 +475,9 @@ export default function SereneServices({ config: c, siteSlug }) {
                     <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(21px, 2.4vw, 27px)', fontWeight: 300, lineHeight: 1.15 }}>
                       {s.name}
                     </div>
-                    {s.short && (
+                    {(s.summary || s.short) && (
                       <div style={{ fontSize: T.type.sm, color: img ? T.colors.textOnImageDim : T.colors.textDim, marginTop: 12, lineHeight: 1.6 }}>
-                        {s.short}
+                        {s.summary || s.short}
                       </div>
                     )}
                   </div>

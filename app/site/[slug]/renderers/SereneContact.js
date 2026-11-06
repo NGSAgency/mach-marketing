@@ -58,7 +58,7 @@ export default function SereneContact({ config: c, siteSlug }) {
               margin: 0,
               maxWidth: 820,
             }}>
-              {titleCase(labels.conversion)}
+              {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
             </h1>
           </div>
         </section>
@@ -118,7 +118,7 @@ export default function SereneContact({ config: c, siteSlug }) {
                   fontSize: T.type.sm,
                   letterSpacing: '0.04em',
                 }}>
-                  {titleCase(labels.conversion)}
+                  {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
                 </a>
               )}
             </div>

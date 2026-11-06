@@ -184,7 +184,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
                 fontSize: T.type.sm,
                 letterSpacing: '0.04em',
               }}>
-                {labels.conversion.replace(/\b\w/g, ch => ch.toUpperCase())}
+                {labels.conversion.replace(/^\w/, ch => ch.toUpperCase())}
               </a>
             )}
           </div>

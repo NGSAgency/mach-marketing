@@ -87,7 +87,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                 style={{
                   display: 'inline-block',
                   marginTop: 32,
-                  background: T.colors.secondary,
+                  background: T.colors.accent,
                   color: T.colors.onAccent,
                   padding: '15px 38px',
                   borderRadius: T.radius.full,
