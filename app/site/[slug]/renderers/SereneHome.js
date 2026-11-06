@@ -318,7 +318,10 @@ export default function SereneHome({ config: c, siteSlug }) {
           return (
             <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
               <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)', gap: 'clamp(32px, 6vw, 96px)', alignItems: 'start' }}>
+                {/* Text and the pull quote on the left, the photo on the right,
+                    centred against each other: with the quote under the photo the
+                    left column ran out long before the right one did. */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 7fr) minmax(0, 5fr)', gap: 'clamp(32px, 6vw, 96px)', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontSize: T.type.xs, letterSpacing: '0.18em', textTransform: 'uppercase', color: T.colors.accent, marginBottom: 40 }}>
                       The practice
@@ -343,17 +346,10 @@ export default function SereneHome({ config: c, siteSlug }) {
                         <p key={i} style={{ margin: '0 0 20px' }}>{s}</p>
                       ))}
                     </div>
-                  </div>
-
-                  <div>
-                    {secondary && (
-                      <div style={{ aspectRatio: '3/4', overflow: 'hidden', marginBottom: pull ? 48 : 0 }}>
-                        <img src={secondary.url} alt={secondary.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                      </div>
-                    )}
                     {pull && (
                       <blockquote style={{
-                        margin: 0,
+                        margin: '20px 0 0',
+                        maxWidth: 560,
                         paddingLeft: 24,
                         borderLeft: `1px solid ${T.colors.accent}`,
                         fontFamily: T.fonts.display,
@@ -365,6 +361,14 @@ export default function SereneHome({ config: c, siteSlug }) {
                       }}>
                         {pull}
                       </blockquote>
+                    )}
+                  </div>
+
+                  <div>
+                    {secondary && (
+                      <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
+                        <img src={secondary.url} alt={secondary.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      </div>
                     )}
                   </div>
                 </div>
