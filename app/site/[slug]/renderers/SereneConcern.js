@@ -3,7 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { buildBreadcrumbSchema, buildFAQSchema, buildConcernPageSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
-import { SideColumn, SideFacts, SideAsk, SideNav, sideId, LONG_TEXT } from './SereneSide.js'
+import { RailLayout, Paras, QAList, sideId } from './SereneSide.js'
 import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
@@ -40,25 +40,11 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
   const texts = { 'About this': asText(copy('intro')), 'What contributes': asText(copy('causes')), Approaches: asText(copy('treatment_options')) }
   const tCell = fillRows(treatments.length, pickCols(treatments.length, 3))
   const treatmentsLabel = `${labels.offering} for ${concern.label.toLowerCase()}`
-  const navItems = [
-    treatments.length > 0 && treatmentsLabel, ...Object.keys(texts).filter(k => texts[k]), faqs.length > 0 && 'Questions',
-  ].filter(Boolean).map(l => ({ id: sideId(l), label: l }))
-  // The first block carries the practice's details; a long one after it, the list
-  const firstText = Object.keys(texts).find(k => texts[k])
-  const sideFor = (label, long) => label === firstText
-    ? <SideFacts T={T} c={c} labels={labels} />
-    : long ? <SideNav T={T} items={navItems} current={sideId(label)} /> : null
-
-  const Block = ({ label, body }) => body ? (
-    <section id={sideId(label)} style={{ scrollMarginTop: 96, padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <SideColumn T={T} label={label} size="clamp(21px, 2.4vw, 30px)">{sideFor(label, String(body).length >= LONG_TEXT)}</SideColumn>
-        <div style={{ maxWidth: 780, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
-          {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
-        </div>
-      </div>
-    </section>
-  ) : null
+  // The text sections in order, beside one side rail (SereneSide.js)
+  const railSections = [
+    ...Object.keys(texts).map(k => ({ label: k, body: texts[k] ? <Paras T={T} text={texts[k]} max={720} /> : null })),
+    { label: 'Questions', body: faqs.length > 0 ? <QAList T={T} faqs={faqs} /> : null },
+  ]
 
   return (
     <>
@@ -183,27 +169,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
           </section>
         )}
 
-        <div style={{ paddingTop: 'clamp(40px, 6vw, 72px)' }}>
-          <Block label="About this" body={texts['About this']} />
-          <Block label="What contributes" body={texts['What contributes']} />
-          <Block label="Approaches" body={texts.Approaches} />
-        </div>
-
-        {faqs.length > 0 && (
-          <section id="questions" style={{ scrollMarginTop: 96, padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <SideColumn T={T} label="Questions" size="clamp(26px, 3.2vw, 40px)"><SideAsk T={T} c={c} labels={labels} /></SideColumn>
-              <div style={{ maxWidth: 720 }}>
-                {faqs.map((f, i) => (
-                  <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-                    <h3 style={{ fontSize: T.type.lg, fontWeight: 400, margin: '0 0 10px' }}>{f.question}</h3>
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        <RailLayout T={T} c={c} labels={labels} sections={railSections} />
 
         <SereneCTA T={T} c={c} headline={concern.label} />
         <SereneFooter T={T} c={c} base={base} />

@@ -95,10 +95,16 @@ function SereneHeader({ T, c, logo, base }) {
           gap: 32,
         }}>
           <a href={base} style={{ textDecoration: 'none', flexShrink: 0 }}>
-            {logo ? (
+            {logo && c.brand?.logo_plate === false ? (
+              /* A logo prepared for a dark background (transparent, light
+                 artwork) sits straight on the header, a size up. */
+              <img src={logo} alt={c.business.display_name} className="serene-logo serene-logo-bare" style={{ height: 76, width: 'auto', maxWidth: 'none', display: 'block' }} />
+            ) : logo ? (
               /* Logo sits on a light plate. A practice often has only one
                  variant, and dark artwork on a dark background disappears
-                 entirely, so the plate guarantees it is visible either way. */
+                 entirely, so the plate guarantees it is visible either way.
+                 maxWidth none: the global "images never wider than their
+                 box" rule collapsed it to nothing inside this auto-width plate. */
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -106,7 +112,7 @@ function SereneHeader({ T, c, logo, base }) {
                 padding: '12px 22px',
                 borderRadius: T.radius.sm,
               }}>
-                <img src={logo} alt={c.business.display_name} className="serene-logo" style={{ height: 64, width: 'auto', display: 'block' }} />
+                <img src={logo} alt={c.business.display_name} className="serene-logo" style={{ height: 64, width: 'auto', maxWidth: 'none', display: 'block' }} />
               </span>
             ) : (
               <div style={{
@@ -209,6 +215,7 @@ function SereneHeader({ T, c, logo, base }) {
           .serene-header-inner { padding-left: 20px !important; padding-right: 20px !important; }
           .serene-utility { display: none !important; }
           .serene-logo { height: 44px !important; }
+          .serene-logo-bare { height: 56px !important; }
         }
       ` }} />
     </>

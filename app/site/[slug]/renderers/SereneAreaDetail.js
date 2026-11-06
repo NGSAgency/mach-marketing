@@ -11,7 +11,7 @@ import {
 import { parseJson } from '../../../../lib/templates/shared/claims.js'
 import { aroundTownFor } from './family/data.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
-import { SideColumn, SideFacts, SideAsk, SideNav, sideId, LONG_TEXT } from './SereneSide.js'
+import { RailLayout, Paras, QAList, sideId } from './SereneSide.js'
 import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
@@ -65,30 +65,14 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
   const allLabel = `All ${labels.offering.toLowerCase()}`
   // Rows always full: 20 treatments go four across
   const cell = fillRows(services.length, pickCols(services.length, 4))
-  const navItems = [
-    services.length > 0 && allLabel, intro.length > 0 && 'Overview', local.length > 0 && `Around ${area}`,
-    around.length > 0 && 'Where we work', faqs.length > 0 && 'Questions',
-  ].filter(Boolean).map(l => ({ id: sideId(l), label: l }))
-  // Overview carries the practice's details; a long section after it, the list
-  const sideFor = (label, long) => label === 'Overview'
-    ? <SideFacts T={T} c={c} area={area} labels={labels} />
-    : long ? <SideNav T={T} items={navItems} current={sideId(label)} /> : null
-
-  const Section = ({ label, paras, index = 0 }) => paras.length > 0 ? (
-    <section id={sideId(label)} style={{
-      scrollMarginTop: 96,
-      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
-      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
-      borderTop: `1px solid ${T.colors.borderLight}`,
-    }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <SideColumn T={T} label={label}>{sideFor(label, paras.join(' ').length >= LONG_TEXT)}</SideColumn>
-        <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
-          {paras.map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
-        </div>
-      </div>
-    </section>
-  ) : null
+  // The text sections in order, beside one side rail (SereneSide.js)
+  const parasBody = (ps) => ps.length > 0 ? <Paras T={T} text={ps.join('\n\n')} /> : null
+  const railSections = [
+    { label: 'Overview', body: parasBody(intro) },
+    { label: `Around ${area}`, body: parasBody(local) },
+    { label: 'Where we work', body: parasBody(around) },
+    { label: 'Questions', body: faqs.length > 0 ? <QAList T={T} faqs={faqs} /> : null },
+  ]
 
   const hasCopy = intro.length > 0 || local.length > 0
 
@@ -214,26 +198,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
           </section>
         )}
 
-        <Section label="Overview" paras={intro} index={0} />
-        <Section label={`Around ${area}`} paras={local} index={intro.length > 0 ? 1 : 0} />
-
-        <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
-
-        {faqs.length > 0 && (
-          <section id="questions" style={{ scrollMarginTop: 96, background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <SideColumn T={T} label="Questions" size="clamp(26px, 3.2vw, 40px)"><SideAsk T={T} c={c} labels={labels} /></SideColumn>
-              <div style={{ maxWidth: 720 }}>
-                {faqs.map((f, i) => (
-                  <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-                    <h3 style={{ fontSize: T.type.lg, fontWeight: 400, margin: '0 0 10px', color: T.colors.text }}>{f.question}</h3>
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        <RailLayout T={T} c={c} labels={labels} area={area} sections={railSections} />
 
         {otherAreas.length > 0 && (
           <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(56px, 8vw, 104px)' }}>

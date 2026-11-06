@@ -1,38 +1,15 @@
 import { aroundTownFor } from './family/data.js'
+import SereneRailNav from './SereneRailNav.js'
 
-// The left column of SERENE's two-column sections (heading left, text right).
-//
-// It used to hold the heading alone, so a long section left a tall empty strip
-// down the left of the page (the balance check flags it). Now the column does
-// a job and stays in view while the text beside it scrolls:
-//   - the first section of a page: address, hours, phone, the towns served,
-//     and the booking button
-//   - Questions: a short "still deciding" prompt with the phone and booking
-//   - a long section in between: a list of the page's sections, the current
-//     one marked, so a reader can jump ahead
-// Everything shown is the practice's own information; a line with no data
-// behind it is left out. On a phone the columns stack and the sticky turns
-// off (SereneResponsive).
+// The side rail of SERENE's treatment, town and concern pages, and the
+// pieces it is built from (see RailLayout below). Everything shown is the
+// practice's own information; a line with no data behind it is left out.
 
-const STICK_TOP = 112 // clears the sticky header
+// Clears the sticky header (121px on a laptop) with room to spare; at 112
+// the top of the column slid under it
+const STICK_TOP = 144
 
 export const sideId = (label) => String(label || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-
-// A section counts as long when its text runs past this many characters; a
-// short one keeps the heading alone so the side never outgrows the text.
-export const LONG_TEXT = 700
-
-export function SideColumn({ T, label, level = 2, size = 'clamp(20px, 2.3vw, 28px)', children }) {
-  const H = level === 2 ? 'h2' : 'div'
-  return (
-    <div style={{ position: 'sticky', top: STICK_TOP, alignSelf: 'start', display: 'grid', gap: 24 }}>
-      <H style={{ fontFamily: T.fonts.display, fontSize: size, fontWeight: 300, lineHeight: 1.2, letterSpacing: '-0.01em', color: T.colors.text, margin: 0, paddingTop: 2 }}>
-        {label}
-      </H>
-      {children}
-    </div>
-  )
-}
 
 export function BookButton({ T, c, label }) {
   const href = c.business?.booking_url || (c.business?.phone ? `tel:${c.business.phone}` : null)
@@ -63,13 +40,13 @@ const servingFor = (c, area) => {
   return list.slice(0, 6).join(', ') + (list.length > 6 ? ' and more' : '')
 }
 
-export function SideFacts({ T, c, area, labels }) {
+export function SideFacts({ T, c, area, labels, towns = true }) {
   const b = c.business || {}
   const rows = [
     b.address_line && { k: 'Address', v: addressLines(b.address_line).map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>) },
     b.hours_display && { k: 'Hours', v: String(b.hours_display).split(' · ').map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>) },
     b.phone_display && { k: 'Phone', v: <a href={`tel:${b.phone}`} style={{ color: T.colors.text, textDecoration: 'none' }}>{b.phone_display}</a> },
-    servingFor(c, area) && { k: 'Serving', v: servingFor(c, area) },
+    towns && servingFor(c, area) && { k: 'Serving', v: servingFor(c, area) },
   ].filter(Boolean)
   return (
     <>
@@ -88,42 +65,72 @@ export function SideFacts({ T, c, area, labels }) {
   )
 }
 
-export function SideAsk({ T, c, labels }) {
-  const b = c.business || {}
-  const conversion = String(labels?.conversion || 'book a consultation').toLowerCase()
+// One side rail for the run of text sections on a page.
+//
+// Each section used to carry its own sticky column, so the side content
+// handed over at every section boundary: the old column slid up under the
+// header before the next arrived, and short sections (What it costs,
+// Questions) had no list at all. Now one rail runs the length of the
+// sections and stays put: the list of sections with the current one
+// marked, then the practice's details and the booking button. Each
+// section's heading sits at the top of its text. On a phone the rail is
+// hidden and the sections read straight through.
+export function RailLayout({ T, c, labels, area, sections }) {
+  const shown = sections.filter(s => s && s.body)
+  if (!shown.length) return null
+  const items = shown.map(s => ({ id: sideId(s.label), label: s.label }))
   return (
-    <>
-      <p style={{ margin: 0, fontSize: T.type.sm, lineHeight: 1.75, color: T.colors.textDim, maxWidth: '30ch' }}>
-        Still deciding?{' '}
-        {b.phone_display
-          ? <>Call <a href={`tel:${b.phone}`} style={{ color: T.colors.text, textDecorationColor: T.colors.accent, textUnderlineOffset: 4 }}>{b.phone_display}</a> or {conversion} and ask in person.</>
-          : <>Ask in person at a consultation.</>}
-      </p>
-      <BookButton T={T} c={c} label={labels?.conversion} />
-    </>
+    <div style={{ padding: 'clamp(40px, 6vw, 72px) clamp(24px, 5vw, 96px) clamp(56px, 8vw, 104px)' }}>
+      <div className="sr-rail" style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)', alignItems: 'start' }}>
+        <aside className="sr-rail-side" style={{ position: 'sticky', top: STICK_TOP, display: 'grid', gap: 28, maxHeight: `calc(100vh - ${STICK_TOP + 24}px)`, overflowY: 'auto' }}>
+          <SereneRailNav items={items} colors={{ text: T.colors.text, textMuted: T.colors.textMuted, accent: T.colors.accent, border: T.colors.border }} />
+          <div style={{ display: 'grid', gap: 22, paddingTop: 24, borderTop: `1px solid ${T.colors.borderLight}` }}>
+            {/* Towns are left to the sections and footer, which keeps the rail
+                short enough to stay with the last section to its end */}
+            <SideFacts T={T} c={c} area={area} labels={labels} towns={false} />
+          </div>
+        </aside>
+        <div>
+          {shown.map((s, i) => (
+            <section key={s.label} id={sideId(s.label)} style={{
+              scrollMarginTop: STICK_TOP,
+              paddingBlock: i === 0 ? '0 clamp(36px, 5vw, 56px)' : 'clamp(36px, 5vw, 56px)',
+              borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}`,
+            }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(24px, 2.6vw, 34px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.01em', color: T.colors.text, margin: '0 0 22px' }}>
+                {s.label}
+              </h2>
+              {s.body}
+            </section>
+          ))}
+        </div>
+      </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 860px) { .sr-rail { grid-template-columns: minmax(0, 1fr) !important; } .sr-rail-side { display: none !important; } }
+      ` }} />
+    </div>
   )
 }
 
-export function SideNav({ T, items, current }) {
-  if (!items || items.length < 3) return null
+// The usual body of a text section: paragraphs split on blank lines
+export function Paras({ T, text, max = 680 }) {
   return (
-    <nav aria-label="On this page">
-      <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 2 }}>
-        {items.map(it => {
-          const on = it.id === current
-          return (
-            <li key={it.id}>
-              <a href={`#${it.id}`} aria-current={on ? 'location' : undefined} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '5px 0', textDecoration: 'none',
-                fontSize: 13, letterSpacing: '0.02em', color: on ? T.colors.text : T.colors.textMuted,
-              }}>
-                <span aria-hidden="true" style={{ width: on ? 22 : 10, height: 1, background: on ? T.colors.accent : T.colors.border, flex: 'none' }} />
-                {it.label}
-              </a>
-            </li>
-          )
-        })}
-      </ol>
-    </nav>
+    <div style={{ maxWidth: max, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
+      {String(text).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
+    </div>
+  )
+}
+
+// Questions and answers, as the sections show them
+export function QAList({ T, faqs }) {
+  return (
+    <div style={{ maxWidth: 720 }}>
+      {faqs.map((f, i) => (
+        <div key={i} style={{ padding: '22px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
+          <h3 style={{ fontSize: T.type.lg, fontWeight: 400, lineHeight: 1.4, margin: '0 0 10px', color: T.colors.text }}>{f.question}</h3>
+          <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
+        </div>
+      ))}
+    </div>
   )
 }

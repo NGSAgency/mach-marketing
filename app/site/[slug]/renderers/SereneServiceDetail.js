@@ -15,7 +15,7 @@ import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/page
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
 import { signsFrom, serviceCostRows } from './family/data.js'
 import { RelatedLinks } from '../../../../lib/templates/shared/related.js'
-import { SideColumn, SideFacts, SideAsk, SideNav, sideId, LONG_TEXT } from './SereneSide.js'
+import { RailLayout, Paras, QAList } from './SereneSide.js'
 
 export default function SereneServiceDetail({ config: c, siteSlug, service, conceptOnly = false }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -46,92 +46,59 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
     'Our approach': asText(copy('materials_and_methods')), 'Who it suits': asText(copy('candidacy')),
     Aftercare: asText(copy('aftercare')),
   }
-  const cost = serviceCostRows(c, service)
-  const navItems = [
-    texts.Overview && 'Overview', signs && 'Signs to look for', texts['What to expect'] && 'What to expect',
-    texts['Our approach'] && 'Our approach', texts['Who it suits'] && 'Who it suits', texts.Aftercare && 'Aftercare',
-    cost.has && 'What it costs', faqs.length > 0 && 'Questions',
-  ].filter(Boolean).map(l => ({ id: sideId(l), label: l }))
-  // First section: the practice's details. A long one later on: the list.
-  const sideFor = (label, long) => label === navItems[0]?.label
-    ? <SideFacts T={T} c={c} labels={labels} />
-    : long ? <SideNav T={T} items={navItems} current={sideId(label)} /> : null
 
-  const Section = ({ label, body, index = 0 }) => body ? (
-    <section id={sideId(label)} style={{
-      scrollMarginTop: 96,
-      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
-      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
-      borderTop: `1px solid ${T.colors.borderLight}`,
-    }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <SideColumn T={T} label={label}>{sideFor(label, String(body).length >= LONG_TEXT)}</SideColumn>
-        <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
-          {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
-        </div>
-      </div>
-    </section>
-  ) : null
-
-  // The same two-column shape again, with prices in the right column.
+  // Prices as label and value rows, with any notes under them.
   //
   // SERENE was built before the shared content layer and never read any of
   // it, so a client could tell us what a treatment costs, how they take
   // payment, whether a consultation is free and what their licence number is,
   // and the site said none of it. For a practice where the first question is
   // "how much is this", that was the worst gap of the eight families.
-  const CostSection = ({ index = 0 }) => cost.has ? (
-    <section id={sideId('What it costs')} style={{
-      scrollMarginTop: 96,
-      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
-      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
-      borderTop: `1px solid ${T.colors.borderLight}`,
-    }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <SideColumn T={T} label="What it costs">{sideFor('What it costs', cost.rows.length + cost.notes.length >= 4)}</SideColumn>
-        <div style={{ maxWidth: 640 }}>
-          <dl style={{ margin: 0 }}>
-            {cost.rows.map((r, i) => (
-              <div key={r.k} style={{
-                display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 24,
-                alignItems: 'baseline', paddingBlock: 18,
-                borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}`,
-              }}>
-                <dt style={{ fontSize: T.type.xs, letterSpacing: '0.16em', textTransform: 'uppercase', color: T.colors.accent }}>{r.k}</dt>
-                <dd style={{ margin: 0, fontSize: T.type.base, lineHeight: 1.7, color: T.colors.text, fontWeight: 300 }}>{r.v}</dd>
-              </div>
-            ))}
-          </dl>
-          {cost.notes.map((n, i) => (
-            <p key={i} style={{ margin: i ? '14px 0 0' : '22px 0 0', fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>{n}</p>
-          ))}
-        </div>
-      </div>
-    </section>
+  const cost = serviceCostRows(c, service)
+  const costBody = cost.has ? (
+    <div style={{ maxWidth: 680 }}>
+      <dl style={{ margin: 0 }}>
+        {cost.rows.map((r, i) => (
+          <div key={r.k} style={{
+            display: 'grid', gridTemplateColumns: 'minmax(0, 34%) minmax(0, 1fr)', gap: 24,
+            alignItems: 'baseline', paddingBlock: 18,
+            borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}`,
+          }}>
+            <dt style={{ fontSize: T.type.xs, letterSpacing: '0.16em', textTransform: 'uppercase', color: T.colors.accent }}>{r.k}</dt>
+            <dd style={{ margin: 0, fontSize: T.type.base, lineHeight: 1.7, color: T.colors.text, fontWeight: 300 }}>{r.v}</dd>
+          </div>
+        ))}
+      </dl>
+      {cost.notes.map((n, i) => (
+        <p key={i} style={{ margin: i ? '14px 0 0' : '22px 0 0', fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>{n}</p>
+      ))}
+    </div>
   ) : null
 
-  // The same two-column shape as a Section, but the right column is a list:
-  // the concern set in the display face, what it usually means underneath.
-  const SignsSection = ({ index = 0 }) => signs ? (
-    <section id={sideId('Signs to look for')} style={{
-      scrollMarginTop: 96,
-      padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
-      background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
-      borderTop: `1px solid ${T.colors.borderLight}`,
-    }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <SideColumn T={T} label="Signs to look for">{sideFor('Signs to look for', signs.length >= 4)}</SideColumn>
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: 640 }}>
-          {signs.map((sg, i) => (
-            <li key={i} style={{ padding: '22px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-              <h3 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(19px, 2vw, 23px)', fontWeight: 300, lineHeight: 1.25, letterSpacing: '-0.01em', margin: 0, color: T.colors.text }}>{sg.sign}</h3>
-              {sg.detail && <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim, margin: '10px 0 0' }}>{sg.detail}</p>}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+  // The concern set in the display face, what it usually means underneath
+  const signsBody = signs ? (
+    <ul style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: 680 }}>
+      {signs.map((sg, i) => (
+        <li key={i} style={{ padding: '22px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
+          <h3 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(19px, 2vw, 23px)', fontWeight: 300, lineHeight: 1.25, letterSpacing: '-0.01em', margin: 0, color: T.colors.text }}>{sg.sign}</h3>
+          {sg.detail && <p style={{ fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim, margin: '10px 0 0' }}>{sg.detail}</p>}
+        </li>
+      ))}
+    </ul>
   ) : null
+
+  // Every text section in order, beside one side rail (SereneSide.js)
+  const textBody = (k) => texts[k] ? <Paras T={T} text={texts[k]} /> : null
+  const railSections = [
+    { label: 'Overview', body: textBody('Overview') },
+    { label: 'Signs to look for', body: signsBody },
+    { label: 'What to expect', body: textBody('What to expect') },
+    { label: 'Our approach', body: textBody('Our approach') },
+    { label: 'Who it suits', body: textBody('Who it suits') },
+    { label: 'Aftercare', body: textBody('Aftercare') },
+    { label: 'What it costs', body: costBody },
+    { label: 'Questions', body: faqs.length > 0 ? <QAList T={T} faqs={faqs} /> : null },
+  ]
 
   return (
     <>
@@ -212,31 +179,9 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
           </section>
         )}
 
-        <div style={{ paddingTop: conceptOnly ? 'clamp(32px, 4vw, 56px)' : 'clamp(48px, 7vw, 88px)' }}>
-          <Section label="Overview" body={texts.Overview} index={0} />
-          <SignsSection index={1} />
-          <Section label="What to expect" body={texts['What to expect']} index={signs ? 2 : 1} />
-          <Section label="Our approach" body={texts['Our approach']} index={signs ? 3 : 2} />
-          <Section label="Who it suits" body={texts['Who it suits']} index={signs ? 4 : 3} />
-          <Section label="Aftercare" body={texts.Aftercare} index={signs ? 5 : 4} />
-          <CostSection index={signs ? 6 : 5} />
+        <div style={{ paddingTop: conceptOnly ? 'clamp(8px, 2vw, 24px)' : 'clamp(16px, 3vw, 32px)' }}>
+          <RailLayout T={T} c={c} labels={labels} sections={railSections} />
         </div>
-
-        {faqs.length > 0 && (
-          <section id="questions" style={{ scrollMarginTop: 96, background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <SideColumn T={T} label="Questions" size="clamp(26px, 3.2vw, 40px)"><SideAsk T={T} c={c} labels={labels} /></SideColumn>
-              <div style={{ maxWidth: 720 }}>
-                {faqs.map((f, i) => (
-                  <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-                    <h3 style={{ fontSize: T.type.lg, fontWeight: 400, margin: '0 0 10px', color: T.colors.text }}>{f.question}</h3>
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* Links to every area page for this treatment. These are the combo
             pages, and cross-linking them from the treatment page is what gets
