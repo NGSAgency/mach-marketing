@@ -203,11 +203,18 @@ function SereneHeader({ T, c, logo, base }) {
         }
         .serene-navlink:hover::after { width: 100%; }
         .serene-navlink:hover { color: ${T.colors.accentLight}; }
-        @media (max-width: 1024px) {
+        /* Six links, the logo and the booking button need about 1200px; below
+           that the links move into the menu. At 1024 the header ran past the
+           edge of a laptop screen and the booking button was cut off. */
+        @media (max-width: 1199px) {
           .serene-nav { display: none !important; }
           .serene-menu { display: block !important; }
           .serene-header-inner { grid-template-columns: auto auto !important; justify-content: space-between !important; }
         }
+        /* The shared menu shows its own full row of links from 768px up; in
+           this header it is only ever the menu button */
+        .serene-menu .mach-nav-desktop { display: none !important; }
+        .serene-menu .mach-nav-mobile { display: flex !important; }
         @media (max-width: 640px) {
           /* Booking is already pinned to the bottom of the screen on mobile, so
              a second button crowds a narrow header for no gain. */

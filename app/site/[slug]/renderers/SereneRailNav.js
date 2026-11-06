@@ -8,14 +8,25 @@ export default function SereneRailNav({ items, colors }) {
   const [current, setCurrent] = useState(items[0]?.id)
   useEffect(() => {
     const els = items.map(it => document.getElementById(it.id)).filter(Boolean)
-    if (!els.length || typeof IntersectionObserver === 'undefined') return
-    // A section counts as current once its top passes just under the header
-    const io = new IntersectionObserver(entries => {
-      const seen = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-      if (seen[0]) setCurrent(seen[0].target.id)
-    }, { rootMargin: '-150px 0px -55% 0px', threshold: 0 })
-    els.forEach(el => io.observe(el))
-    return () => io.disconnect()
+    if (!els.length) return
+    // The current section is the last one whose top has passed just under
+    // the sticky header; at the very bottom of the page, the last section.
+    // (An IntersectionObserver picked the topmost section still in view,
+    // which after a jump was the one before.)
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const line = 170
+      let cur = els[0].id
+      for (const el of els) if (el.getBoundingClientRect().top <= line) cur = el.id
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = els[els.length - 1].id
+      setCurrent(cur)
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (frame) cancelAnimationFrame(frame) }
   }, [items])
   if (!items || items.length < 2) return null
   return (
