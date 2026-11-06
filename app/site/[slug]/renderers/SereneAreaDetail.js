@@ -156,10 +156,8 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
           </section>
         )}
 
-        <Section label="Overview" paras={intro} index={0} />
-
-        {/* The treatment list sits right after the overview, so visitors see
-            what is offered here before the local detail and questions. */}
+        {/* The treatment list comes first, straight under the heading, so
+            visitors see what is offered here before any reading. */}
         {/* Every treatment for this area, each linking to its combo page. This
             is what gets the combo pages crawled from the area side. */}
         {services.length > 0 && (
@@ -209,6 +207,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
           </section>
         )}
 
+        <Section label="Overview" paras={intro} index={0} />
         <Section label={`Around ${area}`} paras={local} index={intro.length > 0 ? 1 : 0} />
 
         <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
