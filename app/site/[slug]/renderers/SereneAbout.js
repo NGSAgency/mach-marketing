@@ -36,14 +36,24 @@ export default function SereneAbout({ config: c, siteSlug }) {
           if (c.business.established_year) facts.push({ k: 'Established', v: c.business.established_year })
           if (c.business.address_line) facts.push({ k: 'Location', v: c.business.address_line })
           if ((c.services || []).length) facts.push({ k: labels.offering, v: `${c.services.length} offered` })
-          if ((c.service_areas || []).length) facts.push({ k: 'Areas served', v: `${c.service_areas.length}` })
+          // The towns by name: "1" told a reader nothing
+          if ((c.service_areas || []).length) facts.push({ k: 'Areas served', v: c.service_areas.map(a => String(a).trim()).filter(Boolean).join(', ') })
           // What the practice is licensed and insured to do. A medical
           // practice is judged on exactly this, and SERENE published none of
           // it. Certifications are listed in full here rather than capped:
           // the list beside a booking button is a glance, this is the page
           // someone reads when they are checking us out.
           const creds = c.credentials || {}
-          if (creds.license_number) facts.push({ k: 'License', v: creds.license_number })
+          // Several licences typed into one field ("2026011369 Dr Rhea Rogers MD
+          // 2016004313 Amber Lockard LE") are split at each number, one per
+          // line, the person first
+          if (creds.license_number) {
+            const lines = String(creds.license_number).trim().split(/\s+(?=\d{6,}\b)/).map(l => {
+              const m = /^(\d{6,})\s+(.+)$/.exec(l.trim())
+              return m ? `${m[2].trim()} · ${m[1]}` : l.trim()
+            }).filter(Boolean)
+            facts.push({ k: lines.length > 1 ? 'Licenses' : 'License', v: lines })
+          }
           if (creds.insurance_info) facts.push({ k: 'Insurance', v: creds.insurance_info })
           const certs = (c.certifications || [])
             .map(x => (typeof x === 'string' ? x : x?.name))
@@ -94,33 +104,20 @@ export default function SereneAbout({ config: c, siteSlug }) {
                       {body.slice(0, 3).map((s, i) => <p key={i} style={{ margin: '0 0 20px' }}>{s}</p>)}
                     </div>
 
+                    {/* A fact sheet: one fact per row, label left and value right,
+                        in the reading size. Mixed three-, two- and one-across rows
+                        in the display face read as cluttered. */}
                     {facts.length > 0 && (
-                      <div className="sr-fill" style={{
-                        '--g': '24px',
-                        marginTop: 40,
-                        paddingTop: 32,
-                        borderTop: `1px solid ${T.colors.borderLight}`,
-                      }}>
-                        {/* Short facts share rows (four sit two by two); a long one
-                            (the address, a licence line, the certifications) takes a
-                            row of its own, so no row is three times the height of
-                            the one beside it. */}
-                        {(() => {
-                          const isLong = f => String(f.v).length > 28
-                          const short = facts.filter(f => !isLong(f)), long = facts.filter(isLong)
-                          const cell = fillRows(short.length, short.length === 4 ? 2 : pickCols(short.length, 3))
-                          return [...short, ...long].map((f, i) => ({ f, style: i < short.length ? cell(i) : { '--k': 1, '--k-md': 1 } }))
-                        })().map(({ f, style }) => (
-                          <div key={f.k} className="sr-cell" style={style}>
-                            <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.colors.textMuted, marginBottom: 8 }}>
-                              {f.k}
-                            </div>
-                            <div style={{ fontFamily: T.fonts.display, fontSize: 'clamp(19px, 2.1vw, 25px)', fontWeight: 300, color: T.colors.text }}>
-                              {f.v}
-                            </div>
+                      <dl className="sr-facts" style={{ margin: '40px 0 0', borderTop: `1px solid ${T.colors.borderLight}` }}>
+                        {facts.map(f => (
+                          <div key={f.k} style={{ display: 'grid', gridTemplateColumns: 'minmax(110px, 30%) minmax(0, 1fr)', gap: 20, alignItems: 'baseline', padding: '14px 0', borderBottom: `1px solid ${T.colors.borderLight}` }}>
+                            <dt style={{ fontSize: T.type.xs, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.colors.textMuted }}>{f.k}</dt>
+                            <dd style={{ margin: 0, fontSize: T.type.base, lineHeight: 1.6, color: T.colors.text }}>
+                              {Array.isArray(f.v) ? f.v.map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>) : f.v}
+                            </dd>
                           </div>
                         ))}
-                      </div>
+                      </dl>
                     )}
                   </div>
 
