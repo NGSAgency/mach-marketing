@@ -26,9 +26,9 @@ export async function placeIndexMetadata({ params }, segment) {
   return buildStaticMetadata(c, {
     slug: segment,
     title: plural,
-    description: areas.length
-      ? `${c.business.display_name} serves ${areas.slice(0, 4).join(', ')}${areas.length > 4 ? ' and more' : ''}.`
-      : `${plural} served by ${c.business.display_name}.`,
+    // A full sentence: what they offer, where, and how to book. The old one
+    // line ("X serves Kansas City.") was too short to be worth showing.
+    description: placeIndexDescription(c, areas, plural),
   })
 }
 
@@ -56,4 +56,15 @@ export async function placeDetailPage({ params, searchParams }, segment) {
   if (!area) notFound()
   const Renderer = rendererFor(await previewFamily(searchParams) || result.config.template_slug, 'AreaDetail')
   return <Renderer config={result.config} siteSlug={slug} area={area} />
+}
+
+function placeIndexDescription(c, areas, plural) {
+  const name = c.business.display_name
+  const offering = String(c.profile?.nouns?.offering?.plural || 'services').toLowerCase()
+  const phone = String(c.business?.phone || '').trim()
+  const list = areas.slice(0, 4).map(a => String(a).trim()).join(', ') + (areas.length > 4 ? ' and more' : '')
+  const book = phone ? ` Call ${phone} or book online.` : ' Book online.'
+  return areas.length
+    ? `${name} offers ${offering} in ${list}. See what is available near you.${book}`
+    : `${plural} served by ${name}, with the ${offering} available in each.${book}`
 }
