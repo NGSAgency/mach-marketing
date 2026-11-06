@@ -23,8 +23,12 @@ function balanceIssues(doc) {
     const top = el.getBoundingClientRect().top; let b = top
     ;[el, ...el.querySelectorAll('*')].forEach(k => {
       let r = null
+      // Text is measured wherever it sits, including a link with a small
+      // marker beside its words (a span), which is not a leaf element
+      const hasText = [...k.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())
       if (k.tagName === 'IMG') r = k.getBoundingClientRect()
-      else if (k.children.length === 0 && k.textContent.trim()) { const rg = doc.createRange(); rg.selectNodeContents(k); r = rg.getBoundingClientRect() }
+      else if (hasText || (k.children.length === 0 && k.textContent.trim())) { const rg = doc.createRange(); rg.selectNodeContents(k); r = rg.getBoundingClientRect() }
+      else if (k.children.length === 0 && /^(A|BUTTON)$/.test(k.tagName)) r = k.getBoundingClientRect()
       if (r && r.height) b = Math.max(b, r.bottom)
     })
     return b - top
@@ -41,9 +45,21 @@ function balanceIssues(doc) {
       kids.forEach(k => { const t = Math.round(k.getBoundingClientRect().top / 4) * 4; (rows[t] = rows[t] || []).push(k) })
       const rowList = Object.keys(rows).map(Number).sort((a, b) => a - b).map(t => rows[t])
       if (rowList.length === 1 && kids.length === 2) {
-        const [a, b] = kids.map(contentH); const lo = Math.min(a, b), hi = Math.max(a, b)
-        if (hi > 600 && lo / hi < 0.2) { out.push(`${name} | heading alone beside ${Math.round(hi)}px of content`); continue }
+        const hs = kids.map(contentH); const lo = Math.min(...hs), hi = Math.max(...hs)
+        const short = kids[hs.indexOf(lo)]
+        // A side column that stays in view as the text scrolls never sits
+        // empty, so it passes when it holds more than a heading
+        const sticky = [short, ...short.children].some(e => win.getComputedStyle(e).position === 'sticky') && short.querySelectorAll('*').length > 1
+        if (hi > 600 && lo / hi < 0.2 && !sticky) { out.push(`${name} | heading alone beside ${Math.round(hi)}px of content`); continue }
+        if (sticky) continue
+        // A heading beside a short block of text is the section's layout,
+        // not two cards; only the tall case above is a problem
+        if (short.querySelector('h2, h3') && !short.querySelector('img') && short.textContent.trim().length < 80) continue
       }
+      // A deliberate big-and-small grid (one card two rows tall) is judged
+      // on whether it fills its rows, not on matching heights
+      const spans = kids.some(k => { const cs = win.getComputedStyle(k); return /span\s*[2-9]/.test(cs.gridRowStart + ' ' + cs.gridRowEnd) })
+      if (spans) continue
       if (rowList[0].length < 2) continue
       // Small tags and chips wrap freely; only cards are held to full rows
       const avgH = kids.reduce((n, k) => n + k.getBoundingClientRect().height, 0) / kids.length

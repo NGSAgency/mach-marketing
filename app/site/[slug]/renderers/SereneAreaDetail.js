@@ -11,6 +11,8 @@ import {
 import { parseJson } from '../../../../lib/templates/shared/claims.js'
 import { aroundTownFor } from './family/data.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
+import { SideColumn, SideFacts, SideAsk, SideNav, sideId, LONG_TEXT } from './SereneSide.js'
+import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
@@ -60,25 +62,27 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
 
   const bookHref = c.business?.booking_url || (c.business?.phone ? `tel:${c.business.phone}` : null)
 
+  const allLabel = `All ${labels.offering.toLowerCase()}`
+  // Rows always full: 20 treatments go four across
+  const cell = fillRows(services.length, pickCols(services.length, 4))
+  const navItems = [
+    services.length > 0 && allLabel, intro.length > 0 && 'Overview', local.length > 0 && `Around ${area}`,
+    around.length > 0 && 'Where we work', faqs.length > 0 && 'Questions',
+  ].filter(Boolean).map(l => ({ id: sideId(l), label: l }))
+  // Overview carries the practice's details; a long section after it, the list
+  const sideFor = (label, long) => label === 'Overview'
+    ? <SideFacts T={T} c={c} area={area} labels={labels} />
+    : long ? <SideNav T={T} items={navItems} current={sideId(label)} /> : null
+
   const Section = ({ label, paras, index = 0 }) => paras.length > 0 ? (
-    <section style={{
+    <section id={sideId(label)} style={{
+      scrollMarginTop: 96,
       padding: 'clamp(32px, 5vw, 56px) clamp(24px, 5vw, 96px)',
       background: index % 2 === 1 ? T.colors.bgAlt : 'transparent',
       borderTop: `1px solid ${T.colors.borderLight}`,
     }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <h2 style={{
-          fontFamily: T.fonts.display,
-          fontSize: 'clamp(20px, 2.3vw, 28px)',
-          fontWeight: 300,
-          lineHeight: 1.2,
-          letterSpacing: '-0.01em',
-          color: T.colors.text,
-          margin: 0,
-          paddingTop: 2,
-        }}>
-          {label}
-        </h2>
+        <SideColumn T={T} label={label}>{sideFor(label, paras.join(' ').length >= LONG_TEXT)}</SideColumn>
         <div style={{ maxWidth: 640, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
           {paras.map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
         </div>
@@ -161,7 +165,7 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
         {/* Every treatment for this area, each linking to its combo page. This
             is what gets the combo pages crawled from the area side. */}
         {services.length > 0 && (
-          <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
+          <section id={sideId(allLabel)} style={{ scrollMarginTop: 96, padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${T.colors.borderLight}` }}>
             <div style={{ maxWidth: 1400, margin: '0 auto' }}>
               <h2 style={{
                 fontFamily: T.fonts.display,
@@ -173,14 +177,17 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
                 All {labels.offering.toLowerCase()}
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))', gap: 8 }}>
-                {services.map(s => {
+              <FillCSS />
+              <div className="sr-fill" style={{ '--g': '8px' }}>
+                {services.map((s, i) => {
                   const img = (c.images || {})[`service_${s.slug}`]
                   return (
                     <a
                       key={s.slug}
+                      className="sr-cell"
                       href={`${base}${urlCombo(s, area, c)}`}
                       style={{
+                        ...cell(i),
                         position: 'relative',
                         display: 'block',
                         minHeight: 220,
@@ -213,11 +220,9 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
         <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
 
         {faqs.length > 0 && (
-          <section style={{ background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
+          <section id="questions" style={{ scrollMarginTop: 96, background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
             <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.2vw, 40px)', fontWeight: 300, margin: 0, letterSpacing: '-0.015em' }}>
-                Questions
-              </h2>
+              <SideColumn T={T} label="Questions" size="clamp(26px, 3.2vw, 40px)"><SideAsk T={T} c={c} labels={labels} /></SideColumn>
               <div style={{ maxWidth: 720 }}>
                 {faqs.map((f, i) => (
                   <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>

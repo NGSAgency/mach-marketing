@@ -4,6 +4,7 @@ import { buildBreadcrumbSchema, buildFAQSchema, JsonLd } from '../../../../lib/t
 import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import FAQAccordion from './FAQAccordion.js'
+import { BookButton } from './SereneSide.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
 export default function SereneFAQ({ config: c, siteSlug }) {
@@ -56,8 +57,8 @@ export default function SereneFAQ({ config: c, siteSlug }) {
             gap: 'clamp(24px, 5vw, 80px)',
             alignItems: 'start',
           }}>
-            <div style={{ fontSize: T.type.sm, lineHeight: 1.8, color: T.colors.textDim }}>
-              Cannot find what you are looking for?
+            <div style={{ position: 'sticky', top: 112, alignSelf: 'start', display: 'grid', gap: 20, fontSize: T.type.sm, lineHeight: 1.8, color: T.colors.textDim }}>
+              <span>Cannot find what you are looking for?
               {c.business.phone_display && (
                 <>
                   {' '}
@@ -66,6 +67,8 @@ export default function SereneFAQ({ config: c, siteSlug }) {
                   </a>
                 </>
               )}
+              </span>
+              <BookButton T={T} c={c} />
             </div>
 
             <div>

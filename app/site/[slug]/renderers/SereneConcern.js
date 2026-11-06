@@ -3,6 +3,8 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
 import { buildBreadcrumbSchema, buildFAQSchema, buildConcernPageSchema, JsonLd, urlService } from '../../../../lib/templates/shared/seo/index.js'
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
+import { SideColumn, SideFacts, SideAsk, SideNav, sideId, LONG_TEXT } from './SereneSide.js'
+import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 
@@ -35,20 +37,22 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
     faqs.length > 0 ? buildFAQSchema(faqs) : null,
   ].filter(Boolean)
 
+  const texts = { 'About this': asText(copy('intro')), 'What contributes': asText(copy('causes')), Approaches: asText(copy('treatment_options')) }
+  const tCell = fillRows(treatments.length, pickCols(treatments.length, 3))
+  const treatmentsLabel = `${labels.offering} for ${concern.label.toLowerCase()}`
+  const navItems = [
+    treatments.length > 0 && treatmentsLabel, ...Object.keys(texts).filter(k => texts[k]), faqs.length > 0 && 'Questions',
+  ].filter(Boolean).map(l => ({ id: sideId(l), label: l }))
+  // The first block carries the practice's details; a long one after it, the list
+  const firstText = Object.keys(texts).find(k => texts[k])
+  const sideFor = (label, long) => label === firstText
+    ? <SideFacts T={T} c={c} labels={labels} />
+    : long ? <SideNav T={T} items={navItems} current={sideId(label)} /> : null
+
   const Block = ({ label, body }) => body ? (
-    <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 9fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-        <div style={{
-          fontFamily: T.fonts.display,
-          fontSize: 'clamp(21px, 2.4vw, 30px)',
-          fontWeight: 300,
-          lineHeight: 1.2,
-          letterSpacing: '-0.01em',
-          color: T.colors.text,
-          paddingTop: 4,
-        }}>
-          {label}
-        </div>
+    <section id={sideId(label)} style={{ scrollMarginTop: 96, padding: '0 clamp(24px, 5vw, 96px) clamp(40px, 6vw, 72px)' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+        <SideColumn T={T} label={label} size="clamp(21px, 2.4vw, 30px)">{sideFor(label, String(body).length >= LONG_TEXT)}</SideColumn>
         <div style={{ maxWidth: 780, fontSize: T.type.base, lineHeight: 1.85, color: T.colors.textDim }}>
           {String(body).split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 20px' }}>{p}</p>)}
         </div>
@@ -130,23 +134,26 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
             fixed table rather than a judgment, so an unrelated service can never
             surface here. */}
         {treatments.length > 0 && (
-          <section style={{ background: T.colors.bgAlt, padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
+          <section id={sideId(treatmentsLabel)} style={{ scrollMarginTop: 96, background: T.colors.bgAlt, padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
             <div style={{ maxWidth: 1400, margin: '0 auto' }}>
               <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.4vw, 44px)', fontWeight: 300, margin: '0 0 12px', letterSpacing: '-0.015em' }}>
-                {labels.offering} for {concern.label.toLowerCase()}
+                {treatmentsLabel}
               </h2>
               <p style={{ fontSize: T.type.sm, color: T.colors.textMuted, margin: '0 0 40px', maxWidth: 560 }}>
                 Which of these suits you is determined at a consultation.
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: 8 }}>
+              <FillCSS />
+              <div className="sr-fill" style={{ '--g': '8px' }}>
                 {treatments.map((t, i) => {
                   const img = (c.images || {})[`service_${t.slug}`]
                   return (
                     <a
                       key={t.slug}
+                      className="sr-cell"
                       href={`${base}${urlService(t.slug, c)}`}
                       style={{
+                        ...tCell(i),
                         position: 'relative',
                         display: 'block',
                         minHeight: 240,
@@ -177,17 +184,15 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
         )}
 
         <div style={{ paddingTop: 'clamp(40px, 6vw, 72px)' }}>
-          <Block label="About this" body={asText(copy('intro'))} />
-          <Block label="What contributes" body={asText(copy('causes'))} />
-          <Block label="Approaches" body={asText(copy('treatment_options'))} />
+          <Block label="About this" body={texts['About this']} />
+          <Block label="What contributes" body={texts['What contributes']} />
+          <Block label="Approaches" body={texts.Approaches} />
         </div>
 
         {faqs.length > 0 && (
-          <section style={{ padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 9fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.2vw, 40px)', fontWeight: 300, margin: 0, letterSpacing: '-0.015em' }}>
-                Questions
-              </h2>
+          <section id="questions" style={{ scrollMarginTop: 96, padding: 'clamp(56px, 8vw, 104px) clamp(24px, 5vw, 96px)' }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+              <SideColumn T={T} label="Questions" size="clamp(26px, 3.2vw, 40px)"><SideAsk T={T} c={c} labels={labels} /></SideColumn>
               <div style={{ maxWidth: 720 }}>
                 {faqs.map((f, i) => (
                   <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>

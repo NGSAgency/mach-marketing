@@ -5,6 +5,7 @@ import { SereneHeader, SereneCTA, SereneFooter } from './SereneServices.js'
 import { StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { BlogPostCore } from '../../../../lib/templates/shared/blog/BlogCore.js'
+import { fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 
 export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -24,12 +25,25 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
 
   // The post's own photo first. A treatment photo stands in when it has none,
   // but each one only once, so the list isn't the same picture seven times.
+  // Once those run out, the site's other photos take turns: a row where some
+  // posts have a picture and some don't reads as broken (balance check).
   const usedPhotos = new Set()
+  const pool = [...new Map(Object.values(imgs).filter(i => i?.url).map(i => [i.url, i])).values()]
+  let turn = 0
+  const fromPool = (prev) => {
+    const fresh = pool.find(i => !usedPhotos.has(i.url))
+    if (fresh) return fresh
+    if (!pool.length) return null
+    let pick = pool[turn++ % pool.length]
+    if (pool.length > 1 && pick.url === prev) pick = pool[turn++ % pool.length]
+    return pick
+  }
+  let prevUrl = null
   const withImages = posts.map(p => {
     const own = p.image?.url && !usedPhotos.has(p.image.url) ? p.image : null
     const fallback = own ? null : imageFor(p)
-    const image = own || (fallback?.url && !usedPhotos.has(fallback.url) ? fallback : null)
-    if (image) usedPhotos.add(image.url)
+    const image = own || (fallback?.url && !usedPhotos.has(fallback.url) ? fallback : null) || fromPool(prevUrl)
+    if (image) { usedPhotos.add(image.url); prevUrl = image.url }
     return { ...p, image }
   })
   const featured = withImages[0]
@@ -118,18 +132,19 @@ export default function SereneBlogIndex({ config: c, siteSlug, posts = [] }) {
 
             {rest.length > 0 && (
               <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
-                <div style={{
+                <FillCSS />
+                <div className="sr-fill" style={{
                   maxWidth: 1400,
                   margin: '0 auto',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
-                  gap: 8,
+                  '--g': '8px',
                 }}>
                   {rest.map((post, i) => (
                     <a
                       key={post.slug || i}
+                      className="sr-cell"
                       href={`${base}/blog/${post.slug}`}
                       style={{
+                        ...fillRows(rest.length, Math.min(3, rest.length))(i),
                         position: 'relative',
                         display: 'block',
                         minHeight: 260,

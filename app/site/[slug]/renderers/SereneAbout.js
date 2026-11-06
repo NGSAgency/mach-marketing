@@ -4,6 +4,7 @@ import { buildBreadcrumbSchema, JsonLd } from '../../../../lib/templates/shared/
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import { TrustBar, StickyBooking } from '../../../../lib/templates/shared/components/medical.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
+import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 
 export default function SereneAbout({ config: c, siteSlug }) {
   const T = applyBrand(sereneTokens, brandFrom(c))
@@ -94,16 +95,15 @@ export default function SereneAbout({ config: c, siteSlug }) {
                     </div>
 
                     {facts.length > 0 && (
-                      <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                        gap: 24,
+                      <div className="sr-fill" style={{
+                        '--g': '24px',
                         marginTop: 40,
                         paddingTop: 32,
                         borderTop: `1px solid ${T.colors.borderLight}`,
                       }}>
-                        {facts.map(f => (
-                          <div key={f.k}>
+                        {/* Rows always full: four facts sit two by two in this column */}
+                        {facts.map((f, i) => (
+                          <div key={f.k} className="sr-cell" style={fillRows(facts.length, facts.length === 4 ? 2 : pickCols(facts.length, 3))(i)}>
                             <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.colors.textMuted, marginBottom: 8 }}>
                               {f.k}
                             </div>
@@ -142,25 +142,29 @@ export default function SereneAbout({ config: c, siteSlug }) {
                 How we work
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'clamp(24px, 4vw, 56px)' }}>
-                {gen['about|our_approach']
-                  .replace(/\s+/g, ' ')
-                  .split(/(?<=[.!?])\s+/)
-                  .filter(s => s.length > 40)
-                  .slice(0, 4)
-                  .map((s, i) => (
-                    <div key={i} style={{ borderTop: `1px solid ${T.colors.border}`, paddingTop: 24 }}>
+              <div className="sr-fill" style={{ '--g': 'clamp(24px, 4vw, 56px)' }}>
+                {(() => {
+                  const steps = gen['about|our_approach']
+                    .replace(/\s+/g, ' ')
+                    .split(/(?<=[.!?])\s+/)
+                    .filter(s => s.length > 40)
+                    .slice(0, 4)
+                  const cell = fillRows(steps.length, pickCols(steps.length, 4))
+                  return steps.map((s, i) => (
+                    <div key={i} className="sr-cell" style={{ ...cell(i), borderTop: `1px solid ${T.colors.border}`, paddingTop: 24 }}>
                       <div style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 300, color: T.colors.accent, marginBottom: 16, lineHeight: 1 }}>
                         {String(i + 1).padStart(2, '0')}
                       </div>
                       <p style={{ fontSize: T.type.sm, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{s}</p>
                     </div>
-                  ))}
+                  ))
+                })()}
               </div>
             </div>
           </section>
         )}
 
+        <FillCSS />
         <TrustBar T={T} c={c} />
         {/* The equipment and product lines they named in the questionnaire,
             in their order and spelling, with nothing said about any of them.
