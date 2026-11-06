@@ -156,33 +156,10 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
           </section>
         )}
 
-        {hasCopy && (
-          <div>
-            <Section label="Overview" paras={intro} index={0} />
-            <Section label={`Around ${area}`} paras={local} index={intro.length > 0 ? 1 : 0} />
-          </div>
-        )}
+        <Section label="Overview" paras={intro} index={0} />
 
-        <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
-
-        {faqs.length > 0 && (
-          <section style={{ background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
-            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
-              <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.2vw, 40px)', fontWeight: 300, margin: 0, letterSpacing: '-0.015em' }}>
-                Questions
-              </h2>
-              <div style={{ maxWidth: 720 }}>
-                {faqs.map((f, i) => (
-                  <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
-                    <h3 style={{ fontSize: T.type.lg, fontWeight: 400, margin: '0 0 10px', color: T.colors.text }}>{f.question}</h3>
-                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
+        {/* The treatment list sits right after the overview, so visitors see
+            what is offered here before the local detail and questions. */}
         {/* Every treatment for this area, each linking to its combo page. This
             is what gets the combo pages crawled from the area side. */}
         {services.length > 0 && (
@@ -227,6 +204,28 @@ export default function SereneAreaDetail({ config: c, siteSlug, area }) {
                     </a>
                   )
                 })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <Section label={`Around ${area}`} paras={local} index={intro.length > 0 ? 1 : 0} />
+
+        <Section label="Where we work" paras={around} index={hasCopy ? (intro.length > 0 ? 1 : 0) + (local.length > 0 ? 1 : 0) : 0} />
+
+        {faqs.length > 0 && (
+          <section style={{ background: T.colors.bgAlt, padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)' }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 8fr)', gap: 'clamp(24px, 5vw, 80px)' }}>
+              <h2 style={{ fontFamily: T.fonts.display, fontSize: 'clamp(26px, 3.2vw, 40px)', fontWeight: 300, margin: 0, letterSpacing: '-0.015em' }}>
+                Questions
+              </h2>
+              <div style={{ maxWidth: 720 }}>
+                {faqs.map((f, i) => (
+                  <div key={i} style={{ padding: '24px 0', borderTop: i === 0 ? 'none' : `1px solid ${T.colors.borderLight}` }}>
+                    <h3 style={{ fontSize: T.type.lg, fontWeight: 400, margin: '0 0 10px', color: T.colors.text }}>{f.question}</h3>
+                    <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{f.answer}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
