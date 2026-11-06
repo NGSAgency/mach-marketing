@@ -63,19 +63,15 @@ export function stagePlan(n) {
 }
 
 /**
- * SERENE: an editorial column of wide photographs and pairs, alternating.
- * A pair with one photograph in it becomes a wide one.
+ * SERENE: an even grid, every photograph the same shape, rows always full.
+ * The old editorial column (wide photo, staggered pair, wide photo) left the
+ * heading alone in an empty left column beside 2,000px of photographs.
+ * Six fill three columns twice; five drop to four (two by two) rather than
+ * leave a hole; three sit in one row; two and four go two across.
  */
 export function serenePlan(n) {
   if (n < MIN) return null
-  const count = Math.min(n, 6)
-  const groups = []
-  let i = 0
-  let wide = true
-  while (i < count) {
-    if (wide || count - i === 1) { groups.push([i]); i += 1 }
-    else { groups.push([i, i + 1]); i += 2 }
-    wide = !wide
-  }
-  return { count, groups }
+  if (n >= 6) return { count: 6, cols: 3 }
+  if (n >= 4) return { count: 4, cols: 2 }
+  return { count: n, cols: n }
 }

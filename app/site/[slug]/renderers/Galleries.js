@@ -316,47 +316,39 @@ export function stageGalleryChapter(x, items) {
   }
 }
 
-// ---- SERENE: an editorial column, captions in italic ------------------------
+// ---- SERENE: an even grid under the heading, captions in italic -----------
 
 export function SereneGallery({ T, items }) {
   const plan = serenePlan(items.length)
   if (!plan) return null
   const list = items.slice(0, plan.count)
   const C = T.colors
-  const Fig = ({ it, ratio, low }) => (
-    <figure style={{ margin: 0, marginTop: low ? 70 : 0 }} className={low ? 'sr-gal-low' : undefined}>
-      <Photo it={it} style={{ height: 'auto', aspectRatio: ratio, borderRadius: T.radius.md }} />
-      {it.caption && (
-        <figcaption style={{ marginTop: 14, fontFamily: T.fonts.display, fontStyle: 'italic', fontSize: 19, color: C.textDim, display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span aria-hidden="true" style={{ width: 28, height: 1, background: C.accent, flex: 'none' }} />{it.caption}
-        </figcaption>
-      )}
-    </figure>
-  )
   return (
     <section style={{ padding: 'clamp(64px, 9vw, 120px) clamp(24px, 5vw, 96px)', borderTop: `1px solid ${C.borderLight}` }}>
-      <div className="sr-gal" style={{ maxWidth: 1400, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: T.fonts.display, fontWeight: 300, fontSize: 'clamp(26px, 2.6vw, 34px)', lineHeight: 1.15, margin: 0, color: C.text }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+        <h2 style={{ fontFamily: T.fonts.display, fontWeight: 300, fontSize: 'clamp(26px, 3.2vw, 40px)', lineHeight: 1.15, letterSpacing: '-0.015em', margin: '0 0 clamp(28px, 4vw, 48px)', color: C.text }}>
           From the practice
         </h2>
-        <div style={{ display: 'grid', gap: 38 }}>
-          {plan.groups.map((g, gi) => g.length === 1
-            ? <Fig key={gi} it={list[g[0]]} ratio="16 / 9" />
-            : (
-              <div key={gi} className="sr-gal-pair">
-                <Fig it={list[g[0]]} ratio="4 / 5" />
-                <Fig it={list[g[1]]} ratio="4 / 5" low />
-              </div>
-            ))}
+        <div className={`sr-gal sr-gal-${plan.cols}${plan.count === plan.cols ? ' sr-gal-row' : ''}`}>
+          {list.map((it, i) => (
+            <figure key={i} style={{ margin: 0 }}>
+              <Photo it={it} style={{ height: 'auto', aspectRatio: '4 / 5', borderRadius: T.radius.md }} />
+              {it.caption && (
+                <figcaption style={{ marginTop: 14, fontFamily: T.fonts.display, fontStyle: 'italic', fontSize: 19, lineHeight: 1.3, color: C.textDim, display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <span aria-hidden="true" style={{ width: 28, height: 1, background: C.accent, flex: 'none' }} />{it.caption}
+                </figcaption>
+              )}
+            </figure>
+          ))}
         </div>
       </div>
       <style>{`
-        .sr-gal { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: clamp(24px, 5vw, 80px); }
-        .sr-gal-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; align-items: start; }
-        @media (max-width: 760px) {
-          .sr-gal, .sr-gal-pair { grid-template-columns: minmax(0, 1fr); }
-          .sr-gal-low { margin-top: 0 !important; }
-        }
+        .sr-gal { display: grid; gap: clamp(20px, 2.4vw, 32px); align-items: start; }
+        .sr-gal-1 { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+        .sr-gal-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .sr-gal-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        @media (max-width: 900px) { .sr-gal-3:not(.sr-gal-row) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .sr-gal-2, .sr-gal-3 { grid-template-columns: minmax(0, 1fr); } }
       `}</style>
     </section>
   )

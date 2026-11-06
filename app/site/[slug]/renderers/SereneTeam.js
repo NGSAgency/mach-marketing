@@ -59,7 +59,9 @@ export default function SereneTeam({ config: c, siteSlug }) {
               {providers.map((p, i) => (
                 <article
                   key={p.slug || p.name}
+                  id={p.slug || undefined}
                   style={{
+                    scrollMarginTop: 120,
                     display: 'grid',
                     gridTemplateColumns: p.photo_url ? 'minmax(0, 4fr) minmax(0, 8fr)' : '1fr',
                     gap: 'clamp(24px, 5vw, 72px)',
