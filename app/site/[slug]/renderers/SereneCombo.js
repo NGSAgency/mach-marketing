@@ -11,6 +11,7 @@ import {
 import { SereneHeader, SereneCTA, SereneFooter, navLabels } from './SereneServices.js'
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { pageCopy, faqList, asText } from '../../../../lib/templates/shared/pageCopy.js'
+import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 
 /**
  * Service + area page. This is the highest-intent page type we generate and the
@@ -172,14 +173,18 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                 Also available in {area}
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(260px, 100%), 1fr))', gap: 8 }}>
-                {(c.services || []).filter(s => s.slug !== service.slug).slice(0, 6).map((s, i) => {
+              {/* Six go three by two; four across left two over */}
+              <FillCSS />
+              <div className="sr-fill" style={{ '--g': '8px' }}>
+                {(() => { const others = (c.services || []).filter(s => s.slug !== service.slug).slice(0, 6); const cell = fillRows(others.length, pickCols(others.length, 3)); return others.map((s, i) => {
                   const img = (c.images || {})[`service_${s.slug}`]
                   return (
                     <a
                       key={s.slug}
+                      className="sr-cell"
                       href={`${base}${urlCombo(s, area, c)}`}
                       style={{
+                        ...cell(i),
                         position: 'relative',
                         display: 'block',
                         minHeight: 220,
@@ -200,7 +205,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
                       </div>
                     </a>
                   )
-                })}
+                }) })()}
               </div>
             </div>
           </section>

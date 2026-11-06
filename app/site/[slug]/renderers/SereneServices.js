@@ -5,6 +5,7 @@ import { buildBreadcrumbSchema, JsonLd, urlServices, urlServiceAreas, urlService
 import SereneResponsive from '../../../../lib/templates/shared/components/SereneResponsive.js'
 import { socialLinks, specialsInMenu } from './family/data.js'
 import { hasFaqPage } from '../../../../lib/templates/shared/claims.js'
+import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -447,20 +448,22 @@ export default function SereneServices({ config: c, siteSlug }) {
         {/* Image-led tiles rather than text cards. This is a visual industry and
             a list of names reads as a price sheet. */}
         <section style={{ padding: '0 clamp(24px, 5vw, 96px) clamp(64px, 9vw, 112px)' }}>
-          <div style={{
+          {/* Rows always full: twenty go four across */}
+          <FillCSS />
+          <div className="sr-fill" style={{
             maxWidth: 1400,
             margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px, 100%), 1fr))',
-            gap: 'clamp(16px, 2vw, 28px)',
+            '--g': 'clamp(16px, 2vw, 28px)',
           }}>
             {(c.services || []).map((s, i) => {
               const img = (c.images || {})[`service_${s.slug}`]
               return (
                 <a
                   key={s.slug}
+                  className="sr-cell"
                   href={`${base}${urlService(s.slug, c)}`}
                   style={{
+                    ...fillRows((c.services || []).length, pickCols((c.services || []).length, 4))(i),
                     position: 'relative',
                     display: 'block',
                     minHeight: 300,
