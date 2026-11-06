@@ -43,7 +43,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
           // the list beside a booking button is a glance, this is the page
           // someone reads when they are checking us out.
           const creds = c.credentials || {}
-          if (creds.license_number) facts.push({ k: 'Licence', v: creds.license_number })
+          if (creds.license_number) facts.push({ k: 'License', v: creds.license_number })
           if (creds.insurance_info) facts.push({ k: 'Insurance', v: creds.insurance_info })
           const certs = (c.certifications || [])
             .map(x => (typeof x === 'string' ? x : x?.name))
@@ -101,9 +101,17 @@ export default function SereneAbout({ config: c, siteSlug }) {
                         paddingTop: 32,
                         borderTop: `1px solid ${T.colors.borderLight}`,
                       }}>
-                        {/* Rows always full: four facts sit two by two in this column */}
-                        {facts.map((f, i) => (
-                          <div key={f.k} className="sr-cell" style={fillRows(facts.length, facts.length === 4 ? 2 : pickCols(facts.length, 3))(i)}>
+                        {/* Short facts share rows (four sit two by two); a long one
+                            (the address, a licence line, the certifications) takes a
+                            row of its own, so no row is three times the height of
+                            the one beside it. */}
+                        {(() => {
+                          const isLong = f => String(f.v).length > 28
+                          const short = facts.filter(f => !isLong(f)), long = facts.filter(isLong)
+                          const cell = fillRows(short.length, short.length === 4 ? 2 : pickCols(short.length, 3))
+                          return [...short, ...long].map((f, i) => ({ f, style: i < short.length ? cell(i) : { '--k': 1, '--k-md': 1 } }))
+                        })().map(({ f, style }) => (
+                          <div key={f.k} className="sr-cell" style={style}>
                             <div style={{ fontSize: T.type.xs, letterSpacing: '0.14em', textTransform: 'uppercase', color: T.colors.textMuted, marginBottom: 8 }}>
                               {f.k}
                             </div>
@@ -142,24 +150,25 @@ export default function SereneAbout({ config: c, siteSlug }) {
                 How we work
               </h2>
 
-              <div className="sr-fill" style={{ '--g': 'clamp(24px, 4vw, 56px)' }}>
+              {/* One step per row, number beside it: four sentences of very
+                  different lengths side by side ended at ragged heights. */}
+              <ol style={{ listStyle: 'none', margin: 0, padding: 0, maxWidth: 880 }}>
                 {(() => {
                   const steps = gen['about|our_approach']
                     .replace(/\s+/g, ' ')
                     .split(/(?<=[.!?])\s+/)
                     .filter(s => s.length > 40)
                     .slice(0, 4)
-                  const cell = fillRows(steps.length, pickCols(steps.length, 4))
                   return steps.map((s, i) => (
-                    <div key={i} className="sr-cell" style={{ ...cell(i), borderTop: `1px solid ${T.colors.border}`, paddingTop: 24 }}>
-                      <div style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 300, color: T.colors.accent, marginBottom: 16, lineHeight: 1 }}>
+                    <li key={i} style={{ display: 'flex', gap: 'clamp(20px, 3vw, 40px)', alignItems: 'baseline', borderTop: `1px solid ${T.colors.border}`, padding: '22px 0' }}>
+                      <span style={{ fontFamily: T.fonts.display, fontSize: 28, fontWeight: 300, color: T.colors.accent, lineHeight: 1, flex: 'none', width: 44 }}>
                         {String(i + 1).padStart(2, '0')}
-                      </div>
-                      <p style={{ fontSize: T.type.sm, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{s}</p>
-                    </div>
+                      </span>
+                      <p style={{ fontSize: T.type.base, lineHeight: 1.8, color: T.colors.textDim, margin: 0 }}>{s}</p>
+                    </li>
                   ))
                 })()}
-              </div>
+              </ol>
             </div>
           </section>
         )}

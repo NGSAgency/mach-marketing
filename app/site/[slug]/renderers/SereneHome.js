@@ -9,7 +9,7 @@ import { heroTrust, parseJson } from '../../../../lib/templates/shared/claims.js
 import { SereneGallery } from './Galleries.js'
 import { galleryItems } from './family/data.js'
 import { resolveSections } from '../../../../lib/templates/shared/sections.js'
-import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
+import { pickCols, fillRows, FillCSS, AlignCSS } from '../../../../lib/templates/shared/fill.js'
 
 // What the business is, in the words people search with, for the H1.
 const BUSINESS_NOUN = { medspa: 'Med spa', med_spa: 'Med spa', aesthetics: 'Med spa', wellness: 'Med spa', auto_detailing: 'Auto detailing' }
@@ -396,12 +396,13 @@ export default function SereneHome({ config: c, siteSlug }) {
                 <h2 style={{ fontFamily: T.fonts.display, fontWeight: 300, fontSize: 'clamp(28px, 3.4vw, 44px)', letterSpacing: '-0.01em', margin: '0 0 clamp(28px, 4vw, 48px)' }}>
                   Why {c.business.display_name}
                 </h2>
-                <FillCSS />
-                <div className="sr-fill" style={{ '--g': 'clamp(24px, 3vw, 40px)' }}>
+                {/* Titles share one row and the text another (subgrid), so the
+                    text starts level however many lines a title takes */}
+                <AlignCSS />
+                <div className="sr-align" style={{ '--g': 'clamp(24px, 3vw, 40px)', '--cols': pickCols(items.length, 4), '--cols-md': items.length % 2 === 0 ? 2 : 1 }}>
                   {items.map((it, i) => (
-                    <div key={it.title} className="sr-cell" style={{ ...fillRows(items.length, pickCols(items.length, 4))(i), borderTop: `1px solid ${T.colors.border}`, paddingTop: 20 }}>
-                      {/* Two lines held for every title, so the text under them starts level */}
-                      <h3 style={{ fontFamily: T.fonts.display, fontWeight: 400, fontSize: 22, lineHeight: 1.25, margin: '0 0 10px', minHeight: '2.5em' }}>{it.title}</h3>
+                    <div key={it.title} style={{ borderTop: `1px solid ${T.colors.border}`, paddingTop: 20 }}>
+                      <h3 style={{ fontFamily: T.fonts.display, fontWeight: 400, fontSize: 22, lineHeight: 1.25, margin: 0 }}>{it.title}</h3>
                       <p style={{ margin: 0, fontSize: 16, lineHeight: 1.7, color: T.colors.textDim }}>{it.description}</p>
                     </div>
                   ))}

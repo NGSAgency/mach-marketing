@@ -16,7 +16,7 @@
 function balanceIssues(doc) {
   const win = doc.defaultView, out = []
   const vis = el => { const r = el.getBoundingClientRect(); const s = win.getComputedStyle(el); return r.width > 40 && r.height > 20 && s.display !== 'none' && s.visibility !== 'hidden' && s.position !== 'absolute' && s.position !== 'fixed' }
-  const label = sec => (sec.querySelector('h2,h1')?.textContent || sec.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)
+  const label = sec => (sec.querySelector('h2,h1')?.textContent || [...sec.childNodes].filter(n => n.nodeName !== 'STYLE').map(n => n.textContent).join(' ')).trim().replace(/\s+/g, ' ').slice(0, 40)
   // Height of what is drawn in an element, not its box: a grid stretches a
   // short heading to the height of the column beside it.
   const contentH = el => {
@@ -64,7 +64,9 @@ function balanceIssues(doc) {
       // Small tags and chips wrap freely; only cards are held to full rows
       const avgH = kids.reduce((n, k) => n + k.getBoundingClientRect().height, 0) / kids.length
       const first = rowList[0].length, last = rowList[rowList.length - 1].length
-      if (avgH > 70 && rowList.length > 1 && last < first && rowList.slice(0, -1).every(r => r.length === first)) out.push(`${name} | last row has ${last} of ${first}`)
+      // A short last row is fine when its cards widen to fill it
+      const spanW = r => { const rs = r.map(k => k.getBoundingClientRect()); return Math.max(...rs.map(x => x.right)) - Math.min(...rs.map(x => x.left)) }
+      if (avgH > 70 && rowList.length > 1 && last < first && rowList.slice(0, -1).every(r => r.length === first) && spanW(rowList[rowList.length - 1]) < spanW(rowList[0]) * 0.9) out.push(`${name} | last row has ${last} of ${first}`)
       for (const row of rowList) {
         if (row.length < 2 || avgH < 70) continue
         const hs = row.map(contentH); const mx = Math.max(...hs), mn = Math.min(...hs)
