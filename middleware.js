@@ -8,8 +8,12 @@ const RESERVED_SUBDOMAINS = new Set(['app', 'api', 'www', 'admin', 'staging'])
 
 export const config = {
   matcher: [
-    // Match all paths except: static assets, _next internals, api routes, favicon
-    '/((?!_next/|api/|_static/|_vercel|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|css|js)$).*)',
+    // Match all paths except: static assets, _next internals, api routes,
+    // favicon, and /.well-known (the certificate authority checks a client's
+    // own domain at /.well-known/acme-challenge/ before Vercel can issue its
+    // HTTPS certificate; routed into the site, or redirected from www to an
+    // https address with no certificate yet, the check fails)
+    '/((?!_next/|api/|_static/|_vercel|\\.well-known/|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|css|js)$).*)',
   ],
 }
 
