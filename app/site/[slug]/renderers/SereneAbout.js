@@ -22,6 +22,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         {/* Structured rather than narrative. A story-first about page depends
             entirely on the story being good; a structured one holds up whatever
@@ -197,6 +198,7 @@ export default function SereneAbout({ config: c, siteSlug }) {
         })()}
 
         <SereneCTA T={T} c={c} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>

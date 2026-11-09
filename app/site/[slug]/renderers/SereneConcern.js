@@ -53,6 +53,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 5vw, 56px)', borderBottom: `1px solid ${T.colors.borderLight}` }}>
           <div style={{
@@ -172,6 +173,7 @@ export default function SereneConcern({ config: c, siteSlug, concern }) {
         <RailLayout T={T} c={c} labels={labels} sections={railSections} />
 
         <SereneCTA T={T} c={c} headline={concern.label} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>

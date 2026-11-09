@@ -204,7 +204,7 @@ export function CrewStyles({ x }) {
 function UtilityBar({ x }) {
   const { C, wrap, areas, biz, emergency, phone, phoneDisplay } = x
   return (
-    <div style={{ background: C.inverseBg, color: C.inverseTextDim, fontSize: 14 }}>
+    <div role="region" aria-label="Service area and phone" style={{ background: C.inverseBg, color: C.inverseTextDim, fontSize: 14 }}>
       <div style={{ ...wrap, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, paddingBlock: 9, flexWrap: 'wrap' }}>
         <span className="crew-utiltext">
           {areas.length > 0 && <>Serving {listAreas(areas)}</>}
@@ -350,8 +350,10 @@ export function CrewPage({ x, current, schemas = [], children }) {
       <div className="crew" style={{ background: C.bg, color: C.text, fontFamily: F.body, fontSize: T.type.base, lineHeight: 1.6, minHeight: '100vh' }}>
         <UtilityBar x={x} />
         <Header x={x} current={current} />
-        {children}
-        <CallBand x={x} />
+        <main>
+          {children}
+          <CallBand x={x} />
+        </main>
         <Footer x={x} />
       </div>
 

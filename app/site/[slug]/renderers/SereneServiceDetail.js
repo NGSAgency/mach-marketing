@@ -107,6 +107,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         <section style={{
           display: 'grid',
@@ -229,6 +230,7 @@ export default function SereneServiceDetail({ config: c, siteSlug, service, conc
 
         <RelatedLinks c={c} base={base} kind="service" slug={service.slug} C={{ text: T.colors.text, textDim: T.colors.textDim, accent: T.colors.accent, border: T.colors.border }} F={{ display: T.fonts.display }} wrap={{ maxWidth: 1400, margin: '0 auto', paddingInline: 'clamp(24px, 5vw, 96px)', boxSizing: 'border-box' }} />
         <SereneCTA T={T} c={c} headline={service.name} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>

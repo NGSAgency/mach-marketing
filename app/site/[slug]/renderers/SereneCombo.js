@@ -45,6 +45,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         {hero && (
           <section style={{ position: 'relative', height: 'clamp(360px, 48vh, 520px)', overflow: 'hidden' }}>
@@ -212,6 +213,7 @@ export default function SereneCombo({ config: c, siteSlug, service, area }) {
         )}
 
         <SereneCTA T={T} c={c} headline={`${service.name} in ${area}`} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
       </div>
     </>

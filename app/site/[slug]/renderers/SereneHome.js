@@ -90,6 +90,7 @@ export default function SereneHome({ config: c, siteSlug }) {
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         {/* SPLIT HERO
             Asymmetric on purpose: type occupies the left, image bleeds off the
@@ -414,6 +415,7 @@ export default function SereneHome({ config: c, siteSlug }) {
         {has('providers') && <Providers T={T} c={c} providers={c.providers || []} base={base} />}
 
         <SereneCTA T={T} c={c} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
         {has('sticky_booking') && <StickyBooking T={T} c={c} />}
       </div>

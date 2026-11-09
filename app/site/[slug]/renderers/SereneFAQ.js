@@ -29,6 +29,7 @@ export default function SereneFAQ({ config: c, siteSlug }) {
 
       <div style={{ background: T.colors.bg, color: T.colors.text, fontFamily: T.fonts.body, minHeight: '100vh' }}>
         <SereneHeader T={T} c={c} logo={c.brand?.logo_url} base={base} />
+        <main>
 
         <section style={{ padding: 'clamp(48px, 7vw, 96px) clamp(24px, 5vw, 96px) clamp(32px, 5vw, 56px)' }}>
           <div style={{ maxWidth: 1400, margin: '0 auto' }}>
@@ -94,6 +95,7 @@ export default function SereneFAQ({ config: c, siteSlug }) {
         </section>
 
         <SereneCTA T={T} c={c} />
+        </main>
         <SereneFooter T={T} c={c} base={base} />
         <StickyBooking T={T} c={c} />
       </div>
