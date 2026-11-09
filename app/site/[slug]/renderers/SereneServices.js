@@ -6,6 +6,7 @@ import SereneResponsive from '../../../../lib/templates/shared/components/Serene
 import { socialLinks, specialsInMenu } from './family/data.js'
 import { hasFaqPage } from '../../../../lib/templates/shared/claims.js'
 import { pickCols, fillRows, FillCSS } from '../../../../lib/templates/shared/fill.js'
+import { FooterLocations, LocationPhones, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())
 
@@ -70,8 +71,8 @@ function SereneHeader({ T, c, logo, base }) {
           justifyContent: 'space-between',
           gap: 16,
         }}>
-          <span>{c.business.address_line}</span>
-          {c.business.phone_display && (
+          {multiLocations(c) ? <LocationPhones c={c} linkStyle={{ color: T.colors.textDim, fontWeight: 400 }} /> : <span>{c.business.address_line}</span>}
+          {c.business.phone_display && !multiLocations(c) && (
             <a href={`tel:${c.business.phone}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>
               {c.business.phone_display}
             </a>
@@ -319,12 +320,14 @@ function SereneFooter({ T, c, base: baseProp }) {
             {c.business.display_name}
           </div>
           <div style={{ fontSize: T.type.sm, lineHeight: 2, color: T.colors.textDim }}>
-            {c.business.address_line && <div>{c.business.address_line}</div>}
-            {c.business.phone_display && (
-              <a href={`tel:${c.business.phone}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>
-                {c.business.phone_display}
-              </a>
-            )}
+            <FooterLocations c={c} contactHref={`${base}/contact`} fallback={<>
+              {c.business.address_line && <div>{c.business.address_line}</div>}
+              {c.business.phone_display && (
+                <a href={`tel:${c.business.phone}`} style={{ color: T.colors.textDim, textDecoration: 'none' }}>
+                  {c.business.phone_display}
+                </a>
+              )}
+            </>} />
             {c.business.email && <div>{c.business.email}</div>}
           </div>
           {c.business.hours_display && (

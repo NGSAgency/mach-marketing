@@ -400,7 +400,7 @@ export function StageContact({ config: c, siteSlug }) {
         <div className="stg-two" style={{ marginTop: 30, alignItems: 'start' }}>
           <div style={{ background: C.surface, border: `1px solid ${C.text}`, padding: 'clamp(22px, 2.6vw, 32px)' }}>
             <div style={{ ...x.label(C.text), marginBottom: 18 }}>Request a visit</div>
-            <ContactForm
+            <ContactForm options={c.lead_form}
               slug={siteSlug}
               concept={concept}
               colors={formColors(C, C.bg)}

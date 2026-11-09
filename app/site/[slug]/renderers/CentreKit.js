@@ -2,6 +2,7 @@ import { centreTokens } from '../../../templates/centre/tokens.js'
 import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js'
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { siteData, navItems } from './family/data.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // CENTRE's chrome: the floating nav, the footer, and the wrapper every page
 // shares. Sections live here too, because the inner pages are built from the
@@ -152,9 +153,9 @@ function Footer({ x }) {
           <a href={href.contact} style={{ color: C.inverseTextDim, textDecoration: 'none' }}>Contact</a>
         </div>
         <div style={{ fontSize: 15, lineHeight: 1.8 }}>
-          {biz.address_line && <div>{biz.address_line}</div>}
+          <FooterLocations c={x.c} contactHref={x.href.contact} fallback={biz.address_line && <div>{biz.address_line}</div>} />
           <div>
-            {phone && <a href={`tel:${phone}`} style={{ color: C.inverseText, textDecoration: 'none', fontWeight: 600 }}>{phoneDisplay}</a>}
+            {phone && !multiLocations(x.c) && <a href={`tel:${phone}`} style={{ color: C.inverseText, textDecoration: 'none', fontWeight: 600 }}>{phoneDisplay}</a>}
             {biz.email && <> · <a href={`mailto:${biz.email}`} style={{ color: C.inverseTextDim, textDecoration: 'none' }}>{biz.email}</a></>}
           </div>
           {c.credentials?.license_number && <div>License {c.credentials.license_number}</div>}

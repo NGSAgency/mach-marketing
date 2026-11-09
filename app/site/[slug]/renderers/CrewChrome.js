@@ -12,6 +12,7 @@ import CrewMobileBar from './CrewMobileBar.js'
 
 // The trade nouns and the small text helpers are shared by every family.
 import { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig, pageFacts, siteData, specialsInMenu } from './family/data.js'
+import { FooterLocations, LocationPhones, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 export { TRADE_NOUN, listAreas, paragraphs, looksLikeJson, schemaConfig }
 
 
@@ -211,7 +212,9 @@ function UtilityBar({ x }) {
           {biz.hours_display && <> · {biz.hours_display}</>}
           {emergency && <> · <span style={{ color: C.inverseText, fontWeight: 600 }}>{emergency}</span></>}
         </span>
-        {phone && (
+        {multiLocations(x.c) ? (
+          <LocationPhones c={x.c} linkStyle={{ color: C.inverseText }} />
+        ) : phone && (
           <a className="crew-utilphone" href={`tel:${phone}`} style={{ color: C.inverseText, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <PhoneIcon size={15} /> {phoneDisplay}
           </a>
@@ -305,8 +308,12 @@ function Footer({ x }) {
       <div className="crew-foot" style={{ ...wrap, paddingBlock: 56 }}>
         <div>
           <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 26, color: C.inverseText }}>{name}</div>
-          {biz.address_line && <div style={{ marginTop: 10 }}>{biz.address_line}</div>}
-          {phone && <div><a href={`tel:${phone}`} style={{ color: C.inverseText, textDecoration: 'none', fontWeight: 600 }}>{phoneDisplay}</a></div>}
+          <div style={{ marginTop: 10 }}>
+            <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
+              {biz.address_line && <div>{biz.address_line}</div>}
+              {phone && <div><a href={`tel:${phone}`} style={{ color: C.inverseText, textDecoration: 'none', fontWeight: 600 }}>{phoneDisplay}</a></div>}
+            </>} />
+          </div>
           {c.credentials?.license_number && <div style={{ marginTop: 6 }}>License {c.credentials.license_number}</div>}
         </div>
         <div>

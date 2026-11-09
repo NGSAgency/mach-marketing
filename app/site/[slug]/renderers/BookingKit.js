@@ -4,6 +4,7 @@ import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { siteData, navItems, stepsFrom, formColors } from './family/data.js'
 import ContactForm from '../../../../lib/templates/shared/components/ContactForm.js'
 import CrewMobileBar from './CrewMobileBar.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // BOOKING's chrome and its one big idea: the request card. It sits in the hero
 // on the home page and in a sticky column beside the content everywhere else,
@@ -113,7 +114,7 @@ export function RequestCard({ x, title = 'Request a visit', compact = false }) {
           Tell us what's happening and when suits{biz.hours_display ? `. We answer ${biz.hours_display}` : ''}.
         </p>
       )}
-      <ContactForm
+      <ContactForm options={c.lead_form}
         slug={siteSlug}
         concept={concept}
         colors={formColors(C, C.bg)}
@@ -177,8 +178,10 @@ function Footer({ x }) {
           <div>
             <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 23, color: C.inverseText, letterSpacing: '-0.03em' }}>{name}</span>
             <p style={{ margin: '12px 0 0', fontSize: 16, lineHeight: 1.7 }}>
+              <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
               {biz.address_line && <>{biz.address_line}<br /></>}
               {phone && <a href={`tel:${phone}`} style={{ color: C.inverseText, fontWeight: 700, textDecoration: 'none' }}>{phoneDisplay}</a>}
+              </>} />
               {biz.hours_display && <><br />{biz.hours_display}</>}
               {c.credentials?.license_number && <><br />License {c.credentials.license_number}</>}
             </p>

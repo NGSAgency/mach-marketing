@@ -1,5 +1,6 @@
 import { proofItems, pricingModel, oneLine, paragraphs } from './family/data.js'
 import { Board } from './StageKit.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // Pieces every STAGE page uses: the photographs the panel can show, the rows
 // its board can hold, and the shapes the left column repeats.
@@ -269,8 +270,10 @@ export function SiteFooter({ x }) {
         <div>
           <span style={{ fontFamily: F.display, fontWeight: 800, letterSpacing: '-0.03em', fontSize: 20 }}>{name}</span>
           <p style={{ margin: '10px 0 0', color: C.textDim, fontSize: 16, lineHeight: 1.7 }}>
+            <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
             {biz.address_line && <>{biz.address_line}<br /></>}
             {phone && <a href={`tel:${phone}`} style={{ fontWeight: 700, color: C.text, textDecoration: 'none' }}>{phoneDisplay}</a>}
+            </>} />
             {biz.hours_display && <><br />{biz.hours_display}</>}
             {license && <><br />Licensed {license}</>}
           </p>

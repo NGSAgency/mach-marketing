@@ -3,6 +3,7 @@ import { applyBrand, brandFrom } from '../../../../lib/templates/shared/brand.js
 import { JsonLd } from '../../../../lib/templates/shared/seo/index.js'
 import { siteData, navItems, proofItems, paragraphs, galleryItems } from './family/data.js'
 import CrewMobileBar from './CrewMobileBar.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // RAIL's chrome: the page on the left, the rail pinned down the right edge.
 // The rail is the family — the identity, the menu, the phone number, both
@@ -706,8 +707,10 @@ export function SiteFooter({ x }) {
       <div className="rl-foot" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 34 }}>
         <div>
           <div style={{ fontFamily: F.display, fontSize: 19, fontWeight: 800, letterSpacing: '-0.03em', color: C.text, marginBottom: 8 }}>{name}</div>
-          {biz.address_line && <div>{biz.address_line}</div>}
-          {x.phoneDisplay && <div><a href={`tel:${x.phone}`} style={{ color: C.text, textDecoration: 'none' }}>{x.phoneDisplay}</a></div>}
+          <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
+            {biz.address_line && <div>{biz.address_line}</div>}
+            {x.phoneDisplay && <div><a href={`tel:${x.phone}`} style={{ color: C.text, textDecoration: 'none' }}>{x.phoneDisplay}</a></div>}
+          </>} />
           {(license || credential) && <div style={{ marginTop: 10 }}>{license ? `License ${license}` : credential}</div>}
         </div>
         {services.length > 0 && (

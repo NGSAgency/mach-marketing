@@ -6,6 +6,7 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 import { siteData, navItems, proofItems, paragraphs, listAreas } from './family/data.js'
 import { PhoneIcon, Star, ArrowIcon, CheckIcon } from './CrewChrome.js'
 import CrewMobileBar from './CrewMobileBar.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // The pieces every Hearth page shares: context (tokens, colours, links), the
 // letterhead header, the closing "ticket", the livery footer, and the blocks
@@ -267,8 +268,10 @@ function Footer({ x }) {
           <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 28, lineHeight: 1.1 }}>{name}</div>
           {since && <div style={{ marginTop: 6, color: liveryDim, fontSize: 15 }}>{since}</div>}
           <div style={{ marginTop: 18, display: 'grid', gap: 4, color: liveryDim }}>
-            {biz.address_line && <div>{biz.address_line}</div>}
-            {phone && <div><a href={`tel:${phone}`} style={{ ...link, fontWeight: 700 }}>{phoneDisplay}</a></div>}
+            <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
+              {biz.address_line && <div>{biz.address_line}</div>}
+              {phone && <div><a href={`tel:${phone}`} style={{ ...link, fontWeight: 700 }}>{phoneDisplay}</a></div>}
+            </>} />
             {biz.email && <div><a href={`mailto:${biz.email}`} style={link}>{biz.email}</a></div>}
             {license && <div>License {license}</div>}
           </div>

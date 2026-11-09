@@ -582,7 +582,7 @@ export function LevelContact({ config: c, siteSlug }) {
           <div id="quote" style={{ ...x.card, padding: 'clamp(24px, 3.4vw, 40px)' }}>
             <SectionHead x={x} eyebrow="Online" title="Ask for a quote" small style={{ marginBottom: 10 }} />
             <p style={{ margin: '0 0 24px', color: C.textDim, fontSize: 17 }}>Tell us what you need help with and where the property is.</p>
-            <ContactForm slug={siteSlug} concept={concept} colors={formColors(C, C.bg)} fonts={x.T.fonts} radius={T.radius.md} submitLabel="Send request" />
+            <ContactForm options={c.lead_form} slug={siteSlug} concept={concept} colors={formColors(C, C.bg)} fonts={x.T.fonts} radius={T.radius.md} submitLabel="Send request" />
           </div>
         </div>
       </Wide>

@@ -284,7 +284,7 @@ export function CentreContact({ config: c, siteSlug }) {
         <div style={{ ...wrap, maxWidth: 1060 }}>
           <div className="ctr-cost">
             <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: T.radius.lg, padding: 'clamp(26px, 3vw, 44px)' }}>
-              <ContactForm
+              <ContactForm options={c.lead_form}
                 slug={siteSlug}
                 concept={concept}
                 colors={formColors(C, C.bg)}

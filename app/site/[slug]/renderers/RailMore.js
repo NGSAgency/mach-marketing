@@ -320,7 +320,7 @@ export function RailContact({ config: c, siteSlug }) {
         <div className="rl-two">
           <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: x.T.radius.lg, padding: 'clamp(22px, 2.6vw, 32px)' }}>
             <h2 style={{ ...x.label(C.textMuted), margin: '0 0 18px' }}>Request a visit</h2>
-            <ContactForm
+            <ContactForm options={c.lead_form}
               slug={siteSlug}
               concept={concept}
               colors={formColors(C, C.surface)}

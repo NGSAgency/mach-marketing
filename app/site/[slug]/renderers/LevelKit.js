@@ -5,6 +5,7 @@ import { ConceptNote } from '../../../../lib/templates/shared/components/Concept
 import { siteData, navItems, proofItems, paragraphs } from './family/data.js'
 import { PhoneIcon, Star, ArrowIcon, CheckIcon } from './CrewChrome.js'
 import CrewMobileBar from './CrewMobileBar.js'
+import { FooterLocations, multiLocations } from '../../../../lib/templates/shared/components/Locations.js'
 
 // The pieces every Level page shares: context, the slim header, the section
 // rail and quote band inner pages are built from, the closing panel that sits
@@ -181,8 +182,10 @@ function Footer({ x }) {
           <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 24, letterSpacing: '-0.03em' }}>{name}</div>
           {since && <div style={{ marginTop: 6, color: C.inverseTextDim, fontSize: 15 }}>{since}</div>}
           <div style={{ marginTop: 16, display: 'grid', gap: 4, color: C.inverseTextDim, fontSize: 16 }}>
-            {biz.address_line && <div>{biz.address_line}</div>}
-            {phone && <div><a href={`tel:${phone}`} style={{ ...link, fontWeight: 700 }}>{phoneDisplay}</a></div>}
+            <FooterLocations c={x.c} contactHref={x.href.contact} fallback={<>
+              {biz.address_line && <div>{biz.address_line}</div>}
+              {phone && <div><a href={`tel:${phone}`} style={{ ...link, fontWeight: 700 }}>{phoneDisplay}</a></div>}
+            </>} />
             {biz.email && <div><a href={`mailto:${biz.email}`} style={link}>{biz.email}</a></div>}
             {license && <div>License {license}</div>}
           </div>

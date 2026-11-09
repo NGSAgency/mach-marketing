@@ -65,6 +65,7 @@ export const TRADE_NOUN = {
   appliance_repair: 'Appliance repair',
   locksmith: 'Locksmith',
   auto_detailing: 'Auto detailing',
+  auto_body: 'Auto body & dent repair',
 }
 
 const titleCase = (s) => String(s || '').replace(/\b\w/g, ch => ch.toUpperCase())

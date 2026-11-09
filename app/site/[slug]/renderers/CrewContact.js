@@ -64,7 +64,7 @@ export default function CrewContact({ config: c, siteSlug }) {
           <div id="quote" style={{ background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: T.radius.lg, padding: 'clamp(24px, 4vw, 44px)' }}>
             <SectionHead x={x} eyebrow="Online" title="Request a quote" small style={{ marginBottom: 12 }} />
             <p style={{ margin: '0 0 28px', color: C.textDim, fontSize: 17 }}>Tell us what you need help with and where the property is.</p>
-            <ContactForm
+            <ContactForm options={c.lead_form}
               slug={siteSlug}
               concept={concept}
               colors={{

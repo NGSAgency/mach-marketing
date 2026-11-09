@@ -134,7 +134,7 @@ export default function SereneContact({ config: c, siteSlug }) {
               }}>
                 Send a message
               </h2>
-              <ContactForm
+              <ContactForm options={c.lead_form}
                 slug={siteSlug}
                 concept={isConcept}
                 colors={{

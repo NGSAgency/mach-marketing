@@ -593,7 +593,7 @@ export function HearthContact({ config: c, siteSlug }) {
           <div id="quote" style={{ background: C.surface, border: `2px solid ${C.text}`, padding: 'clamp(24px, 4vw, 44px)' }}>
             <SectionHead x={x} eyebrow="Online" title="Request a visit" small style={{ marginBottom: 12 }} />
             <p style={{ margin: '0 0 28px', color: C.textDim, fontSize: 17 }}>Tell us what you need help with and where the property is.</p>
-            <ContactForm slug={siteSlug} concept={concept} colors={formColors(C, C.bg)} fonts={T.fonts} radius={T.radius.md} submitLabel="Send request" />
+            <ContactForm options={c.lead_form} slug={siteSlug} concept={concept} colors={formColors(C, C.bg)} fonts={T.fonts} radius={T.radius.md} submitLabel="Send request" />
           </div>
         </div>
       </Band>
