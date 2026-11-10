@@ -5,6 +5,7 @@ import { familyKey } from './renderers/registry.js'
 import { TrackingScripts } from '../../../lib/site/tracking.js'
 import LeadEvents from '../../../lib/site/events.js'
 import { JsonLd, buildBusinessNode } from '../../../lib/templates/shared/seo/index.js'
+import { cookies } from 'next/headers'
 
 // Loads the site's typefaces for every page under it, and the client's
 // analytics tags. The config request is shared with the page through
@@ -23,14 +24,19 @@ export default async function SiteLayout({ children, params }) {
   const result = await fetchSiteConfig({ slug })
   const family = familyKey(result?.config?.template_slug)
   const preview = result?.meta?.preview === true
+  // Our own browsers (marked by a Command Center staff link) are tagged as
+  // internal traffic so the client's analytics leaves them out
+  let staff = false
+  try { staff = !!(await cookies()).get('mach_staff')?.value } catch {}
+  const bookingUrl = result?.config?.business?.booking_url || null
   return (
     <>
       <FamilyFonts families={[family]} />
       {/* Whose site this is, on every page: the same @id as the home page's
           full business record (lib/templates/shared/seo/schema.js). */}
       {result?.config && buildBusinessNode(result.config) && <JsonLd data={buildBusinessNode(result.config)} />}
-      {!preview && <TrackingScripts tracking={result?.config?.tracking} />}
-      {!preview && <LeadEvents />}
+      {!preview && <TrackingScripts tracking={result?.config?.tracking} internal={staff} />}
+      {!preview && <LeadEvents bookingUrl={bookingUrl} />}
       {preview && (
         <PreviewBar
           slug={slug}
