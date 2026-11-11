@@ -168,6 +168,16 @@ export default async function ReportPage({ params }) {
               <Kpi label="Organic Users" value={data.ga4.organic_users} previous={was.ga_organic_users} highlight />
               <Kpi label="Conversions" value={data.ga4.total_conversions} previous={was.ga_conversions} />
             </div>
+            {/* The same month a year ago, from the previous agency's Analytics:
+                a different site and setup, so shown beside the figures rather
+                than as a percentage change */}
+            {data.last_year?.sessions != null && (
+              <p style={{ margin: '-8px 0 20px', fontSize: 13, color: '#6B7280' }}>
+                {data.last_year.label}: {Number(data.last_year.sessions).toLocaleString('en-US')} sessions
+                {data.last_year.users != null ? ` from ${Number(data.last_year.users).toLocaleString('en-US')} users` : ''}
+                {data.last_year.organic_sessions != null ? `, ${Number(data.last_year.organic_sessions).toLocaleString('en-US')} from Google search` : ''}.
+              </p>
+            )}
             {data.ga4.top_sources?.length > 0 && (
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', color: '#6B7280', marginBottom: 10 }}>Top Traffic Sources</div>
