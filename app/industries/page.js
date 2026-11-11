@@ -1,7 +1,7 @@
 import { AHeader, AFooter, MeshBg, aTokens as T } from '../shell.js'
 import { content } from '../../lib/site-content/data.js'
 
-export const metadata = { title: 'Industries | MACH Digital Solutions', description: 'Growth marketing built for service-based businesses. HVAC, plumbing, roofing, electrical, landscaping, and more.' }
+export const metadata = { title: 'Industries | MACH Digital Solutions', description: 'Growth marketing built for service-based businesses. HVAC, plumbing, roofing, landscaping, med spas, dental practices, law firms, and more.' }
 
 export default function AIndustries() {
   return (
@@ -21,9 +21,10 @@ export default function AIndustries() {
       </section>
 
       <section style={{ padding: 'clamp(48px, 8vw, 96px) clamp(16px, 4vw, 32px)', borderTop: `1px solid ${T.border}` }}>
-        <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 16 }}>
+        {/* Four to a row on a wide screen; a short last row widens to fill it */}
+        <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 16 }}>
           {content.industries.map((i, idx) => (
-            <div key={i.name} style={{ padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, position: 'relative', overflow: 'hidden' }}>
+            <div key={i.name} style={{ flex: '1 1 max(220px, calc((100% - 48px) / 4))', boxSizing: 'border-box', padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3][idx % 3]}30, transparent 60%)`, filter: 'blur(30px)' }} />
               <div style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'start', marginBottom: 32 }}>

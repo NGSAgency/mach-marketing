@@ -78,9 +78,10 @@ export default function AHome() {
             </div>
             <a href="/industries" style={{ color: T.accent2, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>All industries →</a>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(160px, 100%), 1fr))', gap: 12 }}>
+          {/* Six to a row on a wide screen; a short last row widens to fill it */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {content.industries.map(i => (
-              <div key={i.name} style={{ padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
+              <div key={i.name} style={{ flex: '1 1 max(160px, calc((100% - 60px) / 6))', boxSizing: 'border-box', padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
                 
                 <div style={{ fontSize: 14, fontWeight: 500, color: T.fg }}>{i.name}</div>
               </div>
