@@ -81,9 +81,13 @@ export default function AHome() {
           {/* Six to a row on a wide screen; a short last row widens to fill it */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
             {content.industries.map(i => (
-              <div key={i.name} style={{ flex: '1 1 max(160px, calc((100% - 60px) / 6))', boxSizing: 'border-box', padding: 24, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 12, textAlign: 'center' }}>
-                
-                <div style={{ fontSize: 14, fontWeight: 500, color: T.fg }}>{i.name}</div>
+              <div key={i.name} style={{ flex: '1 1 max(160px, calc((100% - 60px) / 6))', boxSizing: 'border-box', position: 'relative', height: 96, borderRadius: 12, overflow: 'hidden', border: `1px solid ${T.border}`, background: '#11131a' }}>
+                {i.photo && (
+                  <img src={`https://images.unsplash.com/${i.photo}?w=400&q=70&auto=format&fit=crop`} alt="" loading="lazy"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                )}
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,5,8,0.2), rgba(5,5,8,0.85))' }} />
+                <div style={{ position: 'absolute', left: 8, right: 8, bottom: 12, textAlign: 'center', fontSize: 14, fontWeight: 500, color: T.fg }}>{i.name}</div>
               </div>
             ))}
           </div>

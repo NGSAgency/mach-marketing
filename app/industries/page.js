@@ -22,17 +22,19 @@ export default function AIndustries() {
 
       <section style={{ padding: 'clamp(48px, 8vw, 96px) clamp(16px, 4vw, 32px)', borderTop: `1px solid ${T.border}` }}>
         {/* Four to a row on a wide screen (12 tiles: three full rows); a short
-            last row widens to fill it */}
+            last row widens to fill it. Each tile is a photo of the work,
+            darkened toward the bottom so the name always reads. */}
+        <style>{`.ind-tile img{transition:transform .5s ease}.ind-tile:hover img{transform:scale(1.04)}@media (prefers-reduced-motion: reduce){.ind-tile img{transition:none}.ind-tile:hover img{transform:none}}`}</style>
         <div style={{ maxWidth: 'min(1200px, 100%)', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 16 }}>
           {content.industries.map((i, idx) => (
-            <div key={i.name} style={{ flex: '1 1 max(220px, calc((100% - 48px) / 4))', boxSizing: 'border-box', padding: 32, background: T.panel, border: `1px solid ${T.border}`, borderRadius: 16, position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: `radial-gradient(circle, ${[T.accent1, T.accent2, T.accent3][idx % 3]}30, transparent 60%)`, filter: 'blur(30px)' }} />
-              <div style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'start', marginBottom: 32 }}>
-                  <div style={{ fontFamily: 'Geist Mono, monospace', fontSize: 11, color: T.fgMuted, letterSpacing: 1 }}>{String(idx + 1).padStart(2, '0')}</div>
-                </div>
-                <div style={{ fontSize: 20, fontWeight: 600, letterSpacing: -0.5 }}>{i.name}</div>
-              </div>
+            <div key={i.name} className="ind-tile" style={{ flex: '1 1 max(220px, calc((100% - 48px) / 4))', boxSizing: 'border-box', position: 'relative', height: 220, borderRadius: 16, overflow: 'hidden', border: `1px solid ${T.border}`, background: '#11131a' }}>
+              {i.photo && (
+                <img src={`https://images.unsplash.com/${i.photo}?w=800&q=75&auto=format&fit=crop`} alt={i.alt || ''} loading="lazy"
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              )}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,5,8,0.15) 0%, rgba(5,5,8,0.35) 45%, rgba(5,5,8,0.92) 100%)' }} />
+              <div style={{ position: 'absolute', top: 16, right: 18, fontFamily: 'Geist Mono, monospace', fontSize: 11, color: 'rgba(255,255,255,0.75)', letterSpacing: 1 }}>{String(idx + 1).padStart(2, '0')}</div>
+              <div style={{ position: 'absolute', left: 24, right: 24, bottom: 20, fontSize: 20, fontWeight: 600, letterSpacing: -0.5 }}>{i.name}</div>
             </div>
           ))}
         </div>
