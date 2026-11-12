@@ -19,6 +19,16 @@ import { cookies } from 'next/headers'
 // On a private preview (the visitor came in through the client's preview
 // link), the preview bar goes above every page, where the client approves
 // the site or suggests changes.
+// The browser tab icon. The root layout's is MACH's own mark, which every
+// client site inherited; a client with an icon set (brand.icon) shows theirs.
+// Pages don't set icons, so this one applies under every page of the site.
+export async function generateMetadata({ params }) {
+  const { slug } = await params
+  const result = await fetchSiteConfig({ slug })
+  const icon = result?.config?.brand?.icon
+  return typeof icon === 'string' && icon ? { icons: { icon, shortcut: icon, apple: icon } } : {}
+}
+
 export default async function SiteLayout({ children, params }) {
   const { slug } = await params
   const result = await fetchSiteConfig({ slug })
